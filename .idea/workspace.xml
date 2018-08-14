@@ -1,166 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ddaaf0ed-0112-4f83-b5ab-f5dd3f6226c9" name="Default Changelist" comment="Default Changelist">
-<<<<<<< HEAD
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/API/nasabah/login.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/API/nasabah/read-one-saldo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/API/nasabah/read-one.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/API/transaksi/read-history.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/API/transaksi/read-mutasi.php" />
+    <list default="true" id="0ada7616-1278-4f16-bce2-1cdfefe057a9" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/mini-internet-banking.iml" afterPath="$PROJECT_DIR$/.idea/mini-internet-banking.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/config/database.php" afterPath="$PROJECT_DIR$/API/config/database.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/create.php" afterPath="$PROJECT_DIR$/API/nasabah/create.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/read.php" afterPath="$PROJECT_DIR$/API/nasabah/read.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/login.php" afterPath="$PROJECT_DIR$/API/nasabah/login.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/update_kode_rahasia.php" afterPath="$PROJECT_DIR$/API/nasabah/update_kode_rahasia.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/update_password.php" afterPath="$PROJECT_DIR$/API/nasabah/update_password.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/objects/nasabah.php" afterPath="$PROJECT_DIR$/API/objects/nasabah.php" />
-=======
-<<<<<<< Updated upstream
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-=======
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
->>>>>>> Stashed changes
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/banking.sql" afterPath="$PROJECT_DIR$/banking.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reinald-cobaAPI/app/products/create-product.js" afterPath="$PROJECT_DIR$/reinald-cobaAPI/app/products/create-product.js" />
     </list>
-    <ignored path="$PROJECT_DIR$/.tmp/" />
-    <ignored path="$PROJECT_DIR$/temp/" />
-    <ignored path="$PROJECT_DIR$/tmp/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="65077615">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.16" value="1" />
-          <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="php" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="PLAIN_TEXT" value="1" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="-59322706">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="php" value="9" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="PHP" value="9" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-<<<<<<< HEAD
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
-=======
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-<<<<<<< Updated upstream
+      <file leaf-file-name="read.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="799">
+              <caret line="47" column="10" lean-forward="false" selection-start-line="36" selection-start-column="5" selection-end-line="47" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="nasabah.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1292">
-              <caret line="76" column="61" lean-forward="false" selection-start-line="76" selection-start-column="61" selection-end-line="76" selection-end-column="61" />
+            <state relative-caret-position="1802">
+              <caret line="106" column="29" lean-forward="false" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
               <folding>
-                <marker date="1533893451857" expanded="true" signature="579:799" ph="SELECT c.nam... ${$this-&gt;table_name}" />
-                <marker date="1533893451857" expanded="true" signature="1061:1343" ph="INSERT INTO ${$this-&gt;table_name}" />
-                <marker date="1533893451857" expanded="true" signature="2921:3300" ph="SELECT c.nam... ${$this-&gt;table_name}" />
-                <marker date="1533893451857" expanded="true" signature="5311:5361" ph="DELETE FROM " />
-                <marker date="1533893451857" expanded="true" signature="5864:6303" ph="SELECT c.nam... ${$this-&gt;table_name}" />
+                <marker date="1534242431189" expanded="true" signature="753:977" ph="SELECT id_na... ${$this-&gt;table_name}" />
+                <marker date="1534242431189" expanded="true" signature="1259:1356" ph="INSERT INTO ${$this-&gt;table_name}" />
+                <marker date="1534242431189" expanded="true" signature="1259:1541" ph="INSERT INTO ${$this-&gt;table_name}" />
+                <marker date="1534242431189" expanded="true" signature="1259:1549" ph="INSERT INTO ${$this-&gt;table_name}" />
+                <marker date="1534242431189" expanded="true" signature="3438:3457" ph="SELECT no_re... ${$this-&gt;table_name2}" />
+                <marker date="1534242431189" expanded="true" signature="3907:4086" ph="INSERT INTO ${$this-&gt;table_name2}" />
+                <marker date="1534242431189" expanded="true" signature="4597:4737" ph="SELECT usern... ${$this-&gt;table_name}" />
+                <marker date="1534242431189" expanded="true" signature="5687:5910" ph="SELECT id_na... ${$this-&gt;table_name}" />
+                <marker date="1534242431189" expanded="true" signature="6629:6815" ph="SELECT no_re... ${$this-&gt;table_name2}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
-=======
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/coba-API/products/read.php">
->>>>>>> Stashed changes
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="43" column="10" lean-forward="true" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-<<<<<<< Updated upstream
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-=======
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/coba-API/config/database.php">
-          <provider selected="true" editor-type-id="text-editor" />
->>>>>>> Stashed changes
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/coba-API/objects/product.php">
-          <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-            <state relative-caret-position="1394">
-              <caret line="82" column="41" lean-forward="false" selection-start-line="82" selection-start-column="41" selection-end-line="82" selection-end-column="41" />
-              <folding />
-=======
-            <state relative-caret-position="867">
-              <caret line="51" column="46" lean-forward="true" selection-start-line="51" selection-start-column="46" selection-end-line="51" selection-end-column="46" />
->>>>>>> Stashed changes
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/coba-API/objects/category.php">
-          <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-            <state relative-caret-position="816">
-              <caret line="48" column="5" lean-forward="false" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-              <folding>
-                <marker date="1533895516570" expanded="true" signature="415:580" ph="SELECT id, n... ${$this-&gt;table_name}" />
-                <marker date="1533895516570" expanded="true" signature="798:943" ph="SELECT id, n... ${$this-&gt;table_name}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create-product.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/create-product.js">
+      <file leaf-file-name="read-one.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/nasabah/read-one.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -169,41 +63,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="read.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/coba-API/category/read.php">
+      <file leaf-file-name="login.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/API/nasabah/login.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="53" column="2" lean-forward="false" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
+            <state relative-caret-position="328">
+              <caret line="31" column="40" lean-forward="false" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="read.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="40" column="34" lean-forward="false" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
-              <folding />
-=======
-            <state relative-caret-position="425">
-              <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
->>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="HTML File" />
-        <option value="CSS File" />
-        <option value="JavaScript File" />
-      </list>
-    </option>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>nsb</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -211,25 +86,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/app/assets/css/style.css" />
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/index.html" />
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/app/app.js" />
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/app/nasabah/create-nasabah.js" />
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/app/nasabah/read-nasabah.js" />
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/app/nasabah/read-one-nasabah.js" />
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/app/nasabah/update-nasabah.js" />
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/app/nasabah/deleta-nasabah.js" />
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/app/product/read-product.js" />
-        <option value="$PROJECT_DIR$/coba-API/category/read.php" />
-        <option value="$PROJECT_DIR$/coba-API/objects/category.php" />
-        <option value="$PROJECT_DIR$/reinald-cobaAPI/app/products/read-products.js" />
-        <option value="$PROJECT_DIR$/API/nasabah/login.php" />
-        <option value="$PROJECT_DIR$/API/config/database.php" />
-        <option value="$PROJECT_DIR$/API/nasabah/read.php" />
+        <option value="$PROJECT_DIR$/API/nasabah/update_kode_rahasia.php" />
+        <option value="$PROJECT_DIR$/API/nasabah/update_password.php" />
         <option value="$PROJECT_DIR$/API/nasabah/create.php" />
+        <option value="$PROJECT_DIR$/API/nasabah/login.php" />
         <option value="$PROJECT_DIR$/API/objects/nasabah.php" />
-        <option value="$PROJECT_DIR$/API/nasabah/read-one.php" />
-        <option value="$PROJECT_DIR$/API/nasabah/read-one-saldo.php" />
       </list>
     </option>
   </component>
@@ -239,24 +100,32 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1383" />
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
-<<<<<<< HEAD
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="mini-internet-banking" />
@@ -264,60 +133,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="reinald-cobaAPI" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="reinald-cobaAPI" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="reinald-cobaAPI" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="products" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -332,24 +147,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="API" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="API" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="transaksi" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -389,74 +186,12 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mini-internet-banking" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="API" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-=======
-          <expand>
-            <path>
-              <item name="mini-internet-banking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mini-internet-banking" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mini-internet-banking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mini-internet-banking" type="462c0819:PsiDirectoryNode" />
-              <item name="coba-API" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mini-internet-banking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mini-internet-banking" type="462c0819:PsiDirectoryNode" />
-              <item name="coba-API" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mini-internet-banking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mini-internet-banking" type="462c0819:PsiDirectoryNode" />
-              <item name="coba-API" type="462c0819:PsiDirectoryNode" />
-              <item name="objects" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mini-internet-banking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mini-internet-banking" type="462c0819:PsiDirectoryNode" />
-              <item name="coba-API" type="462c0819:PsiDirectoryNode" />
-              <item name="products" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
         </subPane>
       </pane>
-<<<<<<< Updated upstream
-      <pane id="Scope" />
-=======
->>>>>>> Stashed changes
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="D:/xampp/htdocs/mini-internet-banking" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\USER\Documents\GitHub\mini-internet-banking\API" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -471,8 +206,45 @@
     </option>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CodeceptionConfigurationType" factoryName="Codeception">
+      <PhpTestRunnerSettings />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpSpecConfigurationType" factoryName="PHPSpec">
+      <PhpTestRunnerSettings />
+      <method />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-<<<<<<< Updated upstream
       <node-interpreter>project</node-interpreter>
       <node-options />
       <gulpfile />
@@ -489,163 +261,98 @@
       <method />
     </configuration>
     <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
-=======
->>>>>>> Stashed changes
       <node-interpreter>project</node-interpreter>
       <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
       <envs />
-      <method v="2" />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
     </configuration>
   </component>
-  <component name="SvnConfiguration">
-    <configuration />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ddaaf0ed-0112-4f83-b5ab-f5dd3f6226c9" name="Default Changelist" comment="" />
-      <created>1533866254259</created>
+      <changelist id="0ada7616-1278-4f16-bce2-1cdfefe057a9" name="Default" comment="" />
+      <created>1534148109582</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1533866254259</updated>
-      <workItem from="1533866264246" duration="481000" />
-<<<<<<< Updated upstream
-      <workItem from="1533866990322" duration="18002000" />
-<<<<<<< HEAD
-      <workItem from="1534123702557" duration="11486000" />
-=======
-      <workItem from="1534123702557" duration="802000" />
-=======
-      <workItem from="1533866990322" duration="17403000" />
-      <workItem from="1534122714686" duration="1213000" />
->>>>>>> Stashed changes
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
+      <updated>1534148109582</updated>
+      <workItem from="1534148112860" duration="166000" />
+      <workItem from="1534216355910" duration="14832000" />
+      <workItem from="1534242738388" duration="17000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-<<<<<<< HEAD
-    <option name="totallyTimeSpent" value="29969000" />
-=======
-<<<<<<< Updated upstream
-    <option name="totallyTimeSpent" value="19285000" />
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
+    <option name="totallyTimeSpent" value="15015000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14128843" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22254759" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-=======
-    <option name="totallyTimeSpent" value="19097000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1854251" />
-      <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.329653" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
->>>>>>> Stashed changes
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="processedProjectFiles" value="true" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="799">
+          <caret line="47" column="10" lean-forward="true" selection-start-line="36" selection-start-column="5" selection-end-line="47" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="76" column="61" lean-forward="false" selection-start-line="76" selection-start-column="61" selection-end-line="76" selection-end-column="61" />
+        <state relative-caret-position="1802">
+          <caret line="106" column="29" lean-forward="true" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
           <folding>
-            <marker date="1534155526660" expanded="true" signature="699:923" ph="SELECT c.nam... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="1205:1495" ph="INSERT INTO ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="3035:3054" ph="SELECT no_re... ${$this-&gt;table_name2}" />
-            <marker date="1534155526660" expanded="true" signature="3035:3076" ph="SELECT no_re... ${$this-&gt;table_name2}" />
-            <marker date="1534155526660" expanded="true" signature="3377:3523" ph="INSERT INTO ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="3377:3548" ph="INSERT INTO ${$this-&gt;table_name2}" />
-            <marker date="1534155526660" expanded="true" signature="4073:4137" ph="SELECT if(us... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="4073:4213" ph="SELECT usern... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="4073:4214" ph="SELECT if(us... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="4079:4137" ph="INSERT INTO ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="5163:5384" ph="SELECT c.nam... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="6142:6328" ph="SELECT no_re... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="753:977" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="1259:1356" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="1259:1541" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="1259:1549" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="3438:3457" ph="SELECT no_re... ${$this-&gt;table_name2}" />
+            <marker date="1534242431189" expanded="true" signature="3907:4086" ph="INSERT INTO ${$this-&gt;table_name2}" />
+            <marker date="1534242431189" expanded="true" signature="4597:4737" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="5687:5910" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="6629:6815" ph="SELECT no_re... ${$this-&gt;table_name2}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="48" lean-forward="false" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/objects/category.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="48" column="5" lean-forward="false" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-          <folding>
-            <marker date="1533895516570" expanded="true" signature="415:580" ph="SELECT id, n... ${$this-&gt;table_name}" />
-            <marker date="1533895516570" expanded="true" signature="798:943" ph="SELECT id, n... ${$this-&gt;table_name}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/create-product.js">
+    <entry file="file://$PROJECT_DIR$/API/nasabah/read-one.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -653,319 +360,102 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/category/read.php">
+    <entry file="file://$PROJECT_DIR$/API/nasabah/login.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="53" column="2" lean-forward="false" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
+        <state relative-caret-position="527">
+          <caret line="31" column="40" lean-forward="false" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" column="34" lean-forward="false" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/read-products.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1394">
-          <caret line="82" column="41" lean-forward="false" selection-start-line="82" selection-start-column="41" selection-end-line="82" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-=======
-    <entry file="file://$PROJECT_DIR$/API/objects/cabang.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-    <entry file="file://$PROJECT_DIR$/API/objects/rekening.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/objects/transfer.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-<<<<<<< HEAD
-=======
-    <entry file="file://$PROJECT_DIR$/API/objects/transaksi.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-    <entry file="file://$PROJECT_DIR$/API/objects/pulsa.php">
-<<<<<<< Updated upstream
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/products/read.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="34" lean-forward="false" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/objects/product.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1156">
-          <caret line="68" column="49" lean-forward="true" selection-start-line="68" selection-start-column="49" selection-end-line="68" selection-end-column="49" />
-          <folding>
-            <marker date="1533893451440" expanded="true" signature="503:833" ph="SELECT c.nam... ${$this-&gt;table_name}" />
-            <marker date="1533893451440" expanded="true" signature="1063:1243" ph="INSERT INTO ${$this-&gt;table_name}" />
-            <marker date="1533893451440" expanded="true" signature="2162:2521" ph="SELECT c.nam... ${$this-&gt;table_name}" />
-            <marker date="1533893451440" expanded="true" signature="4250:4300" ph="DELETE FROM " />
-            <marker date="1533893451440" expanded="true" signature="4706:5125" ph="SELECT c.nam... ${$this-&gt;table_name}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/products/read_one.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="20" lean-forward="true" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-=======
-      <provider selected="true" editor-type-id="text-editor" />
->>>>>>> Stashed changes
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/products/create.php">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="260">
-          <caret line="29" column="21" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="42" selection-end-column="2" />
-          <folding />
-=======
-        <state relative-caret-position="374">
-          <caret line="22" column="20" lean-forward="true" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
-<<<<<<< Updated upstream
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/assets/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="549">
-          <caret line="33" column="40" lean-forward="false" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
-=======
-        <state relative-caret-position="680">
-          <caret line="40" column="34" lean-forward="false" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
-          <folding />
-=======
->>>>>>> Stashed changes
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/read-one-product.js">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-=======
-        <state relative-caret-position="260">
-<<<<<<< Updated upstream
-          <caret line="29" column="21" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="42" selection-end-column="2" />
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/update-product.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/delete-product.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/objects/category.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="48" column="5" lean-forward="false" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-          <folding>
-            <marker date="1533895516570" expanded="true" signature="415:580" ph="SELECT id, n... ${$this-&gt;table_name}" />
-            <marker date="1533895516570" expanded="true" signature="798:943" ph="SELECT id, n... ${$this-&gt;table_name}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/create-product.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-=======
-          <caret line="29" column="21" lean-forward="true" selection-end-line="42" selection-end-column="2" />
->>>>>>> Stashed changes
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/category/read.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-<<<<<<< HEAD
-          <caret line="53" column="2" lean-forward="false" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/transaksi/read-mutasi.php">
-=======
-<<<<<<< Updated upstream
-          <caret line="33" column="40" lean-forward="false" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
-=======
-          <caret line="33" column="40" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
->>>>>>> Stashed changes
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/read-one-product.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/update-product.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/delete-product.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/create-product.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/category/read.php">
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-<<<<<<< HEAD
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/transaksi/read-history.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="1" lean-forward="false" selection-start-line="1" selection-start-column="1" selection-end-line="6" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/config/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="31" lean-forward="false" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/objects/transaksi.php">
-=======
-=======
-        <state relative-caret-position="901">
-          <caret line="53" column="2" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
->>>>>>> Stashed changes
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/read-products.js">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-=======
-        <state relative-caret-position="170">
-          <caret line="82" column="41" selection-start-line="82" selection-start-column="41" selection-end-line="82" selection-end-column="41" />
->>>>>>> Stashed changes
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/app.js">
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-<<<<<<< HEAD
-          <folding />
-=======
-=======
-        <state relative-caret-position="204">
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
->>>>>>> Stashed changes
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="379">
-=======
-<<<<<<< Updated upstream
-        <state relative-caret-position="595">
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
-=======
-        <state relative-caret-position="379">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
->>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="17">
-          <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-          <folding />
+        <state relative-caret-position="187">
+          <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+          <folding>
+            <marker date="1534242431189" expanded="true" signature="753:977" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="1259:1356" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="1259:1541" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="1259:1549" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="3438:3457" ph="SELECT no_re... ${$this-&gt;table_name2}" />
+            <marker date="1534242431189" expanded="true" signature="3907:4086" ph="INSERT INTO ${$this-&gt;table_name2}" />
+            <marker date="1534242431189" expanded="true" signature="4597:4737" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="5687:5910" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="6629:6815" ph="SELECT no_re... ${$this-&gt;table_name2}" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reinald-cobaAPI/app/products/read-products.js">
+    <entry file="file://$PROJECT_DIR$/API/config/database.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-=======
-        <state relative-caret-position="-238">
-          <caret line="65" column="68" lean-forward="true" selection-start-line="65" selection-start-column="68" selection-end-line="65" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-        <state relative-caret-position="901">
-          <caret line="53" column="2" lean-forward="false" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-=======
-        <state relative-caret-position="582">
-          <caret line="45" column="48" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
->>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/API/nasabah/update_kode_rahasia.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/nasabah/update_password.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/nasabah/read-one.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="799">
+          <caret line="47" column="10" lean-forward="false" selection-start-line="36" selection-start-column="5" selection-end-line="47" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1802">
+          <caret line="106" column="29" lean-forward="false" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
+          <folding>
+            <marker date="1534242431189" expanded="true" signature="753:977" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="1259:1356" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="1259:1541" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="1259:1549" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="3438:3457" ph="SELECT no_re... ${$this-&gt;table_name2}" />
+            <marker date="1534242431189" expanded="true" signature="3907:4086" ph="INSERT INTO ${$this-&gt;table_name2}" />
+            <marker date="1534242431189" expanded="true" signature="4597:4737" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="5687:5910" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1534242431189" expanded="true" signature="6629:6815" ph="SELECT no_re... ${$this-&gt;table_name2}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+        <state relative-caret-position="294">
+          <caret line="23" column="41" lean-forward="false" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -973,104 +463,8 @@
     <entry file="file://$PROJECT_DIR$/API/nasabah/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
-          <caret line="31" column="6" lean-forward="true" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
+          <caret line="31" column="40" lean-forward="false" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="5" lean-forward="true" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/objects/cabang.php">
-=======
-    <entry file="file://$PROJECT_DIR$/API/config/database.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-        <state relative-caret-position="816">
-          <caret line="48" column="5" lean-forward="false" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-          <folding>
-            <marker date="1533895516570" expanded="true" signature="415:580" ph="SELECT id, n... ${$this-&gt;table_name}" />
-            <marker date="1533895516570" expanded="true" signature="798:943" ph="SELECT id, n... ${$this-&gt;table_name}" />
-          </folding>
-=======
-        <state relative-caret-position="680">
-          <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
->>>>>>> Stashed changes
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/config/database.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/objects/product.php">
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="51" column="46" lean-forward="true" selection-start-line="51" selection-start-column="46" selection-end-line="51" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/API/nasabah/read-one-saldo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/nasabah/read-one.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="44" lean-forward="true" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
-=======
-    <entry file="file://$PROJECT_DIR$/coba-API/objects/category.php">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-        <state relative-caret-position="1394">
-          <caret line="82" column="41" lean-forward="false" selection-start-line="82" selection-start-column="41" selection-end-line="82" selection-end-column="41" />
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
-          <folding />
-=======
-        <state relative-caret-position="425">
-          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coba-API/products/read.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="43" column="10" lean-forward="true" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
->>>>>>> Stashed changes
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="233" column="42" lean-forward="false" selection-start-line="233" selection-start-column="42" selection-end-line="233" selection-end-column="42" />
-          <folding>
-            <marker date="1534155526660" expanded="true" signature="699:923" ph="SELECT c.nam... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="1205:1495" ph="INSERT INTO ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="3035:3054" ph="SELECT no_re... ${$this-&gt;table_name2}" />
-            <marker date="1534155526660" expanded="true" signature="3035:3076" ph="SELECT no_re... ${$this-&gt;table_name2}" />
-            <marker date="1534155526660" expanded="true" signature="3377:3523" ph="INSERT INTO ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="3377:3548" ph="INSERT INTO ${$this-&gt;table_name2}" />
-            <marker date="1534155526660" expanded="true" signature="4073:4137" ph="SELECT if(us... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="4073:4213" ph="SELECT usern... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="4073:4214" ph="SELECT if(us... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="4079:4137" ph="INSERT INTO ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="5163:5384" ph="SELECT c.nam... ${$this-&gt;table_name}" />
-            <marker date="1534155526660" expanded="true" signature="6142:6328" ph="SELECT no_re... ${$this-&gt;table_name}" />
-          </folding>
         </state>
       </provider>
     </entry>

@@ -19,13 +19,14 @@ $nasabah = new Nasabah($db);
  
 // get id of product to be edited
 $data = json_decode(file_get_contents("php://input"));
- 
+
 // set ID property of product to be edited
-$nasabah->nsb_id = $data->nsb_id;
+$nasabah->id_nasabah = $data->id_nasabah;
  
 // set product property values
 $nasabah->kode_rahasia = $data->kode_rahasia;
-
+$nasabah->baru1 = $data->krb1;
+$nasabah->baru2 = $data->krb2;
  
 // update the product
 if($nasabah->update_kode_rahasia()){

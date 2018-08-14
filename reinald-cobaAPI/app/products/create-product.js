@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     // show html form when 'create product' button was clicked
     $(document).on('click', '.create-product-button', function(){
-        // // load list of categories
+        // load id nasabah
         // $.getJSON("http://localhost/coba-API/category/read.php", function(data){
         //     // build categories option html
         //     // loop through returned list of data
@@ -18,60 +18,69 @@ $(document).ready(function(){
 
             // 'read products' button to show list of products
             create_product_html+="<div id='read-products' class='btn btn-primary pull-right m-b-15px read-products-button'>";
-            create_product_html+="<span class='glyphicon glyphicon-list'></span> Read Products";
+            create_product_html+="<span class='glyphicon glyphicon-list'></span> Kembali";
             create_product_html+="</div>";
 
             // 'create product' html form
             create_product_html+="<form id='create-product-form' action='#' method='post' border='0'>";
             create_product_html+="<table class='table table-hover table-responsive table-bordered'>";
 
-            // name field
-            create_product_html+="<tr>";
-            create_product_html+="<td>Name</td>";
-            create_product_html+="<td><input type='text' name='nama_lengkap' class='form-control' required /></td>";
-            create_product_html+="</tr>";
+            //update password
+            // // name field
+            // create_product_html+="<tr>";
+            // create_product_html+="<td>pwd skr</td>";
+            // create_product_html+="<td><input type='password' name='passwordl' class='form-control' required /></td>";
+            // create_product_html+="</tr>";
+            //
+            // create_product_html+="<tr>";
+            // create_product_html+="<td>pwd baru</td>";
+            // create_product_html+="<td><input type='password' name='passwordb1' class='form-control' required /></td>";
+            // create_product_html+="</tr>";
+            //
+            // create_product_html+="<tr>";
+            // create_product_html+="<td>pwd baru 2</td>";
+            // create_product_html+="<td><input type='password' name='passwordb2' class='form-control' required /></td>";
+            // create_product_html+="</tr>";
 
-            // name field
-            create_product_html+="<tr>";
-            create_product_html+="<td>email</td>";
-            create_product_html+="<td><input type='text' name='email' class='form-control' required /></td>";
-            create_product_html+="</tr>";
+            // hidden field to get the id
+            create_product_html+="<td><input type='hidden' name='id_nasabah' value='5' /></td>";
 
-            // name field
-            create_product_html+="<tr>";
-            create_product_html+="<td>password</td>";
-            create_product_html+="<td><input type='password' name='password' class='form-control' required /></td>";
-            create_product_html+="</tr>";
+            //create nasabah
+        create_product_html+="<tr>";
+        create_product_html+="<td>namalkp</td>";
+        create_product_html+="<td><input type='text' name='nama_lengkap' class='form-control' required /></td>";
+        create_product_html+="</tr>";
+        create_product_html+="<tr>";
+        create_product_html+="<td>email</td>";
+        create_product_html+="<td><input type='email' name='email' class='form-control' required /></td>";
+        create_product_html+="</tr>";
+        create_product_html+="<tr>";
+        create_product_html+="<td>pwd</td>";
+        create_product_html+="<td><input type='password' name='password' class='form-control' required /></td>";
+        create_product_html+="</tr>";
+        create_product_html+="<tr>";
+        create_product_html+="<td>noktp</td>";
+        create_product_html+="<td><input type='text' name='no_ktp' class='form-control' required /></td>";
+        create_product_html+="</tr>";
+        create_product_html+="<tr>";
+        create_product_html+="<td>tgllhr</td>";
+        create_product_html+="<td><input type='date' name='tgl_lahir' class='form-control' required /></td>";
+        create_product_html+="</tr>";
+        create_product_html+="<tr>";
+        create_product_html+="<td>alamat</td>";
+        create_product_html+="<td><input type='text' name='alamat' class='form-control' required /></td>";
+        create_product_html+="</tr>";
+        create_product_html+="<tr>";
+        create_product_html+="<td>koderhs</td>";
+        create_product_html+="<td><input type='password' name='kode_rahasia' class='form-control' required /></td>";
+        create_product_html+="</tr>";
 
-            // name field
-            create_product_html+="<tr>";
-            create_product_html+="<td>noktp</td>";
-            create_product_html+="<td><input type='text' name='no_ktp' class='form-control' required /></td>";
-            create_product_html+="</tr>";
-
-            // name field
-            create_product_html+="<tr>";
-            create_product_html+="<td>tgl lhr</td>";
-            create_product_html+="<td><input type='date' name='tgl_lahir' class='form-control' required /></td>";
-            create_product_html+="</tr>";
-
-            // name field
-            create_product_html+="<tr>";
-            create_product_html+="<td>alamat</td>";
-            create_product_html+="<td><input type='text' name='alamat' class='form-control' required /></td>";
-            create_product_html+="</tr>";
-
-            // name field
-            create_product_html+="<tr>";
-            create_product_html+="<td>kode rhs</td>";
-            create_product_html+="<td><input type='text' name='kode_rahasia' class='form-control' required /></td>";
-            create_product_html+="</tr>";
-            // button to submit form
+        // button to submit form
             create_product_html+="<tr>";
             create_product_html+="<td></td>";
             create_product_html+="<td>";
             create_product_html+="<button type='submit' class='btn btn-primary'>";
-            create_product_html+="<span class='glyphicon glyphicon-plus'></span> daftar";
+            create_product_html+="<span class='glyphicon glyphicon-plus'></span> submit";
             create_product_html+="</button>";
             create_product_html+="</td>";
             create_product_html+="</tr>";
@@ -82,7 +91,7 @@ $(document).ready(function(){
             // inject html to 'page-content' of our app
             $("#page-content").html(create_product_html);
 
-// chage page title
+// change page title
             changePageTitle("Create Product");
 
         });
