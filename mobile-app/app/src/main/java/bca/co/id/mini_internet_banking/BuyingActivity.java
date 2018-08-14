@@ -14,14 +14,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class BuyingActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private TextView txtNoHpBuying;
+    private TextView txtNoHpBuying, txtCodeBuying;
     private Spinner txtProviderBuying, txtNominalBuying;
+    private LinearLayout inputCodeBuying;
     private Button btnSubmitBuying;
     private SharedPreferences sp;
     private static final String[]provider = {"Telkomsel", "Indosat", "XL", "Smartfren"};
@@ -37,7 +40,9 @@ public class BuyingActivity extends AppCompatActivity {
         txtProviderBuying = findViewById(R.id.txtProviderBuying);
         txtNominalBuying = findViewById(R.id.txtNominalBuying);
         txtNoHpBuying = findViewById(R.id.txtNoHpBuying);
+        txtCodeBuying = findViewById(R.id.txtCodeBuying);
         btnSubmitBuying = findViewById(R.id.btnSubmitBuying);
+        inputCodeBuying = findViewById(R.id.inputCodeBuying);
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(BuyingActivity.this,
                 android.R.layout.simple_spinner_item,provider);
@@ -84,6 +89,13 @@ public class BuyingActivity extends AppCompatActivity {
                     }
                 });
 
+        txtNoHpBuying.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                inputCodeBuying.setVisibility(View.VISIBLE);
+            }
+        });
+
         btnSubmitBuying.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,21 +108,26 @@ public class BuyingActivity extends AppCompatActivity {
         String noHp = txtNoHpBuying.getText().toString();
         String provider = txtProviderBuying.getSelectedItem().toString();
         String nominal = txtNominalBuying.getSelectedItem().toString();
+        String code = txtCodeBuying.getText().toString();
 
         int temp = Nasabah.saldo - Integer.parseInt(nominal);
         Intent intent = new Intent(this, BuyingStatusActivity.class);
 
         if (!noHp.equals("")){
-            if (temp > 0){
-                intent.putExtra("noHp", noHp);
-                intent.putExtra("pulsa", nominal);
-                intent.putExtra("provider", provider);
-                intent.putExtra("status", true);
-                Nasabah.saldo = temp;
-                startActivity(intent);
+            if (code.equals(Nasabah.code)) {
+                if (temp > 0) {
+                    intent.putExtra("noHp", noHp);
+                    intent.putExtra("pulsa", nominal);
+                    intent.putExtra("provider", provider);
+                    intent.putExtra("status", true);
+                    Nasabah.saldo = temp;
+                    startActivity(intent);
+                } else {
+                    intent.putExtra("status", false);
+                    startActivity(intent);
+                }
             } else{
-                intent.putExtra("status", false);
-                startActivity(intent);
+                Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
             }
         } else{
             Toast.makeText(this, "Nomor HP harus diisi!", Toast.LENGTH_LONG).show();

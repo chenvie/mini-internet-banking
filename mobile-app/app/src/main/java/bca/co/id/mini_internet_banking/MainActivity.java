@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,23 +78,60 @@ public class MainActivity extends AppCompatActivity {
         String username = txtUname_login.getText().toString();
         String password = txtPwd_login.getText().toString();
 
-        if (username.equals(Nasabah.username) && password.equals(Nasabah.password)){
-            SharedPreferences.Editor spEdit = sp.edit();
-            spEdit.putBoolean("isLogin", true);
-            spEdit.commit();
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams rp = new RequestParams();
+        rp.add("username", txtUname_login.getText().toString());
+        rp.add("password", txtPwd_login.getText().toString());
+        client.post(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/login.php", rp, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String json = new String(responseBody);
+                int jsonStart = json.indexOf("{");
+                int jsonEnd = json.indexOf("}");
 
-            try {
-                if (getNasabahData()){
-                    Intent intent = new Intent(this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                    json = json.substring(jsonStart, jsonEnd+1);
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String login = jsonObject.getString("login");
+                    if (login.equalsIgnoreCase("true")){
+                        SharedPreferences.Editor spEdit = sp.edit();
+                        spEdit.putBoolean("isLogin", true);
+                        spEdit.commit();
+
+                        //Toast.makeText(mContext, "id = " + Nasabah.id, Toast.LENGTH_LONG).show();
+
+                        try {
+                            if (getNasabahData()){
+                                Intent intent = new Intent(mContext, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(mContext, "Get Nasabah data error", Toast.LENGTH_LONG).show();
+                        }
+                    } else{
+                        Toast.makeText(mContext, "Username atau password Salah!", Toast.LENGTH_LONG).show();
+                    }
+                } catch(final JSONException e){
+                    Log.e(TAG, "Json parsing error login: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),"Json parsing error login: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
-        } else{
-            Toast.makeText(this, "Login Gagal, Username atau password salah !", Toast.LENGTH_LONG).show();
-        }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 
     private void loadNewRekeningView(){
@@ -101,45 +139,78 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public boolean getNasabahData() throws JSONException {
+    private boolean getNasabahData() throws JSONException {
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/read.php", null, new AsyncHttpResponseHandler() {
+        RequestParams rp = new RequestParams();
+        rp.add("id", "4");
+        client.get(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/read-one.php", rp, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String json = new String(responseBody);
                 try{
                     JSONObject jsonObject = new JSONObject(json);
-                    JSONArray jsonArray = jsonObject.getJSONArray("records");
 
-                    String id = jsonArray.getJSONObject(0).getString("id");
-                    String email = jsonArray.getJSONObject(0).getString("email");
-                    String username = jsonArray.getJSONObject(0).getString("username");
-                    String password = jsonArray.getJSONObject(0).getString("password");
-                    String name = jsonArray.getJSONObject(0).getString("nama_lengkap");
-                    String ktp = jsonArray.getJSONObject(0).getString("no_ktp");
-                    String birthday = jsonArray.getJSONObject(0).getString("tgl_lahir");
-                    String address = jsonArray.getJSONObject(0).getString("alamat");
-                    String code = jsonArray.getJSONObject(0).getString("kode_rahasia");
-                    String created = jsonArray.getJSONObject(0).getString("created");
+                    String id = jsonObject.getString("id");
+                    //String email = jsonObject.getString("email");
+                    String username = jsonObject.getString("username");
+                    String password = jsonObject.getString("password");
+                    String name = jsonObject.getString("nama_lengkap");
+                    //String ktp = jsonObject.getString("no_ktp");
+                    //String birthday = jsonObject.getString("tgl_lahir");
+                    //String address = jsonObject.getString("alamat");
+                    String code = jsonObject.getString("kode_rahasia");
+                    //String created = jsonObject.getString("created");
 
                     Nasabah.id = id;
                     Nasabah.name = name;
                     Nasabah.username = username;
-                    Nasabah.email = email;
+                    //Nasabah.email = email;
                     Nasabah.password = password;
-                    Nasabah.ktpNum = ktp;
-                    Nasabah.birthday = birthday;
-                    Nasabah.address = address;
+                    //Nasabah.ktpNum = ktp;
+                    //Nasabah.birthday = birthday;
+                    //Nasabah.address = address;
                     Nasabah.code = code;
-                    Nasabah.created = created;
+                    //Nasabah.created = created;
 
-                    Toast.makeText(mContext, "get data", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, "get data success", Toast.LENGTH_LONG).show();
                 } catch(final JSONException e){
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    Log.e(TAG, "Json parsing error get data: " + e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Json parsing error get data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+
+        AsyncHttpClient client2 = new AsyncHttpClient();
+        client2.get(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/read-one-saldo.php", rp, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String json = new String(responseBody);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+
+                    String no_rek = jsonObject.getString("no rekening");
+                    String jml_saldo = jsonObject.getString("saldo");
+                    //String kode_cabang = jsonObject.getString("kode_cabang");
+
+                    Nasabah.rekeningNum = no_rek;
+                    Nasabah.saldo = Integer.parseInt(jml_saldo);
+                    //Nasabah.kode_cabang = kode_cabang;
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error get saldo: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),"Json parsing error get saldo: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }

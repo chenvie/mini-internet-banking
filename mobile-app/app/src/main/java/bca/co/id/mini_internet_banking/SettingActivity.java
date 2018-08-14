@@ -1,5 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,17 +11,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+
 public class SettingActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private EditText txtOldPass, txtNewPass, txtRePass, txtOldCode, txtNewCode, txtReCode;
     private Button btnChangePass, btnChangeCode;
+    private Context mContext;
 
+    private String TAG = SettingActivity.class.getSimpleName();
     private SharedPreferences sp;
 
     @Override
@@ -29,6 +42,7 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
+        mContext = this;
 
         txtOldPass = findViewById(R.id.txtOldPass);
         txtNewPass = findViewById(R.id.txtNewPass);
@@ -91,18 +105,60 @@ public class SettingActivity extends AppCompatActivity {
 
     private void changePassword(){
         String oPass = txtOldPass.getText().toString();
-        String nPass = txtNewPass.getText().toString();
+        final String nPass = txtNewPass.getText().toString();
         String rPass = txtRePass.getText().toString();
 
-        Intent intent = new Intent(this, HomeActivity.class);
+        final Intent intent = new Intent(this, HomeActivity.class);
 
         if (!oPass.equals("") && !nPass.equals("") && !rPass.equals("")){
             if (oPass.equals(Nasabah.password)){
                 if (nPass.equals(rPass)){
                     if(PasswordStrength.calculateStrength(nPass).getValue() > PasswordStrength.MEDIUM.getValue()){
-                        Toast.makeText(this, "Ubah Password Berhasil!", Toast.LENGTH_LONG).show();
-                        Nasabah.password = nPass;
-                        startActivity(intent);
+                        AsyncHttpClient client = new AsyncHttpClient();
+                        RequestParams rp = new RequestParams();
+                        rp.add("id", Nasabah.id);
+                        rp.add("password", nPass);
+
+                        client.post(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/update_password.php", rp, new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                String json = new String(responseBody);
+
+                                int jsonStart = json.indexOf("{");
+                                int jsonEnd = json.indexOf("}");
+
+                                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                                    json = json.substring(jsonStart, jsonEnd+1);
+                                }
+
+                                try {
+                                    JSONObject jsonObject = new JSONObject(json);
+                                    String result = jsonObject.getString("result");
+
+                                    if (result.equalsIgnoreCase("true")){
+                                        Toast.makeText(mContext, "Ubah Password Berhasil!", Toast.LENGTH_LONG).show();
+                                        Nasabah.password = nPass;
+                                        startActivity(intent);
+                                    } else{
+                                        Toast.makeText(mContext, "Ubah Password Gagal!", Toast.LENGTH_LONG).show();
+                                        startActivity(intent);
+                                    }
+                                } catch (final JSONException e) {
+                                    Log.e(TAG, "Json parsing error change password: " + e.getMessage());
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"Json parsing error change password: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                            }
+                        });
                     } else{
                         Toast.makeText(
                                 this,
@@ -113,7 +169,7 @@ public class SettingActivity extends AppCompatActivity {
                     Toast.makeText(this, "Password baru dan Re-type password tidak sama!", Toast.LENGTH_LONG).show();
                 }
             } else{
-                Toast.makeText(this, "Password sekarang salah!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Password lama salah!", Toast.LENGTH_LONG).show();
             }
         } else{
             Toast.makeText(this, "Semua kolom harus terisi!", Toast.LENGTH_LONG).show();
@@ -122,18 +178,60 @@ public class SettingActivity extends AppCompatActivity {
 
     private void changeCode(){
         String oCOde = txtOldCode.getText().toString();
-        String nCode = txtNewCode.getText().toString();
+        final String nCode = txtNewCode.getText().toString();
         String rCode = txtReCode.getText().toString();
 
-        Intent intent = new Intent(this, HomeActivity.class);
+        final Intent intent = new Intent(this, HomeActivity.class);
 
         if (!oCOde.equals("") && !nCode.equals("") && !rCode.equals("")){
             if (oCOde.equals(Nasabah.code)){
                 if (nCode.equals(rCode)){
                     if(CodeStrength.calculateStrength(nCode).getValue() > CodeStrength.MEDIUM.getValue()) {
-                        Toast.makeText(this, "Ubah Kode Rahasia Berhasil!", Toast.LENGTH_LONG).show();
-                        Nasabah.code = nCode;
-                        startActivity(intent);
+                        AsyncHttpClient client = new AsyncHttpClient();
+                        RequestParams rp = new RequestParams();
+                        rp.add("id", Nasabah.id);
+                        rp.add("kode_rahasia", nCode);
+
+                        client.post(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/update_kode_rahasia.php", rp, new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                String json = new String(responseBody);
+
+                                int jsonStart = json.indexOf("{");
+                                int jsonEnd = json.indexOf("}");
+
+                                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                                    json = json.substring(jsonStart, jsonEnd+1);
+                                }
+
+                                try {
+                                    JSONObject jsonObject = new JSONObject(json);
+                                    String result = jsonObject.getString("result");
+
+                                    if (result.equalsIgnoreCase("true")) {
+                                        Toast.makeText(mContext, "Ubah Kode Rahasia Berhasil!", Toast.LENGTH_LONG).show();
+                                        Nasabah.code = nCode;
+                                        startActivity(intent);
+                                    } else{
+                                        Toast.makeText(mContext, "Ubah Kode Rahasia Gagal!", Toast.LENGTH_LONG).show();
+                                        startActivity(intent);
+                                    }
+                                } catch (final JSONException e) {
+                                    Log.e(TAG, "Json parsing error change code: " + e.getMessage());
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"Json parsing error change code: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                            }
+                        });
                     } else{
                         Toast.makeText(
                                 this,
@@ -144,7 +242,7 @@ public class SettingActivity extends AppCompatActivity {
                     Toast.makeText(this, "Kode baru dan Re-type kode tidak sama!", Toast.LENGTH_LONG).show();
                 }
             } else{
-                Toast.makeText(this, "Kode lama sekarang!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Kode lama salah!", Toast.LENGTH_LONG).show();
             }
         } else{
             Toast.makeText(this, "Semua kolom harus terisi!", Toast.LENGTH_LONG).show();
