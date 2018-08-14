@@ -1,0 +1,31 @@
+<div *ngIf="page === 1">
+  NO HP <input type="text"><br>
+  Provider
+  <select>
+    <option value="">indosat</option>
+    <option value="">XL</option>
+    <option value="">simpati</option>
+    <option value="">smartfren</option>
+  </select><br>
+  Nominal
+  <select>
+    <option value="">25000</option>
+    <option value="">50000</option>
+    <option value="">100000</option>
+  </select><br>
+  <input type="button" value="submit" style="float: right;" (click)="page=2"><br> <!-- ke konfirmasi -->
+</div>
+<div *ngIf="page === 2">
+    No HP <span> [no hp] </span><br>
+    Provider <span> [provider] </span><br>
+    Nominal <span> [nominal] </span><br>
+    Kode Rahasia <input type="text"><br>
+    <input type="button" value="submit" style="float: right;" (click)="page=3"><br> <!-- ke hasil -->
+</div>
+<div *ngIf="page === 3">
+    Pembelian pulsa <span> [status] </span><br>
+    <span> [keterangan] </span><br><br>
+    No HP <span> [no hp] </span><br>
+    Provider <span> [provider] </span><br>
+    Nominal <span> [nominal] </span><br>
+</div>

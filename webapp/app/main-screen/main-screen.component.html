@@ -1,0 +1,16 @@
+<div style="float: left;">
+  <a href="#" (click)="page=1">informasi saldo</a><br><br>
+  <a href="#" (click)="page=2">mutasi rekening</a><br><br>
+  <a href="#" (click)="page=3;">transfer</a><br><br>
+  <a href="#" (click)="page=4;">pembelian</a><br><br>
+  <a href="#" (click)="page=5;">histori transaksi</a><br><br>
+  <a href="#" (click)="page=6">account setting</a><br><br>
+</div>
+<div style="float: right;">
+  <app-info-saldo [hidden]="page !== 1"></app-info-saldo>
+  <app-mutasi-rek [hidden]="page !== 2"></app-mutasi-rek>
+  <app-transfer [hidden]="page !== 3"></app-transfer>
+  <app-pembelian [hidden]="page !== 4"></app-pembelian>
+  <app-histori [hidden]="page !== 5"></app-histori>
+  <app-setting [hidden]="page !== 6"></app-setting>
+</div>
