@@ -1,14 +1,11 @@
 <?php
-class nasabah
+class Nasabah
 {
 
     // database connection and table name
     private $conn;
     private $table_name = "nasabah";
-<<<<<<< HEAD
     private $table_name2 = "rekening";
-=======
->>>>>>> 4d294244982e535754c875e8d43d65ca3a0b7341
 
     // object properties
     public $id_nasabah;
@@ -60,38 +57,40 @@ class nasabah
         $query = "INSERT INTO
                 " . $this->table_name . "
             SET
-                id_nasabah=:id_nasabah, email=:email, username=:username, password=:password, nama_lengkap=:nama_lengkap, no_ktp=:no_ktp, tgl_lahir=:tgl_lahir, alamat=:alamat, kode_rahasia=:kode_rahasia, created=:created";
+                id_nasabah=:id_nasabah, email=:email, username=:username, nama_lengkap=:nama_lengkap, password=:password, no_ktp=:no_ktp, tgl_lahir=:tgl_lahir, alamat=:alamat, kode_rahasia=:kode_rahasia, created=CURRENT_TIMESTAMP";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
 
         // sanitize
-        $this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
+        //$this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
         $this->email = htmlspecialchars(strip_tags($this->email));
-        $this->password = htmlspecialchars(strip_tags($this->password));
+        //$this->username = htmlspecialchars(strip_tags($this->username));
         $this->nama_lengkap = htmlspecialchars(strip_tags($this->nama_lengkap));
+        $this->password = htmlspecialchars(strip_tags($this->password));
         $this->no_ktp = htmlspecialchars(strip_tags($this->no_ktp));
-        $this->tgl_lahir = htmlspecialchars(strip_tags($this->tgl_lahir));
+        //$this->tgl_lahir = htmlspecialchars(strip_tags($this->tgl_lahir));
         $this->alamat = htmlspecialchars(strip_tags($this->alamat));
         $this->kode_rahasia = htmlspecialchars(strip_tags($this->kode_rahasia));
-        $this->created = htmlspecialchars(strip_tags($this->created));
+        //$this->created = htmlspecialchars(strip_tags($this->created));
 
+        $nsb = 4;
+        $unm = 'cocoba';
+        $tgll= '2018-08-01';
         // bind values
-        $stmt->bindParam(":id_nasabah", $this->id_nasabah);
+        $stmt->bindParam(":id_nasabah", $nsb);
         $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":username", $this->username);
-        $stmt->bindParam(":password", $this->password);
+        $stmt->bindParam(":username", $unm);
         $stmt->bindParam(":nama_lengkap", $this->nama_lengkap);
+        $stmt->bindParam(":password", $this->password);
         $stmt->bindParam(":no_ktp", $this->no_ktp);
-        $stmt->bindParam(":tgl_lahir", $this->tgl_lahir);
+        $stmt->bindParam(":tgl_lahir", $tgll);
         $stmt->bindParam(":alamat", $this->alamat);
         $stmt->bindParam(":kode_rahasia", $this->kode_rahasia);
         $stmt->bindParam(":created", $this->created);
 
-        // executing the query
+         //executing the query
         $stmt->execute();
-        // closing stmt to use another stmt
-        $stmt->close();
 
         // query to check latest no rek count
         $query = "SELECT no_rek from " . $this->table_name2;
@@ -112,7 +111,7 @@ class nasabah
         $stmt = $this->conn->prepare($query);
 
         // bind values
-        $stmt->bindParam(":id_nasabah", $this->id_nasabah);
+        $stmt->bindParam(":id_nasabah", $nsb);
         $stmt->bindParam(":no_rek", $num);
         $stmt->bindParam(":jml_saldo", 50000);
         $stmt->bindParam(":kode_cabang", 'asd2');
@@ -179,7 +178,7 @@ class nasabah
             FROM
                 " . $this->table_name . "
             WHERE
-                username = ?
+                id_nasabah = ?
             LIMIT
                 0,1";
 
