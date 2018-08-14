@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -81,7 +80,7 @@ public class NewRekeningActivity extends AppCompatActivity {
         String code = new_code.getText().toString();
 
         if(PasswordStrength.calculateStrength(password). getValue() < PasswordStrength.MEDIUM.getValue()){
-            Toast.makeText(this, "Buka Rekening Berhasil !", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Pembukaan Rekening Berhasil!", Toast.LENGTH_LONG).show();
             Nasabah.name = name;
             Nasabah.email = email;
             Nasabah.password = password;
@@ -93,7 +92,7 @@ public class NewRekeningActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else{
-            Toast.makeText(this, "Password harus terdiri min 6 karakter, 1 lowercase, 1 uppercase, dan 1 angka !", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Password harus terdiri min 8 karakter dan alfanumerik!", Toast.LENGTH_LONG).show();
         }
     }
 }

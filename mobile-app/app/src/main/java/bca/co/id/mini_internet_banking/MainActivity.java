@@ -83,14 +83,14 @@ public class MainActivity extends AppCompatActivity {
             spEdit.commit();
 
             try {
-                getNasabahData();
+                if (getNasabahData()){
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
-            finish();
         } else{
             Toast.makeText(this, "Login Gagal, Username atau password salah !", Toast.LENGTH_LONG).show();
         }
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void getNasabahData() throws JSONException {
+    public boolean getNasabahData() throws JSONException {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/read.php", null, new AsyncHttpResponseHandler() {
             @Override
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     JSONObject jsonObject = new JSONObject(json);
                     JSONArray jsonArray = jsonObject.getJSONArray("records");
-                    
+
                     String id = jsonArray.getJSONObject(0).getString("id");
                     String email = jsonArray.getJSONObject(0).getString("email");
                     String username = jsonArray.getJSONObject(0).getString("username");
@@ -132,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
                     Nasabah.address = address;
                     Nasabah.code = code;
                     Nasabah.created = created;
+
+                    Toast.makeText(mContext, "get data", Toast.LENGTH_LONG).show();
                 } catch(final JSONException e){
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
@@ -148,5 +150,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        return true;
     }
 }

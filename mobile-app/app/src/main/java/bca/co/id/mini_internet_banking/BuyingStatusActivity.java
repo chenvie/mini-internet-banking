@@ -36,10 +36,10 @@ public class BuyingStatusActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.getBooleanExtra("status", true)){
-            txtBuyingStatus.setText("Transaksi berhasil !");
+            txtBuyingStatus.setText("Transaksi berhasil!");
             txtFailedBuying.setVisibility(View.INVISIBLE);
         } else{
-            txtBuyingStatus.setText("Transaksi gagal !");
+            txtBuyingStatus.setText("Transaksi gagal!");
             txtFailedBuying.setVisibility(View.VISIBLE);
         }
 

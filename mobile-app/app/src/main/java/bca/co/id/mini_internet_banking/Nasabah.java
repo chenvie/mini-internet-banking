@@ -1,13 +1,5 @@
 package bca.co.id.mini_internet_banking;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
-
 public class Nasabah {
     protected static String id = "01";
     protected static String name = "Nasabah Bank";

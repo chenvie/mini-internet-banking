@@ -113,7 +113,7 @@ public class BuyingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         } else{
-            Toast.makeText(this, "Nomor HP harus diisi", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Nomor HP harus diisi!", Toast.LENGTH_LONG).show();
         }
     }
 

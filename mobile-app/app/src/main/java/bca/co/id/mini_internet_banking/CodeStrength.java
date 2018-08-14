@@ -2,19 +2,18 @@ package bca.co.id.mini_internet_banking;
 
 import android.graphics.Color;
 
-public enum PasswordStrength {
+public enum CodeStrength {
     WEAK(0, Color.RED), MEDIUM(1, Color.argb(255, 220, 185, 0)), STRONG(2, Color.GREEN), VERY_STRONG(3, Color.BLUE);
 
     //--------REQUIREMENTS--------
-    static int REQUIRED_LENGTH = 8;
-    static int MAXIMUM_LENGTH = 8;
+    static int REQUIRED_LENGTH = 6;
     static boolean REQUIRE_DIGITS = true;
     static boolean REQUIRE_ALPHA = true;
 
     int resId;
     int color;
 
-    PasswordStrength(int resId, int color){
+    CodeStrength(int resId, int color){
         this.resId = resId;
         this.color = color;
     }
@@ -29,13 +28,13 @@ public enum PasswordStrength {
         return color;
     }
 
-    public static PasswordStrength calculateStrength(String password){
+    public static CodeStrength calculateStrength(String code){
         int currentScore = 0;
         boolean sawAlpha = false;
         boolean sawDigit = false;
 
-        for (int i = 0; i < password.length(); i++){
-            char c = password.charAt(i);
+        for (int i = 0; i < code.length(); i++){
+            char c = code.charAt(i);
             if (!sawDigit && Character.isDigit(c)){
                 currentScore += 1;
                 sawDigit = true;
@@ -46,17 +45,14 @@ public enum PasswordStrength {
             }
         }
 
-        if (password.length() >= REQUIRED_LENGTH){
-            if ((REQUIRE_ALPHA && sawAlpha) && (REQUIRE_DIGITS && sawDigit)){
-                currentScore = 2;
-                if (password.length() > MAXIMUM_LENGTH){
-                    currentScore = 3;
-                }
-            } else {
-                currentScore = 1;
-            }
-        } else{
+        if (code.length() > REQUIRED_LENGTH || code.length() < REQUIRED_LENGTH) {
             currentScore = 0;
+        } else {
+            if ((REQUIRE_ALPHA && sawAlpha) && (REQUIRE_DIGITS && sawDigit)) {
+                currentScore = 2;
+            } else {
+                currentScore = 0;
+            }
         }
 
         switch (currentScore) {
@@ -75,3 +71,4 @@ public enum PasswordStrength {
     }
 
 }
+

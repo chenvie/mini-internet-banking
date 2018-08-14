@@ -36,10 +36,10 @@ public class TransferStatusActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.getBooleanExtra("status", true)){
-            txtTransStatus.setText("Transaksi berhasil !");
+            txtTransStatus.setText("Transaksi berhasil!");
             txtFailedTrans.setVisibility(View.INVISIBLE);
         } else{
-            txtTransStatus.setText("Transaksi gagal !");
+            txtTransStatus.setText("Transaksi gagal!");
             txtFailedTrans.setVisibility(View.VISIBLE);
         }
 

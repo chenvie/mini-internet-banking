@@ -99,24 +99,24 @@ public class SettingActivity extends AppCompatActivity {
         if (!oPass.equals("") && !nPass.equals("") && !rPass.equals("")){
             if (oPass.equals(Nasabah.password)){
                 if (nPass.equals(rPass)){
-                    if(PasswordStrength.calculateStrength(nPass).getValue() >= PasswordStrength.MEDIUM.getValue()){
-                        Toast.makeText(this, "Ubah Password Berhasil", Toast.LENGTH_LONG).show();
+                    if(PasswordStrength.calculateStrength(nPass).getValue() > PasswordStrength.MEDIUM.getValue()){
+                        Toast.makeText(this, "Ubah Password Berhasil!", Toast.LENGTH_LONG).show();
                         Nasabah.password = nPass;
                         startActivity(intent);
                     } else{
                         Toast.makeText(
                                 this,
-                                "Password harus terdiri min 6 karakter, 1 lowercase, 1 uppercase dan 1 angka !",
+                                "Password harus terdiri min 8 karakter dan alfanumerik!",
                                 Toast.LENGTH_LONG).show();
                     }
                 } else{
-                    Toast.makeText(this, "Password baru dan Re-type password tidak sama !", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Password baru dan Re-type password tidak sama!", Toast.LENGTH_LONG).show();
                 }
             } else{
-                Toast.makeText(this, "Password sekarang salah !", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Password sekarang salah!", Toast.LENGTH_LONG).show();
             }
         } else{
-            Toast.makeText(this, "Semua kolom harus terisi !", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Semua kolom harus terisi!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -130,17 +130,24 @@ public class SettingActivity extends AppCompatActivity {
         if (!oCOde.equals("") && !nCode.equals("") && !rCode.equals("")){
             if (oCOde.equals(Nasabah.code)){
                 if (nCode.equals(rCode)){
-                    Toast.makeText(this, "Ubah Kode Rahasia Berhasil !", Toast.LENGTH_LONG).show();
-                    Nasabah.code = nCode;
-                    startActivity(intent);
+                    if(CodeStrength.calculateStrength(nCode).getValue() > CodeStrength.MEDIUM.getValue()) {
+                        Toast.makeText(this, "Ubah Kode Rahasia Berhasil!", Toast.LENGTH_LONG).show();
+                        Nasabah.code = nCode;
+                        startActivity(intent);
+                    } else{
+                        Toast.makeText(
+                                this,
+                                "Kode Rahasia harus terdiri min 6 karakter dan alfanumerik!",
+                                Toast.LENGTH_LONG).show();
+                    }
                 } else{
-                    Toast.makeText(this, "Kode baru dan Re-type kode tidak sama !", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Kode baru dan Re-type kode tidak sama!", Toast.LENGTH_LONG).show();
                 }
             } else{
-                Toast.makeText(this, "Kode lama sekarang !", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Kode lama sekarang!", Toast.LENGTH_LONG).show();
             }
         } else{
-            Toast.makeText(this, "Semua kolom harus terisi !", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Semua kolom harus terisi!", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -113,10 +113,10 @@ public class TransferActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             } else{
-                Toast.makeText(this, "Kode Rahasia salah !", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
             }
         } else{
-            Toast.makeText(this, "Semua kolom harus diisi !", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Semua kolom harus diisi!", Toast.LENGTH_LONG).show();
         }
     }
 
