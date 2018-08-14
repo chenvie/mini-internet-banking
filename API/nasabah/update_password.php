@@ -19,13 +19,12 @@ $nasabah = new Nasabah($db);
  
 // get id of product to be edited
 $data = json_decode(file_get_contents("php://input"));
- 
-// set ID property of product to be edited
-$nasabah->nsb_id = $data->nsb_id;
- 
-// set product property values
-$nasabah->password = $data->password;
 
+// set product property values
+$nasabah->password = $data->passwordl;
+$nasabah->baru1 = $data->passwordb1;
+$nasabah->baru2 = $data->passwordb2;
+$nasabah->id_nasabah = $data->id_nasabah;
  
 // update the product
 if($nasabah->update_password()){

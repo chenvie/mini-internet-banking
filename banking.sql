@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 14, 2018 at 08:17 AM
+-- Generation Time: Aug 14, 2018 at 12:29 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -47,7 +47,7 @@ INSERT INTO `cabang_bank` (`kode_cabang`, `nama_cabang`, `almt_cabang`) VALUES
 --
 
 CREATE TABLE `nasabah` (
-  `id_nasabah` varchar(5) NOT NULL,
+  `id_nasabah` int(10) NOT NULL,
   `email` varchar(40) NOT NULL,
   `username` varchar(20) NOT NULL,
   `nama_lengkap` varchar(100) NOT NULL,
@@ -64,9 +64,10 @@ CREATE TABLE `nasabah` (
 --
 
 INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `created`) VALUES
-('1', 'reinald.a.k@gmail.com', 'reinald', 'reinalda ar', '123456', '3323031211960005', '2018-08-06', 'temanggung', '654321', '2018-08-13 09:47:20'),
-('2', 'boni@gmail.com', 'bonii', 'bonifasius', 'boni123', '123513163', '2018-02-05', 'magelang', '112233', '2018-08-13 09:47:20'),
-('3', 'asd@gmail.com', 'coba', 'coba', 'coba', '123', '2018-08-02', 'coba', '123', '2018-08-14 03:53:23');
+(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', '123456', '3323031211960005', '2018-08-06', 'temanggung', '654321', '2018-08-14 07:49:58'),
+(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'zxc', '123513163', '2018-02-05', 'magelang', '112233', '2018-08-14 08:25:09'),
+(3, 'asd@gmail.com', 'coba', 'coba', 'coba', '123', '2018-08-02', 'coba', '123', '2018-08-14 03:53:23'),
+(4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '2018-08-14 04:21:26');
 
 -- --------------------------------------------------------
 
@@ -97,7 +98,7 @@ INSERT INTO `pulsa` (`kode_pembelian`, `no_hp`, `provider`, `nominal`) VALUES
 CREATE TABLE `rekening` (
   `no_rek` varchar(16) NOT NULL,
   `jml_saldo` int(11) NOT NULL,
-  `id_nasabah` varchar(5) NOT NULL,
+  `id_nasabah` int(10) NOT NULL,
   `kode_cabang` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -106,8 +107,10 @@ CREATE TABLE `rekening` (
 --
 
 INSERT INTO `rekening` (`no_rek`, `jml_saldo`, `id_nasabah`, `kode_cabang`) VALUES
-('039210480', 1000000, '1', 'asd1'),
-('215162637', 2000000, '2', 'asd2');
+('039210480', 1000000, 1, 'asd1'),
+('11111111111', 1000000, 3, 'asd1'),
+('1111122211', 2100000, 4, 'asd2'),
+('215162637', 2000000, 2, 'asd2');
 
 -- --------------------------------------------------------
 
@@ -117,7 +120,7 @@ INSERT INTO `rekening` (`no_rek`, `jml_saldo`, `id_nasabah`, `kode_cabang`) VALU
 
 CREATE TABLE `transaksi` (
   `kode_transaksi` varchar(20) NOT NULL,
-  `id_nasabah` varchar(3) NOT NULL,
+  `id_nasabah` int(10) NOT NULL,
   `tgl_trans` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `jenis` varchar(2) NOT NULL,
   `status` varchar(8) NOT NULL
@@ -128,10 +131,10 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`kode_transaksi`, `id_nasabah`, `tgl_trans`, `jenis`, `status`) VALUES
-('10001', '1', '2018-08-13 08:06:41', 'DB', 'Berhasil'),
-('10002', '2', '2018-08-13 08:06:41', 'DB', 'Berhasil'),
-('10003', '2', '2018-08-13 08:06:41', 'DB', 'Gagal'),
-('20001', '1', '2018-08-13 08:06:41', 'DB', 'Berhasil');
+('10001', 1, '2018-08-13 08:06:41', 'DB', 'Berhasil'),
+('10002', 2, '2018-08-13 08:06:41', 'DB', 'Berhasil'),
+('10003', 2, '2018-08-13 08:06:41', 'DB', 'Gagal'),
+('20001', 1, '2018-08-13 08:06:41', 'DB', 'Berhasil');
 
 -- --------------------------------------------------------
 
@@ -205,6 +208,15 @@ ALTER TABLE `transfer`
   ADD PRIMARY KEY (`kode_transfer`);
 
 --
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `nasabah`
+--
+ALTER TABLE `nasabah`
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- Constraints for dumped tables
 --
 
@@ -225,7 +237,7 @@ ALTER TABLE `rekening`
 -- Constraints for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_nasabah`) REFERENCES `nasabah` (`id_nasabah`);
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_nasabah`) REFERENCES `nasabah` (`id_nasabah`);
 
 --
 -- Constraints for table `transfer`
