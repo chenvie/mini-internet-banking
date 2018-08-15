@@ -1,31 +1,102 @@
 <div *ngIf="page === 1">
-  NO HP <input type="text"><br>
-  Provider
-  <select>
-    <option value="">indosat</option>
-    <option value="">XL</option>
-    <option value="">simpati</option>
-    <option value="">smartfren</option>
-  </select><br>
-  Nominal
-  <select>
-    <option value="">25000</option>
-    <option value="">50000</option>
-    <option value="">100000</option>
-  </select><br>
-  <input type="button" value="submit" style="float: right;" (click)="page=2"><br> <!-- ke konfirmasi -->
+    <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="nohp">No.Hp:</label>
+          <div class="col-sm-11">
+            <input type="text" class="form-control" id="norek" placeholder="Masukan no HP">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="prov">Provider:</label>
+          <div class="col-sm-11">          
+            <select class="form-control" id="prov" placeholder="pilih provider">
+              <option>xl</option>
+              <option>simpati</option>
+              <option>smartfren</option>
+            </select>  
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1 control-label" for="nom">Nominal:</label>
+            <div class="col-sm-11">          
+              <select class="form-control" id="nom">
+                <option>25000</option>
+                <option>50000</option>
+                <option>100000</option>
+              </select> 
+            </div>
+          </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-1 col-sm-11">
+            <button type="submit" class="btn btn-default"style="float: right;" (click)="page=2">Submit</button>
+          </div>
+        </div>
+      </form>
+  <!-- ke konfirmasi -->
 </div>
 <div *ngIf="page === 2">
-    No HP <span> [no hp] </span><br>
-    Provider <span> [provider] </span><br>
-    Nominal <span> [nominal] </span><br>
-    Kode Rahasia <input type="text"><br>
-    <input type="button" value="submit" style="float: right;" (click)="page=3"><br> <!-- ke hasil -->
+    <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="nohp">No.Hp:</label>
+          <div class="col-sm-5">
+            [nohp]
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="prov">Provider:</label>
+          <div class="col-sm-11">          
+            [prov]
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1 control-label" for="ket">Nominal:</label>
+            <div class="col-sm-11">          
+              [nom]
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label" for="rahasia">Kode rahasia:</label>
+            <div class="col-sm-11">
+              <input type="text" class="form-control" id="rahasia" placeholder="Masukan kode rahasia">
+            </div>
+          </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-1 col-sm-11">
+            <button type="submit" class="btn btn-default"  style="float: right;" (click)="page=3">Submit</button>
+          </div>
+        </div>
+      </form>
 </div>
 <div *ngIf="page === 3">
-    Pembelian pulsa <span> [status] </span><br>
-    <span> [keterangan] </span><br><br>
-    No HP <span> [no hp] </span><br>
-    Provider <span> [provider] </span><br>
-    Nominal <span> [nominal] </span><br>
+    <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="norek">Pembelian pulsa:</label>
+          <div class="col-sm-5">
+            [status]
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1 control-label" for="nohp">No.HP:</label>
+            <div class="col-sm-5">
+              [nohp]
+            </div>
+          </div>
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="prov">Provider:</label>
+          <div class="col-sm-11">          
+            [prov]
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1 control-label" for="ket">Nominal:</label>
+            <div class="col-sm-11">          
+              [nom]
+            </div>
+          </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-1 col-sm-11">
+            <button type="submit" class="btn btn-default"  style="float: right;" (click)="page=1">Done</button>
+          </div>
+        </div>
+      </form>
 </div>

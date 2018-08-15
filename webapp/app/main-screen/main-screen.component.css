@@ -1,1 +1,21 @@
-/*  */
+.btn-group-vertical{
+    float: left;
+    margin: 100px 0px 50px 25px;
+    width: 350px;
+}
+ a{
+     color: white;
+     font-size: 30px;
+ }
+ button{
+    padding: 9pt;
+ }
+
+ .data{
+     float: right;
+     border-style: double;
+     border-color: cornflowerblue;
+     margin: 35px 25px 0px 0px;
+     padding: 200pt;
+     width:710pt ;
+ }

@@ -1,15 +1,56 @@
-<a href="#" (click)="toggleRegForm()">buka rekening</a><br><br>
+<button class="btn btn-info" style="left: 150pt;" (click)="toggleRegForm()">buka rekening</button><br><br>
 <div [hidden]="!isHidden">
-	nama lengkap <input type="text" [(ngModel)]="nama"><br><br>
-	email <input type="email" [(ngModel)]="email"><br><br>
-	password <input type="password" [(ngModel)]="password"><br> <!-- 8alfa -->
-	<span *ngIf="!isPassValid" style="color: red">Password minimal 8 karakter alfanumerik</span><br>
-	no ktp <input type="number" [(ngModel)]="ktp"><br><br> 
-	tgl lahir <input type="date" [(ngModel)]="tglLahir"><br>
-	<span *ngIf="!isTanggalValid" style="color: red">Umur minimal 17 tahun</span><br>
-	alamat <input type="text" [(ngModel)]="alamat"><br><br>
-	kode rahasia <input type="password" [(ngModel)]="kode"><br> <!-- 6alfa -->
-	<span *ngIf="!isKodeValid" style="color: red">Kode minimal 6 karakter alfanumerik</span><br>
-	<input type="button" value="submit" (click)="validateForm()">
-	<input type="button" value="reset" (click)="resetForm()">
+	<form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-lg-4 control-label" for="kode">nama&nbsp;lengkap:</label>
+          <div class="col-lg-8">
+			<input type="text" [(ngModel)]="nama">
+          </div>
+		</div>
+		<div class="form-group">
+		  <label class="col-sm-4 control-label" for="kode">email:</label>
+			<div class="col-sm-8">
+			  <input type="email" [(ngModel)]="email">
+			</div>
+		</div>
+		<div class="form-group">
+		  <label class="col-sm-4 control-label" for="kode">password:</label>
+			 <div class="col-sm-8">
+				<input type="password" [(ngModel)]="password"> <!-- 8alfa -->
+			 </div>
+		</div>
+		<span *ngIf="!isPassValid" style="color: red">Password minimal 8 karakter alfanumerik</span>
+		<div class="form-group">
+		  <label class="col-sm-4 control-label" for="kode">no&nbsp;ktp:</label>
+			<div class="col-sm-8">
+			  <input type="number" [(ngModel)]="ktp">
+			</div>
+		</div>
+		<div class="form-group">
+		  <label class="col-sm-4 control-label" for="kode">tgl&nbsp;lahir:</label>
+			<div class="col-sm-8">
+			  <input type="date" [(ngModel)]="tglLahir">
+			</div>
+		</div>
+		<span *ngIf="!isTanggalValid" style="color: red">Umur minimal 17 tahun</span>
+		<div class="form-group">
+		  <label class="col-sm-4 control-label" for="kode">alamat:</label>
+			<div class="col-sm-8">
+			  <input type="text" [(ngModel)]="alamat">
+			</div>
+		</div>
+		<div class="form-group">
+		  <label class="col-sm-4 control-label" for="kode">Kode&nbsp;Rahasia:</label>
+			<div class="col-sm-8">
+					<input type="password" [(ngModel)]="kode"> <!-- 6alfa -->
+			</div>
+		</div>
+		<span *ngIf="!isKodeValid" style="color: red">Kode minimal 6 karakter alfanumerik</span><br>
+		<div class="form-group">        
+		  <div class="col-sm-offset-4 col-sm-8">
+			<button type="submit" class="btn btn-success" (click)="validateForm()">Submit</button>
+			<button type="submit" class="btn btn-default" (click)="resetForm()">Reset</button>
+		  </div>
+		</div>
+	</form>
 </div>

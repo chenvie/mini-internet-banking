@@ -1,12 +1,12 @@
-<div style="float: left;">
-  <a href="#" (click)="page=1">informasi saldo</a><br><br>
-  <a href="#" (click)="page=2">mutasi rekening</a><br><br>
-  <a href="#" (click)="page=3;">transfer</a><br><br>
-  <a href="#" (click)="page=4;">pembelian</a><br><br>
-  <a href="#" (click)="page=5;">histori transaksi</a><br><br>
-  <a href="#" (click)="page=6">account setting</a><br><br>
+<div class="btn-group-vertical">
+ <button type="button" class="btn btn-primary"><a href="#" (click)="page=1">informasi saldo</a></button> 
+ <button type="button"class="btn btn-primary"><a href="#" (click)="page=2">mutasi rekening</a></button>
+ <button type="button"class="btn btn-primary"><a href="#" (click)="page=3;">transfer</a></button>
+ <button type="button"class="btn btn-primary"><a href="#" (click)="page=4;">pembelian</a></button>
+ <button type="button"class="btn btn-primary"><a href="#" (click)="page=5;">histori transaksi</a></button>
+ <button type="button"class="btn btn-primary"><a href="#" (click)="page=6">account setting</a></button>
 </div>
-<div style="float: right;">
+<div class="data">
   <app-info-saldo [hidden]="page !== 1"></app-info-saldo>
   <app-mutasi-rek [hidden]="page !== 2"></app-mutasi-rek>
   <app-transfer [hidden]="page !== 3"></app-transfer>
