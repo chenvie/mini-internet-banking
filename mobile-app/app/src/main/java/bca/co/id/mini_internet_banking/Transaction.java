@@ -4,7 +4,7 @@ public class Transaction {
     private String date;
     private String type;
     private String info;
-    private int nominal;
+    private double nominal;
     private String status;
 
     public Transaction(String date, String type, String info, int nominal){
@@ -46,11 +46,11 @@ public class Transaction {
         this.info = info;
     }
 
-    public int getNominal() {
+    public double getNominal() {
         return nominal;
     }
 
-    public void setNominal(int nominal) {
+    public void setNominal(double nominal) {
         this.nominal = nominal;
     }
 

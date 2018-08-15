@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 public class MutationAdapter extends RecyclerView.Adapter<MutationAdapter.MutationHolder> {
@@ -27,10 +29,12 @@ public class MutationAdapter extends RecyclerView.Adapter<MutationAdapter.Mutati
 
     @Override
     public void onBindViewHolder(MutationHolder holder, int position) {
+        NumberFormat formatter = new DecimalFormat("#,###");
+
         Transaction trans = listTrans.get(position);
         holder.mutation_date.setText(trans.getDate());
         holder.mutation_type.setText(trans.getType());
-        holder.mutation_nominal.setText(String.valueOf(trans.getNominal()));
+        holder.mutation_nominal.setText("Rp " + String.valueOf(formatter.format(trans.getNominal())) + ",-");
         holder.mutation_info.setText(trans.getInfo());
     }
 

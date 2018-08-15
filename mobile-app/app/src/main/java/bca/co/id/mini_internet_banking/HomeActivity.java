@@ -24,8 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView txtNasabahName;
 
     private SharedPreferences sp;
-    private DBHelper helper;
-    private SQLiteDatabase db;
+    private DBExecQuery dbQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,10 +32,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
-
-        helper = new DBHelper(this);
-        db = helper.getWritableDatabase();
-        saveDataToLocal();
+        dbQuery = new DBExecQuery(this);
+        dbQuery.saveDataToLocal();
 
         menu_balance = findViewById(R.id.menu_balance);
         menu_mutation = findViewById(R.id.menu_mutation);
@@ -124,31 +121,6 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-    }
-
-    private void saveDataToLocal(){
-        if (Nasabah.id != null && Nasabah.id != "") {
-            SQLiteStatement stmt = db.compileStatement(
-                    "INSERT INTO nasabah(id_nasabah, name, username, password, rekeningNum, saldo, code) VALUES(?, ?, ?, ?, ?, ?, ?)");
-            stmt.bindString(1, Nasabah.id);
-            stmt.bindString(2, Nasabah.name);
-            stmt.bindString(3, Nasabah.username);
-            stmt.bindString(4, Nasabah.password);
-            stmt.bindString(5, Nasabah.rekeningNum);
-            stmt.bindDouble(6, Nasabah.saldo);
-            stmt.bindString(7, Nasabah.code);
-            stmt.execute();
-            /*db.execSQL(
-                    "INSERT INTO nasabah(id, name, username, password, rekeningNum, saldo, code) VALUES ('" +
-                            Nasabah.id + "', '" +
-                            Nasabah.name + "', '" +
-                            Nasabah.username + "', '" +
-                            Nasabah.password + "', '" +
-                            Nasabah.rekeningNum + "', '" +
-                            Nasabah.saldo + "', '" +
-                            Nasabah.code + "')"
-            );*/
-        }
     }
 
     @Override

@@ -35,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private String id, username, name, password, code, rekeningNum, saldo;
 
     private SharedPreferences sp;
-    private DBHelper helper;
-    private SQLiteDatabase db;
+    private DBExecQuery dbQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +43,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mContext = this;
-        helper = new DBHelper(this);
-        db = helper.getWritableDatabase();
 
         sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
+        dbQuery = new DBExecQuery(this);
 
         if (sp.getBoolean("isLogin", false)){
-            readLocalData();
+            dbQuery.readLocalData();
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();
@@ -89,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams rp = new RequestParams();
-        rp.add("username", txtUname_login.getText().toString());
-        rp.add("password", txtPwd_login.getText().toString());
+        rp.add("username", username);
+        rp.add("password", password);
         client.post(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/login.php", rp, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -109,8 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         SharedPreferences.Editor spEdit = sp.edit();
                         spEdit.putBoolean("isLogin", true);
                         spEdit.commit();
-
-                        //Toast.makeText(mContext, "id = " + Nasabah.id, Toast.LENGTH_LONG).show();
+                        Nasabah.id = id;
 
                         try {
                             if (getNasabahData()){
@@ -151,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean getNasabahData() throws JSONException {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams rp = new RequestParams();
-        rp.add("id", "4");
+        rp.add("id", Nasabah.username);
         client.get(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/read-one.php", rp, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -199,11 +196,9 @@ public class MainActivity extends AppCompatActivity {
 
                     rekeningNum = jsonObject.getString("no rekening");
                     saldo = jsonObject.getString("saldo");
-                    //String kode_cabang = jsonObject.getString("kode_cabang");
 
                     Nasabah.rekeningNum = rekeningNum;
-                    Nasabah.saldo = Integer.parseInt(saldo);
-                    //Nasabah.kode_cabang = kode_cabang;
+                    Nasabah.saldo = Double.parseDouble(saldo);
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error get saldo: " + e.getMessage());
                     runOnUiThread(new Runnable() {
@@ -221,19 +216,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
-    }
-
-    private void readLocalData(){
-        Cursor cursor = db.rawQuery("SELECT id, name, username, password, rekeningNum, saldo, code FROM nasabah", null);
-        for (int i = 0; i < cursor.getCount(); i++){
-            cursor.moveToPosition(i);
-            Nasabah.id = cursor.getString(0);
-            Nasabah.name = cursor.getString(1);
-            Nasabah.username = cursor.getString(2);
-            Nasabah.password = cursor.getString(3);
-            Nasabah.rekeningNum = cursor.getString(4);
-            Nasabah.saldo = Double.parseDouble(cursor.getString(5));
-            Nasabah.code = cursor.getString(6);
-        }
     }
 }

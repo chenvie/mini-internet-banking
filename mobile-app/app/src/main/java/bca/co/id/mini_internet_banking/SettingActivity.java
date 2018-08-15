@@ -3,6 +3,7 @@ package bca.co.id.mini_internet_banking;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -35,6 +36,7 @@ public class SettingActivity extends AppCompatActivity {
 
     private String TAG = SettingActivity.class.getSimpleName();
     private SharedPreferences sp;
+    private DBExecQuery dbQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class SettingActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
         mContext = this;
+        dbQuery = new DBExecQuery(this);
 
         txtOldPass = findViewById(R.id.txtOldPass);
         txtNewPass = findViewById(R.id.txtNewPass);
@@ -133,11 +136,12 @@ public class SettingActivity extends AppCompatActivity {
 
                                 try {
                                     JSONObject jsonObject = new JSONObject(json);
-                                    String result = jsonObject.getString("result");
+                                    String result = jsonObject.getString("message");
 
-                                    if (result.equalsIgnoreCase("true")){
+                                    if (result.equalsIgnoreCase("update password berhasil")){
                                         Toast.makeText(mContext, "Ubah Password Berhasil!", Toast.LENGTH_LONG).show();
                                         Nasabah.password = nPass;
+                                        dbQuery.updatePassword();
                                         startActivity(intent);
                                     } else{
                                         Toast.makeText(mContext, "Ubah Password Gagal!", Toast.LENGTH_LONG).show();
@@ -189,7 +193,7 @@ public class SettingActivity extends AppCompatActivity {
                     if(CodeStrength.calculateStrength(nCode).getValue() > CodeStrength.MEDIUM.getValue()) {
                         AsyncHttpClient client = new AsyncHttpClient();
                         RequestParams rp = new RequestParams();
-                        rp.add("id", Nasabah.id);
+                        rp.add("id_nasabah", Nasabah.id);
                         rp.add("kode_rahasia", nCode);
 
                         client.post(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/update_kode_rahasia.php", rp, new AsyncHttpResponseHandler() {
@@ -206,9 +210,9 @@ public class SettingActivity extends AppCompatActivity {
 
                                 try {
                                     JSONObject jsonObject = new JSONObject(json);
-                                    String result = jsonObject.getString("result");
+                                    String result = jsonObject.getString("message");
 
-                                    if (result.equalsIgnoreCase("true")) {
+                                    if (result.equalsIgnoreCase("update kode rahasia berhasil")) {
                                         Toast.makeText(mContext, "Ubah Kode Rahasia Berhasil!", Toast.LENGTH_LONG).show();
                                         Nasabah.code = nCode;
                                         startActivity(intent);
