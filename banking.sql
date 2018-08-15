@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 14, 2018 at 12:29 PM
+-- Generation Time: Aug 15, 2018 at 11:27 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -29,16 +29,16 @@ SET time_zone = "+00:00";
 CREATE TABLE `cabang_bank` (
   `kode_cabang` varchar(10) NOT NULL,
   `nama_cabang` varchar(50) NOT NULL,
-  `almt_cabang` text NOT NULL
+  `alamat_cabang` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cabang_bank`
 --
 
-INSERT INTO `cabang_bank` (`kode_cabang`, `nama_cabang`, `almt_cabang`) VALUES
-('asd1', 'jogja', 'jogja'),
-('asd2', 'kcp Temanggung', 'Temanggung');
+INSERT INTO `cabang_bank` (`kode_cabang`, `nama_cabang`, `alamat_cabang`) VALUES
+('asd1', 'KCU Jogja', 'Sudirman'),
+('asd2', 'KCU Temanggung', 'Temanggung');
 
 -- --------------------------------------------------------
 
@@ -56,6 +56,9 @@ CREATE TABLE `nasabah` (
   `tgl_lahir` date NOT NULL,
   `alamat` varchar(100) NOT NULL,
   `kode_rahasia` varchar(6) NOT NULL,
+  `no_rek` varchar(16) NOT NULL,
+  `jml_saldo` int(11) NOT NULL,
+  `kode_cabang` varchar(10) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -63,11 +66,12 @@ CREATE TABLE `nasabah` (
 -- Dumping data for table `nasabah`
 --
 
-INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `created`) VALUES
-(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', '123456', '3323031211960005', '2018-08-06', 'temanggung', '654321', '2018-08-14 07:49:58'),
-(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'zxc', '123513163', '2018-02-05', 'magelang', '112233', '2018-08-14 08:25:09'),
-(3, 'asd@gmail.com', 'coba', 'coba', 'coba', '123', '2018-08-02', 'coba', '123', '2018-08-14 03:53:23'),
-(4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '2018-08-14 04:21:26');
+INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `no_rek`, `jml_saldo`, `kode_cabang`, `created`) VALUES
+(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', '123456', '3323031211960005', '2018-08-06', 'temanggung', '654321', '2141516', 2000000, 'asd1', '2018-08-15 03:04:48'),
+(2, 'boni@gmail.com', 'bonii', 'bonifasius', '812018', '123513163', '2018-02-05', 'magelang', '123', '2491204', 3000000, 'asd1', '2018-08-15 08:10:51'),
+(3, 'asd@gmail.com', 'coba', 'coba', 'coba', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-15 03:04:48'),
+(4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
+(6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4500000, 'asd1', '2018-08-15 09:19:19');
 
 -- --------------------------------------------------------
 
@@ -88,29 +92,6 @@ CREATE TABLE `pulsa` (
 
 INSERT INTO `pulsa` (`kode_pembelian`, `no_hp`, `provider`, `nominal`) VALUES
 ('20001', '08978902350', 'Telkomsel', 50000);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rekening`
---
-
-CREATE TABLE `rekening` (
-  `no_rek` varchar(16) NOT NULL,
-  `jml_saldo` int(11) NOT NULL,
-  `id_nasabah` int(10) NOT NULL,
-  `kode_cabang` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `rekening`
---
-
-INSERT INTO `rekening` (`no_rek`, `jml_saldo`, `id_nasabah`, `kode_cabang`) VALUES
-('039210480', 1000000, 1, 'asd1'),
-('11111111111', 1000000, 3, 'asd1'),
-('1111122211', 2100000, 4, 'asd2'),
-('215162637', 2000000, 2, 'asd2');
 
 -- --------------------------------------------------------
 
@@ -166,7 +147,8 @@ INSERT INTO `transfer` (`kode_transfer`, `rek_transfer`, `nominal`, `keterangan`
 -- Indexes for table `cabang_bank`
 --
 ALTER TABLE `cabang_bank`
-  ADD PRIMARY KEY (`kode_cabang`);
+  ADD PRIMARY KEY (`kode_cabang`),
+  ADD KEY `kode_cabang` (`kode_cabang`);
 
 --
 -- Indexes for table `nasabah`
@@ -176,21 +158,14 @@ ALTER TABLE `nasabah`
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `username_2` (`username`),
   ADD KEY `username` (`username`),
-  ADD KEY `id_nasabah` (`id_nasabah`);
+  ADD KEY `id_nasabah` (`id_nasabah`),
+  ADD KEY `kode_cabang` (`kode_cabang`);
 
 --
 -- Indexes for table `pulsa`
 --
 ALTER TABLE `pulsa`
   ADD PRIMARY KEY (`kode_pembelian`);
-
---
--- Indexes for table `rekening`
---
-ALTER TABLE `rekening`
-  ADD PRIMARY KEY (`no_rek`),
-  ADD KEY `id_nasabah` (`id_nasabah`),
-  ADD KEY `kode_cabang` (`kode_cabang`);
 
 --
 -- Indexes for table `transaksi`
@@ -215,23 +190,22 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `nasabah`
+--
+ALTER TABLE `nasabah`
+  ADD CONSTRAINT `nasabah_ibfk_1` FOREIGN KEY (`kode_cabang`) REFERENCES `cabang_bank` (`kode_cabang`);
 
 --
 -- Constraints for table `pulsa`
 --
 ALTER TABLE `pulsa`
   ADD CONSTRAINT `pulsa_ibfk_1` FOREIGN KEY (`kode_pembelian`) REFERENCES `transaksi` (`kode_transaksi`);
-
---
--- Constraints for table `rekening`
---
-ALTER TABLE `rekening`
-  ADD CONSTRAINT `rekening_ibfk_1` FOREIGN KEY (`kode_cabang`) REFERENCES `cabang_bank` (`kode_cabang`),
-  ADD CONSTRAINT `rekening_ibfk_2` FOREIGN KEY (`id_nasabah`) REFERENCES `nasabah` (`id_nasabah`);
 
 --
 -- Constraints for table `transaksi`
