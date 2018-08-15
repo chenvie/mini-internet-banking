@@ -25,7 +25,7 @@ $(document).ready(function(){
             create_product_html+="<form id='create-product-form' action='#' method='post' border='0'>";
             create_product_html+="<table class='table table-hover table-responsive table-bordered'>";
 
-            //update password
+            // //update password
             // // name field
             // create_product_html+="<tr>";
             // create_product_html+="<td>pwd skr</td>";
@@ -41,9 +41,33 @@ $(document).ready(function(){
             // create_product_html+="<td>pwd baru 2</td>";
             // create_product_html+="<td><input type='password' name='passwordb2' class='form-control' required /></td>";
             // create_product_html+="</tr>";
+            //
+            // create_product_html+="<tr>";
+            // create_product_html+="<td>tgl_lahir</td>";
+            // create_product_html+="<td><input type='date' name='tgl_lahir' class='form-control' required /></td>";
+            // create_product_html+="</tr>";
 
-            // hidden field to get the id
-            create_product_html+="<td><input type='hidden' name='id_nasabah' value='5' /></td>";
+        // hidden field to get the id
+             //create_product_html+="<input type='hidden' name='id_nasabah' value='2' />";
+
+
+        // //update kode rahasia
+        // // name field
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>kr skr</td>";
+        // create_product_html+="<td><input type='password' name='kode_rahasiaL' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
+        //
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>kr baru</td>";
+        // create_product_html+="<td><input type='password' name='krb1' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
+        //
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>kr baru 2</td>";
+        // create_product_html+="<td><input type='password' name='krb2' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
+
 
             //create nasabah
         create_product_html+="<tr>";

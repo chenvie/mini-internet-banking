@@ -23,15 +23,24 @@ $data = json_decode(file_get_contents("php://input"));
 
 // set ID property of nasabah to be edited
 $nasabah->id_nasabah = $data->id_nasabah;
-
 $nasabah->readOnePwd($data->id_nasabah);
 
-if ($data->password == $nasabah->password) {
-    $nasabah->password = $data->password;
-
+if($nasabah->contains(date('Y-m-d',strtotime($data->tgl_lahir)),$data->passwordl) or
+    $nasabah->contains(date('Ymd',strtotime($data->tgl_lahir)),$data->passwordl) or
+    $nasabah->contains(date('Ydm',strtotime($data->tgl_lahir)),$data->passwordl) or
+    $nasabah->contains(date('dmY',strtotime($data->tgl_lahir)),$data->passwordl) or
+    $nasabah->contains(date('dYm',strtotime($data->tgl_lahir)),$data->passwordl) or
+    $nasabah->contains(date('mYd',strtotime($data->tgl_lahir)),$data->passwordl) or
+    $nasabah->contains(date('mdY',strtotime($data->tgl_lahir)),$data->passwordl)){
+    echo json_encode(
+        array("message" => "Password tidak diperbolehkan karena mengandung tanggal lahir")
+    );
+}
+elseif ($data->passwordl == $nasabah->password) {
     if ($data->passwordb1 == $data->passwordb2) {
 
-// set product property values
+        // set product property values
+        $nasabah->password = $data->passwordl;
         $nasabah->baru1 = $data->passwordb1;
         $nasabah->baru2 = $data->passwordb2;
 

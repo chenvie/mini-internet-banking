@@ -28,7 +28,8 @@ $nasabah_arr = array(
     "username" => $nasabah->username,
     "password" => $nasabah->password,
     "nama_lengkap" => $nasabah->nama_lengkap,
-    "kode_rahasia" => $nasabah->kode_rahasia
+    "kode_rahasia" => $nasabah->kode_rahasia,
+    "tgl_lahir" => $nasabah->tgl_lahir
 
 );
 

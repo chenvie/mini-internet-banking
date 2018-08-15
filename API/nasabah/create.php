@@ -20,33 +20,34 @@ $nasabah = new Nasabah($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-if($nasabah->contains(date('Y-m-d',strtotime($data->tgl_lahir)),$data->password) or
-    $nasabah->contains(date('Ymd',strtotime($data->tgl_lahir)),$data->password) or
-    $nasabah->contains(date('Ydm',strtotime($data->tgl_lahir)),$data->password) or
-    $nasabah->contains(date('dmY',strtotime($data->tgl_lahir)),$data->password) or
-    $nasabah->contains(date('dYm',strtotime($data->tgl_lahir)),$data->password) or
-    $nasabah->contains(date('mYd',strtotime($data->tgl_lahir)),$data->password) or
-    $nasabah->contains(date('mdY',strtotime($data->tgl_lahir)),$data->password)){
-    echo json_encode(
-        array("message" => "Password tidak diperbolehkan karena mengandung tanggal lahir")
-    );
-}
-elseif($nasabah->contains(date('Y-m-d',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
-    $nasabah->contains(date('Ymd',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
-    $nasabah->contains(date('Ydm',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
-    $nasabah->contains(date('dmY',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
-    $nasabah->contains(date('dYm',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
-    $nasabah->contains(date('mYd',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
-    $nasabah->contains(date('mdY',strtotime($data->tgl_lahir)),$data->kode_rahasia)){
-    echo json_encode(
-        array("message" => "Kode rahasia tidak diperbolehkan karena mengandung tanggal lahir")
-    );
-}
-elseif (ctype_alnum($data->password) and strlen($data->password)>=8){
-    if (ctype_alnum($data->kode_rahasia) and stream_is_local($data->kode_rahasia)==6){
+//if($nasabah->contains(date('Y-m-d',strtotime($data->tgl_lahir)),$data->password) or
+//    $nasabah->contains(date('Ymd',strtotime($data->tgl_lahir)),$data->password) or
+//    $nasabah->contains(date('Ydm',strtotime($data->tgl_lahir)),$data->password) or
+//    $nasabah->contains(date('dmY',strtotime($data->tgl_lahir)),$data->password) or
+//    $nasabah->contains(date('dYm',strtotime($data->tgl_lahir)),$data->password) or
+//    $nasabah->contains(date('mYd',strtotime($data->tgl_lahir)),$data->password) or
+//    $nasabah->contains(date('mdY',strtotime($data->tgl_lahir)),$data->password)){
+//    echo json_encode(
+//        array("message" => "Password tidak diperbolehkan karena mengandung tanggal lahir")
+//    );
+//}
+//elseif($nasabah->contains(date('Y-m-d',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
+//    $nasabah->contains(date('Ymd',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
+//    $nasabah->contains(date('Ydm',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
+//    $nasabah->contains(date('dmY',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
+//    $nasabah->contains(date('dYm',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
+//    $nasabah->contains(date('mYd',strtotime($data->tgl_lahir)),$data->kode_rahasia) or
+//    $nasabah->contains(date('mdY',strtotime($data->tgl_lahir)),$data->kode_rahasia)){
+//    echo json_encode(
+//        array("message" => "Kode rahasia tidak diperbolehkan karena mengandung tanggal lahir")
+//    );
+//}
+//else
+//    if (ctype_alnum($data->password) and strlen($data->password)>=8){
+//    if (ctype_alnum($data->kode_rahasia) and strlen($data->kode_rahasia)==6){
 
         // set products property values
-                $nasabah->id_nasabah = $data->id_nasabah;
+                //$nasabah->id_nasabah = $data->id_nasabah;
                 $nasabah->nama_lengkap = $data->nama_lengkap;
                 $nasabah->email = $data->email;
                 $nasabah->password = $data->password;
@@ -69,19 +70,19 @@ elseif (ctype_alnum($data->password) and strlen($data->password)>=8){
                         array("message" => "Pendaftaran gagal")
                     );
                 }
-            }
-    else{
-        echo json_encode(
-            array("message" => "Kode rahasia tidak mengandung karakter alphanumeric atau tidak sepanjang 6 karakter")
-        );
+//            }
+//    else{
+//        echo json_encode(
+//            array("message" => "Kode rahasia tidak mengandung karakter alphanumeric atau tidak sepanjang 6 karakter")
+//        );
+//
+//    }
+//}
+//else {
+//    echo json_encode(
+//        array("message" => "Password tidak mengandung karakter alphanumeric atau kurang dari 8 karakter")
+//    );
 
-    }
-}
-else {
-    echo json_encode(
-        array("message" => "Password tidak mengandung karakter alphanumeric atau kurang dari 8 karakter")
-    );
-
-}
+//}
 
 ?>

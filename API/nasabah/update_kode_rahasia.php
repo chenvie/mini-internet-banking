@@ -25,8 +25,8 @@ $nasabah->id_nasabah = $data->id_nasabah;
 
 $nasabah->readOneKode($data->id_nasabah);
 
-if ($data->kode_rahasia == $nasabah->kode_rahasia) {
-    $nasabah->kode_rahasia = $data->kode_rahasia;
+if ($data->kode_rahasiaL == $nasabah->kode_rahasia) {
+    $nasabah->kode_rahasia = $data->kode_rahasiaL;
 
     if ($data->krb1 == $data->krb2) {
 

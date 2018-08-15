@@ -19,11 +19,12 @@ class Nasabah
     public $kode_rahasia;
     public $created;
     public $no_rek;
-    public $jml_saldo;
-    public $kode_cabang;
+    public $jml_saldo = 450000;
+    public $kode_cabang = 'asd1';
     public $baru1;
     public $baru2;
     public $id;
+    public $jml_nsb;
 
     // constructor with $db as database connection
     public function __construct($db)
@@ -56,17 +57,32 @@ class Nasabah
     function create()
     {
 
+        $awalan_rek = "03700";
+        $sql = "SELECT COUNT(id_nasabah) FROM nasabah";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $stmt->bind_result($this->jml_nsb);
+        while ($stmt->fetch()) {
+            if ($this->jml_nsb > 9) {
+                $awalan_rek = "0370";
+            } else if ($this->jml_nsb > 99) {
+                $awalan_rek = "037";
+            }
+            $this->no_rek = $awalan_rek . (string)($this->jml_nsb + 1);
+        }
+
+
         // query to insert record for nasabah
         $query = "INSERT INTO
                 " . $this->table_name . "
             SET
-                id_nasabah=:id_nasabah, email=:email, username=:username, nama_lengkap=:nama_lengkap, password=:password, no_ktp=:no_ktp, tgl_lahir=:tgl_lahir, alamat=:alamat, kode_rahasia=:kode_rahasia, no_rek=:no_rek, jml_saldo=:jml_saldo, kode_cabang=:kode_cabang,'' created=:created";
+                email=:email, username=:username, nama_lengkap=:nama_lengkap, password=:password, no_ktp=:no_ktp, tgl_lahir=:tgl_lahir, alamat=:alamat, kode_rahasia=:kode_rahasia, no_rek=:no_rek, jml_saldo=:jml_saldo, kode_cabang=:kode_cabang, created=:created";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
 
         // sanitize
-        $this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
+        //$this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
         //$this->username = htmlspecialchars(strip_tags($this->username));
         $this->created = htmlspecialchars(strip_tags($this->created));
         $this->email = htmlspecialchars(strip_tags($this->email));
@@ -76,13 +92,15 @@ class Nasabah
         $this->alamat = htmlspecialchars(strip_tags($this->alamat));
         $this->kode_rahasia = htmlspecialchars(strip_tags($this->kode_rahasia));
         $this->tgl_lahir = htmlspecialchars(strip_tags($this->tgl_lahir));
-
+        $this->no_rek = htmlspecialchars(strip_tags($this->no_rek));
+        $this->jml_saldo = htmlspecialchars(strip_tags($this->jml_saldo));
+        $this->kode_cabang = htmlspecialchars(strip_tags($this->kode_cabang));
 
         //$nsb = 4;
-        $unm = 'cocobaba';
-        //$tgll= '2018-08-01';
+        $unm = 'sam';
+
         // bind values
-        $stmt->bindParam(":id_nasabah", $this->id_nasabah);
+        //$stmt->bindParam(":id_nasabah", $this->id_nasabah);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":username", $unm);
         $stmt->bindParam(":nama_lengkap", $this->nama_lengkap);
@@ -92,17 +110,15 @@ class Nasabah
         $stmt->bindParam(":alamat", $this->alamat);
         $stmt->bindParam(":kode_rahasia", $this->kode_rahasia);
         $stmt->bindParam(":created", $this->created);
+        $stmt->bindParam(":no_rek", $this->no_rek);
+        $stmt->bindParam(":jml_saldo", $this->jml_saldo);
+        $stmt->bindParam(":kode_cabang", $this->kode_cabang);
 
 
 
 
 
-        $num = (string)$this->rekCount();
 
-        // execute query
-//        if ($this->createRek($this->id_nasabah,$num)) {
-//            return true;
-//        }
 
         if ( $stmt->execute()) {
             return true;
@@ -196,11 +212,11 @@ class Nasabah
 
         // query to read single record
         $query = "SELECT
-                id_nasabah,username,password,nama_lengkap,kode_rahasia
+                id_nasabah,username,password,nama_lengkap,kode_rahasia,tgl_lahir
             FROM
                 " . $this->table_name . "
             WHERE
-                id_nasabah = ?
+                username = ?
             LIMIT
                 0,1";
 
@@ -222,6 +238,7 @@ class Nasabah
         $this->password = $row['password'];
         $this->nama_lengkap = $row['nama_lengkap'];
         $this->kode_rahasia = $row['kode_rahasia'];
+        $this->tgl_lahir = $row['tgl_lahir'];
     }
 
 // baca saldo rekening satu nasabah
@@ -402,7 +419,7 @@ class Nasabah
         if($this->baru1 == $this->baru2) {
 
             // bind new values
-            $stmt->bindParam(':password', $this->baru1);
+            $stmt->bindParam(':kode_rahasia', $this->baru1);
             $stmt->bindParam(':id_nasabah', $this->id_nasabah);
 
             // execute the query

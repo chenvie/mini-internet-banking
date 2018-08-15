@@ -28,8 +28,7 @@ $nasabah->password = $data->password;
 // login
 if($nasabah->login()){
     echo json_encode(
-        array("login" => "True",
-            "id" => $nasabah->id_nasabah)
+        array("login" => "True")
     );
 }
 
