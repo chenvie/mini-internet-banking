@@ -9,7 +9,7 @@ export class InputValidatorService {
   constructor() { }
 
   validatePassword(pass: String): boolean {
-    if (pass === undefined) { return false; }
+    if (pass === undefined || pass === null) { return false; }
     if (pass.length < 8) { return false; }
     const regex = /\W/g;
     const result = pass.match(regex);
@@ -18,7 +18,7 @@ export class InputValidatorService {
   }
 
   validateKode(kode: String): boolean {
-    if (kode === undefined) { return false; }
+    if (kode === undefined || kode === null) { return false; }
     if (kode.length < 6) { return false; }
     const regex = /\W/g;
     const result = kode.match(regex);
@@ -27,7 +27,7 @@ export class InputValidatorService {
   }
 
   validateTanggal(tanggal: string): boolean {
-    if (tanggal === undefined) { return false; }
+    if (tanggal === undefined || tanggal === null) { return false; }
     if (moment().year() - moment(tanggal).year() < 17) { return false; }
     return true;
   }

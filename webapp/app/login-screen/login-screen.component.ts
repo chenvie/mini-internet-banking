@@ -8,7 +8,13 @@ import { LoginService } from '../login.service';
 })
 export class LoginScreenComponent implements OnInit {
 
-  isLoggedIn = false;
+  userLogin = {
+    username: null,
+    password: null,
+  };
+  loginInfo = {
+    isLoggedIn: null
+  };
 
   constructor(private loginService: LoginService) { }
 
@@ -16,7 +22,9 @@ export class LoginScreenComponent implements OnInit {
   }
 
   login(): void {
-    this.isLoggedIn = this.loginService.login();
+    this.loginService.login(this.userLogin).subscribe((data: any) => this.loginInfo = {
+      isLoggedIn: data['login']
+    });
   }
 
 }
