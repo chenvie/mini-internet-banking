@@ -20,25 +20,41 @@ $nasabah = new Nasabah($db);
 // get id of product to be edited
 $data = json_decode(file_get_contents("php://input"));
 
-// set ID property of product to be edited
+// set ID property of nasabah to be edited
 $nasabah->id_nasabah = $data->id_nasabah;
- 
+
+$nasabah->readOneKode($data->id_nasabah);
+
+if ($data->kode_rahasia == $nasabah->kode_rahasia) {
+    $nasabah->kode_rahasia = $data->kode_rahasia;
+
+    if ($data->krb1 == $data->krb2) {
+
 // set product property values
-$nasabah->kode_rahasia = $data->kode_rahasia;
-$nasabah->baru1 = $data->krb1;
-$nasabah->baru2 = $data->krb2;
- 
+        $nasabah->baru1 = $data->krb1;
+        $nasabah->baru2 = $data->krb2;
+
+
 // update the product
-if($nasabah->update_kode_rahasia()){
-    echo '{';
-        echo '"message": "Kode Rahasia was updated."';
-    echo '}';
-}
- 
-// if unable to update the product, tell the user
-else{
-    echo '{';
-        echo '"message": "Unable to update Kode Rahasia."';
-    echo '}';
+        if ($nasabah->update_kode_rahasia()) {
+            echo json_encode(
+                array("message" => "Update kode rahasia berhasil")
+            );
+        } // if unable to update the product, tell the user
+        else {
+            echo json_encode(
+                array("message" => "Update kode rahasia gagal")
+            );
+        }
+    } else {
+        echo json_encode(
+            array("message" => "Kode rahasia baru tidak sama")
+        );
+    }
+}else
+{
+    echo json_encode(
+            array("message" => "Kode rahasia lama salah")
+    );
 }
 ?>

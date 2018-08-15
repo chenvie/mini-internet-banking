@@ -60,7 +60,7 @@ class Nasabah
         $query = "INSERT INTO
                 " . $this->table_name . "
             SET
-                id_nasabah=:id_nasabah, email=:email, username=:username, nama_lengkap=:nama_lengkap, password=:password, no_ktp=:no_ktp, tgl_lahir=:tgl_lahir, alamat=:alamat, kode_rahasia=:kode_rahasia, created=:created";
+                id_nasabah=:id_nasabah, email=:email, username=:username, nama_lengkap=:nama_lengkap, password=:password, no_ktp=:no_ktp, tgl_lahir=:tgl_lahir, alamat=:alamat, kode_rahasia=:kode_rahasia, no_rek=:no_rek, jml_saldo=:jml_saldo, kode_cabang=:kode_cabang,'' created=:created";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -254,6 +254,94 @@ class Nasabah
         $this->no_rek = $row['no_rek'];
         $this->jml_saldo = $row['jml_saldo'];
     }
+
+    function readOnePwd($id)
+    {
+
+        // query to read single record
+        $query = "SELECT
+                password
+            FROM
+                " . $this->table_name . "
+            WHERE
+                id_nasabah = ?
+            LIMIT
+                0,1";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // bind id of products to be updated
+        $stmt->bindParam(1, $id);
+
+        // execute query
+        $stmt->execute();
+
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // set values to object properties
+        $this->password = $row['password'];
+    }
+
+    function readOneKode($id)
+    {
+
+        // query to read single record
+        $query = "SELECT
+                kode_rahasia
+            FROM
+                " . $this->table_name . "
+            WHERE
+                id_nasabah = ?
+            LIMIT
+                0,1";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // bind id of products to be updated
+        $stmt->bindParam(1, $id);
+
+        // execute query
+        $stmt->execute();
+
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // set values to object properties
+        $this->kode_rahasia = $row['kode_rahasia'];
+    }
+
+//    function readOneTglLahir($id)
+//    {
+//
+//        // query to read single record
+//        $query = "SELECT
+//                tgl_lahir
+//            FROM
+//                " . $this->table_name . "
+//            WHERE
+//                id_nasabah = ?
+//            LIMIT
+//                0,1";
+//
+//        // prepare query statement
+//        $stmt = $this->conn->prepare($query);
+//
+//        // bind id of products to be updated
+//        $stmt->bindParam(1, $id);
+//
+//        // execute query
+//        $stmt->execute();
+//
+//        // get retrieved row
+//        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+//
+//        // set values to object properties
+//        $this->tgl_lahir = $row['tgl_lahir'];
+//    }
+
 //update password
     function update_password(){
 
@@ -276,10 +364,10 @@ class Nasabah
         $this->id_nasabah=htmlspecialchars(strip_tags($this->id_nasabah));
 
         //validation
-        if($this->pwdbaru1 == $this->pwdbaru2) {
+        if($this->baru1 == $this->baru2) {
 
             // bind new values
-            $stmt->bindParam(':password', $this->pwdbaru1);
+            $stmt->bindParam(':password', $this->baru1);
             $stmt->bindParam(':id_nasabah', $this->id_nasabah);
 
             // execute the query
@@ -306,15 +394,15 @@ class Nasabah
 
         // sanitize
         $this->kode_rahasia=htmlspecialchars(strip_tags($this->kode_rahasia));
-        $this->baru1=htmlspecialchars(strip_tags($this->krb1));
-        $this->baru2=htmlspecialchars(strip_tags($this->krb2));
+        $this->baru1=htmlspecialchars(strip_tags($this->baru1));
+        $this->baru2=htmlspecialchars(strip_tags($this->baru2));
         $this->id_nasabah=htmlspecialchars(strip_tags($this->id_nasabah));
 
         //validation
-        if($this->pwdbaru1 == $this->pwdbaru2) {
+        if($this->baru1 == $this->baru2) {
 
             // bind new values
-            $stmt->bindParam(':password', $this->pwdbaru1);
+            $stmt->bindParam(':password', $this->baru1);
             $stmt->bindParam(':id_nasabah', $this->id_nasabah);
 
             // execute the query
@@ -323,5 +411,11 @@ class Nasabah
             }
         }
         return false;
+    }
+
+    // returns true if $needle is a substring of $haystack
+    function contains($needle, $haystack)
+    {
+        return strpos($haystack, $needle) !== false;
     }
 }

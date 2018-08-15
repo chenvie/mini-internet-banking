@@ -20,23 +20,42 @@ $nasabah = new Nasabah($db);
 // get id of product to be edited
 $data = json_decode(file_get_contents("php://input"));
 
-// set product property values
-$nasabah->password = $data->passwordl;
-$nasabah->baru1 = $data->passwordb1;
-$nasabah->baru2 = $data->passwordb2;
+
+// set ID property of nasabah to be edited
 $nasabah->id_nasabah = $data->id_nasabah;
- 
+
+$nasabah->readOnePwd($data->id_nasabah);
+
+if ($data->password == $nasabah->password) {
+    $nasabah->password = $data->password;
+
+    if ($data->passwordb1 == $data->passwordb2) {
+
+// set product property values
+        $nasabah->baru1 = $data->passwordb1;
+        $nasabah->baru2 = $data->passwordb2;
+
+
 // update the product
-if($nasabah->update_password()){
-    echo '{';
-        echo '"message": "Password was updated."';
-    echo '}';
-}
- 
-// if unable to update the product, tell the user
-else{
-    echo '{';
-        echo '"message": "Unable to update password."';
-    echo '}';
+        if ($nasabah->update_password()) {
+            echo json_encode(
+                array("message" => "Update password berhasil")
+            );
+        } // if unable to update the product, tell the user
+        else {
+            echo json_encode(
+                array("message" => "Update password gagal")
+            );
+        }
+    } else {
+        echo json_encode(
+            array("message" => "password baru tidak sama")
+        );
+    }
+}else
+{
+    echo json_encode(
+        array("message" => "password lama salah")
+    );
 }
 ?>
