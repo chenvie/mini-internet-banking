@@ -30,7 +30,7 @@ public class BalanceActivity extends AppCompatActivity {
         txtSaldoNasabah = findViewById(R.id.txtSaldoNasabah);
 
         txtNorekNasabah.setText(Nasabah.rekeningNum.toString());
-        txtSaldoNasabah.setText(String.valueOf(Nasabah.saldo));
+        txtSaldoNasabah.setText("Rp " + String.valueOf(Nasabah.saldo) + ",-");
 
         Toolbar toolbar = findViewById(R.id.balance_toolbar);
         setSupportActionBar(toolbar);

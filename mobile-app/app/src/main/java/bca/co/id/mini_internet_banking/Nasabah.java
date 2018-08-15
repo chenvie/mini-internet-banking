@@ -10,7 +10,7 @@ public class Nasabah {
     protected static String birthday;
     protected static String address;
     protected static String rekeningNum;
-    protected static int saldo;
+    protected static double saldo;
     protected static String code;
     protected static String created;
     protected static String kode_cabang;

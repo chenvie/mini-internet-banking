@@ -3,6 +3,8 @@ package bca.co.id.mini_internet_banking;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private Context mContext;
     private String TAG = MainActivity.class.getSimpleName();
 
+    private String id, username, name, password, code, rekeningNum, saldo;
+
     private SharedPreferences sp;
+    private DBHelper helper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +44,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mContext = this;
+        helper = new DBHelper(this);
+        db = helper.getWritableDatabase();
 
         sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
 
-        if (sp.getBoolean("isLogin", false)){ //param : (key, default value)
+        if (sp.getBoolean("isLogin", false)){
+            readLocalData();
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();
@@ -150,27 +159,17 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     JSONObject jsonObject = new JSONObject(json);
 
-                    String id = jsonObject.getString("id");
-                    //String email = jsonObject.getString("email");
-                    String username = jsonObject.getString("username");
-                    String password = jsonObject.getString("password");
-                    String name = jsonObject.getString("nama_lengkap");
-                    //String ktp = jsonObject.getString("no_ktp");
-                    //String birthday = jsonObject.getString("tgl_lahir");
-                    //String address = jsonObject.getString("alamat");
-                    String code = jsonObject.getString("kode_rahasia");
-                    //String created = jsonObject.getString("created");
+                    id = jsonObject.getString("id");
+                    username = jsonObject.getString("username");
+                    password = jsonObject.getString("password");
+                    name = jsonObject.getString("nama_lengkap");
+                    code = jsonObject.getString("kode_rahasia");
 
                     Nasabah.id = id;
                     Nasabah.name = name;
                     Nasabah.username = username;
-                    //Nasabah.email = email;
                     Nasabah.password = password;
-                    //Nasabah.ktpNum = ktp;
-                    //Nasabah.birthday = birthday;
-                    //Nasabah.address = address;
                     Nasabah.code = code;
-                    //Nasabah.created = created;
 
                     //Toast.makeText(mContext, "get data success", Toast.LENGTH_LONG).show();
                 } catch(final JSONException e){
@@ -198,12 +197,12 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(json);
 
-                    String no_rek = jsonObject.getString("no rekening");
-                    String jml_saldo = jsonObject.getString("saldo");
+                    rekeningNum = jsonObject.getString("no rekening");
+                    saldo = jsonObject.getString("saldo");
                     //String kode_cabang = jsonObject.getString("kode_cabang");
 
-                    Nasabah.rekeningNum = no_rek;
-                    Nasabah.saldo = Integer.parseInt(jml_saldo);
+                    Nasabah.rekeningNum = rekeningNum;
+                    Nasabah.saldo = Integer.parseInt(saldo);
                     //Nasabah.kode_cabang = kode_cabang;
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error get saldo: " + e.getMessage());
@@ -222,5 +221,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    private void readLocalData(){
+        Cursor cursor = db.rawQuery("SELECT id, name, username, password, rekeningNum, saldo, code FROM nasabah", null);
+        for (int i = 0; i < cursor.getCount(); i++){
+            cursor.moveToPosition(i);
+            Nasabah.id = cursor.getString(0);
+            Nasabah.name = cursor.getString(1);
+            Nasabah.username = cursor.getString(2);
+            Nasabah.password = cursor.getString(3);
+            Nasabah.rekeningNum = cursor.getString(4);
+            Nasabah.saldo = Double.parseDouble(cursor.getString(5));
+            Nasabah.code = cursor.getString(6);
+        }
     }
 }
