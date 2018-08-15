@@ -1,3 +1,12 @@
 #loginsection{
     float: right;
 }
+
+.input-group{
+    width: 200pt;
+    right:  100pt;
+}
+.btn-success{
+    position: absolute;
+    right: 250pt;
+}

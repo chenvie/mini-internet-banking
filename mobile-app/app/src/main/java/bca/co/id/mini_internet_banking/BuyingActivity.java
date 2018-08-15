@@ -110,7 +110,7 @@ public class BuyingActivity extends AppCompatActivity {
         String nominal = txtNominalBuying.getSelectedItem().toString();
         String code = txtCodeBuying.getText().toString();
 
-        int temp = Nasabah.saldo - Integer.parseInt(nominal);
+        double temp = Nasabah.saldo - Double.parseDouble(nominal);
         Intent intent = new Intent(this, BuyingStatusActivity.class);
 
         if (!noHp.equals("")){

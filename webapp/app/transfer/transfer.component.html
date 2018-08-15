@@ -1,20 +1,93 @@
-<div *ngIf="page === 1">
-  No rekening <input type="text"><br>
-  Jumlah <input type="text"><br>
-  Keterangan <input type="text"><br>
-  <input type="button" value="submit" style="float: right;" (click)="page=2"><br> <!-- pindah ke konfirmasi -->
-</div>
-<div *ngIf="page === 2">
-    No rekening <span> [norek] </span><br>
-    Jumlah <span> [RP. nominal] </span><br>
-    Keterangan <span> [Keterangan] </span><br>
-    Kode Rahasia <input type="text"><br>
-    <input type="button" value="submit" style="float: right;" (click)="page=3"><br> <!-- pindah ke hasil -->
+<div class="container" *ngIf="page ===1">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-4 control-label" for="norek">No.Rekening:</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="norek" placeholder="Masukan no rekening">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label" for="jml">Jumlah:</label>
+        <div class="col-sm-8">          
+          <input type="number" class="form-control" id="jml" placeholder="Masukan jumlah">
+        </div>
+      </div>
+      <div class="form-group">
+          <label class="col-sm-4 control-label" for="ket">Keterangan:</label>
+          <div class="col-sm-8">          
+            <input type="text-area" class="form-control" id="ket">
+          </div>
+        </div>
+      <div class="form-group">        
+        <div class="col-sm-offset-4 col-sm-8">
+          <button type="submit" class="btn btn-default"  style="float: right;" (click)="page=2">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+<div class="container" *ngIf="page === 2">
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-4 control-label" for="norek">Nomor&nbsp;Rekening:</label>
+      <div class="col-sm-8">
+        [norek]
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-4 control-label" for="jml">Jumlah:</label>
+      <div class="col-sm-8">          
+        [jml]
+      </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label" for="ket">Keterangan:</label>
+        <div class="col-sm-8">          
+          [ket]
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label" for="rahasia">Kode&nbsp;rahasia:</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="rahasia" placeholder="Masukan kode rahasia">
+        </div>
+      </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-4 col-sm-8">
+        <button type="submit" class="btn btn-default"  style="float: right;" (click)="page=3">Submit</button>
+      </div>
+    </div>
+  </form>
 </div>
 <div *ngIf="page === 3">
-  Transfer <span> [status] </span><br>
-  <span> [keterangan] </span><br><br>
-  No rekening <span> [norek] </span><br>
-  Jumlah <span> [RP. nominal] </span><br>
-  Keterangan <span> [Keterangan] </span><br>  
-</div>
+    <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="norek">Transfer:</label>
+          <div class="col-sm-8">
+            [status]
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="norek">Nomor&nbsp;Rekening:</label>
+            <div class="col-sm-8">
+              [status]
+            </div>
+          </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="jml">Jumlah:</label>
+          <div class="col-sm-8">          
+            [jml]
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="ket">Keterangan:</label>
+            <div class="col-sm-8">          
+              [ket]
+            </div>
+          </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-default"  style="float: right;" (click)="page=1">Done</button>
+          </div>
+        </div>
+      </form>
+ </div>

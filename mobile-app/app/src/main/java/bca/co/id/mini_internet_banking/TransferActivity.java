@@ -99,7 +99,7 @@ public class TransferActivity extends AppCompatActivity {
 
         if (!noRek.equals("") && !nominal.equals("") && !ket.equals("") && !(code.equals(""))){
             if (code.equals(Nasabah.code)) {
-                int temp = Nasabah.saldo - Integer.parseInt(nominal);
+                double temp = Nasabah.saldo - Double.parseDouble(nominal);
                 if (temp > 0) {
                     Nasabah.saldo = temp;
 
