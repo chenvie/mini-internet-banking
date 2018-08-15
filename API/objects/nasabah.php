@@ -5,7 +5,7 @@ class Nasabah
     // database connection and table name
     private $conn;
     private $table_name = "nasabah";
-    private $table_name2 = "rekening";
+    //private $table_name2 = "rekening";
 
     // object properties
     public $id_nasabah;
@@ -53,10 +53,7 @@ class Nasabah
         return $stmt;
     }
 
-// create new nasabah
-    function create()
-    {
-
+    function generateNoRek(){
         $awalan_rek = "03700";
         $sql = "SELECT COUNT(id_nasabah) FROM nasabah";
         $stmt = $this->conn->prepare($sql);
@@ -68,10 +65,16 @@ class Nasabah
             } else if ($this->jml_nsb > 99) {
                 $awalan_rek = "037";
             }
-            $this->no_rek = $awalan_rek . (string)($this->jml_nsb + 1);
+            return $awalan_rek . (string)($this->jml_nsb + 1);
         }
+    }
 
+    // create new nasabah
+    function create()
+    {
+        $this->no_rek = $this->generateNoRek();
 
+        //$this->no_rek = '037002';
         // query to insert record for nasabah
         $query = "INSERT INTO
                 " . $this->table_name . "
@@ -96,8 +99,7 @@ class Nasabah
         $this->jml_saldo = htmlspecialchars(strip_tags($this->jml_saldo));
         $this->kode_cabang = htmlspecialchars(strip_tags($this->kode_cabang));
 
-        //$nsb = 4;
-        $unm = 'sam';
+        $unm = 'argo';
 
         // bind values
         //$stmt->bindParam(":id_nasabah", $this->id_nasabah);
@@ -113,12 +115,6 @@ class Nasabah
         $stmt->bindParam(":no_rek", $this->no_rek);
         $stmt->bindParam(":jml_saldo", $this->jml_saldo);
         $stmt->bindParam(":kode_cabang", $this->kode_cabang);
-
-
-
-
-
-
 
         if ( $stmt->execute()) {
             return true;
@@ -212,7 +208,7 @@ class Nasabah
 
         // query to read single record
         $query = "SELECT
-                id_nasabah,username,password,nama_lengkap,kode_rahasia,tgl_lahir
+                id_nasabah,username,password,nama_lengkap,kode_rahasia,tgl_lahir,jml_saldo,no_rek
             FROM
                 " . $this->table_name . "
             WHERE
@@ -239,38 +235,40 @@ class Nasabah
         $this->nama_lengkap = $row['nama_lengkap'];
         $this->kode_rahasia = $row['kode_rahasia'];
         $this->tgl_lahir = $row['tgl_lahir'];
-    }
-
-// baca saldo rekening satu nasabah
-    function readOneSaldo()
-    {
-
-        // query to read single record
-        $query = "SELECT
-                no_rek,jml_saldo
-            FROM
-                " . $this->table_name2 . "
-            WHERE
-                id_nasabah = ?
-            LIMIT
-                0,1";
-
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-
-        // bind id of products to be updated
-        $stmt->bindParam(1, $this->id);
-
-        // execute query
-        $stmt->execute();
-
-        // get retrieved row
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // set values to object properties
-        $this->no_rek = $row['no_rek'];
         $this->jml_saldo = $row['jml_saldo'];
+        $this->no_rek = $row['no_rek'];
     }
+
+//// baca saldo rekening satu nasabah
+//    function readOneSaldo()
+//    {
+//
+//        // query to read single record
+//        $query = "SELECT
+//                no_rek,jml_saldo
+//            FROM
+//                " . $this->table_name2 . "
+//            WHERE
+//                id_nasabah = ?
+//            LIMIT
+//                0,1";
+//
+//        // prepare query statement
+//        $stmt = $this->conn->prepare($query);
+//
+//        // bind id of products to be updated
+//        $stmt->bindParam(1, $this->id);
+//
+//        // execute query
+//        $stmt->execute();
+//
+//        // get retrieved row
+//        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+//
+//        // set values to object properties
+//        $this->no_rek = $row['no_rek'];
+//        $this->jml_saldo = $row['jml_saldo'];
+//    }
 
     function readOnePwd($id)
     {
