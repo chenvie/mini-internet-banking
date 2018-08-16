@@ -30,7 +30,7 @@ public class MutationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mutation);
 
-        sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
+        sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
         rcyMutation = findViewById(R.id.rcyMutation);
         List<Transaction> listTrans = new ArrayList<Transaction>();
@@ -132,6 +132,14 @@ public class MutationActivity extends AppCompatActivity {
     private void loadLoginView(){
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
+        spEdit.putString("id", "");
+        spEdit.putString("name", "");
+        spEdit.putString("username", "");
+        spEdit.putString("password", "");
+        spEdit.putString("code", "");
+        spEdit.putString("birthday", "");
+        spEdit.putString("rekeningNum", "");
+        spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
         Intent intent = new Intent(this, MainActivity.class);

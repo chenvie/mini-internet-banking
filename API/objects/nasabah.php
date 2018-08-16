@@ -200,7 +200,7 @@ class Nasabah
         // execute query
         $stmt->execute();
 
-        $this->querycek = $;
+        $this->querycek = $query;
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $ceku = $row['username'];
         $cekp = $row['password'];

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class NewUsernameActivity extends AppCompatActivity {
-    private TextView txtNewUsername;
+    private TextView txtNewUsername, txtNewRekening;
     private Button btnOk;
 
     @Override
@@ -18,13 +18,16 @@ public class NewUsernameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_username);
 
         txtNewUsername = findViewById(R.id.txtNewUsername);
+        txtNewRekening = findViewById(R.id.txtNewRekening);
         btnOk = findViewById(R.id.btnOk);
 
         String[] names = Nasabah.name.split(" ");
         String[] birthday = Nasabah.birthday.split("/");
         String username = names[0] + birthday[0].substring(2, 3);
+        String rekening = "0000";
 
-        txtNewUsername.setText(username);
+        txtNewUsername.setText(Nasabah.username);
+        txtNewRekening.setText(Nasabah.rekeningNum);
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override

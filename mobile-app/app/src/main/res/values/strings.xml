@@ -38,4 +38,6 @@
     <string name="newRekDone">Terima kasih telah membuka rekening baru</string>
     <string name="uName">Username Anda</string>
     <string name="ok">OK</string>
+    <string name="infoName">Nama Nasabah</string>
+    <string name="uRekening">Nomor Rekening Anda</string>
 </resources>

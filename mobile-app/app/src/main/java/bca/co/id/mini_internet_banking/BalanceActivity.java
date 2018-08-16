@@ -18,7 +18,7 @@ import java.text.NumberFormat;
 
 public class BalanceActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private TextView txtNorekNasabah, txtSaldoNasabah;
+    private TextView txtNorekNasabah, txtSaldoNasabah, txtNameNasabah;
 
     private SharedPreferences sp;
 
@@ -27,13 +27,15 @@ public class BalanceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance);
 
-        sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
+        sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
         NumberFormat formatter = new DecimalFormat("#,###");
 
         txtNorekNasabah = findViewById(R.id.txtNorekNasabah);
         txtSaldoNasabah = findViewById(R.id.txtSaldoNasabah);
+        txtNameNasabah = findViewById(R.id.txtNameNasabah);
 
+        txtNameNasabah.setText(Nasabah.name);
         txtNorekNasabah.setText(Nasabah.rekeningNum.toString());
         txtSaldoNasabah.setText("Rp " + String.valueOf(formatter.format(Nasabah.saldo)) + ",-");
 
@@ -122,6 +124,14 @@ public class BalanceActivity extends AppCompatActivity {
     private void loadLoginView(){
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
+        spEdit.putString("id", "");
+        spEdit.putString("name", "");
+        spEdit.putString("username", "");
+        spEdit.putString("password", "");
+        spEdit.putString("code", "");
+        spEdit.putString("birthday", "");
+        spEdit.putString("rekeningNum", "");
+        spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
         Intent intent = new Intent(this, MainActivity.class);

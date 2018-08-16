@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/transfer_toolbar"
+            android:id="@+id/buying_code_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#1d6ef7"
@@ -30,29 +30,30 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/transfer"
+                android:text="@string/buying"
                 android:fontFamily="casual"
-                android:textSize="20dp"
-                android:textAlignment="center"
+                android:textSize="20sp"
                 android:textStyle="bold"
+                android:textAlignment="center"
                 android:layout_marginBottom="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/noRekening"
+                    android:text="@string/noHp"
                     android:fontFamily="casual"
                     android:textSize="15sp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"/>
 
-                <EditText
-                    android:id="@+id/inputNoRekTransfer"
+                <TextView
+                    android:id="@+id/txtNoHpBuying"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:fontFamily="casual"
@@ -62,19 +63,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="30dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/jumlah"
+                    android:text="@string/provider"
                     android:fontFamily="casual"
                     android:textSize="15sp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"/>
 
-                <EditText
-                    android:id="@+id/inputNominalTransfer"
+                <TextView
+                    android:id="@+id/txtProviderBuying"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:fontFamily="casual"
@@ -84,31 +86,56 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="30dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/ket"
+                    android:text="@string/nominal"
                     android:fontFamily="casual"
                     android:textSize="15sp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"/>
 
-                <EditText
-                    android:id="@+id/inputKetTransfer"
+                <TextView
+                    android:id="@+id/txtNominalBuying"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:fontFamily="casual"
                     android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/inputCodeBuying"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/code"
+                    android:fontFamily="casual"
+                    android:textSize="15sp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/txtCodeBuying"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:fontFamily="casual"
+                    android:layout_weight="1"
+                    android:inputType="textPassword"/>
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnSubmitTransfer"
+                android:id="@+id/btnBuyingWithCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/submit"
                 android:background="@drawable/background_button"
+                android:text="@string/submit"
                 android:fontFamily="casual"
                 android:textStyle="bold"
                 android:layout_marginTop="40dp"

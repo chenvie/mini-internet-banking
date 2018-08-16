@@ -15,7 +15,7 @@ public class DBExecQuery {
     }
 
     public void saveDataToLocal(){
-        if (Nasabah.id != null && Nasabah.name != null && Nasabah.username != null && Nasabah.password != null && Nasabah.rekeningNum != null && Nasabah.saldo != 0 && Nasabah.code != null) {
+        if (Nasabah.id != null) {
             SQLiteStatement stmt = db.compileStatement(
                     "INSERT INTO nasabah(id_nasabah, name, username, password, rekeningNum, saldo, code) VALUES(?, ?, ?, ?, ?, ?, ?)");
             stmt.bindString(1, Nasabah.id);
@@ -26,16 +26,6 @@ public class DBExecQuery {
             stmt.bindDouble(6, Nasabah.saldo);
             stmt.bindString(7, Nasabah.code);
             stmt.execute();
-            /*db.execSQL(
-                    "INSERT INTO nasabah(id, name, username, password, rekeningNum, saldo, code) VALUES ('" +
-                            Nasabah.id + "', '" +
-                            Nasabah.name + "', '" +
-                            Nasabah.username + "', '" +
-                            Nasabah.password + "', '" +
-                            Nasabah.rekeningNum + "', '" +
-                            Nasabah.saldo + "', '" +
-                            Nasabah.code + "')"
-            );*/
         }
     }
 
@@ -48,7 +38,7 @@ public class DBExecQuery {
             Nasabah.username = cursor.getString(2);
             Nasabah.password = cursor.getString(3);
             Nasabah.rekeningNum = cursor.getString(4);
-            Nasabah.saldo = Double.parseDouble(cursor.getString(5));
+            Nasabah.saldo = Float.parseFloat(cursor.getString(5));
             Nasabah.code = cursor.getString(6);
         }
     }

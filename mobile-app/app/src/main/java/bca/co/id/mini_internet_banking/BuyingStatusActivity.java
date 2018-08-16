@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class BuyingStatusActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private TextView txtNoHpStatus, txtPulsaStatus, txtProviderStatus, txtBuyingStatus, txtFailedBuying;
@@ -25,7 +28,7 @@ public class BuyingStatusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buying_status);
 
-        sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
+        sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
         txtNoHpStatus = findViewById(R.id.txtNoHpStatus);
         txtPulsaStatus = findViewById(R.id.txtPulsaStatus);
@@ -43,8 +46,10 @@ public class BuyingStatusActivity extends AppCompatActivity {
             txtFailedBuying.setVisibility(View.VISIBLE);
         }
 
+        NumberFormat formatter = new DecimalFormat("#,###");
+
         txtNoHpStatus.setText(intent.getStringExtra("noHp"));
-        txtPulsaStatus.setText("Rp " + intent.getStringExtra("pulsa") + ",-");
+        txtPulsaStatus.setText("Rp " + (formatter.format(Float.parseFloat(intent.getStringExtra("nominal")))) + ",-");
         txtProviderStatus.setText(intent.getStringExtra("provider"));
 
         Toolbar toolbar = findViewById(R.id.buying_status_toolbar);
@@ -132,6 +137,14 @@ public class BuyingStatusActivity extends AppCompatActivity {
     private void loadLoginView(){
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
+        spEdit.putString("id", "");
+        spEdit.putString("name", "");
+        spEdit.putString("username", "");
+        spEdit.putString("password", "");
+        spEdit.putString("code", "");
+        spEdit.putString("birthday", "");
+        spEdit.putString("rekeningNum", "");
+        spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
         Intent intent = new Intent(this, MainActivity.class);

@@ -34,7 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/pass"
-        android:fontFamily="casual" />
+        android:fontFamily="casual"
+        android:inputType="textPassword"/>
 
     <EditText
         android:id="@+id/new_ktp"
@@ -62,7 +63,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/secCode"
-        android:fontFamily="casual" />
+        android:fontFamily="casual"
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/btnSubmitRekening"

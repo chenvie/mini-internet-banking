@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".BalanceActivity"/>
         <activity android:name=".BuyingActivity"/>
+        <activity android:name=".BuyingCodeActivity"/>
         <activity android:name=".BuyingStatusActivity"/>
         <activity android:name=".HistoryActivity"/>
         <activity android:name=".HistoryDetailActivity"/>
@@ -29,6 +30,7 @@
         <activity android:name=".NewUsernameActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".TransferActivity"/>
+        <activity android:name=".TransferCodeActivity"/>
         <activity android:name=".TransferStatusActivity"/>
     </application>
 
