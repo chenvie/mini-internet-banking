@@ -25,6 +25,7 @@ class Nasabah
     public $baru2;
     public $id;
     public $jml_nsb;
+    public $querycek;
 
     // constructor with $db as database connection
     public function __construct($db)
@@ -180,7 +181,7 @@ class Nasabah
     {
 
         // query to insert record
-        $query = "SELECT  username from 
+        $query = "SELECT  username, password from 
                 " . $this->table_name . "
             where
                 username=:username and password=:password";
@@ -199,18 +200,12 @@ class Nasabah
         // execute query
         $stmt->execute();
 
-        // instantiate database and products object
-        $database = new Database();
-        $db = $database->getConnection();
+        $this->querycek = $;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $ceku = $row['username'];
+        $cekp = $row['password'];
 
-        // initialize object
-        $nasabah = new Nasabah($db);
-
-        // query products
-        $stmt = $nasabah->read();
-        $num = $stmt->rowCount();
-
-        if ($num = 1) {
+        if ($ceku == $this->username && $cekp == $this->password) {
             return true;
         }
 

@@ -25,30 +25,30 @@ $(document).ready(function(){
             create_product_html+="<form id='create-product-form' action='#' method='post' border='0'>";
             create_product_html+="<table class='table table-hover table-responsive table-bordered'>";
 
-            // //update password
-            // // name field
-            // create_product_html+="<tr>";
-            // create_product_html+="<td>pwd skr</td>";
-            // create_product_html+="<td><input type='password' name='passwordl' class='form-control' required /></td>";
-            // create_product_html+="</tr>";
-            //
-            // create_product_html+="<tr>";
-            // create_product_html+="<td>pwd baru</td>";
-            // create_product_html+="<td><input type='password' name='passwordb1' class='form-control' required /></td>";
-            // create_product_html+="</tr>";
-            //
-            // create_product_html+="<tr>";
-            // create_product_html+="<td>pwd baru 2</td>";
-            // create_product_html+="<td><input type='password' name='passwordb2' class='form-control' required /></td>";
-            // create_product_html+="</tr>";
-            //
+            //update password
+            // name field
+            create_product_html+="<tr>";
+            create_product_html+="<td>pwd skr</td>";
+            create_product_html+="<td><input type='password' name='passwordl' class='form-control' required /></td>";
+            create_product_html+="</tr>";
+
+            create_product_html+="<tr>";
+            create_product_html+="<td>pwd baru</td>";
+            create_product_html+="<td><input type='password' name='passwordb1' class='form-control' required /></td>";
+            create_product_html+="</tr>";
+
+            create_product_html+="<tr>";
+            create_product_html+="<td>pwd baru 2</td>";
+            create_product_html+="<td><input type='password' name='passwordb2' class='form-control' required /></td>";
+            create_product_html+="</tr>";
+
             // create_product_html+="<tr>";
             // create_product_html+="<td>tgl_lahir</td>";
             // create_product_html+="<td><input type='date' name='tgl_lahir' class='form-control' required /></td>";
             // create_product_html+="</tr>";
 
         // hidden field to get the id
-             //create_product_html+="<input type='hidden' name='id_nasabah' value='2' />";
+             create_product_html+="<input type='hidden' name='id_nasabah' value='3' />";
 
 
         // //update kode rahasia
@@ -68,36 +68,36 @@ $(document).ready(function(){
         // create_product_html+="<td><input type='password' name='krb2' class='form-control' required /></td>";
         // create_product_html+="</tr>";
 
-
-            //create nasabah
-        create_product_html+="<tr>";
-        create_product_html+="<td>namalkp</td>";
-        create_product_html+="<td><input type='text' name='nama_lengkap' class='form-control' required /></td>";
-        create_product_html+="</tr>";
-        create_product_html+="<tr>";
-        create_product_html+="<td>email</td>";
-        create_product_html+="<td><input type='email' name='email' class='form-control' required /></td>";
-        create_product_html+="</tr>";
-        create_product_html+="<tr>";
-        create_product_html+="<td>pwd</td>";
-        create_product_html+="<td><input type='password' name='password' class='form-control' required /></td>";
-        create_product_html+="</tr>";
-        create_product_html+="<tr>";
-        create_product_html+="<td>noktp</td>";
-        create_product_html+="<td><input type='text' name='no_ktp' class='form-control' required /></td>";
-        create_product_html+="</tr>";
-        create_product_html+="<tr>";
-        create_product_html+="<td>tgllhr</td>";
-        create_product_html+="<td><input type='date' name='tgl_lahir' class='form-control' required /></td>";
-        create_product_html+="</tr>";
-        create_product_html+="<tr>";
-        create_product_html+="<td>alamat</td>";
-        create_product_html+="<td><input type='text' name='alamat' class='form-control' required /></td>";
-        create_product_html+="</tr>";
-        create_product_html+="<tr>";
-        create_product_html+="<td>koderhs</td>";
-        create_product_html+="<td><input type='password' name='kode_rahasia' class='form-control' required /></td>";
-        create_product_html+="</tr>";
+        //
+        //     //create nasabah
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>namalkp</td>";
+        // create_product_html+="<td><input type='text' name='nama_lengkap' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>email</td>";
+        // create_product_html+="<td><input type='email' name='email' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>pwd</td>";
+        // create_product_html+="<td><input type='password' name='password' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>noktp</td>";
+        // create_product_html+="<td><input type='text' name='no_ktp' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>tgllhr</td>";
+        // create_product_html+="<td><input type='date' name='tgl_lahir' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>alamat</td>";
+        // create_product_html+="<td><input type='text' name='alamat' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
+        // create_product_html+="<tr>";
+        // create_product_html+="<td>koderhs</td>";
+        // create_product_html+="<td><input type='password' name='kode_rahasia' class='form-control' required /></td>";
+        // create_product_html+="</tr>";
 
         // button to submit form
             create_product_html+="<tr>";
@@ -128,7 +128,7 @@ $(document).ready(function(){
 
         // submit form data to api
         $.ajax({
-            url: "http://localhost/mini-internet-banking/API/nasabah/create.php",
+            url: "http://localhost/mini-internet-banking/API/nasabah/update_password.php",
             type : "POST",
             contentType : 'application/json',
             data : form_data,

@@ -28,7 +28,9 @@ $nasabah->password = $data->password;
 // login
 if($nasabah->login()){
     echo json_encode(
-        array("login" => "True")
+        array("login" => "True",
+                "query" => $nasabah->querycek
+        )
     );
 }
 
