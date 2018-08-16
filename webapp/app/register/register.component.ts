@@ -47,9 +47,9 @@ export class RegisterComponent implements OnInit {
   }
 
   validateForm(): boolean {
+    this.isTanggalValid = this.validator.validateTanggal(this.userData.tgl_lahir); // harus diatas, menentukan tanggal di service
     this.isPassValid = this.validator.validatePassword(this.userData.password);
     this.isKodeValid = this.validator.validateKode(this.userData.kode_rahasia);
-    this.isTanggalValid = this.validator.validateTanggal(this.userData.tgl_lahir);
     return this.isPassValid && this.isKodeValid && this.isTanggalValid;
   }
 
