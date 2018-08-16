@@ -3,13 +3,13 @@
 	nama lengkap <input type="text" [(ngModel)]="userData.nama_lengkap"><br><br>
 	email <input type="email" [(ngModel)]="userData.email"><br><br>
 	password <input type="password" [(ngModel)]="userData.password"><br> <!-- 8alfa -->
-	<span *ngIf="!isPassValid" style="color: red">Password minimal 8 karakter alfanumerik</span><br>
+	<span *ngIf="!isPassValid" style="color: red">Password minimal 8 karakter alfanumerik, tidak boleh tanggal lahir</span><br>
 	no ktp <input type="number" [(ngModel)]="userData.no_ktp"><br><br> 
 	tgl lahir <input type="date" [(ngModel)]="userData.tgl_lahir"><br>
 	<span *ngIf="!isTanggalValid" style="color: red">Umur minimal 17 tahun</span><br>
 	alamat <input type="text" [(ngModel)]="userData.alamat"><br><br>
-	kode rahasia <input type="password" [(ngModel)]="userData.kode_rahasia"><br> <!-- 6alfa -->
-	<span *ngIf="!isKodeValid" style="color: red">Kode minimal 6 karakter alfanumerik</span><br>
+	kode rahasia <input type="password" [(ngModel)]="userData.kode_rahasia" maxlength="6"><br> <!-- 6alfa -->
+	<span *ngIf="!isKodeValid" style="color: red">Kode 6 karakter alfanumerik, tidak boleh tanggal lahir</span><br>
 	<input type="button" value="submit" (click)="submitForm()">
 	<input type="button" value="reset" (click)="resetForm()">
 </div>

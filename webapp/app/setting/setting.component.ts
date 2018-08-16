@@ -32,13 +32,13 @@ export class SettingComponent implements OnInit {
   validatePassword(): boolean {
     this.isPassBaruValid = this.validator.validatePassword(this.passBaru);
     this.isPassSama = (this.passBaru === this.passRetype) && (this.validator.validateKode(this.passRetype));
-    return this.isPassBaruValid && this.isPassSama;
+    return this.isPassBaruValid && this.isPassSama && this.passLama !== undefined;
   }
 
   validateKode(): boolean {
     this.isKodeBaruValid = this.validator.validateKode(this.kodeBaru);
     this.isKodeSama = (this.kodeBaru === this.kodeRetype) && (this.validator.validateKode(this.kodeRetype));
-    return this.isKodeBaruValid && this.isKodeSama;
+    return this.isKodeBaruValid && this.isKodeSama && this.kodeLama !== undefined;
   }
 
   submitKodeBaru(): void {
@@ -46,7 +46,7 @@ export class SettingComponent implements OnInit {
 
       const kodeUser = {
         id_nasabah: this.login.id_nasabah,
-        kode_rahasia: this.kodeLama,
+        kode_rahasiaL: this.kodeLama,
         krb1: this.kodeBaru,
         krb2: this.kodeRetype
       };
@@ -54,13 +54,15 @@ export class SettingComponent implements OnInit {
       this.setting.changeKode(kodeUser).subscribe((data: any) => alert(data['message']));
     } else {
       alert('gagal ubah kode rahasia');
+      this.isKodeBaruValid = false;
+      this.isKodeSama = false;
     }
   }
 
   submitPassBaru(): void {
     const passUser = {
       id_nasabah: this.login.id_nasabah,
-      password: this.passLama,
+      passwordl: this.passLama,
       passwordb1: this.passBaru,
       passwordb2: this.passRetype
     };
@@ -69,6 +71,8 @@ export class SettingComponent implements OnInit {
       this.setting.changePassword(passUser).subscribe((data: any) => alert(data['message']));
     } else {
       alert('gagal ubah password');
+      this.isPassBaruValid = false;
+      this.isPassSama = false;
     }
   }
 

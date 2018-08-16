@@ -10,10 +10,10 @@
 <br>
 <div>
     <h3>ubah kode rahasia</h3>
-    kode sekarang <input type="password" [(ngModel)]="kodeLama"><br>
-    kode baru <input type="password" [(ngModel)]="kodeBaru"><br>
-    <span *ngIf="!isKodeBaruValid" style="color: red">Kode minimal 6 karakter alfanumerik <br></span>
-    retype kode <input type="password" [(ngModel)]="kodeRetype"><br>
+    kode sekarang <input type="password" [(ngModel)]="kodeLama" maxlength="6"><br>
+    kode baru <input type="password" [(ngModel)]="kodeBaru" maxlength="6"><br>
+    <span *ngIf="!isKodeBaruValid" style="color: red">Kode 6 karakter alfanumerik <br></span>
+    retype kode <input type="password" [(ngModel)]="kodeRetype" maxlength="6"><br>
     <span *ngIf="!isKodeSama" style="color: red">Masukkan kode baru sekali lagi <br></span>
     <input type="button" value="submit" style="float: right;" (click)="submitKodeBaru(); resetForm();"><br>
 </div>
