@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryHolder> {
@@ -27,10 +29,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
 
     @Override
     public void onBindViewHolder(HistoryHolder holder, int position) {
+        NumberFormat formatter = new DecimalFormat("#,###");
+
         Transaction trans = listTrans.get(position);
         holder.history_date.setText(trans.getDate());
         holder.history_type.setText(trans.getType());
-        holder.history_nominal.setText(String.valueOf(trans.getNominal()));
+        holder.history_nominal.setText("Rp " + String.valueOf(formatter.format(trans.getNominal())) + ",-");
         holder.history_info.setText(trans.getInfo());
         holder.history_status.setText(trans.getStatus());
     }

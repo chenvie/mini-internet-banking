@@ -13,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class BalanceActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private TextView txtNorekNasabah, txtSaldoNasabah;
@@ -26,11 +29,13 @@ public class BalanceActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
 
+        NumberFormat formatter = new DecimalFormat("#,###");
+
         txtNorekNasabah = findViewById(R.id.txtNorekNasabah);
         txtSaldoNasabah = findViewById(R.id.txtSaldoNasabah);
 
         txtNorekNasabah.setText(Nasabah.rekeningNum.toString());
-        txtSaldoNasabah.setText("Rp " + String.valueOf(Nasabah.saldo) + ",-");
+        txtSaldoNasabah.setText("Rp " + String.valueOf(formatter.format(Nasabah.saldo)) + ",-");
 
         Toolbar toolbar = findViewById(R.id.balance_toolbar);
         setSupportActionBar(toolbar);
