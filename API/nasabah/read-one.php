@@ -29,7 +29,9 @@ $nasabah_arr = array(
     "password" => $nasabah->password,
     "nama_lengkap" => $nasabah->nama_lengkap,
     "kode_rahasia" => $nasabah->kode_rahasia,
-    "tgl_lahir" => $nasabah->tgl_lahir
+    "tgl_lahir" => $nasabah->tgl_lahir,
+    "jml_saldo" => $nasabah->jml_saldo,
+    "no_rek" => $nasabah->no_rek
 
 );
 
