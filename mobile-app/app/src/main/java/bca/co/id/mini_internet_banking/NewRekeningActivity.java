@@ -122,9 +122,6 @@ public class NewRekeningActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                try {
-                    StringEntity entity = new StringEntity(jsonParams.toString());
-
                 /*RequestParams rp = new RequestParams();
                 rp.add("nama_lengkap", name);
                 rp.add("email", email);
@@ -134,7 +131,11 @@ public class NewRekeningActivity extends AppCompatActivity {
                 rp.add("alamat", address);
                 rp.add("kode_rahasia", code);*/
 
-                    client.post(mContext, "http://192.168.43.234/mini-internet-banking/API/nasabah/create.php", entity, "application/json",  new AsyncHttpResponseHandler() {
+
+                try {
+                    StringEntity entity = new StringEntity(jsonParams.toString());
+
+                    client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/create.php", entity, "application/json",  new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             String json = new String(responseBody);
@@ -198,7 +199,7 @@ public class NewRekeningActivity extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams rp = new RequestParams();
         rp.add("id", Nasabah.username);
-        client.get(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/read-one.php", rp, new AsyncHttpResponseHandler() {
+        client.get(this, "http://10.0.2.2/mini-internet-banking/API/nasabah/read-one.php", rp, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String json = new String(responseBody);
