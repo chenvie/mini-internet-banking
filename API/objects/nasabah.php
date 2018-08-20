@@ -25,6 +25,8 @@ class Nasabah
     public $baru2;
     public $id;
     public $jml_nsb;
+    public $ceku;
+    public $cekp;
 
     // constructor with $db as database connection
     public function __construct($db)
@@ -180,7 +182,7 @@ class Nasabah
     {
 
         // query to insert record
-        $query = "SELECT  username from 
+        $query = "SELECT  username, password from 
                 " . $this->table_name . "
             where
                 username=:username and password=:password";
@@ -198,19 +200,15 @@ class Nasabah
 
         // execute query
         $stmt->execute();
+        $this->ceku = $stmt->rowCount();
+//        $this->querycek = preg_replace(":username",$this->username,preg_replace(":password",$this->password,$query));
+//        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+//        $this->ceku = $row['username'];
+//        $this->cekp = $row['password'];
 
-        // instantiate database and products object
-        $database = new Database();
-        $db = $database->getConnection();
+//        if ($this->ceku == $this->username && $this->cekp == $this->password) {
+        if ($this->ceku == 1    ) {
 
-        // initialize object
-        $nasabah = new Nasabah($db);
-
-        // query products
-        $stmt = $nasabah->read();
-        $num = $stmt->rowCount();
-
-        if ($num = 1) {
             return true;
         }
 
@@ -449,6 +447,7 @@ class Nasabah
     {
         return strpos($haystack, $needle) !== false;
     }
+<<<<<<< HEAD
 
 //    function beli_pulsa(){
 //        $query = "SELECT
@@ -460,4 +459,6 @@ class Nasabah
 //    }
 
     
+=======
+>>>>>>> master
 }
