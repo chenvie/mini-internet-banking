@@ -23,7 +23,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class MainActivity extends AppCompatActivity {
     private EditText txtUname_login, txtPwd_login;
@@ -89,55 +92,71 @@ public class MainActivity extends AppCompatActivity {
         final String password = txtPwd_login.getText().toString();
 
         AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams rp = new RequestParams();
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("username", username);
+            jsonParams.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        /*RequestParams rp = new RequestParams();
         rp.add("username", username);
-        rp.add("password", password);
-        client.post(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/login.php", rp, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String json = new String(responseBody);
-                int jsonStart = json.indexOf("{");
-                int jsonEnd = json.indexOf("}");
+        rp.add("password", password);*/
 
-                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
-                    json = json.substring(jsonStart, jsonEnd+1);
-                }
+        try {
+            StringEntity entity = new StringEntity(jsonParams.toString());
 
-                try {
-                    JSONObject jsonObject = new JSONObject(json);
-                    String login = jsonObject.getString("login");
-                    if (login.equalsIgnoreCase("true")){
-                        Nasabah.username = username;
+            client.post(mContext, "http://192.168.43.234/mini-internet-banking/API/nasabah/login.php", entity, "application/json", new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    String json = new String(responseBody);
+                    int jsonStart = json.indexOf("{");
+                    int jsonEnd = json.indexOf("}");
 
-                        try {
-                            if (getNasabahData()){
-                                Intent intent = new Intent(mContext, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(mContext, "Get Nasabah data error", Toast.LENGTH_LONG).show();
-                        }
-                    } else{
-                        Toast.makeText(mContext, "Username atau password Salah!", Toast.LENGTH_LONG).show();
+                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                        json = json.substring(jsonStart, jsonEnd+1);
                     }
-                } catch(final JSONException e){
-                    Log.e(TAG, "Json parsing error login: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),"Json parsing error login: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(json);
+                        String login = jsonObject.getString("login");
+                        if (login.equalsIgnoreCase("true")){
+                            Nasabah.username = username;
+
+                            try {
+                                if (getNasabahData()){
+                                    Intent intent = new Intent(mContext, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(mContext, "Get Nasabah data error", Toast.LENGTH_LONG).show();
+                            }
+                        } else{
+                            Toast.makeText(mContext, "Username atau password Salah!", Toast.LENGTH_LONG).show();
                         }
-                    });
+                    } catch(final JSONException e){
+                        Log.e(TAG, "Json parsing error login: " + e.getMessage());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),"Json parsing error login: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-            }
-        });
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadNewRekeningView(){

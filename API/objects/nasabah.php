@@ -450,14 +450,14 @@ class Nasabah
         return strpos($haystack, $needle) !== false;
     }
 
-    function beli_pulsa(){
-        $query = "SELECT
-                    ".$this->table_name ."
-                    SET
-                        jml_saldo = :jml_saldo
-                    where 
-                        id_nasabah = :id_nasabah;
-    }
+//    function beli_pulsa(){
+//        $query = "SELECT
+//                    ".$this->table_name ."
+//                    SET
+//                        jml_saldo = :jml_saldo
+//                    where
+//                        id_nasabah = :id_nasabah;
+//    }
 
     
 }
