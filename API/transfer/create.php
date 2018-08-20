@@ -10,34 +10,36 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
 
 // instantiate products object
-include_once '../objects/nasabah.php';
+include_once '../objects/transfer.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$nasabah = new Nasabah($db);
+$transfer = new Transfer($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
 // set products property values
-$nasabah->username = $data->username;
-$nasabah->password = $data->password;
+$transfer->username = $data->username;
+//$transfer->jml_saldo = $data->jml_saldo;
+$transfer->no_rek_tujuan = $data->no_rek_tujuan;
+$transfer->id_nasabah = $data->id_nasabah;
+$transfer->kode_rahasia = $data->kode_rahasia;
+$transfer->nominal = $data->nominal;
+$transfer->keterangan = $data->keterangan;
 
-
-// login
-if($nasabah->login()){
+// create new transaksi transfer
+if($transfer->create()){
     echo json_encode(
-        array("login" => true
-        )
+        array("transfer" => true,
+        "message" => $transfer->message)
     );
 }
-
-// if unable to login
 else{
     echo json_encode(
-        array("login" => false
-            )
+        array("transfer" => false,
+            "message" => $transfer->message)
     );
 }
 ?>

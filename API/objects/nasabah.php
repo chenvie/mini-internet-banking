@@ -180,7 +180,6 @@ class Nasabah
 // login
     function login()
     {
-
         // query to insert record
         $query = "SELECT  username, password from 
                 " . $this->table_name . "
