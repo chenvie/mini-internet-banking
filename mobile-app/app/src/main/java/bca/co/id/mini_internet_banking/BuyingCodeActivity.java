@@ -20,38 +20,42 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class BuyingActivity extends AppCompatActivity {
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+public class BuyingCodeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private TextView inputNoHpBuying;
-    private Spinner inputProviderBuying, inputNominalBuying;
-    private Button btnSubmitBuying;
+    private TextView txtNoHpBuying, txtProviderBuying, txtNominalBuying;
+    private EditText txtCodeBuying;
+    private Button btnBuyingWithCode;
     private SharedPreferences sp;
-    private static final String[]provider = {"Telkomsel", "Indosat", "XL", "Smartfren"};
-    private static final String[]nominal = {"50000", "100000", "150000"};
+    private String noHp, provider, nominal;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buying);
+        setContentView(R.layout.activity_buying_code);
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
-        inputProviderBuying = findViewById(R.id.inputProviderBuying);
-        inputNominalBuying = findViewById(R.id.inputNominalBuying);
-        inputNoHpBuying = findViewById(R.id.inputNoHpBuying);
-        btnSubmitBuying = findViewById(R.id.btnSubmitBuying);
+        txtProviderBuying = findViewById(R.id.txtProviderBuying);
+        txtNominalBuying = findViewById(R.id.txtNominalBuying);
+        txtNoHpBuying = findViewById(R.id.txtNoHpBuying);
+        txtCodeBuying = findViewById(R.id.txtCodeBuying);
+        btnBuyingWithCode = findViewById(R.id.btnBuyingWithCode);
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(BuyingActivity.this,
-                android.R.layout.simple_spinner_item,provider);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        inputProviderBuying.setAdapter(adapter1);
+        NumberFormat formatter = new DecimalFormat("#,###");
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(BuyingActivity.this,
-                android.R.layout.simple_spinner_item,nominal);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        inputNominalBuying.setAdapter(adapter2);
+        Intent intent = getIntent();
+        noHp = intent.getStringExtra("noHp");
+        nominal = intent.getStringExtra("nominal");
+        provider = intent.getStringExtra("provider");
 
-        Toolbar toolbar = findViewById(R.id.buying_toolbar);
+        txtNoHpBuying.setText(noHp);
+        txtNominalBuying.setText("Rp " + (formatter.format(Float.parseFloat(nominal))).toString() + ",-");
+        txtProviderBuying.setText(provider);
+
+        Toolbar toolbar = findViewById(R.id.buying_code_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -86,7 +90,7 @@ public class BuyingActivity extends AppCompatActivity {
                     }
                 });
 
-        btnSubmitBuying.setOnClickListener(new View.OnClickListener() {
+        btnBuyingWithCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 submitBuying();
@@ -95,19 +99,31 @@ public class BuyingActivity extends AppCompatActivity {
     }
 
     private void submitBuying(){
-        String noHp = inputNoHpBuying.getText().toString();
-        String provider = inputProviderBuying.getSelectedItem().toString();
-        String nominal = inputNominalBuying.getSelectedItem().toString();
+        String code = txtCodeBuying.getText().toString();
+        float temp = Nasabah.saldo - Float.parseFloat(nominal);
+        Intent intent = new Intent(this, BuyingStatusActivity.class);
 
-        Intent intent = new Intent(this, BuyingCodeActivity.class);
-
-        if (!noHp.equals("")){
-            intent.putExtra("noHp", noHp);
-            intent.putExtra("nominal", nominal);
-            intent.putExtra("provider", provider);
-            startActivity(intent);
+        if(code.equals(Nasabah.code)) {
+            if (!noHp.equals("")) {
+                if (temp > 0) {
+                    intent.putExtra("noHp", noHp);
+                    intent.putExtra("nominal", nominal);
+                    intent.putExtra("provider", provider);
+                    intent.putExtra("status", true);
+                    Nasabah.saldo = temp;
+                    startActivity(intent);
+                } else {
+                    intent.putExtra("noHp", noHp);
+                    intent.putExtra("nominal", nominal);
+                    intent.putExtra("provider", provider);
+                    intent.putExtra("status", false);
+                    startActivity(intent);
+                }
+            } else {
+                Toast.makeText(this, "Nomor HP harus diisi!", Toast.LENGTH_LONG).show();
+            }
         } else{
-            Toast.makeText(this, "Nomor HP harus diisi!", Toast.LENGTH_LONG).show();
+          Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }
     }
 

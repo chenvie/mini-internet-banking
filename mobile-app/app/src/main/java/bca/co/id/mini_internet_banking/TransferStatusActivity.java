@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class TransferStatusActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private TextView txtNorekStatus, txtNominalStatus, txtKetStatus, txtTransStatus, txtFailedTrans;
@@ -25,7 +28,7 @@ public class TransferStatusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_status);
 
-        sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
+        sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
         txtNorekStatus = findViewById(R.id.txtNoRekStatus);
         txtNominalStatus = findViewById(R.id.txtNominalStatus);
@@ -43,8 +46,12 @@ public class TransferStatusActivity extends AppCompatActivity {
             txtFailedTrans.setVisibility(View.VISIBLE);
         }
 
+        NumberFormat formatter = new DecimalFormat("#,###");
+
         txtNorekStatus.setText(intent.getStringExtra("noRek"));
-        txtNominalStatus.setText("Rp " + intent.getStringExtra("nominal") + ",-");
+        if (intent.getStringExtra("nominal") != null || intent.getStringExtra("nominal") != ""){
+            txtNominalStatus.setText("Rp " + (formatter.format(Float.parseFloat(intent.getStringExtra("nominal")))).toString() + ",-");
+        }
         txtKetStatus.setText(intent.getStringExtra("ket"));
 
         Toolbar toolbar = findViewById(R.id.transfer_status_toolbar);
@@ -132,6 +139,14 @@ public class TransferStatusActivity extends AppCompatActivity {
     private void loadLoginView(){
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
+        spEdit.putString("id", "");
+        spEdit.putString("name", "");
+        spEdit.putString("username", "");
+        spEdit.putString("password", "");
+        spEdit.putString("code", "");
+        spEdit.putString("birthday", "");
+        spEdit.putString("rekeningNum", "");
+        spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
         Intent intent = new Intent(this, MainActivity.class);

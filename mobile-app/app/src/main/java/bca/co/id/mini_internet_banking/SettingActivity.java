@@ -3,7 +3,6 @@ package bca.co.id.mini_internet_banking;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -33,19 +32,17 @@ public class SettingActivity extends AppCompatActivity {
     private EditText txtOldPass, txtNewPass, txtRePass, txtOldCode, txtNewCode, txtReCode;
     private Button btnChangePass, btnChangeCode;
     private Context mContext;
-
     private String TAG = SettingActivity.class.getSimpleName();
+
     private SharedPreferences sp;
-    private DBExecQuery dbQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
+        sp = getSharedPreferences("ibank", MODE_PRIVATE);
         mContext = this;
-        dbQuery = new DBExecQuery(this);
 
         txtOldPass = findViewById(R.id.txtOldPass);
         txtNewPass = findViewById(R.id.txtNewPass);
@@ -107,9 +104,9 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void changePassword(){
-        String oPass = txtOldPass.getText().toString();
+        final String oPass = txtOldPass.getText().toString();
         final String nPass = txtNewPass.getText().toString();
-        String rPass = txtRePass.getText().toString();
+        final String rPass = txtRePass.getText().toString();
 
         final Intent intent = new Intent(this, HomeActivity.class);
 
@@ -120,7 +117,9 @@ public class SettingActivity extends AppCompatActivity {
                         AsyncHttpClient client = new AsyncHttpClient();
                         RequestParams rp = new RequestParams();
                         rp.add("id", Nasabah.id);
-                        rp.add("password", nPass);
+                        rp.add("passwordl", oPass);
+                        rp.add("passwordb1", nPass);
+                        rp.add("passwordb2", rPass);
 
                         client.post(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/update_password.php", rp, new AsyncHttpResponseHandler() {
                             @Override
@@ -139,9 +138,10 @@ public class SettingActivity extends AppCompatActivity {
                                     String result = jsonObject.getString("message");
 
                                     if (result.equalsIgnoreCase("update password berhasil")){
-                                        Toast.makeText(mContext, "Ubah Password Berhasil!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(mContext, "Ubah Password Berhasil!7", Toast.LENGTH_LONG).show();
+                                        SharedPreferences.Editor spEdit = sp.edit();
+                                        spEdit.putString("password", nPass);
                                         Nasabah.password = nPass;
-                                        dbQuery.updatePassword();
                                         startActivity(intent);
                                     } else{
                                         Toast.makeText(mContext, "Ubah Password Gagal!", Toast.LENGTH_LONG).show();
@@ -166,14 +166,14 @@ public class SettingActivity extends AppCompatActivity {
                     } else{
                         Toast.makeText(
                                 this,
-                                "Password harus terdiri min 8 karakter dan alfanumerik!",
+                                "Password harus terdiri min 8 karakter, alfanumerik dan tidak terdiri dari tanggal lahir!",
                                 Toast.LENGTH_LONG).show();
                     }
                 } else{
                     Toast.makeText(this, "Password baru dan Re-type password tidak sama!", Toast.LENGTH_LONG).show();
                 }
             } else{
-                Toast.makeText(this, "Password lama salah!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Password sekarang salah!", Toast.LENGTH_LONG).show();
             }
         } else{
             Toast.makeText(this, "Semua kolom harus terisi!", Toast.LENGTH_LONG).show();
@@ -194,7 +194,9 @@ public class SettingActivity extends AppCompatActivity {
                         AsyncHttpClient client = new AsyncHttpClient();
                         RequestParams rp = new RequestParams();
                         rp.add("id_nasabah", Nasabah.id);
-                        rp.add("kode_rahasia", nCode);
+                        rp.add("kode_rahasiaL", oCOde);
+                        rp.add("krb1", nCode);
+                        rp.add("krb2", rCode);
 
                         client.post(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/update_kode_rahasia.php", rp, new AsyncHttpResponseHandler() {
                             @Override
@@ -214,6 +216,8 @@ public class SettingActivity extends AppCompatActivity {
 
                                     if (result.equalsIgnoreCase("update kode rahasia berhasil")) {
                                         Toast.makeText(mContext, "Ubah Kode Rahasia Berhasil!", Toast.LENGTH_LONG).show();
+                                        SharedPreferences.Editor spEdit = sp.edit();
+                                        spEdit.putString("code", nCode);
                                         Nasabah.code = nCode;
                                         startActivity(intent);
                                     } else{
@@ -239,14 +243,14 @@ public class SettingActivity extends AppCompatActivity {
                     } else{
                         Toast.makeText(
                                 this,
-                                "Kode Rahasia harus terdiri min 6 karakter dan alfanumerik!",
+                                "Kode Rahasia harus terdiri 6 karakter, alfanumerik dan tidak terdiri dari tanggal lahir!",
                                 Toast.LENGTH_LONG).show();
                     }
                 } else{
                     Toast.makeText(this, "Kode baru dan Re-type kode tidak sama!", Toast.LENGTH_LONG).show();
                 }
             } else{
-                Toast.makeText(this, "Kode lama salah!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Kode sekarang salah!", Toast.LENGTH_LONG).show();
             }
         } else{
             Toast.makeText(this, "Semua kolom harus terisi!", Toast.LENGTH_LONG).show();
@@ -302,6 +306,14 @@ public class SettingActivity extends AppCompatActivity {
     private void loadLoginView(){
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
+        spEdit.putString("id", "");
+        spEdit.putString("name", "");
+        spEdit.putString("username", "");
+        spEdit.putString("password", "");
+        spEdit.putString("code", "");
+        spEdit.putString("birthday", "");
+        spEdit.putString("rekeningNum", "");
+        spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
         Intent intent = new Intent(this, MainActivity.class);

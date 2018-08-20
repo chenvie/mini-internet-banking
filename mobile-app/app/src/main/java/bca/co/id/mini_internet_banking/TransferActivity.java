@@ -21,7 +21,7 @@ public class TransferActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Button btnSubmitTransfer;
     private LinearLayout inputCode;
-    private EditText txtNorekTransfer, txtNominalTransfer, txtKetTransfer, txtCodeTransfer;
+    private EditText inputNorekTransfer, inputNominalTransfer, inputKetTransfer;
 
     private SharedPreferences sp;
 
@@ -30,14 +30,13 @@ public class TransferActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
 
-        sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
+        sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
-        btnSubmitTransfer = findViewById(R.id.btnSumbitTransfer);
+        btnSubmitTransfer = findViewById(R.id.btnSubmitTransfer);
         inputCode = findViewById(R.id.inputCode);
-        txtNorekTransfer = findViewById(R.id.txtNoRekTransfer);
-        txtNominalTransfer = findViewById(R.id.txtNominalTransfer);
-        txtKetTransfer = findViewById(R.id.txtKetTransfer);
-        txtCodeTransfer = findViewById(R.id.txtCodeTransfer);
+        inputNorekTransfer = findViewById(R.id.inputNoRekTransfer);
+        inputNominalTransfer = findViewById(R.id.inputNominalTransfer);
+        inputKetTransfer = findViewById(R.id.inputKetTransfer);
 
         Toolbar toolbar = findViewById(R.id.transfer_toolbar);
         setSupportActionBar(toolbar);
@@ -74,13 +73,6 @@ public class TransferActivity extends AppCompatActivity {
                     }
                 });
 
-        txtNominalTransfer.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                inputCode.setVisibility(View.VISIBLE);
-            }
-        });
-
         btnSubmitTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,33 +82,19 @@ public class TransferActivity extends AppCompatActivity {
     }
 
     private void submitTransfer(){
-        String noRek = txtNorekTransfer.getText().toString();
-        String nominal = txtNominalTransfer.getText().toString();
-        String ket = txtKetTransfer.getText().toString();
-        String code = txtCodeTransfer.getText().toString();
+        String noRek = inputNorekTransfer.getText().toString();
+        String nominal = inputNominalTransfer.getText().toString();
+        String ket = inputKetTransfer.getText().toString();
 
-        Intent intent = new Intent(this, TransferStatusActivity.class);
+        Intent intent = new Intent(this, TransferCodeActivity.class);
 
-        if (!noRek.equals("") && !nominal.equals("") && !ket.equals("") && !(code.equals(""))){
-            if (code.equals(Nasabah.code)) {
-                double temp = Nasabah.saldo - Double.parseDouble(nominal);
-                if (temp > 0) {
-                    Nasabah.saldo = temp;
-
-                    intent.putExtra("noRek", noRek);
-                    intent.putExtra("nominal", nominal);
-                    intent.putExtra("ket", ket);
-                    intent.putExtra("status", true);
-                    startActivity(intent);
-                } else {
-                    intent.putExtra("status", false);
-                    startActivity(intent);
-                }
-            } else{
-                Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
-            }
+        if (!noRek.equals("") && !nominal.equals("") && !ket.equals("")){
+            intent.putExtra("noRek", noRek);
+            intent.putExtra("nominal", nominal);
+            intent.putExtra("ket", ket);
+            startActivity(intent);
         } else{
-            Toast.makeText(this, "Semua kolom harus diisi!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -169,6 +147,14 @@ public class TransferActivity extends AppCompatActivity {
     private void loadLoginView(){
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
+        spEdit.putString("id", "");
+        spEdit.putString("name", "");
+        spEdit.putString("username", "");
+        spEdit.putString("password", "");
+        spEdit.putString("code", "");
+        spEdit.putString("birthday", "");
+        spEdit.putString("rekeningNum", "");
+        spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
         Intent intent = new Intent(this, MainActivity.class);

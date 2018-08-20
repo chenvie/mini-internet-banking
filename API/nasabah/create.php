@@ -60,7 +60,8 @@ $data = json_decode(file_get_contents("php://input"));
         // create new nasabah
                 if($nasabah->create()){
                     echo json_encode(
-                        array("message" => "Pendaftaran berhasil")
+                        array("message" => "Pendaftaran berhasil",
+                        "username" => $nasabah->username)
                     );
                 }
 

@@ -53,7 +53,7 @@
                     android:layout_weight="1"/>
 
                 <EditText
-                    android:id="@+id/txtNoHpBuying"
+                    android:id="@+id/inputNoHpBuying"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:fontFamily="casual"
@@ -76,7 +76,7 @@
                     android:layout_weight="1"/>
 
                 <Spinner
-                    android:id="@+id/txtProviderBuying"
+                    android:id="@+id/inputProviderBuying"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown">
@@ -99,36 +99,11 @@
                     android:layout_weight="1"/>
 
                 <Spinner
-                    android:id="@+id/txtNominalBuying"
+                    android:id="@+id/inputNominalBuying"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown">
                 </Spinner>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/inputCodeBuying"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="invisible">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/code"
-                    android:fontFamily="casual"
-                    android:textSize="15sp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/txtCodeBuying"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:fontFamily="casual"
-                    android:layout_weight="1"
-                    android:inputType="textPassword"/>
             </LinearLayout>
 
             <Button

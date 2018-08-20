@@ -1,29 +1,50 @@
 package bca.co.id.mini_internet_banking;
 
 import android.app.DatePickerDialog;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import cz.msebera.android.httpclient.Header;
 
 public class NewRekeningActivity extends AppCompatActivity {
     private EditText new_name, new_email, new_password, new_ktp, new_birthday, new_address, new_code;
     private Button btnSubmitRekening;
     Calendar myCalendar = Calendar.getInstance();
+    private String TAG = NewRekeningActivity.class.getSimpleName();
+    private Context mContext;
+    private SharedPreferences sp;
+    private String id, username, name, password, code, birthday, rekeningNum, saldo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_new_rekening);
+
+        mContext = this;
+
+        sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
         new_name = findViewById(R.id.new_name);
         new_email = findViewById(R.id.new_email);
@@ -64,35 +85,151 @@ public class NewRekeningActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         new_birthday.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void submitNewRekening(){
-        String name = new_name.getText().toString();
-        String email = new_email.getText().toString();
-        String password = new_password.getText().toString();
-        String ktp = new_ktp.getText().toString();
-        String birthday = new_birthday.getText().toString();
-        String address = new_address.getText().toString();
-        String code = new_code.getText().toString();
+        final String name = new_name.getText().toString();
+        final String email = new_email.getText().toString();
+        final String password = new_password.getText().toString();
+        final String ktp = new_ktp.getText().toString();
+        final String birthday = new_birthday.getText().toString();
+        final String address = new_address.getText().toString();
+        final String code = new_code.getText().toString();
 
-        if(PasswordStrength.calculateStrength(password). getValue() < PasswordStrength.MEDIUM.getValue()){
-            Toast.makeText(this, "Pembukaan Rekening Berhasil!", Toast.LENGTH_LONG).show();
-            Nasabah.name = name;
-            Nasabah.email = email;
-            Nasabah.password = password;
-            Nasabah.ktpNum = ktp;
-            Nasabah.birthday = birthday;
-            Nasabah.address = address;
-            Nasabah.code = code;
-            Intent intent = new Intent(this, NewUsernameActivity.class);
-            startActivity(intent);
-            finish();
+        Nasabah.birthday = birthday;
+
+        if(PasswordStrength.calculateStrength(password).getValue() > PasswordStrength.MEDIUM.getValue()){
+            if (CodeStrength.calculateStrength(code).getValue() > CodeStrength.MEDIUM.getValue()) {
+
+                AsyncHttpClient client = new AsyncHttpClient();
+                RequestParams rp = new RequestParams();
+                rp.add("nama_lengkap", name);
+                rp.add("email", email);
+                rp.add("password", password);
+                rp.add("no_ktp", ktp);
+                rp.add("tgl_lahir", birthday);
+                rp.add("alamat", address);
+                rp.add("kode_rahasia", code);
+
+                client.post("http://192.168.43.234/mini-internet-banking/API/nasabah/create.php", rp, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        String json = new String(responseBody);
+                        int jsonStart = json.indexOf("{");
+                        int jsonEnd = json.indexOf("}");
+
+                        if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                            json = json.substring(jsonStart, jsonEnd+1);
+                        }
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            String result = jsonObject.getString("message");
+
+                            if (result.equalsIgnoreCase("pendaftaran berhasil")){
+                                Nasabah.name = name;
+                                Nasabah.email = email;
+                                Nasabah.password = password;
+                                Nasabah.ktpNum = ktp;
+                                Nasabah.birthday = birthday;
+                                Nasabah.address = address;
+                                Nasabah.code = code;
+
+                                if (getNasabahData()){
+                                    Toast.makeText(mContext, "Pembukaan Rekening Berhasil!", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(mContext, NewUsernameActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                        } catch (final JSONException e) {
+                            Log.e(TAG, "Json parsing error login: " + e.getMessage());
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(),"Json parsing error login: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                    }
+                });
+            } else{
+                Toast.makeText(this, "Kode Rahasia harus terdiri 6 karakter, alfanumerik dan tidak terdiri dari tanggal lahir", Toast.LENGTH_LONG).show();
+            }
         } else{
-            Toast.makeText(this, "Password harus terdiri min 8 karakter dan alfanumerik!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Password harus terdiri min 8 karakter, alfanumerik dan tidak terdiri dari tanggal lahir!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private boolean getNasabahData() throws JSONException {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams rp = new RequestParams();
+        rp.add("id", Nasabah.username);
+        client.get(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/read-one.php", rp, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String json = new String(responseBody);
+                try{
+                    JSONObject jsonObject = new JSONObject(json);
+
+                    id = jsonObject.getString("id");
+                    username = jsonObject.getString("username");
+                    password = jsonObject.getString("password");
+                    name = jsonObject.getString("nama_lengkap");
+                    code = jsonObject.getString("kode_rahasia");
+                    birthday = jsonObject.getString("tgl_lahir");
+                    rekeningNum = jsonObject.getString("no_rek");
+                    saldo = jsonObject.getString("jml_saldo");
+
+                    Nasabah.id = id;
+                    Nasabah.name = name;
+                    Nasabah.username = username;
+                    Nasabah.password = password;
+                    Nasabah.code = code;
+                    Nasabah.birthday = birthday;
+                    Nasabah.rekeningNum = rekeningNum;
+                    if (saldo != null && saldo != "") {
+                        Nasabah.saldo = Float.parseFloat(saldo);
+                    }else{
+                        Nasabah.saldo = 0;
+                    }
+
+                    SharedPreferences.Editor spEdit = sp.edit();
+                    spEdit.putBoolean("isLogin", true);
+                    spEdit.putString("id", Nasabah.id);
+                    spEdit.putString("name", Nasabah.name);
+                    spEdit.putString("username", Nasabah.username);
+                    spEdit.putString("password", Nasabah.password);
+                    spEdit.putString("code", Nasabah.code);
+                    spEdit.putString("birthday", Nasabah.birthday);
+                    spEdit.putString("rekeningNum", Nasabah.rekeningNum);
+                    spEdit.putFloat("saldo", Nasabah.saldo);
+                    spEdit.commit();
+                } catch(final JSONException e){
+                    Log.e(TAG, "Json parsing error get data: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),"Json parsing error get data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+        return true;
     }
 }

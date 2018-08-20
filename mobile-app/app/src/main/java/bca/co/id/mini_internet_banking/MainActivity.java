@@ -31,11 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtNewRekening;
     private Context mContext;
     private String TAG = MainActivity.class.getSimpleName();
-
-    private String id, username, name, password, code, rekeningNum, saldo;
-
+    private String id, username, name, password, code, birthday, rekeningNum, saldo;
     private SharedPreferences sp;
-    private DBExecQuery dbQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +41,17 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
 
-        sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
-        dbQuery = new DBExecQuery(this);
+        sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
         if (sp.getBoolean("isLogin", false)){
-            dbQuery.readLocalData();
+            Nasabah.id = sp.getString("id", "");
+            Nasabah.name = sp.getString("name", "");
+            Nasabah.username = sp.getString("username", "");
+            Nasabah.password = sp.getString("password", "");
+            Nasabah.code = sp.getString("code", "");
+            Nasabah.birthday = sp.getString("birthday", "");
+            Nasabah.rekeningNum = sp.getString("rekeningNum", "");
+            Nasabah.saldo = sp.getFloat("saldo", 0);
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();
@@ -82,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(){
-        String username = txtUname_login.getText().toString();
-        String password = txtPwd_login.getText().toString();
+        final String username = txtUname_login.getText().toString();
+        final String password = txtPwd_login.getText().toString();
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams rp = new RequestParams();
@@ -104,10 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(json);
                     String login = jsonObject.getString("login");
                     if (login.equalsIgnoreCase("true")){
-                        SharedPreferences.Editor spEdit = sp.edit();
-                        spEdit.putBoolean("isLogin", true);
-                        spEdit.commit();
-                        Nasabah.id = id;
+                        Nasabah.username = username;
 
                         try {
                             if (getNasabahData()){
@@ -161,50 +161,40 @@ public class MainActivity extends AppCompatActivity {
                     password = jsonObject.getString("password");
                     name = jsonObject.getString("nama_lengkap");
                     code = jsonObject.getString("kode_rahasia");
+                    birthday = jsonObject.getString("tgl_lahir");
+                    rekeningNum = jsonObject.getString("no_rek");
+                    saldo = jsonObject.getString("jml_saldo");
 
                     Nasabah.id = id;
                     Nasabah.name = name;
                     Nasabah.username = username;
                     Nasabah.password = password;
                     Nasabah.code = code;
+                    Nasabah.birthday = birthday;
+                    Nasabah.rekeningNum = rekeningNum;
+                    if (saldo != null && saldo != "") {
+                        Nasabah.saldo = Float.parseFloat(saldo);
+                    }else{
+                        Nasabah.saldo = 0;
+                    }
 
-                    //Toast.makeText(mContext, "get data success", Toast.LENGTH_LONG).show();
+                    SharedPreferences.Editor spEdit = sp.edit();
+                    spEdit.putBoolean("isLogin", true);
+                    spEdit.putString("id", Nasabah.id);
+                    spEdit.putString("name", Nasabah.name);
+                    spEdit.putString("username", Nasabah.username);
+                    spEdit.putString("password", Nasabah.password);
+                    spEdit.putString("code", Nasabah.code);
+                    spEdit.putString("birthday", Nasabah.birthday);
+                    spEdit.putString("rekeningNum", Nasabah.rekeningNum);
+                    spEdit.putFloat("saldo", Nasabah.saldo);
+                    spEdit.commit();
                 } catch(final JSONException e){
                     Log.e(TAG, "Json parsing error get data: " + e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),"Json parsing error get data: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
-
-        AsyncHttpClient client2 = new AsyncHttpClient();
-        client2.get(this, "http://192.168.43.234/mini-internet-banking/API/nasabah/read-one-saldo.php", rp, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String json = new String(responseBody);
-                try {
-                    JSONObject jsonObject = new JSONObject(json);
-
-                    rekeningNum = jsonObject.getString("no rekening");
-                    saldo = jsonObject.getString("saldo");
-
-                    Nasabah.rekeningNum = rekeningNum;
-                    Nasabah.saldo = Double.parseDouble(saldo);
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error get saldo: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),"Json parsing error get saldo: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }

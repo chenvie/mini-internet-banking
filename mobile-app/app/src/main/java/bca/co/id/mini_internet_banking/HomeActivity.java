@@ -2,8 +2,6 @@ package bca.co.id.mini_internet_banking;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -21,19 +19,15 @@ public class HomeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private LinearLayout menu_balance, menu_mutation, menu_transfer,
                          menu_buying, menu_history, menu_setting;
-    private TextView txtNasabahName;
 
     private SharedPreferences sp;
-    private DBExecQuery dbQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        sp = getSharedPreferences("login_ibank", MODE_PRIVATE);
-        dbQuery = new DBExecQuery(this);
-        dbQuery.saveDataToLocal();
+        sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
         menu_balance = findViewById(R.id.menu_balance);
         menu_mutation = findViewById(R.id.menu_mutation);
@@ -41,9 +35,6 @@ public class HomeActivity extends AppCompatActivity {
         menu_buying = findViewById(R.id.menu_buying);
         menu_history = findViewById(R.id.menu_history);
         menu_setting = findViewById(R.id.menu_setting);
-        txtNasabahName = findViewById(R.id.txtNasabahName);
-
-        txtNasabahName.setText(Nasabah.name);
 
         menu_balance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +163,14 @@ public class HomeActivity extends AppCompatActivity {
     private void loadLoginView(){
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
+        spEdit.putString("id", "");
+        spEdit.putString("name", "");
+        spEdit.putString("username", "");
+        spEdit.putString("password", "");
+        spEdit.putString("code", "");
+        spEdit.putString("birthday", "");
+        spEdit.putString("rekeningNum", "");
+        spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
         Intent intent = new Intent(this, MainActivity.class);

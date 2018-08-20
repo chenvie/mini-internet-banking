@@ -12,46 +12,49 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class BuyingActivity extends AppCompatActivity {
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+public class TransferCodeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private TextView inputNoHpBuying;
-    private Spinner inputProviderBuying, inputNominalBuying;
-    private Button btnSubmitBuying;
+    private Button btnTransferWithCode;
+    private TextView txtNorekTransfer, txtNominalTransfer, txtKetTransfer;
+    private EditText txtCodeTransfer;
+    private String noRek, ket, nominal;
+
     private SharedPreferences sp;
-    private static final String[]provider = {"Telkomsel", "Indosat", "XL", "Smartfren"};
-    private static final String[]nominal = {"50000", "100000", "150000"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buying);
+        setContentView(R.layout.activity_transfer_code);
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
-        inputProviderBuying = findViewById(R.id.inputProviderBuying);
-        inputNominalBuying = findViewById(R.id.inputNominalBuying);
-        inputNoHpBuying = findViewById(R.id.inputNoHpBuying);
-        btnSubmitBuying = findViewById(R.id.btnSubmitBuying);
+        btnTransferWithCode = findViewById(R.id.btnTransferWithCode);
+        txtNorekTransfer = findViewById(R.id.txtNoRekTransfer);
+        txtNominalTransfer = findViewById(R.id.txtNominalTransfer);
+        txtKetTransfer = findViewById(R.id.txtKetTransfer);
+        txtCodeTransfer = findViewById(R.id.txtCodeTransfer);
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(BuyingActivity.this,
-                android.R.layout.simple_spinner_item,provider);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        inputProviderBuying.setAdapter(adapter1);
+        NumberFormat formatter = new DecimalFormat("#,###");
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(BuyingActivity.this,
-                android.R.layout.simple_spinner_item,nominal);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        inputNominalBuying.setAdapter(adapter2);
+        Intent intent = getIntent();
+        noRek = intent.getStringExtra("noRek");
+        nominal = intent.getStringExtra("nominal");
+        ket = intent.getStringExtra("ket");
 
-        Toolbar toolbar = findViewById(R.id.buying_toolbar);
+        txtNorekTransfer.setText(noRek);
+        txtNominalTransfer.setText("Rp " + (formatter.format(Float.parseFloat(nominal))).toString() + ",-");
+        txtKetTransfer.setText(ket);
+
+        Toolbar toolbar = findViewById(R.id.transfer_code_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -86,28 +89,38 @@ public class BuyingActivity extends AppCompatActivity {
                     }
                 });
 
-        btnSubmitBuying.setOnClickListener(new View.OnClickListener() {
+        btnTransferWithCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitBuying();
+                submitTransfer();
             }
         });
     }
 
-    private void submitBuying(){
-        String noHp = inputNoHpBuying.getText().toString();
-        String provider = inputProviderBuying.getSelectedItem().toString();
-        String nominal = inputNominalBuying.getSelectedItem().toString();
+    private void submitTransfer(){
+        String code = txtCodeTransfer.getText().toString();
 
-        Intent intent = new Intent(this, BuyingCodeActivity.class);
+        Intent intent = new Intent(this, TransferStatusActivity.class);
 
-        if (!noHp.equals("")){
-            intent.putExtra("noHp", noHp);
-            intent.putExtra("nominal", nominal);
-            intent.putExtra("provider", provider);
-            startActivity(intent);
+        if (code.equals(Nasabah.code)) {
+            float temp = Nasabah.saldo - Float.parseFloat(nominal);
+            if (temp > 0) {
+                Nasabah.saldo = temp;
+
+                intent.putExtra("noRek", noRek);
+                intent.putExtra("nominal", nominal);
+                intent.putExtra("ket", ket);
+                intent.putExtra("status", true);
+                startActivity(intent);
+            } else {
+                intent.putExtra("noRek", noRek);
+                intent.putExtra("nominal", nominal);
+                intent.putExtra("ket", ket);
+                intent.putExtra("status", false);
+                startActivity(intent);
+            }
         } else{
-            Toast.makeText(this, "Nomor HP harus diisi!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }
     }
 
