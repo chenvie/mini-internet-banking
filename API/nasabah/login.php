@@ -15,7 +15,7 @@ include_once '../objects/nasabah.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$nasabah = new nasabah($db);
+$nasabah = new Nasabah($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -28,14 +28,17 @@ $nasabah->password = $data->password;
 // login
 if($nasabah->login()){
     echo json_encode(
-        array("login" => "True")
+        array("login" => "True",
+            "username" => $nasabah->username
+        )
     );
 }
 
 // if unable to login
 else{
     echo json_encode(
-        array("login" => "False")
+        array("login" => "False"
+            )
     );
 }
 ?>

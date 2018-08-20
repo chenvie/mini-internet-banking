@@ -61,7 +61,7 @@ $data = json_decode(file_get_contents("php://input"));
                 if($nasabah->create()){
                     echo json_encode(
                         array("message" => "Pendaftaran berhasil",
-                        "username" => $nasabah->username)
+                            "username" => $nasabah->username)
                     );
                 }
 
