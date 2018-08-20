@@ -12,10 +12,7 @@ class Transfer
     public $id_nasabah;
     public $username;
     public $password;
-    public $tgl_trans;
-    public $status;
     public $kode_rahasia;
-    public $no_rek_asal;
     public $no_rek_tujuan;
     public $nominal;
     public $keterangan;
@@ -280,10 +277,5 @@ class Transfer
         return false;
 
 
-    }
-    // returns true if $needle is a substring of $haystack
-    function contains($needle, $haystack)
-    {
-        return strpos($haystack, $needle) !== false;
     }
 }

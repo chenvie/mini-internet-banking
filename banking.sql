@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2018 at 12:53 PM
+-- Generation Time: Aug 20, 2018 at 11:22 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -68,8 +68,8 @@ CREATE TABLE `nasabah` (
 
 INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `no_rek`, `jml_saldo`, `kode_cabang`, `created`) VALUES
 (1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', '123456', '3323031211960005', '2018-08-06', 'temanggung', '654321', '2141516', 2000000, 'asd1', '2018-08-15 03:04:48'),
-(2, 'boni@gmail.com', 'bonii', 'bonifasius', '812018', '123513163', '2018-02-05', 'magelang', '123', '2491204', 3000000, 'asd1', '2018-08-15 08:10:51'),
-(3, 'asd@gmail.com', 'coba', 'coba', 'coba', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-15 03:04:48'),
+(2, 'boni@gmail.com', 'bonii', 'bonifasius', '812018', '123513163', '2018-02-05', 'magelang', '123', '2491204', 2850000, 'asd1', '2018-08-20 09:20:35'),
+(3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
 (4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
 (6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4500000, 'asd1', '2018-08-15 09:19:19'),
 (7, 'sam@gmail.com', 'sam', 'sam w', 'qwe', '123', '2018-08-02', 'kudus', '123', '037000', 450000, 'asd1', '2018-08-15 04:34:29'),
@@ -78,7 +78,8 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (10, 'kadinugraha@gmail.com', '', 'kristian adi', 'qwe', '123', '2018-08-05', 'godean', '123', '037009', 450000, 'asd1', '2018-08-15 05:47:30'),
 (11, 'kw@gmail.com', 'katon10', 'katon wijana', '123', '123', '2018-08-08', 'godean', '123', '037010', 450000, 'asd1', '2018-08-15 05:49:58'),
 (12, 'hb@gmail.com', 'halim12', 'halim budi', 'qwe', '123', '2018-08-09', 'maguwo', 'qwe', '037011', 450000, 'asd1', '2018-08-15 05:50:53'),
-(13, 'ivan@gmail.com', 'ivan12', 'ivan', 'qwe', '123', '2018-08-03', 'klitren', 'qwe', '037012', 450000, 'asd1', '2018-08-15 05:52:22');
+(13, 'ivan@gmail.com', 'ivan12', 'ivan', 'qwe', '123', '2018-08-03', 'klitren', 'qwe', '037012', 450000, 'asd1', '2018-08-15 05:52:22'),
+(14, '', '13', '', '', '', '2018-08-01', '', '', '037013', 450000, 'asd1', '2018-08-15 21:34:59');
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,8 @@ CREATE TABLE `pulsa` (
 --
 
 INSERT INTO `pulsa` (`kode_pembelian`, `no_hp`, `provider`, `nominal`) VALUES
-('20001', '08978902350', 'Telkomsel', 50000);
+('20004', '08978902350', 'Telkomsel', 50000),
+('20015', '081212515', 'Telkomsel', 50000);
 
 -- --------------------------------------------------------
 
@@ -110,19 +112,30 @@ CREATE TABLE `transaksi` (
   `kode_transaksi` varchar(20) NOT NULL,
   `id_nasabah` int(10) NOT NULL,
   `tgl_trans` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `jenis` varchar(2) NOT NULL,
-  `status` varchar(8) NOT NULL
+  `status` varchar(8) NOT NULL,
+  `ket_status` varchar(70) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`kode_transaksi`, `id_nasabah`, `tgl_trans`, `jenis`, `status`) VALUES
-('10001', 1, '2018-08-13 08:06:41', 'DB', 'Berhasil'),
-('10002', 2, '2018-08-13 08:06:41', 'DB', 'Berhasil'),
-('10003', 2, '2018-08-13 08:06:41', 'DB', 'Gagal'),
-('20001', 1, '2018-08-13 08:06:41', 'DB', 'Berhasil');
+INSERT INTO `transaksi` (`kode_transaksi`, `id_nasabah`, `tgl_trans`, `status`, `ket_status`) VALUES
+('10001', 1, '2018-08-13 08:06:41', 'Berhasil', ''),
+('10002', 2, '2018-08-13 08:06:41', 'Berhasil', ''),
+('10003', 2, '2018-08-13 08:06:41', 'Gagal', ''),
+('10006', 2, '2018-08-20 08:25:47', 'Berhasil', 'Berhasil transfer'),
+('10007', 2, '2018-08-20 08:26:38', 'Berhasil', 'Berhasil transfer'),
+('10008', 2, '2018-08-20 08:38:26', 'Gagal', 'Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda'),
+('10009', 2, '2018-08-20 08:39:31', 'Gagal', 'Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda'),
+('10010', 2, '2018-08-20 08:40:46', 'Berhasil', 'Berhasil transfer'),
+('10011', 2, '2018-08-20 08:41:33', 'Gagal', 'Jumlah yang ditransfer terlalu kecil'),
+('10012', 2, '2018-08-20 08:56:18', 'Gagal', 'Nomor rekening tujuan tidak ditemukan'),
+('10013', 2, '2018-08-20 08:59:37', 'Gagal', 'Kode rahasia salah'),
+('10014', 2, '2018-08-20 09:00:16', 'Gagal', 'Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda'),
+('15', 2, '2018-08-20 08:23:15', 'Berhasil', 'Berhasil transfer'),
+('20004', 1, '2018-08-20 04:19:59', 'Berhasil', ''),
+('20015', 2, '2018-08-20 09:20:35', 'Berhasil', 'Pembelian pulsa berhasil');
 
 -- --------------------------------------------------------
 
@@ -144,7 +157,17 @@ CREATE TABLE `transfer` (
 INSERT INTO `transfer` (`kode_transfer`, `rek_transfer`, `nominal`, `keterangan`) VALUES
 ('10001', '214534', 50000, 'coba'),
 ('10002', '87654', 100000, 'coba 2'),
-('10003', '765421', 30000, 'coba 3');
+('10003', '765421', 30000, 'coba 3'),
+('10006', '2141516', 50000, 'cek'),
+('10007', '2141516', 50000, 'cek'),
+('10008', '2141516', 50000, 'cek'),
+('10009', '2141516', 50000, 'cek'),
+('10010', '2141516', 50000, 'cek'),
+('10011', '2141516', 0, 'cek'),
+('10012', '001', 50000, 'cek'),
+('10013', '2141516', 50000, 'cek'),
+('10014', '2141516', 5000000, 'cek'),
+('15', '2141516', 50000, '');
 
 --
 -- Indexes for dumped tables
@@ -197,7 +220,7 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- Constraints for dumped tables
 --
@@ -212,7 +235,7 @@ ALTER TABLE `nasabah`
 -- Constraints for table `pulsa`
 --
 ALTER TABLE `pulsa`
-  ADD CONSTRAINT `pulsa_ibfk_1` FOREIGN KEY (`kode_pembelian`) REFERENCES `transaksi` (`kode_transaksi`);
+  ADD CONSTRAINT `pulsa_ibfk_1` FOREIGN KEY (`kode_pembelian`) REFERENCES `transaksi` (`kode_transaksi`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `transaksi`
