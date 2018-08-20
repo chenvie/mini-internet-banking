@@ -447,7 +447,6 @@ class Nasabah
     {
         return strpos($haystack, $needle) !== false;
     }
-<<<<<<< HEAD
 
 //    function beli_pulsa(){
 //        $query = "SELECT
@@ -457,8 +456,4 @@ class Nasabah
 //                    where
 //                        id_nasabah = :id_nasabah;
 //    }
-
-    
-=======
->>>>>>> master
 }
