@@ -22,11 +22,13 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class NewRekeningActivity extends AppCompatActivity {
     private EditText new_name, new_email, new_password, new_ktp, new_birthday, new_address, new_code;
@@ -106,62 +108,84 @@ public class NewRekeningActivity extends AppCompatActivity {
             if (CodeStrength.calculateStrength(code).getValue() > CodeStrength.MEDIUM.getValue()) {
 
                 AsyncHttpClient client = new AsyncHttpClient();
-                RequestParams rp = new RequestParams();
+
+                JSONObject jsonParams = new JSONObject();
+                try {
+                    jsonParams.put("nama_lengkap", name);
+                    jsonParams.put("email", email);
+                    jsonParams.put("password", password);
+                    jsonParams.put("no_ktp", ktp);
+                    jsonParams.put("tgl_lahir", birthday);
+                    jsonParams.put("alamat", address);
+                    jsonParams.put("kode_rahasia", code);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    StringEntity entity = new StringEntity(jsonParams.toString());
+
+                /*RequestParams rp = new RequestParams();
                 rp.add("nama_lengkap", name);
                 rp.add("email", email);
                 rp.add("password", password);
                 rp.add("no_ktp", ktp);
                 rp.add("tgl_lahir", birthday);
                 rp.add("alamat", address);
-                rp.add("kode_rahasia", code);
+                rp.add("kode_rahasia", code);*/
 
-                client.post("http://192.168.43.234/mini-internet-banking/API/nasabah/create.php", rp, new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        String json = new String(responseBody);
-                        int jsonStart = json.indexOf("{");
-                        int jsonEnd = json.indexOf("}");
+                    client.post(mContext, "http://192.168.43.234/mini-internet-banking/API/nasabah/create.php", entity, "application/json",  new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            String json = new String(responseBody);
+                            int jsonStart = json.indexOf("{");
+                            int jsonEnd = json.indexOf("}");
 
-                        if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
-                            json = json.substring(jsonStart, jsonEnd+1);
-                        }
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(json);
-                            String result = jsonObject.getString("message");
-
-                            if (result.equalsIgnoreCase("pendaftaran berhasil")){
-                                Nasabah.name = name;
-                                Nasabah.email = email;
-                                Nasabah.password = password;
-                                Nasabah.ktpNum = ktp;
-                                Nasabah.birthday = birthday;
-                                Nasabah.address = address;
-                                Nasabah.code = code;
-
-                                if (getNasabahData()){
-                                    Toast.makeText(mContext, "Pembukaan Rekening Berhasil!", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(mContext, NewUsernameActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
+                            if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                                json = json.substring(jsonStart, jsonEnd+1);
                             }
-                        } catch (final JSONException e) {
-                            Log.e(TAG, "Json parsing error login: " + e.getMessage());
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(),"Json parsing error login: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(json);
+                                String result = jsonObject.getString("message");
+                                String username = jsonObject.getString("username");
+
+                                if (result.equalsIgnoreCase("pendaftaran berhasil")){
+                                    Nasabah.name = name;
+                                    Nasabah.username = username;
+                                    Nasabah.email = email;
+                                    Nasabah.password = password;
+                                    Nasabah.ktpNum = ktp;
+                                    Nasabah.birthday = birthday;
+                                    Nasabah.address = address;
+                                    Nasabah.code = code;
+
+                                    if (getNasabahData()){
+                                        Toast.makeText(mContext, "Pembukaan Rekening Berhasil!", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(mContext, NewUsernameActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }
-                            });
+                            } catch (final JSONException e) {
+                                Log.e(TAG, "Json parsing error open rek: " + e.getMessage());
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(),"Json parsing error login: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-                    }
-                });
+                        }
+                    });
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             } else{
                 Toast.makeText(this, "Kode Rahasia harus terdiri 6 karakter, alfanumerik dan tidak terdiri dari tanggal lahir", Toast.LENGTH_LONG).show();
             }
