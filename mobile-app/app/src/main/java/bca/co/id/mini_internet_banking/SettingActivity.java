@@ -138,7 +138,7 @@ public class SettingActivity extends AppCompatActivity {
                         try {
                             StringEntity entity = new StringEntity(jsonParams.toString());
 
-                            client.post(mContext, "http://192.168.43.234/mini-internet-banking/API/nasabah/update_password.php", entity, "application/json", new AsyncHttpResponseHandler() {
+                            client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/update_password.php", entity, "application/json", new AsyncHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                     String json = new String(responseBody);
@@ -233,7 +233,7 @@ public class SettingActivity extends AppCompatActivity {
                         try {
                             StringEntity entity = new StringEntity(jsonParams.toString());
 
-                            client.post(mContext, "http://192.168.43.234/mini-internet-banking/API/nasabah/update_kode_rahasia.php", entity, "application/json", new AsyncHttpResponseHandler() {
+                            client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/update_kode_rahasia.php", entity, "application/json", new AsyncHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                     String json = new String(responseBody);

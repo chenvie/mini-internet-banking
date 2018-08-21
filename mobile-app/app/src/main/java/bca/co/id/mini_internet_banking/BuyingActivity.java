@@ -1,5 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,14 +21,26 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+
 public class BuyingActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private TextView inputNoHpBuying;
+    private EditText inputNoHpBuying, txtCodeBuying;
     private Spinner inputProviderBuying, inputNominalBuying;
     private Button btnSubmitBuying;
     private SharedPreferences sp;
     private static final String[]provider = {"Telkomsel", "Indosat", "XL", "Smartfren"};
     private static final String[]nominal = {"50000", "100000", "150000"};
+    private Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,10 +48,12 @@ public class BuyingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buying);
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
+        mContext = this;
 
         inputProviderBuying = findViewById(R.id.inputProviderBuying);
         inputNominalBuying = findViewById(R.id.inputNominalBuying);
         inputNoHpBuying = findViewById(R.id.inputNoHpBuying);
+        txtCodeBuying = findViewById(R.id.txtCodeBuying);
         btnSubmitBuying = findViewById(R.id.btnSubmitBuying);
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(BuyingActivity.this,
@@ -98,10 +113,58 @@ public class BuyingActivity extends AppCompatActivity {
         String noHp = inputNoHpBuying.getText().toString();
         String provider = inputProviderBuying.getSelectedItem().toString();
         String nominal = inputNominalBuying.getSelectedItem().toString();
+        String code = txtCodeBuying.getText().toString();
 
         Intent intent = new Intent(this, BuyingCodeActivity.class);
 
         if (!noHp.equals("")){
+            AsyncHttpClient client = new AsyncHttpClient();
+            JSONObject jsonParams = new JSONObject();
+            try {
+                jsonParams.put("username", Nasabah.username);
+                jsonParams.put("no_hp_tujuan", noHp);
+                jsonParams.put("id_nasabah", Nasabah.id);
+                jsonParams.put("provider", provider);
+                jsonParams.put("kode_rahasia", code);
+                jsonParams.put("nominal", nominal);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                StringEntity entity = new StringEntity(jsonParams.toString());
+
+                client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/pulsa/create.php", entity, "application/json", new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        String json = new String(responseBody);
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            String status = jsonObject.getString("transfer");
+                            String message = jsonObject.getString("message");
+
+                            if (status.equalsIgnoreCase("true")){
+                                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(mContext, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else{
+                                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
             intent.putExtra("noHp", noHp);
             intent.putExtra("nominal", nominal);
             intent.putExtra("provider", provider);
