@@ -122,22 +122,26 @@ $nasabah->readOnePwd($data->id_nasabah);
                 //update password
                 if ($nasabah->update_password()) {
                     echo json_encode(
-                        array("message" => "Update password berhasil")
+                        array("update" => true,
+                            "message" => "Update password berhasil")
                     );
                 } // if unable to update the product, tell the user
                 else {
                     echo json_encode(
-                        array("message" => "Update password gagal")
+                        array("update" => false,
+                            "message" => "Update password gagal")
                     );
                 }
             } else {
                 echo json_encode(
-                    array("message" => "password baru tidak sama")
+                    array("update" => false,
+                        "message" => "password baru tidak sama")
                 );
             }
         } else {
             echo json_encode(
-                array("message" => "password lama salah")
+                array("update" => false,
+                    "message" => "password lama salah")
             );
         }
 

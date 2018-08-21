@@ -53,21 +53,13 @@ if($num>0){
             "nominal" => $nominal,
             "status" => $status
         );
-
         array_push($history_arr["records"], $history_item);
     }
-
     echo json_encode($history_arr);
 }
-
 else{
     echo json_encode(
-        array("message" => "Belum ada mutasi dalam 7 hari terakhir.")
+        array("message" => "Tidak ada history diantara hari yang dipilih.")
     );
 }
-//echo json_encode(
-//  array("tgl1" => $transaksi->tgl_awal,
-//      "tgl2" => $transaksi->tgl_akhir,
-//  "id" => $transaksi->id_nasabah)
-//);
 ?>

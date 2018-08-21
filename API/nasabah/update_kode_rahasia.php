@@ -38,23 +38,27 @@ if ($data->kode_rahasiaL == $nasabah->kode_rahasia) {
 // update the product
         if ($nasabah->update_kode_rahasia()) {
             echo json_encode(
-                array("message" => "Update kode rahasia berhasil")
+                array("update" => true,
+                    "message" => "Update kode rahasia berhasil")
             );
         } // if unable to update the product, tell the user
         else {
             echo json_encode(
-                array("message" => "Update kode rahasia gagal")
+                array("update" => false,
+                    "message" => "Update kode rahasia gagal")
             );
         }
     } else {
         echo json_encode(
-            array("message" => "Kode rahasia baru tidak sama")
+            array("update" => false,
+                "message" => "Kode rahasia baru tidak sama")
         );
     }
 }else
 {
     echo json_encode(
-            array("message" => "Kode rahasia lama salah")
+            array("update" => false,
+                "message" => "Kode rahasia lama salah")
     );
 }
 ?>

@@ -233,7 +233,7 @@ class Nasabah
         $stmt = $this->conn->prepare($query);
 
         // bind id of products to be updated
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(1, $this->username);
 
         // execute query
         $stmt->execute();

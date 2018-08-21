@@ -16,7 +16,7 @@ $transaksi = new Transaksi($db);
 
 //mendapat
 $transaksi->id_nasabah = isset($_GET['id']) ? $_GET['id'] : die();
-$transaksi->tgl = isset($_GET['tgl']) ? $_GET['tgl'] : die();
+$transaksi->tgl = date('Y-m-d');
 
 // query products
 $stmt = $transaksi->readMutasi();

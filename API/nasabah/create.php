@@ -47,7 +47,7 @@ $data = json_decode(file_get_contents("php://input"));
 //    if (ctype_alnum($data->kode_rahasia) and strlen($data->kode_rahasia)==6){
 
         // set products property values
-                //$nasabah->id_nasabah = $data->id_nasabah;
+                //input dari json
                 $nasabah->nama_lengkap = $data->nama_lengkap;
                 $nasabah->email = $data->email;
                 $nasabah->password = $data->password;
