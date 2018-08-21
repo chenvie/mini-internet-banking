@@ -20,6 +20,7 @@ class Transfer
     public $jml_trans;
     public $cekr;
     public $jml_saldo;
+    public $jml_saldo_tujuan;
     public $message;
     public $status;
 
@@ -167,10 +168,20 @@ class Transfer
 
     function getSaldo($id)
     {
-        $sql = "SELECT jml_saldo FROM " . $this->table_name2 . " WHERE id_nasabah=:id_nasabah";
+        if ($id == $this->id_nasabah)
+        {
+            $c = 'id_nasabah=:id_nasabah';
+            $c2 = ':id_nasabah';
+        }
+        else
+        {
+            $c = 'no_rek=:no_rek';
+            $c2 = ':no_rek';
+        }
+        $sql = "SELECT jml_saldo FROM " . $this->table_name2 . " WHERE " .$c;
         $stmt = $this->conn->prepare($sql);
         $id = htmlspecialchars(strip_tags($id));
-        $stmt->bindParam(":id_nasabah", $id);
+        $stmt->bindParam($c2, $id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $cek = $row['jml_saldo'];
@@ -181,6 +192,7 @@ class Transfer
     function create()
     {
         $this->jml_saldo = $this->getSaldo($this->id_nasabah);
+        $this->jml_saldo_tujuan = $this->getSaldo($this->no_rek_tujuan);
         if($this->cekKodeRahasia($this->username,$this->kode_rahasia) == false)
         {
             $this->message = "Kode rahasia salah";
@@ -214,6 +226,28 @@ class Transfer
                 // bind values
                 $stmt->bindParam(":jml_saldo", $this->jml_saldo);
                 $stmt->bindParam(":id_nasabah", $this->id_nasabah);
+
+                $stmt->execute();
+
+                $this->jml_saldo_tujuan = $this->jml_saldo_tujuan + $this->nominal;
+
+                $query = "UPDATE
+                " . $this->table_name2 . "
+                SET
+                jml_saldo=:jml_saldo
+                WHERE
+                no_rek=:no_rek";
+
+                // prepare query
+                $stmt = $this->conn->prepare($query);
+
+                // sanitize
+                $this->jml_saldo_tujuan = htmlspecialchars(strip_tags($this->jml_saldo_tujuan));
+                $this->no_rek_tujuan = htmlspecialchars(strip_tags($this->no_rek_tujuan));
+
+                // bind values
+                $stmt->bindParam(":jml_saldo", $this->jml_saldo_tujuan);
+                $stmt->bindParam(":no_rek", $this->no_rek_tujuan);
 
                 $stmt->execute();
 
