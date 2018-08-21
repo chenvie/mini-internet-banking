@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TransferComponent implements OnInit {
 
   @Input() page: number;
+  @Input() norek: string;
   changeLog: string[] = [];
 
   constructor() { }

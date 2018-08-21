@@ -1,5 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,12 +18,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+
 public class TransferActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Button btnSubmitTransfer;
     private LinearLayout inputCode;
     private EditText inputNorekTransfer, inputNominalTransfer, inputKetTransfer;
-
+    private Context mContext;
     private SharedPreferences sp;
 
     @Override
@@ -31,6 +43,7 @@ public class TransferActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transfer);
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
+        mContext = this;
 
         btnSubmitTransfer = findViewById(R.id.btnSubmitTransfer);
         inputCode = findViewById(R.id.inputCode);
@@ -82,17 +95,66 @@ public class TransferActivity extends AppCompatActivity {
     }
 
     private void submitTransfer(){
-        String noRek = inputNorekTransfer.getText().toString();
-        String nominal = inputNominalTransfer.getText().toString();
-        String ket = inputKetTransfer.getText().toString();
+        final String noRek = inputNorekTransfer.getText().toString();
+        final String nominal = inputNominalTransfer.getText().toString();
+        final String ket = inputKetTransfer.getText().toString();
 
-        Intent intent = new Intent(this, TransferCodeActivity.class);
+        final Intent intent = new Intent(this, TransferCodeActivity.class);
 
         if (!noRek.equals("") && !nominal.equals("") && !ket.equals("")){
-            intent.putExtra("noRek", noRek);
-            intent.putExtra("nominal", nominal);
-            intent.putExtra("ket", ket);
-            startActivity(intent);
+            AsyncHttpClient client = new AsyncHttpClient();
+            JSONObject jsonParams = new JSONObject();
+
+            try {
+                jsonParams.put("no_rek_tujuan", noRek);
+                jsonParams.put("id_nasabah", Nasabah.id);
+                jsonParams.put("nominal", nominal);
+                jsonParams.put("keterangan", ket);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                StringEntity entity = new StringEntity(jsonParams.toString());
+
+                client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/transfer/cek-no-rek.php", entity, "application/json", new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        String json = new String(responseBody);
+                        int jsonStart = json.indexOf("{");
+                        int jsonEnd = json.indexOf("}");
+
+                        if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                            json = json.substring(jsonStart, jsonEnd+1);
+                        }
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+
+                            String check = jsonObject.getString("check");
+                            String message = jsonObject.getString("message");
+
+                            if (check.equalsIgnoreCase("true")){
+                                intent.putExtra("noRek", message);
+                                intent.putExtra("nominal", nominal);
+                                intent.putExtra("ket", ket);
+                                startActivity(intent);
+                            } else{
+                                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         } else{
             Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }

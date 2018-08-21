@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -10,6 +10,7 @@ export class MutasiRekComponent implements OnInit {
 
   curDate: any;
   fromDate: any;
+  @Input() norek: string;
 
   constructor() { }
 

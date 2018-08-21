@@ -1,4 +1,4 @@
-<div *ngIf="loginInfo.isLoggedIn === 'False'">
+<div *ngIf="!loginInfo.isLoggedIn === false">
   <app-register style="float: left;"></app-register>
   <div id="loginsection" style="float: right;">
   username<input type="text" [(ngModel)]="userLogin.username"><br><br>
@@ -7,5 +7,5 @@
   <input type="button" value="Login" style="float: right" (click)="login()">
   </div>
 </div>
-<app-main-screen *ngIf="loginInfo.isLoggedIn === 'True'"></app-main-screen>
+<app-main-screen *ngIf="!loginInfo.isLoggedIn === true"></app-main-screen> <!-- add binding after testing -->
 

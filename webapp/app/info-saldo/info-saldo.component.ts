@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { InfoRekService } from '../info-rek.service';
 
 @Component({
   selector: 'app-info-saldo',
@@ -9,21 +8,11 @@ import { InfoRekService } from '../info-rek.service';
 
 export class InfoSaldoComponent implements OnInit {
 
-  saldo = {
-    norek: null,
-    saldo: null
-  };
+  @Input() norek: string;
+  @Input() saldo: string;
 
-  constructor(private info: InfoRekService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.getSaldo();
-  }
-
-  getSaldo(): void {
-    this.info.getSaldo(2).subscribe((data: any) => this.saldo = {
-      norek: data['no rekening'],
-      saldo: data['saldo']
-    });
   }
 }

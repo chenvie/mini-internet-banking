@@ -65,4 +65,8 @@ export class InputValidatorService {
     if (sequence === moment(tanggal).format('YYYYMMDD')) { return false; }
     return true;
   }
+
+  validatePembelian(dataBeli: any): boolean {
+    return dataBeli.no_hp !== null && dataBeli.provider !== null && dataBeli.nominal !== null;
+  }
 }
