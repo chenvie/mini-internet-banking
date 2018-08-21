@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // get database connection
 include_once '../config/database.php';
 
-// instantiate products object
+// instantiate pulsa object
 include_once '../objects/pulsa.php';
 
 $database = new Database();
@@ -20,7 +20,7 @@ $pulsa = new Pulsa($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// set products property values
+// set pulsa property values
 $pulsa->username = $data->username;
 $pulsa->no_hp_tujuan = $data->no_hp_tujuan;
 $pulsa->id_nasabah = $data->id_nasabah;
@@ -28,7 +28,7 @@ $pulsa->provider = $data->provider;
 $pulsa->kode_rahasia = $data->kode_rahasia;
 $pulsa->nominal = $data->nominal;
 
-// create new transaksi transfer
+// create new transaksi pembelian pulsa
 if($pulsa->create()){
     echo json_encode(
         array("pulsa" => true,

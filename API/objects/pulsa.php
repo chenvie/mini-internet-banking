@@ -47,6 +47,7 @@ class Pulsa
         return $c;
     }
 
+    // untuk cek kode rahasia
     function cekKodeRahasia($uname,$kr)
     {
         $query = "SELECT  kode_rahasia from 
@@ -76,6 +77,7 @@ class Pulsa
         return false;
     }
 
+    //mendapat saldo dari satu nasabah
     function getSaldo($id)
     {
         $sql = "SELECT jml_saldo FROM " . $this->table_name2 . " WHERE id_nasabah=:id_nasabah";
@@ -88,7 +90,7 @@ class Pulsa
         return $cek;
     }
 
-    //transfer
+    //beli pulsa dan simpan di tabel transaksi dan pulsa
     function create()
     {
         $this->jml_saldo = $this->getSaldo($this->id_nasabah);

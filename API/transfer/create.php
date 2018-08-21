@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // get database connection
 include_once '../config/database.php';
 
-// instantiate products object
+// instantiate transfer object
 include_once '../objects/transfer.php';
 
 $database = new Database();
@@ -20,7 +20,7 @@ $transfer = new Transfer($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// set products property values
+// set transfer property values
 $transfer->username = $data->username;
 $transfer->no_rek_tujuan = $data->no_rek_tujuan;
 $transfer->id_nasabah = $data->id_nasabah;

@@ -23,6 +23,7 @@ class Transaksi
         $this->conn = $db;
     }
 
+    //mendapat nomor rekening dari suatu nasabah
     function getNoRek($id)
     {
         // query to read single record
@@ -51,6 +52,7 @@ class Transaksi
         $this->no_rek = $row['no_rek'];
     }
 
+    //cek mutasi yang terjadi
     function readMutasi()
     {
         $this->getNoRek($this->id_nasabah);
@@ -87,6 +89,7 @@ class Transaksi
         return $stmt;
     }
 
+    //cek history yang sudah terjadi
     function readHistory()
 {
     // select all mutasi untuk nasabah tertentu query

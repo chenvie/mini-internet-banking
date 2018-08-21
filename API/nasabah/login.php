@@ -20,7 +20,7 @@ $nasabah = new Nasabah($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// set products property values
+// set nasabah property values
 $nasabah->username = $data->username;
 $nasabah->password = $data->password;
 

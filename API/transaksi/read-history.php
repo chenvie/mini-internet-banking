@@ -7,7 +7,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once '../config/database.php';
 include_once '../objects/transaksi.php';
 
-// instantiate database and products object
+// instantiate database and transaksi object
 $database = new Database();
 $db = $database->getConnection();
 
@@ -19,14 +19,14 @@ $transaksi->id_nasabah = isset($_GET['id']) ? $_GET['id'] : die();
 $transaksi->tgl_awal = isset($_GET['tgl_awal']) ? $_GET['tgl_awal'] : die();
 $transaksi->tgl_akhir = isset($_GET['tgl_akhir']) ? $_GET['tgl_akhir'] : die();
 
-// query products
+// query transaksi
 $stmt = $transaksi->readHistory();
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
 if($num>0){
 
-    // products array
+    // history array
     $history_arr=array();
     $history_arr["tanggal"]=array();
     $history_arr["records"]=array();

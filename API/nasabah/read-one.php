@@ -16,10 +16,10 @@ $db = $database->getConnection();
 // prepare product object
 $nasabah = new Nasabah($db);
 
-// set ID property of product to be edited
+// set ID property of nasabah to get the data
 $nasabah->username = isset($_GET['unm']) ? $_GET['unm'] : die();
 
-// read the details of product to be edited
+// read the details of nasabah
 $nasabah->readOne();
 
 // create array

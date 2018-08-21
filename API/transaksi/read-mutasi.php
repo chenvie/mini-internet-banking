@@ -7,7 +7,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once '../config/database.php';
 include_once '../objects/transaksi.php';
 
-// instantiate database and products object
+// instantiate database and transaksi object
 $database = new Database();
 $db = $database->getConnection();
 
@@ -18,14 +18,14 @@ $transaksi = new Transaksi($db);
 $transaksi->id_nasabah = isset($_GET['id']) ? $_GET['id'] : die();
 $transaksi->tgl = date('Y-m-d');
 
-// query products
+// query mutasi
 $stmt = $transaksi->readMutasi();
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
 if($num>0){
 
-    // products array
+    // mutasi array
     $mutasi_arr=array();
     $mutasi_arr["tanggal"]=array();
     $mutasi_arr["records"]=array();
@@ -66,8 +66,4 @@ else{
         array("message" => "Belum ada mutasi dalam 7 hari terakhir.")
     );
 }
-//echo json_encode(
-//  array("tgl" => $transaksi->tgl,
-//  "id" => $transaksi->id_nasabah)
-//);
 ?>

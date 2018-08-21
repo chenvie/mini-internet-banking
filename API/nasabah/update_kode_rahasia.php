@@ -14,10 +14,10 @@ include_once '../objects/nasabah.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare product object
+// prepare nasabah object
 $nasabah = new Nasabah($db);
  
-// get id of product to be edited
+// get id of nasabah to be edited
 $data = json_decode(file_get_contents("php://input"));
 
 // set ID property of nasabah to be edited
@@ -30,18 +30,18 @@ if ($data->kode_rahasiaL == $nasabah->kode_rahasia) {
 
     if ($data->krb1 == $data->krb2) {
 
-// set product property values
+// set nasabah property values
         $nasabah->baru1 = $data->krb1;
         $nasabah->baru2 = $data->krb2;
 
 
-// update the product
+// update the nasabah
         if ($nasabah->update_kode_rahasia()) {
             echo json_encode(
                 array("update" => true,
                     "message" => "Update kode rahasia berhasil")
             );
-        } // if unable to update the product, tell the user
+        } // if unable to update the nasabah, tell the user
         else {
             echo json_encode(
                 array("update" => false,
