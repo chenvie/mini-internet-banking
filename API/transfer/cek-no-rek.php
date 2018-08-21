@@ -30,7 +30,7 @@ $transfer->keterangan = $data->keterangan;
 if($transfer->cekNoRek()){
     echo json_encode(
         array("check" => "True",
-            "no_rek" => $transfer->no_rek_tujuan
+            "message" => $transfer->no_rek_tujuan
         )
     );
 }

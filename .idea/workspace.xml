@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0ada7616-1278-4f16-bce2-1cdfefe057a9" name="Default" comment="" />
+    <list default="true" id="0ada7616-1278-4f16-bce2-1cdfefe057a9" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,11 +27,9 @@
       <file leaf-file-name="nasabah.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
+            <state relative-caret-position="7565">
               <caret line="445" column="5" lean-forward="false" selection-start-line="445" selection-start-column="5" selection-end-line="445" selection-end-column="5" />
-              <folding>
-                <marker date="1534755749916" expanded="true" signature="19:13724" ph="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -37,7 +37,7 @@
       <file leaf-file-name="read-one.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/API/nasabah/read-one.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
+            <state relative-caret-position="527">
               <caret line="31" column="38" lean-forward="false" selection-start-line="31" selection-start-column="38" selection-end-line="33" selection-end-column="32" />
               <folding />
             </state>
@@ -47,11 +47,10 @@
       <file leaf-file-name="login.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/API/nasabah/login.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
+            <state relative-caret-position="493">
               <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding>
                 <marker date="1534746955133" expanded="true" signature="942:948" ph="..." />
-                <marker date="1534746955133" expanded="true" signature="942:951" ph="..." />
               </folding>
             </state>
           </provider>
@@ -60,16 +59,9 @@
       <file leaf-file-name="create.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="63" column="61" lean-forward="false" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="61" />
-              <folding>
-                <marker date="1534735585624" expanded="true" signature="2915:3122" ph="..." />
-                <marker date="1534735585624" expanded="true" signature="2953:3103" ph="..." />
-                <marker date="1534735585624" expanded="true" signature="2984:3081" ph="..." />
-                <marker date="1534735585624" expanded="true" signature="3204:3346" ph="..." />
-                <marker date="1534735585624" expanded="true" signature="3242:3327" ph="..." />
-                <marker date="1534735585624" expanded="true" signature="3348:3701" ph="//..." />
-              </folding>
+            <state relative-caret-position="549">
+              <caret line="62" column="56" lean-forward="false" selection-start-line="62" selection-start-column="56" selection-end-line="62" selection-end-column="56" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -138,6 +130,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -203,7 +196,6 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -306,11 +298,12 @@
       <workItem from="1534300824307" duration="9936000" />
       <workItem from="1534382188318" duration="2804000" />
       <workItem from="1534729866153" duration="2284000" />
+      <workItem from="1534815365799" duration="1021000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30039000" />
+    <option name="totallyTimeSpent" value="31060000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
@@ -356,11 +349,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3910">
-          <caret line="230" column="24" lean-forward="false" selection-start-line="230" selection-start-column="24" selection-end-line="230" selection-end-column="24" />
-          <folding>
-            <marker date="1534755749916" expanded="true" signature="19:13724" ph="{...}" />
-          </folding>
+        <state relative-caret-position="7565">
+          <caret line="445" column="5" lean-forward="false" selection-start-line="445" selection-start-column="5" selection-end-line="445" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/nasabah/read-one.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="38" lean-forward="false" selection-start-line="31" selection-start-column="38" selection-end-line="33" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -370,7 +369,50 @@
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding>
             <marker date="1534746955133" expanded="true" signature="942:948" ph="..." />
-            <marker date="1534746955133" expanded="true" signature="942:951" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/nasabah/update_password.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1904">
+          <caret line="112" column="35" lean-forward="false" selection-start-line="112" selection-start-column="35" selection-end-line="112" selection-end-column="35" />
+          <folding>
+            <marker date="1534390005706" expanded="true" signature="9612:9613" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1071">
+          <caret line="63" column="61" lean-forward="false" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="56" column="3" lean-forward="false" selection-start-line="56" selection-start-column="3" selection-end-line="58" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3910">
+          <caret line="230" column="24" lean-forward="false" selection-start-line="230" selection-start-column="24" selection-end-line="230" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/nasabah/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <marker date="1534746955133" expanded="true" signature="942:948" ph="..." />
           </folding>
         </state>
       </provider>
@@ -379,14 +421,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="30" column="22" lean-forward="false" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
-          <folding>
-            <marker date="1534735585624" expanded="true" signature="2915:3122" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="2953:3103" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="2984:3081" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="3204:3346" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="3242:3327" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="3348:3701" ph="//..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -420,9 +455,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3638">
           <caret line="214" column="24" lean-forward="false" selection-start-line="214" selection-start-column="24" selection-end-line="214" selection-end-column="24" />
-          <folding>
-            <marker date="1534755749916" expanded="true" signature="19:13724" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -440,7 +473,6 @@
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding>
             <marker date="1534746955133" expanded="true" signature="942:948" ph="..." />
-            <marker date="1534746955133" expanded="true" signature="942:951" ph="..." />
           </folding>
         </state>
       </provider>
@@ -449,14 +481,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="30" column="22" lean-forward="false" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
-          <folding>
-            <marker date="1534735585624" expanded="true" signature="2915:3122" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="2953:3103" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="2984:3081" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="3204:3346" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="3242:3327" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="3348:3701" ph="//..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -482,9 +507,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1802">
           <caret line="106" column="29" lean-forward="false" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
-          <folding>
-            <marker date="1534755749916" expanded="true" signature="19:13724" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -502,7 +525,6 @@
           <caret line="31" column="40" lean-forward="false" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
           <folding>
             <marker date="1534746955133" expanded="true" signature="942:948" ph="..." />
-            <marker date="1534746955133" expanded="true" signature="942:951" ph="..." />
           </folding>
         </state>
       </provider>
@@ -519,9 +541,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1802">
           <caret line="106" column="29" lean-forward="true" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
-          <folding>
-            <marker date="1534755749916" expanded="true" signature="19:13724" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -539,7 +559,6 @@
           <caret line="31" column="40" lean-forward="false" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
           <folding>
             <marker date="1534746955133" expanded="true" signature="942:948" ph="..." />
-            <marker date="1534746955133" expanded="true" signature="942:951" ph="..." />
           </folding>
         </state>
       </provider>
@@ -556,9 +575,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-          <folding>
-            <marker date="1534755749916" expanded="true" signature="19:13724" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -573,7 +590,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -589,7 +605,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
           <caret line="27" column="45" lean-forward="true" selection-start-line="27" selection-start-column="45" selection-end-line="27" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -605,7 +620,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/nasabah/read-one.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
+        <state relative-caret-position="527">
           <caret line="31" column="38" lean-forward="false" selection-start-line="31" selection-start-column="38" selection-end-line="33" selection-end-column="32" />
           <folding />
         </state>
@@ -613,37 +628,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/nasabah/login.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
+        <state relative-caret-position="493">
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding>
             <marker date="1534746955133" expanded="true" signature="942:948" ph="..." />
-            <marker date="1534746955133" expanded="true" signature="942:951" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
+        <state relative-caret-position="7565">
           <caret line="445" column="5" lean-forward="false" selection-start-line="445" selection-start-column="5" selection-end-line="445" selection-end-column="5" />
-          <folding>
-            <marker date="1534755749916" expanded="true" signature="19:13724" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="63" column="61" lean-forward="false" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="61" />
-          <folding>
-            <marker date="1534735585624" expanded="true" signature="2915:3122" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="2953:3103" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="2984:3081" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="3204:3346" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="3242:3327" ph="..." />
-            <marker date="1534735585624" expanded="true" signature="3348:3701" ph="//..." />
-          </folding>
+        <state relative-caret-position="549">
+          <caret line="62" column="56" lean-forward="false" selection-start-line="62" selection-start-column="56" selection-end-line="62" selection-end-column="56" />
+          <folding />
         </state>
       </provider>
     </entry>

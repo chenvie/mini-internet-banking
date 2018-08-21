@@ -31,13 +31,13 @@ $pulsa->nominal = $data->nominal;
 // create new transaksi transfer
 if($pulsa->create()){
     echo json_encode(
-        array("transfer" => true,
+        array("pulsa" => true,
             "message" => $pulsa->message)
     );
 }
 else{
     echo json_encode(
-        array("transfer" => false,
+        array("pulsa" => false,
             "message" => $pulsa->message)
     );
 }
