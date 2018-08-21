@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2018 at 10:39 AM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Aug 21, 2018 at 12:00 PM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -51,11 +53,11 @@ CREATE TABLE `nasabah` (
   `email` varchar(40) NOT NULL,
   `username` varchar(20) NOT NULL,
   `nama_lengkap` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `no_ktp` varchar(20) NOT NULL,
   `tgl_lahir` date NOT NULL,
   `alamat` varchar(100) NOT NULL,
-  `kode_rahasia` varchar(6) NOT NULL,
+  `kode_rahasia` varchar(255) NOT NULL,
   `no_rek` varchar(16) NOT NULL,
   `jml_saldo` int(11) NOT NULL,
   `kode_cabang` varchar(10) NOT NULL,
@@ -70,16 +72,16 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', '123456', '3323031211960005', '2018-08-06', 'temanggung', '654321', '2141516', 2000000, 'asd1', '2018-08-15 03:04:48'),
 (2, 'boni@gmail.com', 'bonii', 'bonifasius', '812018', '123513163', '2018-02-05', 'magelang', '123', '2491204', 2800000, 'asd1', '2018-08-20 10:25:46'),
 (3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
-(4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
+(4, 'danny@gmail.com', 'cocobaba', 'danny sebastian', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-21 10:00:03'),
 (6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4650000, 'asd1', '2018-08-21 04:17:37'),
 (7, 'sam@gmail.com', 'sam', 'sam w', 'qwe', '123', '2018-08-02', 'kudus', '123', '037000', 300000, 'asd1', '2018-08-21 04:17:37'),
 (8, 'billy@gmail.com', 'bil', 'billy b', 'qwe', '12312', '2018-08-02', 'taman siswa', '123', '037002', 450000, 'asd1', '2018-08-15 05:07:06'),
 (9, 'argo@gmail.com', 'argo', 'argo uchiha', 'qwe', '123', '2018-08-01', 'godean', '123', '037008', 450000, 'asd1', '2018-08-15 05:25:15'),
-(10, 'kadinugraha@gmail.com', '', 'kristian adi', 'qwe', '123', '2018-08-05', 'godean', '123', '037009', 450000, 'asd1', '2018-08-15 05:47:30'),
+(10, 'kadinugraha@gmail.com', '', 'kristian adi', 'qwe', '123', '2018-08-05', 'godean', '123', '037009', 850000, 'asd1', '2018-08-21 09:57:16'),
 (11, 'kw@gmail.com', 'katon10', 'katon wijana', '123', '123', '2018-08-08', 'godean', '123', '037010', 450000, 'asd1', '2018-08-15 05:49:58'),
 (12, 'hb@gmail.com', 'halim12', 'halim budi', 'qwe', '123', '2018-08-09', 'maguwo', 'qwe', '037011', 450000, 'asd1', '2018-08-15 05:50:53'),
 (13, 'ivan@gmail.com', 'ivan12', 'ivan', 'qwe', '123', '2018-08-03', 'klitren', 'qwe', '037012', 450000, 'asd1', '2018-08-15 05:52:22'),
-(14, '', '13', '', '', '', '2018-08-01', '', '', '037013', 450000, 'asd1', '2018-08-15 21:34:59');
+(15, 'vievinefendy@gmail.com', 'Vievin13', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037013', 900000, 'asd1', '2018-08-21 09:57:16');
 
 -- --------------------------------------------------------
 
@@ -140,7 +142,11 @@ INSERT INTO `transaksi` (`kode_transaksi`, `id_nasabah`, `tgl_trans`, `status`, 
 ('10020', 7, '2018-08-21 04:16:23', 'Berhasil', 'Berhasil transfer'),
 ('10021', 7, '2018-08-21 04:17:01', 'Berhasil', 'Berhasil transfer'),
 ('10022', 7, '2018-08-21 04:17:37', 'Berhasil', 'Berhasil transfer'),
-('15', 2, '2018-08-20 08:23:15', 'Berhasil', 'Berhasil transfer'),
+('10023', 15, '2018-08-21 09:43:03', 'Gagal', 'Kode rahasia salah'),
+('10024', 15, '2018-08-21 09:43:21', 'Gagal', 'Kode rahasia salah'),
+('10025', 15, '2018-08-21 09:43:41', 'Gagal', 'Kode rahasia salah'),
+('10026', 15, '2018-08-21 09:44:04', 'Berhasil', 'Berhasil transfer'),
+('10027', 15, '2018-08-21 09:45:47', 'Berhasil', 'Berhasil transfer'),
 ('20004', 1, '2018-08-20 04:19:59', 'Berhasil', ''),
 ('20015', 2, '2018-08-20 09:20:35', 'Berhasil', 'Pembelian pulsa berhasil'),
 ('20016', 2, '2018-08-20 10:25:46', 'Berhasil', 'Pembelian pulsa berhasil');
@@ -181,7 +187,11 @@ INSERT INTO `transfer` (`kode_transfer`, `rek_transfer`, `nominal`, `keterangan`
 ('10020', '037001', 50000, 'cek lagi'),
 ('10021', '037001', 50000, 'cek lagi'),
 ('10022', '037001', 50000, 'cek lagi'),
-('15', '2141516', 50000, '');
+('10023', '037009', 150000, 'transfer ke kadinugraha'),
+('10024', '037009', 150000, 'transfer ke kadinugraha'),
+('10025', '037009', 150000, 'transfer ke kadinugraha'),
+('10026', '037009', 150000, 'transfer ke kadinugraha'),
+('10027', '037009', 150000, 'transfer ke kadinugraha');
 
 --
 -- Indexes for dumped tables
@@ -234,7 +244,8 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- Constraints for dumped tables
 --
@@ -262,6 +273,7 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `transfer`
   ADD CONSTRAINT `transfer_ibfk_1` FOREIGN KEY (`kode_transfer`) REFERENCES `transaksi` (`kode_transaksi`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

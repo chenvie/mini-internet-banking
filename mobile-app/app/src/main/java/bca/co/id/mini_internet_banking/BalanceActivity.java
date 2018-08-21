@@ -35,9 +35,11 @@ public class BalanceActivity extends AppCompatActivity {
         txtSaldoNasabah = findViewById(R.id.txtSaldoNasabah);
         txtNameNasabah = findViewById(R.id.txtNameNasabah);
 
-        txtNameNasabah.setText(Nasabah.name);
-        txtNorekNasabah.setText(Nasabah.rekeningNum.toString());
-        txtSaldoNasabah.setText("Rp " + String.valueOf(formatter.format(Nasabah.saldo)) + ",-");
+        if (Nasabah.name != null && Nasabah.rekeningNum != null) {
+            txtNameNasabah.setText(Nasabah.name);
+            txtNorekNasabah.setText(Nasabah.rekeningNum.toString());
+            txtSaldoNasabah.setText("Rp " + String.valueOf(formatter.format(Nasabah.saldo)) + ",-");
+        }
 
         Toolbar toolbar = findViewById(R.id.balance_toolbar);
         setSupportActionBar(toolbar);

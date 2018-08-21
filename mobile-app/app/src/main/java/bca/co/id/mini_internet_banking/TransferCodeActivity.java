@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -112,9 +116,25 @@ public class TransferCodeActivity extends AppCompatActivity {
     private void submitTransfer(){
         String code = txtCodeTransfer.getText().toString();
 
+        String hashCode = "";
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(code.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            hashCode = bigInt.toString(16);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while(hashCode.length() < 32 ){
+                hashCode = "0" + hashCode;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
         final Intent intent = new Intent(this, TransferStatusActivity.class);
 
-        if (code.equals(Nasabah.code)) {
+        if (hashCode.equals(Nasabah.code)) {
             final float temp = Nasabah.saldo - Float.parseFloat(nominal);
             if (temp > 0) {
                 AsyncHttpClient client = new AsyncHttpClient();
@@ -123,7 +143,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                     jsonParams.put("username", Nasabah.username);
                     jsonParams.put("no_rek_tujuan", noRek);
                     jsonParams.put("id_nasabah", Nasabah.id);
-                    jsonParams.put("kode_rahasia", code);
+                    jsonParams.put("kode_rahasia", hashCode);
                     jsonParams.put("nominal", nominal);
                     jsonParams.put("keterangan", ket);
                 } catch (JSONException e) {
@@ -133,6 +153,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                 try {
                     StringEntity entity = new StringEntity(jsonParams.toString());
 
+                    final String finalHashCode = hashCode;
                     client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/transfer/create.php", entity, "application/json", new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -162,6 +183,8 @@ public class TransferCodeActivity extends AppCompatActivity {
                                     intent.putExtra("ket", ket);
                                     intent.putExtra("status", true);
                                     startActivity(intent);
+
+                                    Log.e(TransferCodeActivity.class.getSimpleName(), "username = " + Nasabah.username + ", no_rek_tujuan = " + noRek + ", id_nasabah = " + Nasabah.id + ", kode_rahasia = " + finalHashCode + ", nomina; = " + nominal + ", ket = " + ket);
                                 } else{
                                     Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
                                 }
