@@ -157,7 +157,12 @@ public class BuyingCodeActivity extends AppCompatActivity {
                                         intent.putExtra("nominal", nominal);
                                         intent.putExtra("provider", provider);
                                         intent.putExtra("status", true);
+
                                         Nasabah.saldo = temp;
+                                        SharedPreferences.Editor spEdit = sp.edit();
+                                        spEdit.putFloat("saldo", Nasabah.saldo);
+                                        spEdit.commit();
+
                                         startActivity(intent);
                                         finish();
                                     } else{

@@ -153,6 +153,9 @@ public class TransferCodeActivity extends AppCompatActivity {
                                 if (status.equalsIgnoreCase("true")){
                                     Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
                                     Nasabah.saldo = temp;
+                                    SharedPreferences.Editor spEdit = sp.edit();
+                                    spEdit.putFloat("saldo", Nasabah.saldo);
+                                    spEdit.commit();
 
                                     intent.putExtra("noRek", noRek);
                                     intent.putExtra("nominal", nominal);
