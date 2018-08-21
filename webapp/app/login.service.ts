@@ -13,7 +13,6 @@ const httpOptions = {
 
 export class LoginService {
 
-  isLoggedIn = false;
   id_nasabah = 3; // ID sementara hardcode, login API belum ngasih id
   // loginToken: any;
 
@@ -22,8 +21,13 @@ export class LoginService {
   login(userLogin: any): Observable<any> {
     const url = 'http://localhost/api/nasabah/login.php';
     return this.http.post(url, userLogin, httpOptions);
-    // change return type to customer data
-    // return this.isLoggedIn && true;
+    // only return true / false
+    // call [getUserData] manually to get user data from DB
   }
 
+  getUserData(username: string): Observable<any> {
+    const url = 'http://localhost/api/nasabah/read-one.php';
+    const param = '?id=' + username;
+    return this.http.get(url + param);
+  }
 }

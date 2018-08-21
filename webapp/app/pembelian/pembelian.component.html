@@ -1,31 +1,33 @@
 <div *ngIf="page === 1">
-  NO HP <input type="text"><br>
+  NO HP <input type="text" [(ngModel)]="dataBeli.no_hp_tujuan"><br>
   Provider
-  <select>
-    <option value="">indosat</option>
-    <option value="">XL</option>
-    <option value="">simpati</option>
-    <option value="">smartfren</option>
+  <select [(ngModel)]="dataBeli.provider">
+    <option value="indosat">indosat</option>
+    <option value="xl">XL</option>
+    <option value="simpati">simpati</option>
+    <option value="smartfren">smartfren</option>
   </select><br>
   Nominal
-  <select>
-    <option value="">25000</option>
-    <option value="">50000</option>
-    <option value="">100000</option>
+  <select [(ngModel)]="dataBeli.nominal">
+    <option value="25000">25000</option>
+    <option value="50000">50000</option>
+    <option value="100000">100000</option>
   </select><br>
-  <input type="button" value="submit" style="float: right;" (click)="page=2"><br> <!-- ke konfirmasi -->
+  <span *ngIf="!isFormValid" style="color: red;">Form tidak boleh kosong</span><br>
+  <input type="button" value="submit" style="float: right;" (click)=nextPage()><br> <!-- ke konfirmasi -->
 </div>
 <div *ngIf="page === 2">
-    No HP <span> [no hp] </span><br>
-    Provider <span> [provider] </span><br>
-    Nominal <span> [nominal] </span><br>
-    Kode Rahasia <input type="text"><br>
-    <input type="button" value="submit" style="float: right;" (click)="page=3"><br> <!-- ke hasil -->
+    No HP <span style="float: right;"> {{dataBeli.no_hp_tujuan}} </span><br>
+    Provider <span style="float: right;"> {{dataBeli.provider}} </span><br>
+    Nominal <span style="float: right;"> {{dataBeli.nominal}} </span><br>
+    Kode Rahasia <input type="password" maxlength="6" [(ngModel)]="dataBeli.kode_rahasia"><br>
+    <span  style="color: red" *ngIf="!isKodeValid">Kode rahasia harus 6 karakter alfanumerik</span><br>
+    <input type="button" value="submit" style="float: right;" (click)="submitPulsa()"><br> <!-- ke hasil -->
 </div>
 <div *ngIf="page === 3">
-    Pembelian pulsa <span> [status] </span><br>
-    <span> [keterangan] </span><br><br>
-    No HP <span> [no hp] </span><br>
-    Provider <span> [provider] </span><br>
-    Nominal <span> [nominal] </span><br>
+    Pembelian pulsa <span> {{txtStatus}} </span><br>
+    <span> {{keterangan}} </span><br><br>
+    No HP <span style="float: right;"> {{dataBeli.no_hp_tujuan}} </span><br>
+    Provider <span style="float: right;">  {{dataBeli.provider}} </span><br>
+    Nominal <span style="float: right;"> {{dataBeli.nominal}} </span><br>
 </div>

@@ -13,6 +13,7 @@ import { TransferComponent } from './transfer/transfer.component';
 import { PembelianComponent } from './pembelian/pembelian.component';
 import { HistoriComponent } from './histori/histori.component';
 import { SettingComponent } from './setting/setting.component';
+import { AppRoutingModule } from './/app-routing.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SettingComponent } from './setting/setting.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

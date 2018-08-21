@@ -14,9 +14,9 @@ export class LoginScreenComponent implements OnInit {
     password: null,
   };
   loginInfo = {
-    isLoggedIn: 'False'
+    isLoggedIn: false
   };
-  isLoginCorrect = true;
+  isLoginCorrect = true; // untuk tampilan pesan validasi login
 
   constructor(
     private loginService: LoginService,
@@ -31,6 +31,6 @@ export class LoginScreenComponent implements OnInit {
         isLoggedIn: data['login']
       });
     }
-    this.isLoginCorrect = this.loginInfo.isLoggedIn === 'True' ? true : false;
+    this.isLoginCorrect = this.loginInfo.isLoggedIn;
   }
 }
