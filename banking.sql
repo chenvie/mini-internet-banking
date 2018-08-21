@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2018 at 11:22 AM
+-- Generation Time: Aug 21, 2018 at 10:39 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -68,11 +68,11 @@ CREATE TABLE `nasabah` (
 
 INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `no_rek`, `jml_saldo`, `kode_cabang`, `created`) VALUES
 (1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', '123456', '3323031211960005', '2018-08-06', 'temanggung', '654321', '2141516', 2000000, 'asd1', '2018-08-15 03:04:48'),
-(2, 'boni@gmail.com', 'bonii', 'bonifasius', '812018', '123513163', '2018-02-05', 'magelang', '123', '2491204', 2850000, 'asd1', '2018-08-20 09:20:35'),
+(2, 'boni@gmail.com', 'bonii', 'bonifasius', '812018', '123513163', '2018-02-05', 'magelang', '123', '2491204', 2800000, 'asd1', '2018-08-20 10:25:46'),
 (3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
 (4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
-(6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4500000, 'asd1', '2018-08-15 09:19:19'),
-(7, 'sam@gmail.com', 'sam', 'sam w', 'qwe', '123', '2018-08-02', 'kudus', '123', '037000', 450000, 'asd1', '2018-08-15 04:34:29'),
+(6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4650000, 'asd1', '2018-08-21 04:17:37'),
+(7, 'sam@gmail.com', 'sam', 'sam w', 'qwe', '123', '2018-08-02', 'kudus', '123', '037000', 300000, 'asd1', '2018-08-21 04:17:37'),
 (8, 'billy@gmail.com', 'bil', 'billy b', 'qwe', '12312', '2018-08-02', 'taman siswa', '123', '037002', 450000, 'asd1', '2018-08-15 05:07:06'),
 (9, 'argo@gmail.com', 'argo', 'argo uchiha', 'qwe', '123', '2018-08-01', 'godean', '123', '037008', 450000, 'asd1', '2018-08-15 05:25:15'),
 (10, 'kadinugraha@gmail.com', '', 'kristian adi', 'qwe', '123', '2018-08-05', 'godean', '123', '037009', 450000, 'asd1', '2018-08-15 05:47:30'),
@@ -100,7 +100,8 @@ CREATE TABLE `pulsa` (
 
 INSERT INTO `pulsa` (`kode_pembelian`, `no_hp`, `provider`, `nominal`) VALUES
 ('20004', '08978902350', 'Telkomsel', 50000),
-('20015', '081212515', 'Telkomsel', 50000);
+('20015', '081212515', 'Telkomsel', 50000),
+('20016', '081212515', 'Telkomsel', 50000);
 
 -- --------------------------------------------------------
 
@@ -133,9 +134,16 @@ INSERT INTO `transaksi` (`kode_transaksi`, `id_nasabah`, `tgl_trans`, `status`, 
 ('10012', 2, '2018-08-20 08:56:18', 'Gagal', 'Nomor rekening tujuan tidak ditemukan'),
 ('10013', 2, '2018-08-20 08:59:37', 'Gagal', 'Kode rahasia salah'),
 ('10014', 2, '2018-08-20 09:00:16', 'Gagal', 'Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda'),
+('10017', 2, '2018-08-21 02:47:46', 'Berhasil', 'Nomor rekening tujuan ditemukan'),
+('10018', 2, '2018-08-21 02:50:12', 'Berhasil', 'Nomor rekening tujuan ditemukan'),
+('10019', 2, '2018-08-21 02:51:29', 'Berhasil', 'Nomor rekening tujuan ditemukan'),
+('10020', 7, '2018-08-21 04:16:23', 'Berhasil', 'Berhasil transfer'),
+('10021', 7, '2018-08-21 04:17:01', 'Berhasil', 'Berhasil transfer'),
+('10022', 7, '2018-08-21 04:17:37', 'Berhasil', 'Berhasil transfer'),
 ('15', 2, '2018-08-20 08:23:15', 'Berhasil', 'Berhasil transfer'),
 ('20004', 1, '2018-08-20 04:19:59', 'Berhasil', ''),
-('20015', 2, '2018-08-20 09:20:35', 'Berhasil', 'Pembelian pulsa berhasil');
+('20015', 2, '2018-08-20 09:20:35', 'Berhasil', 'Pembelian pulsa berhasil'),
+('20016', 2, '2018-08-20 10:25:46', 'Berhasil', 'Pembelian pulsa berhasil');
 
 -- --------------------------------------------------------
 
@@ -167,6 +175,12 @@ INSERT INTO `transfer` (`kode_transfer`, `rek_transfer`, `nominal`, `keterangan`
 ('10012', '001', 50000, 'cek'),
 ('10013', '2141516', 50000, 'cek'),
 ('10014', '2141516', 5000000, 'cek'),
+('10017', '037001', 50000, 'asd'),
+('10018', '037001', 50000, 'asd'),
+('10019', '037001', 50000, 'asd'),
+('10020', '037001', 50000, 'cek lagi'),
+('10021', '037001', 50000, 'cek lagi'),
+('10022', '037001', 50000, 'cek lagi'),
 ('15', '2141516', 50000, '');
 
 --
