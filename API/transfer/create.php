@@ -22,7 +22,6 @@ $data = json_decode(file_get_contents("php://input"));
 
 // set products property values
 $transfer->username = $data->username;
-//$transfer->jml_saldo = $data->jml_saldo;
 $transfer->no_rek_tujuan = $data->no_rek_tujuan;
 $transfer->id_nasabah = $data->id_nasabah;
 $transfer->kode_rahasia = $data->kode_rahasia;
