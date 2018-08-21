@@ -23,6 +23,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -102,22 +105,53 @@ public class NewRekeningActivity extends AppCompatActivity {
         final String address = new_address.getText().toString();
         final String code = new_code.getText().toString();
 
+        String hashPassword = "";
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(password.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            hashPassword = bigInt.toString(16);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while(hashPassword.length() < 32 ){
+                hashPassword = "0" + hashPassword;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        String hashCode = "";
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(code.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            hashCode = bigInt.toString(16);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while(hashCode.length() < 32 ){
+                hashCode = "0" + hashCode;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
         Nasabah.birthday = birthday;
 
         if(PasswordStrength.calculateStrength(password).getValue() > PasswordStrength.MEDIUM.getValue()){
             if (CodeStrength.calculateStrength(code).getValue() > CodeStrength.MEDIUM.getValue()) {
-
                 AsyncHttpClient client = new AsyncHttpClient();
 
                 JSONObject jsonParams = new JSONObject();
                 try {
                     jsonParams.put("nama_lengkap", name);
                     jsonParams.put("email", email);
-                    jsonParams.put("password", password);
+                    jsonParams.put("password", hashPassword);
                     jsonParams.put("no_ktp", ktp);
                     jsonParams.put("tgl_lahir", birthday);
                     jsonParams.put("alamat", address);
-                    jsonParams.put("kode_rahasia", code);
+                    jsonParams.put("kode_rahasia", hashCode);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -135,6 +169,8 @@ public class NewRekeningActivity extends AppCompatActivity {
                 try {
                     StringEntity entity = new StringEntity(jsonParams.toString());
 
+                    final String finalHashPassword = hashPassword;
+                    final String finalHashCode = hashCode;
                     client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/create.php", entity, "application/json",  new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -155,11 +191,11 @@ public class NewRekeningActivity extends AppCompatActivity {
                                     Nasabah.name = name;
                                     Nasabah.username = username;
                                     Nasabah.email = email;
-                                    Nasabah.password = password;
+                                    Nasabah.password = finalHashPassword;
                                     Nasabah.ktpNum = ktp;
                                     Nasabah.birthday = birthday;
                                     Nasabah.address = address;
-                                    Nasabah.code = code;
+                                    Nasabah.code = finalHashCode;
 
                                     if (getNasabahData()){
                                         Toast.makeText(mContext, "Pembukaan Rekening Berhasil!", Toast.LENGTH_LONG).show();

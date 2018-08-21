@@ -28,6 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -116,7 +119,23 @@ public class BuyingCodeActivity extends AppCompatActivity {
         final float temp = Nasabah.saldo - Float.parseFloat(nominal);
         final Intent intent = new Intent(this, BuyingStatusActivity.class);
 
-        if(code.equals(Nasabah.code)) {
+        String hashCode = "";
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(code.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            hashCode = bigInt.toString(16);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while(hashCode.length() < 32 ){
+                hashCode = "0" + hashCode;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        if(hashCode.equals(Nasabah.code)) {
             if (!noHp.equals("")) {
                 if (temp > 0) {
                     AsyncHttpClient client = new AsyncHttpClient();
@@ -126,7 +145,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                         jsonParams.put("no_hp_tujuan", noHp);
                         jsonParams.put("id_nasabah", Nasabah.id);
                         jsonParams.put("provider", provider);
-                        jsonParams.put("kode_rahasia", code);
+                        jsonParams.put("kode_rahasia", hashCode);
                         jsonParams.put("nominal", nominal);
                     } catch (JSONException e) {
                         e.printStackTrace();
