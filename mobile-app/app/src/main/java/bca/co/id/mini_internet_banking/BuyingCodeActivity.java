@@ -1,5 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,8 +21,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class BuyingCodeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -30,6 +41,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
     private Button btnBuyingWithCode;
     private SharedPreferences sp;
     private String noHp, provider, nominal;
+    private Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +49,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buying_code);
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
+        mContext = this;
 
         txtProviderBuying = findViewById(R.id.txtProviderBuying);
         txtNominalBuying = findViewById(R.id.txtNominalBuying);
@@ -100,18 +113,69 @@ public class BuyingCodeActivity extends AppCompatActivity {
 
     private void submitBuying(){
         String code = txtCodeBuying.getText().toString();
-        float temp = Nasabah.saldo - Float.parseFloat(nominal);
-        Intent intent = new Intent(this, BuyingStatusActivity.class);
+        final float temp = Nasabah.saldo - Float.parseFloat(nominal);
+        final Intent intent = new Intent(this, BuyingStatusActivity.class);
 
         if(code.equals(Nasabah.code)) {
             if (!noHp.equals("")) {
                 if (temp > 0) {
-                    intent.putExtra("noHp", noHp);
-                    intent.putExtra("nominal", nominal);
-                    intent.putExtra("provider", provider);
-                    intent.putExtra("status", true);
-                    Nasabah.saldo = temp;
-                    startActivity(intent);
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    JSONObject jsonParams = new JSONObject();
+                    try {
+                        jsonParams.put("username", Nasabah.username);
+                        jsonParams.put("no_hp_tujuan", noHp);
+                        jsonParams.put("id_nasabah", Nasabah.id);
+                        jsonParams.put("provider", provider);
+                        jsonParams.put("kode_rahasia", code);
+                        jsonParams.put("nominal", nominal);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        StringEntity entity = new StringEntity(jsonParams.toString());
+
+                        client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/pulsa/create.php", entity, "application/json", new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                String json = new String(responseBody);
+                                int jsonStart = json.indexOf("{");
+                                int jsonEnd = json.indexOf("}");
+
+                                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                                    json = json.substring(jsonStart, jsonEnd+1);
+                                }
+
+                                try {
+                                    JSONObject jsonObject = new JSONObject(json);
+                                    String status = jsonObject.getString("pulsa");
+                                    String message = jsonObject.getString("message");
+
+                                    if (status.equalsIgnoreCase("true")){
+                                        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                        intent.putExtra("noHp", noHp);
+                                        intent.putExtra("nominal", nominal);
+                                        intent.putExtra("provider", provider);
+                                        intent.putExtra("status", true);
+                                        Nasabah.saldo = temp;
+                                        startActivity(intent);
+                                        finish();
+                                    } else{
+                                        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                            }
+                        });
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     intent.putExtra("noHp", noHp);
                     intent.putExtra("nominal", nominal);

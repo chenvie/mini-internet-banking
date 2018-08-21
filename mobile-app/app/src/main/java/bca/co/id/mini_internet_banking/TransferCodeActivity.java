@@ -1,5 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,8 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class TransferCodeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -27,7 +38,7 @@ public class TransferCodeActivity extends AppCompatActivity {
     private TextView txtNorekTransfer, txtNominalTransfer, txtKetTransfer;
     private EditText txtCodeTransfer;
     private String noRek, ket, nominal;
-
+    private Context mContext;
     private SharedPreferences sp;
 
     @Override
@@ -36,6 +47,7 @@ public class TransferCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transfer_code);
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
+        mContext = this;
 
         btnTransferWithCode = findViewById(R.id.btnTransferWithCode);
         txtNorekTransfer = findViewById(R.id.txtNoRekTransfer);
@@ -100,18 +112,69 @@ public class TransferCodeActivity extends AppCompatActivity {
     private void submitTransfer(){
         String code = txtCodeTransfer.getText().toString();
 
-        Intent intent = new Intent(this, TransferStatusActivity.class);
+        final Intent intent = new Intent(this, TransferStatusActivity.class);
 
         if (code.equals(Nasabah.code)) {
-            float temp = Nasabah.saldo - Float.parseFloat(nominal);
+            final float temp = Nasabah.saldo - Float.parseFloat(nominal);
             if (temp > 0) {
-                Nasabah.saldo = temp;
+                AsyncHttpClient client = new AsyncHttpClient();
+                JSONObject jsonParams = new JSONObject();
+                try {
+                    jsonParams.put("username", Nasabah.username);
+                    jsonParams.put("no_rek_tujuan", noRek);
+                    jsonParams.put("id_nasabah", Nasabah.id);
+                    jsonParams.put("kode_rahasia", code);
+                    jsonParams.put("nominal", nominal);
+                    jsonParams.put("keterangan", ket);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                intent.putExtra("noRek", noRek);
-                intent.putExtra("nominal", nominal);
-                intent.putExtra("ket", ket);
-                intent.putExtra("status", true);
-                startActivity(intent);
+                try {
+                    StringEntity entity = new StringEntity(jsonParams.toString());
+
+                    client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/transfer/create.php", entity, "application/json", new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            String json = new String(responseBody);
+                            int jsonStart = json.indexOf("{");
+                            int jsonEnd = json.indexOf("}");
+
+                            if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                                json = json.substring(jsonStart, jsonEnd+1);
+                            }
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(json);
+
+                                String status = jsonObject.getString("transfer");
+                                String message = jsonObject.getString("message");
+
+                                if (status.equalsIgnoreCase("true")){
+                                    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                    Nasabah.saldo = temp;
+
+                                    intent.putExtra("noRek", noRek);
+                                    intent.putExtra("nominal", nominal);
+                                    intent.putExtra("ket", ket);
+                                    intent.putExtra("status", true);
+                                    startActivity(intent);
+                                } else{
+                                    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                        }
+                    });
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             } else {
                 intent.putExtra("noRek", noRek);
                 intent.putExtra("nominal", nominal);
