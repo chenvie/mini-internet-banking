@@ -21,6 +21,7 @@ class Transfer
     public $cekr;
     public $jml_saldo;
     public $message;
+    public $status;
 
     // constructor with $db as database connection
     public function __construct($db)
@@ -80,7 +81,7 @@ class Transfer
             $this->status = "Gagal";
         }
 
-        if ($this->status == "berhasil") {
+        if ($this->status == "Berhasil") {
             return true;
         }
         else {

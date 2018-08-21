@@ -38,8 +38,9 @@ if($transfer->cekNoRek()){
 // if unable to login
 else{
     echo json_encode(
-        array("login" => "False",
-            "message" => $transfer->message
+        array("check" => "False",
+            "message" => $transfer->message,
+            "status" => $transfer->status
         )
     );
 }
