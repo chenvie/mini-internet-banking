@@ -11,17 +11,11 @@ class Transaksi
 
     // object properties
     public $id_nasabah;
-    public $username;
-    public $password;
-    public $kode_rahasia;
-    public $no_rek_tujuan;
-    public $nominal;
-    public $keterangan;
-    public $kode_transaksi;
-    public $jml_trans;
-    public $cekr;
-    public $jml_saldo;
-    public $message;
+    public $tgl;
+    public $limit_date;
+    public $tgl_awal;
+    public $tgl_akhir;
+    public $no_rek;
 
     // constructor with $db as database connection
     public function __construct($db)
@@ -29,107 +23,103 @@ class Transaksi
         $this->conn = $db;
     }
 
-
-    //transfer
-    function create()
+    function getNoRek($id)
     {
-        $this->jml_saldo = $this->getSaldo($this->id_nasabah);
-        if($this->cekKodeRahasia($this->username,$this->kode_rahasia) == false)
-        {
-            $this->message = "Kode rahasia salah";
-            $this->status = "Gagal";
-        }
-        else if($this->nominal > 0)
-        {
-            if (($this->jml_saldo - $this->nominal) < 50000) {
-                $this->message = "Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda";
-                $this->status = "Gagal";
-            } else {
-                $this->message = "Berhasil transfer";
-                $this->status = "Berhasil";
-
-                $this->jml_saldo = $this->jml_saldo - $this->nominal;
-
-                $query = "UPDATE
+        // query to read single record
+        $query = "SELECT
+                no_rek
+            FROM
                 " . $this->table_name2 . "
-                SET
-                jml_saldo=:jml_saldo
-                WHERE
-                id_nasabah=:id_nasabah";
+            WHERE
+                id_nasabah = ?
+            LIMIT
+                0,1";
 
-                // prepare query
-                $stmt = $this->conn->prepare($query);
-
-                // sanitize
-                $this->jml_saldo = htmlspecialchars(strip_tags($this->jml_saldo));
-                $this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
-
-                // bind values
-                $stmt->bindParam(":jml_saldo", $this->jml_saldo);
-                $stmt->bindParam(":id_nasabah", $this->id_nasabah);
-
-                $stmt->execute();
-
-            }
-        }
-        else
-        {
-            $this->message = "Jumlah yang ditransfer terlalu kecil";
-            $this->status = "Gagal";
-        }
-        $this->kode_transaksi = $this->generateKodeTrans();
-
-        // query to insert record for transaksi
-        $query = "INSERT INTO
-                " . $this->table_name3 . "
-            SET
-                kode_transaksi=:kode_transaksi,id_nasabah=:id_nasabah,status=:status,ket_status=:ket_status";
-
-        // prepare query
+        // prepare query statement
         $stmt = $this->conn->prepare($query);
 
-        // sanitize
-        $this->kode_transaksi = htmlspecialchars(strip_tags($this->kode_transaksi));
-        $this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
-        $this->status = htmlspecialchars(strip_tags($this->status));
+        // bind id of products to be updated
+        $stmt->bindParam(1, $id);
 
-        // bind values
-        $stmt->bindParam(":id_nasabah", $this->id_nasabah);
-        $stmt->bindParam(":kode_transaksi", $this->kode_transaksi);
-        $stmt->bindParam(":status", $this->status);
-        $stmt->bindParam(":ket_status", $this->message);
-
+        // execute query
         $stmt->execute();
 
-        // query to insert record for transfer
-        $query = "INSERT INTO
-                " . $this->table_name . "
-            SET
-                kode_transfer=:kode_transaksi,rek_transfer=:rek_transfer,nominal=:nominal,keterangan=:keterangan";
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // prepare query
-        $stmt = $this->conn->prepare($query);
-
-        // sanitize
-        $this->no_rek_tujuan = htmlspecialchars(strip_tags($this->no_rek_tujuan));
-        $this->nominal = htmlspecialchars(strip_tags($this->nominal));
-        $this->keterangan = htmlspecialchars(strip_tags($this->keterangan));
-
-        // bind values
-        $stmt->bindParam(":kode_transaksi", $this->kode_transaksi);
-        $stmt->bindParam(":rek_transfer", $this->no_rek_tujuan);
-        $stmt->bindParam(":nominal", $this->nominal);
-        $stmt->bindParam(":keterangan", $this->keterangan);
-
-        $stmt->execute();
-
-
-        if ($this->status == "Berhasil") {
-            return true;
-        }
-
-        return false;
-
-
+        // set values to object properties
+        $this->no_rek = $row['no_rek'];
     }
+
+    function readMutasi()
+    {
+        $this->getNoRek($this->id_nasabah);
+        // select all mutasi untuk nasabah tertentu query
+        $query = "select DISTINCT t.kode_transaksi,n.no_rek,t.tgl_trans,
+                    IF (substr(t.kode_transaksi,1,1) = '1', 
+                    (if (n.no_rek = r.rek_transfer,
+                    CONCAT('Transfer dari ',(SELECT no_rek from " . $this->table_name2 . " where id_nasabah = t.id_nasabah)),CONCAT('Transfer ke ',r.rek_transfer))),
+                    'Pembelian Pulsa') as tujuan,
+                    IF (substr(t.kode_transaksi,1,1) = '1',IF(n.no_rek = r.rek_transfer,'CR','DB'),'DB') as jenis,
+                    IF (substr(t.kode_transaksi,1,1) = '1', r.keterangan,p.no_hp) as keterangan,
+                    IF (substr(t.kode_transaksi,1,1) = '1', r.nominal,p.nominal) as nominal
+                    from " . $this->table_name3 . " t, " . $this->table_name . " r, " . $this->table_name4 . " p, " . $this->table_name2 . " n
+                    where (n.id_nasabah =:id_nasabah AND (t.id_nasabah = n.id_nasabah or n.no_rek = r.rek_transfer)) AND 
+                    (t.kode_transaksi = r.kode_transfer OR t.kode_transaksi = p.kode_pembelian) AND 
+                    t.tgl_trans >=:tgl AND 
+                    t.status = 'Berhasil'
+                    ORDER BY `t`.`tgl_trans`  ASC";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        $this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
+        $this->tgl = htmlspecialchars(strip_tags($this->tgl));
+
+        $this->limit_date = date('Y-m-d', strtotime('-7 days', strtotime($this->tgl)));
+
+        $stmt->bindParam(":id_nasabah", $this->id_nasabah);
+        $stmt->bindParam(":tgl", $this->limit_date);
+
+        // execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    function readHistory()
+{
+    // select all mutasi untuk nasabah tertentu query
+    $query = "select DISTINCT t.kode_transaksi,t.tgl_trans,
+                IF (substr(t.kode_transaksi,1,1) = '1',CONCAT('Transfer ke ',r.rek_transfer),'Pembelian Pulsa') as tujuan,
+                IF (substr(t.kode_transaksi,1,1) = '1', r.keterangan,p.no_hp) as keterangan,
+                IF (substr(t.kode_transaksi,1,1) = '1', r.nominal,p.nominal) as nominal,
+                t.status
+                from transaksi t, transfer r, pulsa p, nasabah n
+                where n.id_nasabah =:id_nasabah AND t.id_nasabah = n.id_nasabah AND 
+                (t.kode_transaksi = r.kode_transfer OR t.kode_transaksi = p.kode_pembelian) AND 
+                (t.tgl_trans >=:tgl_awal AND t.tgl_trans <=:tgl_akhir)  
+                ORDER BY t.tgl_trans  ASC";
+
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
+
+    $this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
+    $this->tgl_awal = htmlspecialchars(strip_tags($this->tgl_awal));
+    $this->tgl_akhir = htmlspecialchars(strip_tags($this->tgl_akhir));
+
+    $this->tgl_awal = date('Y-m-d', strtotime($this->tgl_awal));
+    $this->tgl_akhir = date('Y-m-d', strtotime('+1 days', strtotime($this->tgl_akhir)));
+
+    $stmt->bindParam(":id_nasabah", $this->id_nasabah);
+    $stmt->bindParam(":tgl_awal", $this->tgl_awal);
+    $stmt->bindParam(":tgl_akhir", $this->tgl_akhir);
+
+    // execute query
+    $stmt->execute();
+
+    $this->tgl_akhir = date('Y-m-d', strtotime('-1 days', strtotime($this->tgl_akhir)));
+
+    return $stmt;
+}
 }
