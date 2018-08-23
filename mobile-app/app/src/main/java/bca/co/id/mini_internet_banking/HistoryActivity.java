@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +31,7 @@ public class HistoryActivity extends AppCompatActivity {
     private Button btnShowHistory;
     private String dateTo, dateFrom;
     private String histDateFrom, histDateTo;
+    private long checkDateFrom, checkDateTo;
 
     private SharedPreferences sp;
 
@@ -131,7 +133,7 @@ public class HistoryActivity extends AppCompatActivity {
     private void updateLabelHistFrom() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
+        checkDateFrom = myCalendar.getTime().getTime();
         histDateFrom = sdf.format(myCalendar.getTime());
         txtHistDateFrom.setText(histDateFrom);
     }
@@ -139,7 +141,7 @@ public class HistoryActivity extends AppCompatActivity {
     private void updateLabelHistTo() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
+        checkDateTo = myCalendar.getTime().getTime();
         histDateTo = sdf.format(myCalendar.getTime());
         txtHistDateTo.setText(histDateTo);
     }
@@ -164,10 +166,16 @@ public class HistoryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Intent intent = new Intent(this, HistoryDetailActivity.class);
-        intent.putExtra("dateFrom", dateFrom);
-        intent.putExtra("dateTo", dateTo);
-        startActivity(intent);
+        long day30 = 30l * 24 * 60 * 60 * 1000;
+        boolean result = checkDateTo < (checkDateFrom + day30);
+        if (result){
+            Intent intent = new Intent(this, HistoryDetailActivity.class);
+            intent.putExtra("dateFrom", dateFrom);
+            intent.putExtra("dateTo", dateTo);
+            startActivity(intent);
+        } else{
+            Toast.makeText(this, "Pemilihan tanggal from dan to harus dalam rentang 30 hari!", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

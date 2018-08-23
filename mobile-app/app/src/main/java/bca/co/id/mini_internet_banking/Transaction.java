@@ -2,21 +2,21 @@ package bca.co.id.mini_internet_banking;
 
 public class Transaction {
     private String date;
-    private String type;
+    private String goal;
     private String info;
-    private double nominal;
+    private float nominal;
     private String status;
 
-    public Transaction(String date, String type, String info, int nominal){
+    public Transaction(String date, String goal, String info, float nominal){
         this.setDate(date);
-        this.setType(type);
+        this.setGoal(goal);
         this.setInfo(info);
         this.setNominal(nominal);
     }
 
-    public Transaction(String date, String type, String info, int nominal, String status){
+    public Transaction(String date, String goal, String info, float nominal, String status){
         this.setDate(date);
-        this.setType(type);
+        this.setGoal(goal);
         this.setInfo(info);
         this.setNominal(nominal);
         this.setStatus(status);
@@ -30,12 +30,12 @@ public class Transaction {
         this.date = date;
     }
 
-    public String getType() {
-        return type;
+    public String getGoal() {
+        return goal;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setGoal(String goal) {
+        this.goal = goal;
     }
 
     public String getInfo() {
@@ -46,11 +46,11 @@ public class Transaction {
         this.info = info;
     }
 
-    public double getNominal() {
+    public float getNominal() {
         return nominal;
     }
 
-    public void setNominal(double nominal) {
+    public void setNominal(float nominal) {
         this.nominal = nominal;
     }
 
