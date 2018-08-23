@@ -1,17 +1,11 @@
 <div style="float: left;">
-  <a href="#" (click)="page=1">informasi saldo</a><br><br>
-  <a href="#" (click)="page=2">mutasi rekening</a><br><br>
-  <a href="#" (click)="page=3;">transfer</a><br><br>
-  <a href="#" (click)="page=4">pembelian</a><br><br>
-  <a href="#" (click)="page=5;">histori transaksi</a><br><br>
-  <a href="#" (click)="page=6">account setting</a><br><br>
+  <a [routerLink]="[ '/main/info-saldo' ]">info saldo</a><br><br>
+  <a [routerLink]="[ '/main/mutasi-rek' ]">mutasi rekening</a><br><br>
+  <a [routerLink]="[ '/main/transfer' ]">transfer</a><br><br>
+  <a [routerLink]="[ '/main/pembelian' ]">pembelian</a><br><br>
+  <a [routerLink]="[ '/main/histori' ]">hitori transaksi</a><br><br>
+  <a [routerLink]="[ '/main/setting' ]">account setting</a><br><br>
 </div>
 <div style="float: right;">
-  <!-- <router-outlet></router-outlet> -->
-  <app-info-saldo *ngIf="page === 1" [norek]="userData.no_rek" [saldo]="userData.jml_saldo"></app-info-saldo>
-  <app-mutasi-rek *ngIf="page === 2" [norek]="userData.no_rek"></app-mutasi-rek>
-  <app-transfer *ngIf="page === 3"></app-transfer>
-  <app-pembelian *ngIf="page === 4" [username]="userData.username" [id_nasabah]="userData.id_nasabah"></app-pembelian>
-  <app-histori *ngIf="page === 5"></app-histori>
-  <app-setting *ngIf="page === 6"></app-setting>
+  <router-outlet></router-outlet>
 </div>

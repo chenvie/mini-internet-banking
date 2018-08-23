@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { InputValidatorService } from '../input-validator.service';
 
@@ -13,24 +14,21 @@ export class LoginScreenComponent implements OnInit {
     username: null,
     password: null,
   };
-  loginInfo = {
-    isLoggedIn: false
-  };
-  isLoginCorrect = true; // untuk tampilan pesan validasi login
+  isLoginApproved = false; // untuk tampilan pesan validasi login
 
   constructor(
     private loginService: LoginService,
-    private validator: InputValidatorService) { }
+    private validator: InputValidatorService,
+    private route: Router) { }
 
   ngOnInit() {
+    if (this.loginService.isLoginValid) {this.route.navigate(['/main']); }
   }
 
-  login(): void {
-    if (this.validator.validateLogin(this.userLogin.username, this.userLogin.password)) {
-      this.loginService.login(this.userLogin).subscribe((data: any) => this.loginInfo = {
-        isLoggedIn: data['login']
-      });
+  async login() {
+    if (this.validator.validateLogin(this.userLogin.username, this.userLogin.password)) { // null validation
+      this.isLoginApproved = await this.loginService.login(this.userLogin);
+      if (this.isLoginApproved) { this.route.navigate(['main']); }
     }
-    this.isLoginCorrect = this.loginInfo.isLoggedIn;
   }
 }

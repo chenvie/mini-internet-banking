@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { InputValidatorService } from './input-validator.service';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,21 +11,45 @@ const httpOptions = {
 
 export class LoginService {
 
-  id_nasabah = 3; // ID sementara hardcode, login API belum ngasih id
-  // loginToken: any;
+  userData = {
+    id_nasabah: null,
+    username: null,
+    password: null,
+    nama_lengkap: null,
+    kode_rahasia: null,
+    tgl_lahir: null,
+    jml_saldo: null,
+    no_rek: null
+  };
+  isLoginValid = false;
 
   constructor(private http: HttpClient) { }
 
-  login(userLogin: any): Observable<any> {
-    const url = 'http://localhost/api/nasabah/login.php';
-    return this.http.post(url, userLogin, httpOptions);
+  async login(userLogin: any) {
+    this.isLoginValid = await this.getLoginValidation(userLogin);
+    if (!this.isLoginValid) { return false; }
+    this.userData = await this.getUserData(userLogin.username);
+    return true;
     // only return true / false
-    // call [getUserData] manually to get user data from DB
+    // call [getUserData] to get user data from DB
   }
 
-  getUserData(username: string): Observable<any> {
+  async getUserData(username: string) {
     const url = 'http://localhost/api/nasabah/read-one.php';
-    const param = '?id=' + username;
-    return this.http.get(url + param);
+    const param = '?unm=' + username;
+    const res =  this.http.get(url + param).toPromise();
+    return <any[8]> res;
   }
+
+  async getLoginValidation(userLogin: any) {
+    const url = 'http://localhost/api/nasabah/login.php';
+    const res = await this.http.post(url, userLogin, httpOptions).toPromise();
+    return <boolean>res.login;
+  }
+
+  // getLoginValidation(userLogin: any): Observable<any> {
+  //   const url = 'http://localhost/api/nasabah/login.php';
+  //   return this.http.post(url, userLogin, httpOptions);
+  // }
+
 }

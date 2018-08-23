@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+// import { ActivatedRoute, Router } from '@angular/router';
 import { PembelianService } from '../pembelian.service';
 import { InputValidatorService } from '../input-validator.service';
 
@@ -29,9 +30,11 @@ export class PembelianComponent implements OnInit {
 
   constructor(
     private beli: PembelianService,
-    private validator: InputValidatorService) { }
+    private validator: InputValidatorService,
+    /* private route: ActivatedRoute */) { }
 
   ngOnInit() {
+    // this.route.data.subscribe();
     this.page = 1;
     this.dataBeli.username = this.username;
     this.dataBeli.id_nasabah = this.id_nasabah;

@@ -45,7 +45,7 @@ export class SettingComponent implements OnInit {
     if (this.validateKode()) {
 
       const kodeUser = {
-        id_nasabah: this.login.id_nasabah,
+        id_nasabah: this.login.userData.id_nasabah,
         kode_rahasiaL: this.kodeLama,
         krb1: this.kodeBaru,
         krb2: this.kodeRetype
@@ -61,7 +61,7 @@ export class SettingComponent implements OnInit {
 
   submitPassBaru(): void {
     const passUser = {
-      id_nasabah: this.login.id_nasabah,
+      id_nasabah: this.login.userData.id_nasabah,
       passwordl: this.passLama,
       passwordb1: this.passBaru,
       passwordb2: this.passRetype
