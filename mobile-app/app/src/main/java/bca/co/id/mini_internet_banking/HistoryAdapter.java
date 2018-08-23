@@ -33,7 +33,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
 
         Transaction trans = listTrans.get(position);
         holder.history_date.setText(trans.getDate());
-        holder.history_type.setText(trans.getType());
+        holder.history_goal.setText(trans.getGoal());
         holder.history_nominal.setText("Rp " + String.valueOf(formatter.format(trans.getNominal())) + ",-");
         holder.history_info.setText(trans.getInfo());
         holder.history_status.setText(trans.getStatus());
@@ -45,13 +45,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
     }
 
     public class HistoryHolder extends RecyclerView.ViewHolder{
-        private TextView history_date, history_type, history_nominal, history_info, history_status;
+        private TextView history_date, history_goal, history_nominal, history_info, history_status;
 
         public HistoryHolder(View itemView) {
             super(itemView);
 
             history_date = itemView.findViewById(R.id.history_date);
-            history_type = itemView.findViewById(R.id.history_type);
+            history_goal = itemView.findViewById(R.id.history_goal);
             history_nominal = itemView.findViewById(R.id.history_nominal);
             history_info = itemView.findViewById(R.id.history_info);
             history_status = itemView.findViewById(R.id.history_status);

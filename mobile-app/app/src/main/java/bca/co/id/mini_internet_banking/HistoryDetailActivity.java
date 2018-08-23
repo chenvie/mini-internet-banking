@@ -1,5 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,79 +17,122 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 public class HistoryDetailActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private HistoryAdapter historyAdapter;
     private RecyclerView rcyHistory;
     private TextView txtHistoryRange;
-
+    private Context mContext;
     private SharedPreferences sp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_detail);
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
-        txtHistoryRange = findViewById(R.id.txtHistoryRange);
+        mContext = this;
 
         Intent intent = getIntent();
-        String from = intent.getStringExtra("dateFrom");
-        String to = intent.getStringExtra("dateTo");
-        txtHistoryRange.setText(from + " - " + to);
+        final String from = intent.getStringExtra("dateFrom");
+        final String to = intent.getStringExtra("dateTo");
 
-        rcyHistory = findViewById(R.id.rcyHistory);
-        List<Transaction> listTrans = new ArrayList<Transaction>();
-        historyAdapter = new HistoryAdapter(listTrans, this);
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams rp = new RequestParams();
+        rp.add("id", Nasabah.id);
+        rp.add("tgl_awal", from);
+        rp.add("tgl_akhir", to);
 
-        RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
-        rcyHistory.setLayoutManager(lm);
-        rcyHistory.setItemAnimator(new DefaultItemAnimator());
-        rcyHistory.setAdapter(historyAdapter);
+        client.get(this, "http://10.0.2.2/mini-internet-banking/API/transaksi/read-history.php", rp, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                setContentView(R.layout.activity_history_detail);
+                txtHistoryRange = findViewById(R.id.txtHistoryRange);
+                rcyHistory = findViewById(R.id.rcyHistory);
 
-        listTrans.add(new Transaction("04/08/2018", "Transfer ke 9876543210", "DB I makan siang", 51000, "berhasil"));
-        listTrans.add(new Transaction("08/08/2018", "Transfer ke 9876543210", "CR I kembalian makan", 11000, "gagal"));
-        listTrans.add(new Transaction("08/08/2018", "Pembelian pulsa", "08123456789", 25000, "berhasil"));
+                txtHistoryRange.setText(from + " - " + to);
 
-        historyAdapter.notifyDataSetChanged();
+                List<Transaction> listTrans = new ArrayList<Transaction>();
+                historyAdapter = new HistoryAdapter(listTrans, mContext);
 
-        Toolbar toolbar = findViewById(R.id.history_detail_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+                RecyclerView.LayoutManager lm = new LinearLayoutManager(mContext);
+                rcyHistory.setLayoutManager(lm);
+                rcyHistory.setItemAnimator(new DefaultItemAnimator());
+                rcyHistory.setAdapter(historyAdapter);
 
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+                String json = new String(responseBody);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONArray jsonRecords = jsonObject.getJSONArray("records");
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        int id = menuItem.getItemId();
-                        if (id == R.id.nav_home){
-                            loadHomeView();
-                        } else if (id == R.id.nav_balance) {
-                            loadBalanceInfoView();
-                        }else if (id == R.id.nav_mutation){
-                            loadMutationView();
-                        } else if (id == R.id.nav_transfer) {
-                            loadTransferView();
-                        } else if (id == R.id.nav_buying){
-                            loadBuyingView();
-                        } else if (id == R.id.nav_history){
-                            loadHistoryView();
-                        } else if (id == R.id.nav_setting){
-                            loadSettingView();
-                        } else{
-                            loadLoginView();
-                        }
-                        return true;
+                    for (int i = 0; i < jsonRecords.length(); i++){
+                        String tgl_trans = jsonRecords.getJSONObject(i).getString("tgl_trans");
+                        String tujuan = jsonRecords.getJSONObject(i).getString("tujuan");
+                        String ket = jsonRecords.getJSONObject(i).getString("keterangan");
+                        String nominal = jsonRecords.getJSONObject(i).getString("nominal");
+                        String status = jsonRecords.getJSONObject(i).getString("status");
+
+                        listTrans.add(new Transaction(tgl_trans, tujuan, ket, Float.parseFloat(nominal), status));
                     }
-                });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                historyAdapter.notifyDataSetChanged();
+
+                Toolbar toolbar = findViewById(R.id.history_detail_toolbar);
+                setSupportActionBar(toolbar);
+                ActionBar actionbar = getSupportActionBar();
+                actionbar.setDisplayHomeAsUpEnabled(true);
+                actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+                mDrawerLayout = findViewById(R.id.drawer_layout);
+
+                NavigationView navigationView = findViewById(R.id.nav_view);
+                navigationView.setNavigationItemSelectedListener(
+                        new NavigationView.OnNavigationItemSelectedListener() {
+                            @Override
+                            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                                int id = menuItem.getItemId();
+                                if (id == R.id.nav_home){
+                                    loadHomeView();
+                                } else if (id == R.id.nav_balance) {
+                                    loadBalanceInfoView();
+                                }else if (id == R.id.nav_mutation){
+                                    loadMutationView();
+                                } else if (id == R.id.nav_transfer) {
+                                    loadTransferView();
+                                } else if (id == R.id.nav_buying){
+                                    loadBuyingView();
+                                } else if (id == R.id.nav_history){
+                                    loadHistoryView();
+                                } else if (id == R.id.nav_setting){
+                                    loadSettingView();
+                                } else{
+                                    loadLoginView();
+                                }
+                                return true;
+                            }
+                        });
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 
     @Override

@@ -33,7 +33,7 @@ public class MutationAdapter extends RecyclerView.Adapter<MutationAdapter.Mutati
 
         Transaction trans = listTrans.get(position);
         holder.mutation_date.setText(trans.getDate());
-        holder.mutation_type.setText(trans.getType());
+        holder.mutation_goal.setText(trans.getGoal());
         holder.mutation_nominal.setText("Rp " + String.valueOf(formatter.format(trans.getNominal())) + ",-");
         holder.mutation_info.setText(trans.getInfo());
     }
@@ -44,14 +44,14 @@ public class MutationAdapter extends RecyclerView.Adapter<MutationAdapter.Mutati
     }
 
     public class MutationHolder extends RecyclerView.ViewHolder{
-        private TextView mutation_date, mutation_type, mutation_nominal, mutation_info;
+        private TextView mutation_date, mutation_goal, mutation_nominal, mutation_info;
 
         public MutationHolder(View itemView) {
             super(itemView);
 
             mutation_date = itemView.findViewById(R.id.mutation_date);
             mutation_nominal = itemView.findViewById(R.id.mutation_nominal);
-            mutation_type = itemView.findViewById(R.id.mutation_type);
+            mutation_goal = itemView.findViewById(R.id.mutation_goal);
             mutation_info = itemView.findViewById(R.id.mutation_info);
         }
     }

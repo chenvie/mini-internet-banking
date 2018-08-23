@@ -186,15 +186,22 @@ public class MainActivity extends AppCompatActivity {
     private boolean getNasabahData() throws JSONException {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams rp = new RequestParams();
-        rp.add("id", Nasabah.username);
+        rp.add("unm", Nasabah.username);
         client.get(this, "http://10.0.2.2/mini-internet-banking/API/nasabah/read-one.php", rp, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String json = new String(responseBody);
+                int jsonStart = json.indexOf("{");
+                int jsonEnd = json.indexOf("}");
+
+                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+                    json = json.substring(jsonStart, jsonEnd+1);
+                }
+
                 try{
                     JSONObject jsonObject = new JSONObject(json);
 
-                    id = jsonObject.getString("id");
+                    id = jsonObject.getString("id_nasabah");
                     username = jsonObject.getString("username");
                     password = jsonObject.getString("password");
                     name = jsonObject.getString("nama_lengkap");
