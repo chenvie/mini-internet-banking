@@ -102,7 +102,7 @@ public class MutationActivity extends AppCompatActivity {
                     for (int i = 0; i < jsonRecords.length(); i++) {
                         String tgl_trans = jsonRecords.getJSONObject(i).getString("tgl_trans");
                         String tujuan = jsonRecords.getJSONObject(i).getString("tujuan");
-                        String info = jsonRecords.getJSONObject(i).getString("jenis") + jsonRecords.getJSONObject(0).getString("keterangan");
+                        String info = jsonRecords.getJSONObject(i).getString("jenis") + jsonRecords.getJSONObject(i).getString("keterangan");
                         String nominal = jsonRecords.getJSONObject(i).getString("nominal");
 
                         listTrans.add(new Transaction(tgl_trans, tujuan, info, Float.parseFloat(nominal)));
