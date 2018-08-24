@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InputValidatorService } from '../input-validator.service';
 import { SettingService } from '../setting.service';
 import { LoginService } from '../login.service';
@@ -24,9 +25,11 @@ export class SettingComponent implements OnInit {
   constructor(
     private validator: InputValidatorService,
     private setting: SettingService,
-    private login: LoginService) { }
+    private login: LoginService,
+    private route: Router) { }
 
   ngOnInit() {
+    if (!this.login.isLoginValid) { this.route.navigate(['login']); }
   }
 
   validatePassword(): boolean {

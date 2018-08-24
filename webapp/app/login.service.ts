@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import md5 from 'md5';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -26,6 +27,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   async login(userLogin: any) {
+    userLogin.password = md5(userLogin.password);
     const res = await this.getLoginValidation(userLogin);
     this.isLoginValid = res.login;
     if (!this.isLoginValid) { return false; }
@@ -47,10 +49,5 @@ export class LoginService {
     const res = await this.http.post(url, userLogin, httpOptions).toPromise();
     return <any>res;
   }
-
-  // getLoginValidation(userLogin: any): Observable<any> {
-  //   const url = 'http://localhost/api/nasabah/login.php';
-  //   return this.http.post(url, userLogin, httpOptions);
-  // }
 
 }
