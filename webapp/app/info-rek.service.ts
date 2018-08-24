@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
 
 @Injectable({
@@ -10,15 +9,22 @@ export class InfoRekService {
 
   constructor(
     private http: HttpClient,
-    private login: LoginService) { }
+    private login: LoginService) {}
 
-  getSaldo(id: number): Observable<any> {
-    const url = 'http://localhost/api/nasabah/read-one-saldo.php?id=' + id;
-    return this.http.get<any>(url);
+  async getMutasi() {
+    const url = 'http://localhost/api/transaksi/read-mutasi.php';
+    const id = this.login.userData.id_nasabah;
+    const param = '?id=' + id;
+    const res = await this.http.get(url + param).toPromise();
+    return <any>res;
   }
 
-  getTransaksi(dariTanggal: any, hinggaTanggal: any, tipe?: any): any {
-    // TODO ambil transaksi dari DB
-    // TODO buat class transaksi (?)s
+  async getHistori(historiData: any) {
+    const url = 'http://localhost/api/transaksi/read-history.php';
+    const param1 = '?id=' + historiData.id;
+    const param2 = '&tgl_awal=' + historiData.dariTanggal;
+    const param3 = '&tgl_akhir=' + historiData.hinggaTanggal;
+    const res = await this.http.get(url + param1 + param2 + param3).toPromise();
+    return <any>res;
   }
 }

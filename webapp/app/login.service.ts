@@ -26,7 +26,8 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   async login(userLogin: any) {
-    this.isLoginValid = await this.getLoginValidation(userLogin);
+    const res = await this.getLoginValidation(userLogin);
+    this.isLoginValid = res.login;
     if (!this.isLoginValid) { return false; }
     this.userData = await this.getUserData(userLogin.username);
     return true;
@@ -37,14 +38,14 @@ export class LoginService {
   async getUserData(username: string) {
     const url = 'http://localhost/api/nasabah/read-one.php';
     const param = '?unm=' + username;
-    const res =  this.http.get(url + param).toPromise();
+    const res = await this.http.get(url + param).toPromise();
     return <any[8]> res;
   }
 
   async getLoginValidation(userLogin: any) {
     const url = 'http://localhost/api/nasabah/login.php';
     const res = await this.http.post(url, userLogin, httpOptions).toPromise();
-    return <boolean>res.login;
+    return <any>res;
   }
 
   // getLoginValidation(userLogin: any): Observable<any> {

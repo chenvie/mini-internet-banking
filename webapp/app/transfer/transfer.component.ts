@@ -1,4 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginService } from '../login.service';
+import { InputValidatorService } from '../input-validator.service';
+import { TransferService } from '../transfer.service';
 
 @Component({
   selector: 'app-transfer',
@@ -7,14 +11,48 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TransferComponent implements OnInit {
 
-  @Input() page: number;
-  @Input() norek: string;
-  changeLog: string[] = [];
+  page: number;
+  dataTrf = {
+    username: null,
+    kode_rahasia: null,
+    no_rek_tujuan: null,
+    id_nasabah: null,
+    nominal: null,
+    keterangan: null
+  };
+  isNorekValid = true;
+  isSuccess = false;
+  message: string;
+  status = 'Gagal';
 
-  constructor() { }
+  constructor(
+    private login: LoginService,
+    private transfer: TransferService,
+    private route: Router,
+    private validator: InputValidatorService
+  ) { }
 
   ngOnInit(): void {
+    if (!this.login.isLoginValid) { this.route.navigate(['login']); }
+
     this.page = 1;
+    this.dataTrf.id_nasabah = this.login.userData.id_nasabah;
+    this.dataTrf.username = this.login.userData.username;
   }
 
+  async validateNorek() {
+    const res = await this.validator.validateNorek(this.dataTrf);
+    this.isNorekValid = res.check === 'True' ? true : false;
+    if (this.isNorekValid) { this.page = 2; }
+  }
+
+  async doTransfer() {
+    const res = await this.transfer.doTransfer(this.dataTrf);
+    this.isSuccess = res.transfer;
+    this.message = res.message;
+    this.page = 3;
+    if (this.isSuccess) {
+      this.status = 'Berhasil';
+    }
+  }
 }

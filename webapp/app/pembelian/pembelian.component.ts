@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-// import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PembelianService } from '../pembelian.service';
 import { InputValidatorService } from '../input-validator.service';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-pembelian',
@@ -25,19 +26,18 @@ export class PembelianComponent implements OnInit {
   isFormValid = false;
   isKodeValid = false;
 
-  @Input() username: string;
-  @Input() id_nasabah: string;
-
   constructor(
     private beli: PembelianService,
     private validator: InputValidatorService,
-    /* private route: ActivatedRoute */) { }
+    private route: Router,
+    private login: LoginService) { }
 
   ngOnInit() {
-    // this.route.data.subscribe();
+    if (!this.login.isLoginValid) { this.route.navigate(['login']); }
+    this.dataBeli.username = this.login.userData.username;
+    this.dataBeli.id_nasabah = this.login.userData.id_nasabah;
+
     this.page = 1;
-    this.dataBeli.username = this.username;
-    this.dataBeli.id_nasabah = this.id_nasabah;
   }
 
   nextPage(): void {
@@ -49,16 +49,15 @@ export class PembelianComponent implements OnInit {
     this.page = 2;
   }
 
-  submitPulsa(): void {
-    if (!this.validator.validateKode(this.dataBeli.kode_rahasia)) {
-      this.isKodeValid = false;
-      return;
-    }
-    this.beli.buyPulsa(this.dataBeli).subscribe((data: any) => {
-      this.keterangan = data['message'];
-      this.status = data['transfer'];
-      this.txtStatus = this.status ? 'Berhasil' : 'Gagal';
-    });
+  async submitPulsa() {
+    // if (!this.validator.validateKode(this.dataBeli.kode_rahasia)) {
+    //   this.isKodeValid = false;
+    //   return;
+    // }
+    const res = await this.beli.buyPulsa(this.dataBeli);
+    this.keterangan = res.message;
+    this.status = res.pulsa;
+    this.txtStatus = this.status ? 'Berhasil' : 'Gagal';
     this.page = 3;
   }
 

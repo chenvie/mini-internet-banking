@@ -1,4 +1,4 @@
-<a href="#" (click)="toggleRegForm()">buka rekening</a><br><br>
+<a [routerLink]="[ '/login' ]" (click)="toggleRegForm()">buka rekening</a><br><br>
 <div [hidden]="!isHidden">
 	nama lengkap <input type="text" [(ngModel)]="userData.nama_lengkap"><br><br>
 	email <input type="email" [(ngModel)]="userData.email"><br><br>

@@ -14,7 +14,7 @@ export class LoginScreenComponent implements OnInit {
     username: null,
     password: null,
   };
-  isLoginApproved = false; // untuk tampilan pesan validasi login
+  isLoginApproved = false;
 
   constructor(
     private loginService: LoginService,

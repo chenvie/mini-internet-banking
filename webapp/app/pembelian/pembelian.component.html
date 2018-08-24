@@ -21,12 +21,11 @@
     Provider <span style="float: right;"> {{dataBeli.provider}} </span><br>
     Nominal <span style="float: right;"> {{dataBeli.nominal}} </span><br>
     Kode Rahasia <input type="password" maxlength="6" [(ngModel)]="dataBeli.kode_rahasia"><br>
-    <span  style="color: red" *ngIf="!isKodeValid">Kode rahasia harus 6 karakter alfanumerik</span><br>
     <input type="button" value="submit" style="float: right;" (click)="submitPulsa()"><br> <!-- ke hasil -->
 </div>
 <div *ngIf="page === 3">
     Pembelian pulsa <span> {{txtStatus}} </span><br>
-    <span> {{keterangan}} </span><br><br>
+    <span *ngIf="!status"> {{keterangan}} </span><br><br>
     No HP <span style="float: right;"> {{dataBeli.no_hp_tujuan}} </span><br>
     Provider <span style="float: right;">  {{dataBeli.provider}} </span><br>
     Nominal <span style="float: right;"> {{dataBeli.nominal}} </span><br>

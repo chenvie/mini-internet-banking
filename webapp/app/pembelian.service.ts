@@ -13,8 +13,9 @@ export class PembelianService {
 
   constructor(private http: HttpClient) { }
 
-  buyPulsa(data: any): Observable<any> {
+  async buyPulsa(data: any) {
     const url = 'http://localhost/api/pulsa/create.php'; // kode null masih valid
-    return this.http.post(url, data, httpOptions);
+    const res = await this.http.post(url, data, httpOptions).toPromise();
+    return <any>res;
   }
 }

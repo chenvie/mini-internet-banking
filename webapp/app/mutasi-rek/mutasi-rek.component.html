@@ -2,10 +2,11 @@
   Mutasi Rekening: <span> {{norek}} </span><br>
   <span style="color: red"> {{fromDate}} </span> - <span style="color: red"> {{curDate}} </span><br><br>
   <ul>
-    <li>
-      <span> [tanggal] </span> <span> Rp. [nominal] </span><br>
-      Transfer ke <span> [norek] </span><br>
-      <span> [type] </span> | <span> [keterangan] </span>
+    <li *ngFor="let t of trx">
+      <span> {{t.tgl_trans}} </span> <span> Rp. {{t.nominal}} </span><br>
+      <span> {{t.tujuan}} </span><br>
+      <span> {{t.jenis}} </span> | <span> {{t.keterangan}} </span><br>
+      <br>
     </li>
   </ul>
 </div>

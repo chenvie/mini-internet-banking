@@ -1,22 +1,23 @@
 <div *ngIf="page === 1">
   <h2>Histori Transaksi</h2>
-  <input type="date" [(ngModel)]="dariTanggal"> sampai <input type="date" [(ngModel)]="hinggaTanggal"><br>
+  <input type="date" [(ngModel)]="historiData.dariTanggal"> sampai <input type="date" [(ngModel)]="historiData.hinggaTanggal"><br>
   <span style="color: red" *ngIf="!isRangeValid">Pilih rentang tanggal maksimal 30 hari yang lalu</span><br>
-  <input type="button" value="submit" style="float: right;" (click)="validateRangeTanggal()"><br> <!-- ke hasil -->
+  <input type="button" value="submit" style="float: right;" (click)="getHistori()"><br> <!-- ke hasil -->
 </div>
 <div *ngIf="page === 2">
   Histori Transaksi<br>
-  <span style="color: red"> [tanggal] </span> - <span style="color: red"> [tanggal] </span><br><br>  
+  <span style="color: red"> {{historiData.dariTanggal}} </span> - <span style="color: red"> {{historiData.hinggaTanggal}} </span><br><br>  
   <ul>
-    <li>
-      <span> [tanggal] </span><br>
+    <li *ngFor="let t of trx">
+      <span> {{t.tgl_trans}} </span><br>
       <!--  -->
-      <span>transfer ke</span> <span> [norek] </span><br> <!-- atau -->
-      <span>pembelian pulsa</span><br>
+      <span> {{t.tujuan}} </span><br> <!-- atau -->
+      <!-- <span>pembelian pulsa</span><br> -->
       <!--  -->
-      <span> [keterangan] </span><br>
-      <span>[nominal]</span><br>
-      <span>[status]</span><br>
+      <span> {{t.keterangan}} </span><br>
+      <span>{{t.nominal}}</span><br>
+      <span>{{t.status}}</span><br>
+      <br>
     </li>
   </ul>
 </div>

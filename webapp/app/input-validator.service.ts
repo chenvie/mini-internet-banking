@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import * as moment from 'moment';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +14,9 @@ export class InputValidatorService {
 
   tanggal: any;
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   validatePassword(pass: string): boolean {
     if (pass === undefined || pass === null) { return false; }
@@ -37,7 +45,7 @@ export class InputValidatorService {
     return true;
   }
 
-  validateRangeTanggal(dariTanggal: any, hinggaTanggal: any): boolean {
+  validateRangeTanggal(dariTanggal: string, hinggaTanggal: string): boolean {
     if (dariTanggal === undefined || hinggaTanggal === undefined) { return false; }
     if (dariTanggal === '' || hinggaTanggal === '') { return false; }
     if (moment(dariTanggal) > moment() || moment(hinggaTanggal) > moment()) { return false; }
@@ -67,6 +75,15 @@ export class InputValidatorService {
   }
 
   validatePembelian(dataBeli: any): boolean {
-    return dataBeli.no_hp !== null && dataBeli.provider !== null && dataBeli.nominal !== null;
+    if (dataBeli.no_hp_tujuan === '' || dataBeli.no_hp_tujuan === null) { return false; }
+    if (dataBeli.provider === null) { return false; }
+    if (dataBeli.nominal === null) { return false; }
+    return true;
+  }
+
+  async validateNorek(dataTrf: any) {
+    const url = 'http://localhost/api/transfer/cek-no-rek.php';
+    const res = await this.http.post(url, dataTrf, httpOptions).toPromise();
+    return <any>res;
   }
 }

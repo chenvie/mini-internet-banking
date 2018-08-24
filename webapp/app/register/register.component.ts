@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InputValidatorService } from '../input-validator.service';
 import { RegisterService } from '../register.service';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +29,9 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private validator: InputValidatorService,
-    private register: RegisterService) { }
+    private register: RegisterService,
+    private login: LoginService,
+    private route: Router) { }
 
   ngOnInit() {
   }
@@ -55,10 +59,11 @@ export class RegisterComponent implements OnInit {
 
   submitForm() {
     if (this.validateForm()) {
-      alert('form valid');
-      this.register.register(this.userData).subscribe((data: any) => alert(data['message']));
+      this.register.register(this.userData).subscribe((data: any) => alert(data['message'] + '\nSilahkan login pada halaman utama.'));
+      this.resetForm();
+      this.toggleRegForm();
     } else {
-      alert('form invalid');
+      alert('pengisian formulir salah');
     }
   }
 }

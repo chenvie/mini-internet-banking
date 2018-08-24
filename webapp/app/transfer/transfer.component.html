@@ -1,20 +1,21 @@
 <div *ngIf="page === 1">
-  No rekening <input type="text"><br>
-  Jumlah <input type="text"><br>
-  Keterangan <input type="text"><br>
-  <input type="button" value="submit" style="float: right;" (click)="page=2"><br> <!-- pindah ke konfirmasi -->
+  No rekening <input type="text" [(ngModel)]="dataTrf.no_rek_tujuan"><br>
+  <span style="color:red;" *ngIf="!isNorekValid">nomor rekening tidak ditemukan<br></span>
+  Jumlah <input type="text" value="0" [(ngModel)]="dataTrf.nominal"><br>
+  Keterangan <input type="text" [(ngModel)]="dataTrf.keterangan"><br>
+  <input type="button" value="submit" style="float: right;" (click)="validateNorek()"><br> <!-- pindah ke konfirmasi -->
 </div>
 <div *ngIf="page === 2">
-    No rekening <span> [norek] </span><br>
-    Jumlah <span> [RP. nominal] </span><br>
-    Keterangan <span> [Keterangan] </span><br>
-    Kode Rahasia <input type="text"><br>
-    <input type="button" value="submit" style="float: right;" (click)="page=3"><br> <!-- pindah ke hasil -->
+    No rekening <span style="float: right;"> {{dataTrf.no_rek_tujuan}} </span><br>
+    Jumlah <span style="float: right;"> {{dataTrf.nominal}} </span><br>
+    Keterangan <span style="float: right;"> {{dataTrf.keterangan}} </span><br>
+    Kode Rahasia <input type="password" [(ngModel)]="dataTrf.kode_rahasia"><br>
+    <input type="button" value="submit" style="float: right;" (click)="doTransfer()"><br> <!-- pindah ke hasil -->
 </div>
 <div *ngIf="page === 3">
-  Transfer <span> [status] </span><br>
-  <span> [keterangan] </span><br><br>
-  No rekening <span> [norek] </span><br>
-  Jumlah <span> [RP. nominal] </span><br>
-  Keterangan <span> [Keterangan] </span><br>  
+  Transfer <span> {{status}} </span><br>
+  <span *ngIf="!isSuccess"> {{message}} </span><br><br>
+  No rekening <span style="float: right;"> {{dataTrf.no_rek_tujuan}} </span><br>
+  Jumlah <span style="float: right;"> Rp. {{dataTrf.nominal}} </span><br>
+  Keterangan <span style="float: right;"> {{dataTrf.keterangan}} </span><br>  
 </div>
