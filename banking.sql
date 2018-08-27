@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2018 at 12:00 PM
+-- Generation Time: Aug 27, 2018 at 06:41 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -21,6 +21,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `banking`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getHistory` (IN `id_nasabah` INT(10), IN `tgl_awal` TIMESTAMP, IN `tgl_akhir` TIMESTAMP)  BEGIN
+select DISTINCT t.kode_transaksi,t.tgl_trans, IF (substr(t.kode_transaksi,1,1) = '1',CONCAT('Transfer ke ',r.rek_transfer),'Pembelian Pulsa') as tujuan, IF (substr(t.kode_transaksi,1,1) = '1', r.keterangan,p.no_hp) as keterangan, IF (substr(t.kode_transaksi,1,1) = '1', r.nominal,p.nominal) as nominal, t.status from transaksi t, transfer r, pulsa p, nasabah n where n.id_nasabah = id_nasabah AND t.id_nasabah = n.id_nasabah AND (t.kode_transaksi = r.kode_transfer OR t.kode_transaksi = p.kode_pembelian) AND (t.tgl_trans >=tgl_awal AND t.tgl_trans <=tgl_akhir) ORDER BY t.tgl_trans ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getMutasi` (IN `id_nasabah` INT(10), IN `tgl` TIMESTAMP)  BEGIN
+select DISTINCT t.kode_transaksi,n.no_rek,t.tgl_trans,
+                    IF (substr(t.kode_transaksi,1,1) = '1', 
+                    (if (n.no_rek = r.rek_transfer,
+                    CONCAT('Transfer dari ',(SELECT no_rek from nasabah where id_nasabah = t.id_nasabah)),CONCAT('Transfer ke ',r.rek_transfer))),
+                    'Pembelian Pulsa') as tujuan,
+                    IF (substr(t.kode_transaksi,1,1) = '1',IF(n.no_rek = r.rek_transfer,'CR','DB'),'DB') as jenis,
+                    IF (substr(t.kode_transaksi,1,1) = '1', r.keterangan,p.no_hp) as keterangan,
+                    IF (substr(t.kode_transaksi,1,1) = '1', r.nominal,p.nominal) as nominal
+                    from transaksi t, transfer r, pulsa p, nasabah n
+                    where (n.id_nasabah =id_nasabah AND (t.id_nasabah = n.id_nasabah or n.no_rek = r.rek_transfer)) AND 
+                    (t.kode_transaksi = r.kode_transfer OR t.kode_transaksi = p.kode_pembelian) AND 
+                    t.tgl_trans >=tgl AND 
+                    t.status = 'Berhasil'
+                    ORDER BY `t`.`tgl_trans`  ASC;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -73,15 +100,17 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (2, 'boni@gmail.com', 'bonii', 'bonifasius', '812018', '123513163', '2018-02-05', 'magelang', '123', '2491204', 2800000, 'asd1', '2018-08-20 10:25:46'),
 (3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
 (4, 'danny@gmail.com', 'cocobaba', 'danny sebastian', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-21 10:00:03'),
-(6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4650000, 'asd1', '2018-08-21 04:17:37'),
-(7, 'sam@gmail.com', 'sam', 'sam w', 'qwe', '123', '2018-08-02', 'kudus', '123', '037000', 300000, 'asd1', '2018-08-21 04:17:37'),
+(6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4655000, 'asd1', '2018-08-27 02:56:25'),
+(7, 'sam@gmail.com', 'sam', 'sam w', 'qwe', '123', '2018-08-02', 'kudus', '123', '037000', 310000, 'asd1', '2018-08-27 03:03:01'),
 (8, 'billy@gmail.com', 'bil', 'billy b', 'qwe', '12312', '2018-08-02', 'taman siswa', '123', '037002', 450000, 'asd1', '2018-08-15 05:07:06'),
 (9, 'argo@gmail.com', 'argo', 'argo uchiha', 'qwe', '123', '2018-08-01', 'godean', '123', '037008', 450000, 'asd1', '2018-08-15 05:25:15'),
 (10, 'kadinugraha@gmail.com', '', 'kristian adi', 'qwe', '123', '2018-08-05', 'godean', '123', '037009', 850000, 'asd1', '2018-08-21 09:57:16'),
 (11, 'kw@gmail.com', 'katon10', 'katon wijana', '123', '123', '2018-08-08', 'godean', '123', '037010', 450000, 'asd1', '2018-08-15 05:49:58'),
 (12, 'hb@gmail.com', 'halim12', 'halim budi', 'qwe', '123', '2018-08-09', 'maguwo', 'qwe', '037011', 450000, 'asd1', '2018-08-15 05:50:53'),
 (13, 'ivan@gmail.com', 'ivan12', 'ivan', 'qwe', '123', '2018-08-03', 'klitren', 'qwe', '037012', 450000, 'asd1', '2018-08-15 05:52:22'),
-(15, 'vievinefendy@gmail.com', 'Vievin13', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037013', 900000, 'asd1', '2018-08-21 09:57:16');
+(15, 'vievinefendy@gmail.com', 'Vievin13', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037013', 900000, 'asd1', '2018-08-21 09:57:16'),
+(16, '', '14', '', '', '', '1970-01-01', '', '', '037014', 450000, 'asd1', '2018-08-26 21:53:59'),
+(17, 'deadpool@gmail.com', 'deadpool15', 'deadpool', '07e080a66059e2e9e059fd9c05a15fcd', '9090909090', '1994-02-14', 'jalan mawar 69', 'b160b84b6c99e391ddc12cdbd8f61e4d', '037015', 335000, 'asd1', '2018-08-27 03:03:01');
 
 -- --------------------------------------------------------
 
@@ -103,7 +132,8 @@ CREATE TABLE `pulsa` (
 INSERT INTO `pulsa` (`kode_pembelian`, `no_hp`, `provider`, `nominal`) VALUES
 ('20004', '08978902350', 'Telkomsel', 50000),
 ('20015', '081212515', 'Telkomsel', 50000),
-('20016', '081212515', 'Telkomsel', 50000);
+('20016', '081212515', 'Telkomsel', 50000),
+('20027', '088880', 'XL', 50000);
 
 -- --------------------------------------------------------
 
@@ -147,9 +177,13 @@ INSERT INTO `transaksi` (`kode_transaksi`, `id_nasabah`, `tgl_trans`, `status`, 
 ('10025', 15, '2018-08-21 09:43:41', 'Gagal', 'Kode rahasia salah'),
 ('10026', 15, '2018-08-21 09:44:04', 'Berhasil', 'Berhasil transfer'),
 ('10027', 15, '2018-08-21 09:45:47', 'Berhasil', 'Berhasil transfer'),
+('10030', 17, '2018-08-27 03:03:01', 'Berhasil', 'Berhasil transfer'),
 ('20004', 1, '2018-08-20 04:19:59', 'Berhasil', ''),
 ('20015', 2, '2018-08-20 09:20:35', 'Berhasil', 'Pembelian pulsa berhasil'),
-('20016', 2, '2018-08-20 10:25:46', 'Berhasil', 'Pembelian pulsa berhasil');
+('20016', 2, '2018-08-20 10:25:46', 'Berhasil', 'Pembelian pulsa berhasil'),
+('20027', 17, '2018-08-27 03:00:24', 'Berhasil', 'Pembelian pulsa berhasil'),
+('20028', 17, '2018-08-27 03:00:26', 'Gagal', 'Kode rahasia salah'),
+('20029', 17, '2018-08-27 03:00:39', 'Berhasil', 'Pembelian pulsa berhasil');
 
 -- --------------------------------------------------------
 
@@ -191,7 +225,8 @@ INSERT INTO `transfer` (`kode_transfer`, `rek_transfer`, `nominal`, `keterangan`
 ('10024', '037009', 150000, 'transfer ke kadinugraha'),
 ('10025', '037009', 150000, 'transfer ke kadinugraha'),
 ('10026', '037009', 150000, 'transfer ke kadinugraha'),
-('10027', '037009', 150000, 'transfer ke kadinugraha');
+('10027', '037009', 150000, 'transfer ke kadinugraha'),
+('10030', '037000', 10000, 'bayar utang');
 
 --
 -- Indexes for dumped tables
@@ -244,7 +279,7 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
