@@ -14,6 +14,7 @@ import { PembelianComponent } from './pembelian/pembelian.component';
 import { HistoriComponent } from './histori/histori.component';
 import { SettingComponent } from './setting/setting.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AppRoutingModule } from './/app-routing.module';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG})
   ],
   providers: [],
   bootstrap: [AppComponent]

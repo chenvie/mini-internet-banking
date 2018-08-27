@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { InputValidatorService } from '../input-validator.service';
 import { TransferService } from '../transfer.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-transfer',
@@ -29,7 +30,8 @@ export class TransferComponent implements OnInit {
     private login: LoginService,
     private transfer: TransferService,
     private route: Router,
-    private validator: InputValidatorService
+    private validator: InputValidatorService,
+    private logger: NGXLogger
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +45,12 @@ export class TransferComponent implements OnInit {
   async validateNorek() {
     const res = await this.validator.validateNorek(this.dataTrf);
     this.isNorekValid = res.check === 'True' ? true : false;
-    if (this.isNorekValid) { this.page = 2; }
+    if (this.isNorekValid) {
+      this.page = 2;
+      this.logger.info('username', this.login.userData.username, 'transfer to', this.dataTrf.no_rek_tujuan, 'norek valid');
+    } else {
+      this.logger.warn('username', this.login.userData.username, 'transfer to', this.dataTrf.no_rek_tujuan, 'norek invalid');
+    }
   }
 
   async doTransfer() {
@@ -53,6 +60,9 @@ export class TransferComponent implements OnInit {
     this.page = 3;
     if (this.isSuccess) {
       this.status = 'Berhasil';
+      this.logger.info('username', this.login.userData.username, 'transfer success');
+    } else {
+      this.logger.warn('username', this.login.userData.username, 'transfer failed');
     }
   }
 }

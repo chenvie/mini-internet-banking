@@ -58,6 +58,7 @@ export class RegisterComponent implements OnInit {
   }
 
   submitForm() {
+
     if (this.validateForm()) {
       this.register.register(this.userData).subscribe((data: any) => alert(data['message'] + '\nSilahkan login pada halaman utama.'));
       this.resetForm();

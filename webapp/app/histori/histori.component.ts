@@ -4,6 +4,7 @@ import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { InfoRekService } from '../info-rek.service';
 import * as moment from 'moment';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-histori',
@@ -32,7 +33,9 @@ export class HistoriComponent implements OnInit {
     private validator: InputValidatorService,
     private login: LoginService,
     private route: Router,
-    private info: InfoRekService) { }
+    private info: InfoRekService,
+    private logger: NGXLogger
+  ) { }
 
   ngOnInit() {
     if (!this.login.isLoginValid) { this.route.navigate(['login']); }
@@ -53,6 +56,8 @@ export class HistoriComponent implements OnInit {
     this.historiData.dariTanggal = moment(this.historiData.dariTanggal).format('DD MMMM YYYY');
     this.historiData.hinggaTanggal = moment(this.historiData.hinggaTanggal).format('DD MMMM YYYY');
     this.trx = res.records;
+    const l = this.trx.length;
+    this.logger.info('fetching', l, 'records from history');
     this.trx.forEach(t => {
       t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
     });

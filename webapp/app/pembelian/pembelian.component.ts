@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PembelianService } from '../pembelian.service';
 import { InputValidatorService } from '../input-validator.service';
 import { LoginService } from '../login.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-pembelian',
@@ -30,7 +31,8 @@ export class PembelianComponent implements OnInit {
     private beli: PembelianService,
     private validator: InputValidatorService,
     private route: Router,
-    private login: LoginService) { }
+    private login: LoginService,
+    private logger: NGXLogger) { }
 
   ngOnInit() {
     if (!this.login.isLoginValid) { this.route.navigate(['login']); }
@@ -50,15 +52,16 @@ export class PembelianComponent implements OnInit {
   }
 
   async submitPulsa() {
-    // if (!this.validator.validateKode(this.dataBeli.kode_rahasia)) {
-    //   this.isKodeValid = false;
-    //   return;
-    // }
     const res = await this.beli.buyPulsa(this.dataBeli);
     this.keterangan = res.message;
     this.status = res.pulsa;
     this.txtStatus = this.status ? 'Berhasil' : 'Gagal';
     this.page = 3;
+    if (this.status) {
+      this.logger.info('username', this.login.userData.username, 'pulsa transaction success');
+    } else {
+      this.logger.warn('username', this.login.userData.username, 'pulsa transaction failed');
+    }
   }
 
 }

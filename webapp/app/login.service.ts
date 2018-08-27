@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import md5 from 'md5';
+import { NGXLogger } from 'ngx-logger';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,14 +25,30 @@ export class LoginService {
   };
   isLoginValid = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private logger: NGXLogger
+  ) { }
 
   async login(userLogin: any) {
     userLogin.password = md5(userLogin.password);
     const res = await this.getLoginValidation(userLogin);
     this.isLoginValid = res.login;
-    if (!this.isLoginValid) { return false; }
+    if (!this.isLoginValid) {
+      this.logger.warn('username', userLogin.username, 'login credentials invalid');
+      return false;
+    } else {
+      this.logger.info('username', userLogin.username, 'login credentials verified');
+    }
     this.userData = await this.getUserData(userLogin.username);
+    for (const key of Object.keys(this.userData)) {
+      const val = this.userData[key];
+      if (val === '') {
+        this.logger.error('error fetching', key, 'for username', userLogin.username);
+        return false;
+      }
+    }
+    this.logger.info('fetch all user data for username', this.userData.username, 'success');
     return true;
     // only return true / false
     // call [getUserData] to get user data from DB

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { InfoRekService } from '../info-rek.service';
 import * as moment from 'moment';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-mutasi-rek',
@@ -27,7 +28,9 @@ export class MutasiRekComponent implements OnInit {
   constructor(
     private info: InfoRekService,
     private login: LoginService,
-    private route: Router) { }
+    private route: Router,
+    private logger: NGXLogger
+  ) { }
 
   ngOnInit() {
     if (!this.login.isLoginValid) { this.route.navigate(['login']); }
@@ -42,6 +45,8 @@ export class MutasiRekComponent implements OnInit {
   async getMutasi() {
     const res = await this.info.getMutasi();
     this.trx = res.records;
+    const l = this.trx.length;
+    this.logger.info('fetching', l, 'records from mutation');
     this.trx.forEach(t => {
       t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
     });
