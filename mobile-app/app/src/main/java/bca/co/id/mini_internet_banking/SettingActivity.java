@@ -25,10 +25,21 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SettingActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -113,77 +124,197 @@ public class SettingActivity extends AppCompatActivity {
 
         final Intent intent = new Intent(this, HomeActivity.class);
 
+        String hashOPassword = "";
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(oPass.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            hashOPassword = bigInt.toString(16);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while(hashOPassword.length() < 32 ){
+                hashOPassword = "0" + hashOPassword;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
         if (!oPass.equals("") && !nPass.equals("") && !rPass.equals("")){
-            if (oPass.equals(Nasabah.password)){
+            if (hashOPassword.equals(Nasabah.password)){
                 if (nPass.equals(rPass)){
                     if(PasswordStrength.calculateStrength(nPass).getValue() > PasswordStrength.MEDIUM.getValue()){
-                        AsyncHttpClient client = new AsyncHttpClient();
+                        String hashNPassword = "";
+                        try {
+                            MessageDigest m = MessageDigest.getInstance("MD5");
+                            m.reset();
+                            m.update(nPass.getBytes());
+                            byte[] digest = m.digest();
+                            BigInteger bigInt = new BigInteger(1,digest);
+                            hashNPassword = bigInt.toString(16);
+                            // Now we need to zero pad it if you actually want the full 32 chars.
+                            while(hashNPassword.length() < 32 ){
+                                hashNPassword = "0" + hashNPassword;
+                            }
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        }
+
+                        String hashRPassword = "";
+                        try {
+                            MessageDigest m = MessageDigest.getInstance("MD5");
+                            m.reset();
+                            m.update(rPass.getBytes());
+                            byte[] digest = m.digest();
+                            BigInteger bigInt = new BigInteger(1,digest);
+                            hashRPassword = bigInt.toString(16);
+                            // Now we need to zero pad it if you actually want the full 32 chars.
+                            while(hashRPassword.length() < 32 ){
+                                hashRPassword = "0" + hashRPassword;
+                            }
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        }
+
+                        OkHttpClient client = new OkHttpClient();
+
+                        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                        String url = "http://10.0.2.2/mini-internet-banking/API/nasabah/update_password.php";
 
                         JSONObject jsonParams = new JSONObject();
                         try {
                             jsonParams.put("id_nasabah", Nasabah.id);
-                            jsonParams.put("passwordl", oPass);
-                            jsonParams.put("passwordb1", nPass);
-                            jsonParams.put("passwordb2", rPass);
+                            jsonParams.put("passwordl", hashOPassword);
+                            jsonParams.put("passwordb1", hashNPassword);
+                            jsonParams.put("passwordb2", hashRPassword);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        /*RequestParams rp = new RequestParams();
-                        rp.add("id_nasabah", Nasabah.id);
-                        rp.add("passwordl", oPass);
-                        rp.add("passwordb1", nPass);
-                        rp.add("passwordb2", rPass);*/
+                        RequestBody body = RequestBody.create(JSON, jsonParams.toString());
 
-                        try {
-                            StringEntity entity = new StringEntity(jsonParams.toString());
+                        Request request = new Request.Builder()
+                                .url(url)
+                                .post(body)
+                                .build();
 
-                            client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/update_password.php", entity, "application/json", new AsyncHttpResponseHandler() {
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                    String json = new String(responseBody);
+                        final String finalHashNPassword = hashNPassword;
 
-                                    int jsonStart = json.indexOf("{");
-                                    int jsonEnd = json.indexOf("}");
+                        client.newCall(request).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Log.e(TAG, "error getting response from async okhttp call");
+                            }
 
-                                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
-                                        json = json.substring(jsonStart, jsonEnd + 1);
-                                    }
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                String responseBody = response.body().string().toString();
 
-                                    try {
-                                        JSONObject jsonObject = new JSONObject(json);
-                                        String result = jsonObject.getString("message");
+                                try {
+                                    JSONObject jsonObject = new JSONObject(responseBody);
+                                    final String result = jsonObject.getString("message");
 
-                                        if (result.equalsIgnoreCase("update password berhasil")) {
-                                            Toast.makeText(mContext, "Ubah Password Berhasil!", Toast.LENGTH_LONG).show();
-                                            SharedPreferences.Editor spEdit = sp.edit();
-                                            spEdit.putString("password", nPass);
-                                            spEdit.commit();
-                                            Nasabah.password = nPass;
-                                            startActivity(intent);
-                                        } else {
-                                            Toast.makeText(mContext, "Ubah Password Gagal: " + result, Toast.LENGTH_LONG).show();
-                                            startActivity(intent);
-                                        }
-                                    } catch (final JSONException e) {
-                                        Log.e(TAG, "Json parsing error change password: " + e.getMessage());
+                                    if (result.equalsIgnoreCase("update password berhasil")) {
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(getApplicationContext(), "Json parsing error change password: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(mContext, "Ubah Password Berhasil!", Toast.LENGTH_LONG).show();
                                             }
                                         });
+                                        SharedPreferences.Editor spEdit = sp.edit();
+                                        spEdit.putString("password", finalHashNPassword);
+                                        spEdit.commit();
+                                        Nasabah.password = finalHashNPassword;
+                                        startActivity(intent);
+                                    } else {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(mContext, "Ubah Password Gagal: " + result, Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                        startActivity(intent);
                                     }
+                                } catch (final JSONException e) {
+                                    Log.e(TAG, "Json parsing error change code: " + e.getMessage());
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getApplicationContext(),"Json parsing error change code: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                        });
                                 }
+                            }
+                        });
 
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-                                }
-                            });
-                        }catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
+//                        AsyncHttpClient client = new AsyncHttpClient();
+//
+//                        JSONObject jsonParams = new JSONObject();
+//                        try {
+//                            jsonParams.put("id_nasabah", Nasabah.id);
+//                            jsonParams.put("passwordl", oPass);
+//                            jsonParams.put("passwordb1", nPass);
+//                            jsonParams.put("passwordb2", rPass);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        /*RequestParams rp = new RequestParams();
+//                        rp.add("id_nasabah", Nasabah.id);
+//                        rp.add("passwordl", oPass);
+//                        rp.add("passwordb1", nPass);
+//                        rp.add("passwordb2", rPass);*/
+//
+//                        try {
+//                            StringEntity entity = new StringEntity(jsonParams.toString());
+//
+//                            client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/update_password.php", entity, "application/json", new AsyncHttpResponseHandler() {
+//                                @Override
+//                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                                    String json = new String(responseBody);
+//
+//                                    int jsonStart = json.indexOf("{");
+//                                    int jsonEnd = json.indexOf("}");
+//
+//                                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+//                                        json = json.substring(jsonStart, jsonEnd + 1);
+//                                    }
+//
+//                                    try {
+//                                        JSONObject jsonObject = new JSONObject(json);
+//                                        String result = jsonObject.getString("message");
+//
+//                                        if (result.equalsIgnoreCase("update password berhasil")) {
+//                                            Toast.makeText(mContext, "Ubah Password Berhasil!", Toast.LENGTH_LONG).show();
+//                                            SharedPreferences.Editor spEdit = sp.edit();
+//                                            spEdit.putString("password", nPass);
+//                                            spEdit.commit();
+//                                            Nasabah.password = nPass;
+//                                            startActivity(intent);
+//                                        } else {
+//                                            Toast.makeText(mContext, "Ubah Password Gagal: " + result, Toast.LENGTH_LONG).show();
+//                                            startActivity(intent);
+//                                        }
+//                                    } catch (final JSONException e) {
+//                                        Log.e(TAG, "Json parsing error change password: " + e.getMessage());
+//                                        runOnUiThread(new Runnable() {
+//                                            @Override
+//                                            public void run() {
+//                                                Toast.makeText(getApplicationContext(), "Json parsing error change password: " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                                            }
+//                                        });
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//
+//                                }
+//                            });
+//                        }catch (UnsupportedEncodingException e) {
+//                            e.printStackTrace();
+//                        }
                     } else{
                         Toast.makeText(
                                 this,
@@ -208,77 +339,194 @@ public class SettingActivity extends AppCompatActivity {
 
         final Intent intent = new Intent(this, HomeActivity.class);
 
+        String hashOCode = "";
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(oCode.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            hashOCode = bigInt.toString(16);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while(hashOCode.length() < 32 ){
+                hashOCode = "0" + hashOCode;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
         if (!oCode.equals("") && !nCode.equals("") && !rCode.equals("")){
-            if (oCode.equals(Nasabah.code)){
+            if (hashOCode.equals(Nasabah.code)){
                 if (nCode.equals(rCode)){
                     if(CodeStrength.calculateStrength(nCode).getValue() > CodeStrength.MEDIUM.getValue()) {
-                        AsyncHttpClient client = new AsyncHttpClient();
+                        String hashNCode = "";
+                        try {
+                            MessageDigest m = MessageDigest.getInstance("MD5");
+                            m.reset();
+                            m.update(nCode.getBytes());
+                            byte[] digest = m.digest();
+                            BigInteger bigInt = new BigInteger(1,digest);
+                            hashNCode = bigInt.toString(16);
+                            // Now we need to zero pad it if you actually want the full 32 chars.
+                            while(hashNCode.length() < 32 ){
+                                hashNCode = "0" + hashNCode;
+                            }
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        }
+
+                        String hashRCode = "";
+                        try {
+                            MessageDigest m = MessageDigest.getInstance("MD5");
+                            m.reset();
+                            m.update(rCode.getBytes());
+                            byte[] digest = m.digest();
+                            BigInteger bigInt = new BigInteger(1,digest);
+                            hashRCode = bigInt.toString(16);
+                            // Now we need to zero pad it if you actually want the full 32 chars.
+                            while(hashRCode.length() < 32 ){
+                                hashRCode = "0" + hashRCode;
+                            }
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        }
+
+                        OkHttpClient client = new OkHttpClient();
+
+                        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                        String url = "http://10.0.2.2/mini-internet-banking/API/nasabah/update_kode_rahasia.php";
 
                         JSONObject jsonParams = new JSONObject();
                         try {
                             jsonParams.put("id_nasabah", Nasabah.id);
-                            jsonParams.put("kode_rahasiaL", oCode);
-                            jsonParams.put("krb1", nCode);
-                            jsonParams.put("krb2", rCode);
+                            jsonParams.put("kode_rahasiaL", hashOCode);
+                            jsonParams.put("krb1", hashNCode);
+                            jsonParams.put("krb2", hashRCode);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        /*RequestParams rp = new RequestParams();
-                        rp.add("id_nasabah", Nasabah.id);
-                        rp.add("kode_rahasiaL", oCOde);
-                        rp.add("krb1", nCode);
-                        rp.add("krb2", rCode);*/
+                        RequestBody body = RequestBody.create(JSON, jsonParams.toString());
 
-                        try {
-                            StringEntity entity = new StringEntity(jsonParams.toString());
+                        Request request = new Request.Builder()
+                                .url(url)
+                                .post(body)
+                                .build();
 
-                            client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/update_kode_rahasia.php", entity, "application/json", new AsyncHttpResponseHandler() {
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                    String json = new String(responseBody);
+                        final String finalHashNCode = hashNCode;
+                        client.newCall(request).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Log.e(TAG, "error getting response from async okhttp call");
+                            }
 
-                                    int jsonStart = json.indexOf("{");
-                                    int jsonEnd = json.indexOf("}");
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                String responseBody = response.body().string().toString();
+                                try {
+                                    JSONObject jsonObject = new JSONObject(responseBody);
+                                    final String result = jsonObject.getString("message");
 
-                                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
-                                        json = json.substring(jsonStart, jsonEnd+1);
+                                    if (result.equalsIgnoreCase("update kode rahasia berhasil")) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(mContext, "Ubah Kode Rahasia Berhasil!", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                        SharedPreferences.Editor spEdit = sp.edit();
+                                        spEdit.putString("code", finalHashNCode);
+                                        spEdit.commit();
+                                        Nasabah.code = finalHashNCode;
+                                        startActivity(intent);
+                                    } else{
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(mContext, "Ubah Kode Rahasia Gagal: " + result, Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                        startActivity(intent);
                                     }
-
-                                    try {
-                                        JSONObject jsonObject = new JSONObject(json);
-                                        String result = jsonObject.getString("message");
-
-                                        if (result.equalsIgnoreCase("update kode rahasia berhasil")) {
-                                            Toast.makeText(mContext, "Ubah Kode Rahasia Berhasil!", Toast.LENGTH_LONG).show();
-                                            SharedPreferences.Editor spEdit = sp.edit();
-                                            spEdit.putString("code", nCode);
-                                            spEdit.commit();
-                                            Nasabah.code = nCode;
-                                            startActivity(intent);
-                                        } else{
-                                            Toast.makeText(mContext, "Ubah Kode Rahasia Gagal: " + result, Toast.LENGTH_LONG).show();
-                                            startActivity(intent);
-                                        }
-                                    } catch (final JSONException e) {
-                                        Log.e(TAG, "Json parsing error change code: " + e.getMessage());
+                                } catch (final JSONException e) {
+                                    Log.e(TAG, "Json parsing error change code: " + e.getMessage());
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
                                                 Toast.makeText(getApplicationContext(),"Json parsing error change code: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         });
-                                    }
                                 }
+                            }
+                        });
 
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                                }
-                            });
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
+//                        AsyncHttpClient client = new AsyncHttpClient();
+//
+//                        JSONObject jsonParams = new JSONObject();
+//                        try {
+//                            jsonParams.put("id_nasabah", Nasabah.id);
+//                            jsonParams.put("kode_rahasiaL", oCode);
+//                            jsonParams.put("krb1", nCode);
+//                            jsonParams.put("krb2", rCode);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        /*RequestParams rp = new RequestParams();
+//                        rp.add("id_nasabah", Nasabah.id);
+//                        rp.add("kode_rahasiaL", oCOde);
+//                        rp.add("krb1", nCode);
+//                        rp.add("krb2", rCode);*/
+//
+//                        try {
+//                            StringEntity entity = new StringEntity(jsonParams.toString());
+//
+//                            client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/update_kode_rahasia.php", entity, "application/json", new AsyncHttpResponseHandler() {
+//                                @Override
+//                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                                    String json = new String(responseBody);
+//
+//                                    int jsonStart = json.indexOf("{");
+//                                    int jsonEnd = json.indexOf("}");
+//
+//                                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
+//                                        json = json.substring(jsonStart, jsonEnd+1);
+//                                    }
+//
+//                                    try {
+//                                        JSONObject jsonObject = new JSONObject(json);
+//                                        String result = jsonObject.getString("message");
+//
+//                                        if (result.equalsIgnoreCase("update kode rahasia berhasil")) {
+//                                            Toast.makeText(mContext, "Ubah Kode Rahasia Berhasil!", Toast.LENGTH_LONG).show();
+//                                            SharedPreferences.Editor spEdit = sp.edit();
+//                                            spEdit.putString("code", nCode);
+//                                            spEdit.commit();
+//                                            Nasabah.code = nCode;
+//                                            startActivity(intent);
+//                                        } else{
+//                                            Toast.makeText(mContext, "Ubah Kode Rahasia Gagal: " + result, Toast.LENGTH_LONG).show();
+//                                            startActivity(intent);
+//                                        }
+//                                    } catch (final JSONException e) {
+//                                        Log.e(TAG, "Json parsing error change code: " + e.getMessage());
+//                                        runOnUiThread(new Runnable() {
+//                                            @Override
+//                                            public void run() {
+//                                                Toast.makeText(getApplicationContext(),"Json parsing error change code: " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                                            }
+//                                        });
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//
+//                                }
+//                            });
+//                        } catch (UnsupportedEncodingException e) {
+//                            e.printStackTrace();
+//                        }
                     } else{
                         Toast.makeText(
                                 this,

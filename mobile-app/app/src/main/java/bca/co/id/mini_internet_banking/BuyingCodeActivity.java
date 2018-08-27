@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -27,6 +28,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -36,6 +38,13 @@ import java.text.NumberFormat;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class BuyingCodeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -45,6 +54,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private String noHp, provider, nominal;
     private Context mContext;
+    private String TAG = BuyingCodeActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -138,7 +148,10 @@ public class BuyingCodeActivity extends AppCompatActivity {
         if(hashCode.equals(Nasabah.code)) {
             if (!noHp.equals("")) {
                 if (temp > 0) {
-                    AsyncHttpClient client = new AsyncHttpClient();
+                    OkHttpClient client = new OkHttpClient();
+                    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                    String url = "http://10.0.2.2/mini-internet-banking/API/pulsa/create.php";
+
                     JSONObject jsonParams = new JSONObject();
                     try {
                         jsonParams.put("username", Nasabah.username);
@@ -151,55 +164,71 @@ public class BuyingCodeActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    try {
-                        StringEntity entity = new StringEntity(jsonParams.toString());
+                    final RequestBody body = RequestBody.create(JSON, jsonParams.toString());
 
-                        client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/pulsa/create.php", entity, "application/json", new AsyncHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                String json = new String(responseBody);
-                                int jsonStart = json.indexOf("{");
-                                int jsonEnd = json.indexOf("}");
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .post(body)
+                            .build();
 
-                                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
-                                    json = json.substring(jsonStart, jsonEnd+1);
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Log.e(TAG, "error in getting respose from async okhttp call");
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String responseBody = response.body().string().toString();
+
+                            int jsonStart = responseBody.indexOf("{");
+                            int jsonEnd = responseBody.indexOf("}");
+
+                            if (jsonStart > 0 && jsonEnd > 0 && jsonEnd > jsonStart){
+                                responseBody = responseBody.substring(jsonStart, jsonEnd+1);
+                            }
+                            try {
+                                JSONObject jsonObject = new JSONObject(responseBody);
+                                String status = jsonObject.getString("pulsa");
+                                final String message = jsonObject.getString("message");
+
+                                if (status.equalsIgnoreCase("true")){
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                    intent.putExtra("noHp", noHp);
+                                    intent.putExtra("nominal", nominal);
+                                    intent.putExtra("provider", provider);
+                                    intent.putExtra("status", true);
+
+                                    Nasabah.saldo = temp;
+                                    SharedPreferences.Editor spEdit = sp.edit();
+                                    spEdit.putFloat("saldo", Nasabah.saldo);
+                                    spEdit.commit();
+
+                                    startActivity(intent);
+                                    finish();
+                                } else{
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                        }
+                                    });
                                 }
-
-                                try {
-                                    JSONObject jsonObject = new JSONObject(json);
-                                    String status = jsonObject.getString("pulsa");
-                                    String message = jsonObject.getString("message");
-
-                                    if (status.equalsIgnoreCase("true")){
-                                        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-                                        intent.putExtra("noHp", noHp);
-                                        intent.putExtra("nominal", nominal);
-                                        intent.putExtra("provider", provider);
-                                        intent.putExtra("status", true);
-
-                                        Nasabah.saldo = temp;
-                                        SharedPreferences.Editor spEdit = sp.edit();
-                                        spEdit.putFloat("saldo", Nasabah.saldo);
-                                        spEdit.commit();
-
-                                        startActivity(intent);
-                                        finish();
-                                    } else{
-                                        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                            } catch (final JSONException e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mContext, "JSON parsing error : " + e.getMessage(), Toast.LENGTH_LONG).show();
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                });
                             }
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                            }
-                        });
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                        }
+                    });
                 } else {
                     intent.putExtra("noHp", noHp);
                     intent.putExtra("nominal", nominal);
@@ -211,7 +240,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                 Toast.makeText(this, "Nomor HP harus diisi!", Toast.LENGTH_LONG).show();
             }
         } else{
-          Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
+          Toast.makeText(this, "Kode Rahasia salah!" + Nasabah.code, Toast.LENGTH_LONG).show();
         }
     }
 

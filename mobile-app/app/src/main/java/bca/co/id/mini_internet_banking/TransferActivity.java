@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,10 +25,18 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class TransferActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -36,6 +45,7 @@ public class TransferActivity extends AppCompatActivity {
     private EditText inputNorekTransfer, inputNominalTransfer, inputKetTransfer;
     private Context mContext;
     private SharedPreferences sp;
+    private String TAG = TransferActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,9 +112,11 @@ public class TransferActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, TransferCodeActivity.class);
 
         if (!noRek.equals("") && !nominal.equals("") && !ket.equals("")){
-            AsyncHttpClient client = new AsyncHttpClient();
-            JSONObject jsonParams = new JSONObject();
+            OkHttpClient client = new OkHttpClient();
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            String url = "http:10.0.2.2/mini-internet-banking/API/transfer/cek-no-rek.php";
 
+            JSONObject jsonParams = new JSONObject();
             try {
                 jsonParams.put("no_rek_tujuan", noRek);
                 jsonParams.put("id_nasabah", Nasabah.id);
@@ -114,47 +126,53 @@ public class TransferActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            try {
-                StringEntity entity = new StringEntity(jsonParams.toString());
+            RequestBody body = RequestBody.create(JSON, jsonParams.toString());
 
-                client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/transfer/cek-no-rek.php", entity, "application/json", new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        String json = new String(responseBody);
-                        int jsonStart = json.indexOf("{");
-                        int jsonEnd = json.indexOf("}");
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
 
-                        if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
-                            json = json.substring(jsonStart, jsonEnd+1);
-                        }
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e(TAG, "error in getting response from async okhttp call");
+                }
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(json);
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseBody = response.body().string().toString();
 
-                            String check = jsonObject.getString("check");
-                            String message = jsonObject.getString("message");
+                    int jsonStart = responseBody.indexOf("{");
+                    int jsonEnd = responseBody.indexOf("}");
 
-                            if (check.equalsIgnoreCase("true")){
-                                intent.putExtra("noRek", message);
-                                intent.putExtra("nominal", nominal);
-                                intent.putExtra("ket", ket);
-                                startActivity(intent);
-                            } else{
-                                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    if (jsonStart > 0 && jsonEnd > 0 && jsonEnd > jsonStart){
+                        responseBody = responseBody.substring(jsonStart, jsonEnd+1);
                     }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        String check = jsonObject.getString("check");
+                        final String message = jsonObject.getString("message");
 
+                        if (check.equalsIgnoreCase("true")){
+                            intent.putExtra("noRek", message);
+                            intent.putExtra("nominal", nominal);
+                            intent.putExtra("ket", ket);
+                            startActivity(intent);
+                        } else{
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+                }
+            });
         } else{
             Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }

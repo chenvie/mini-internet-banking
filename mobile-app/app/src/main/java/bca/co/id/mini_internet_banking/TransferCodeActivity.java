@@ -26,6 +26,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -35,6 +36,13 @@ import java.text.NumberFormat;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class TransferCodeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -44,6 +52,7 @@ public class TransferCodeActivity extends AppCompatActivity {
     private String noRek, ket, nominal;
     private Context mContext;
     private SharedPreferences sp;
+    private String TAG = TransferCodeActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,7 +146,10 @@ public class TransferCodeActivity extends AppCompatActivity {
         if (hashCode.equals(Nasabah.code)) {
             final float temp = Nasabah.saldo - Float.parseFloat(nominal);
             if (temp > 0) {
-                AsyncHttpClient client = new AsyncHttpClient();
+                OkHttpClient client = new OkHttpClient();
+                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                String url = "http://10.0.2.2/mini-internet-banking/API/transfer/create.php";
+
                 JSONObject jsonParams = new JSONObject();
                 try {
                     jsonParams.put("username", Nasabah.username);
@@ -150,57 +162,66 @@ public class TransferCodeActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                try {
-                    StringEntity entity = new StringEntity(jsonParams.toString());
+                RequestBody body = RequestBody.create(JSON, jsonParams.toString());
 
-                    final String finalHashCode = hashCode;
-                    client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/transfer/create.php", entity, "application/json", new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            String json = new String(responseBody);
-                            int jsonStart = json.indexOf("{");
-                            int jsonEnd = json.indexOf("}");
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
 
-                            if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
-                                json = json.substring(jsonStart, jsonEnd+1);
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.e(TAG, "error getting response from async okhttp call");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String responseBody = response.body().string().toString();
+
+                        int jsonStart = responseBody.indexOf("{");
+                        int jsonEnd = responseBody.indexOf("}");
+
+                        if (jsonStart > 0 && jsonEnd > 0 && jsonEnd > jsonStart){
+                            responseBody = responseBody.substring(jsonStart, jsonEnd+1);
+                        }
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseBody);
+
+                            String status = jsonObject.getString("transfer");
+                            final String message = jsonObject.getString("message");
+
+                            if (status.equalsIgnoreCase("true")){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                Nasabah.saldo = temp;
+                                SharedPreferences.Editor spEdit = sp.edit();
+                                spEdit.putFloat("saldo", Nasabah.saldo);
+                                spEdit.commit();
+
+                                intent.putExtra("noRek", noRek);
+                                intent.putExtra("nominal", nominal);
+                                intent.putExtra("ket", ket);
+                                intent.putExtra("status", true);
+                                startActivity(intent);
+                            } else{
+                                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
                             }
-
-                            try {
-                                JSONObject jsonObject = new JSONObject(json);
-
-                                String status = jsonObject.getString("transfer");
-                                String message = jsonObject.getString("message");
-
-                                if (status.equalsIgnoreCase("true")){
-                                    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-                                    Nasabah.saldo = temp;
-                                    SharedPreferences.Editor spEdit = sp.edit();
-                                    spEdit.putFloat("saldo", Nasabah.saldo);
-                                    spEdit.commit();
-
-                                    intent.putExtra("noRek", noRek);
-                                    intent.putExtra("nominal", nominal);
-                                    intent.putExtra("ket", ket);
-                                    intent.putExtra("status", true);
-                                    startActivity(intent);
-
-                                    Log.e(TransferCodeActivity.class.getSimpleName(), "username = " + Nasabah.username + ", no_rek_tujuan = " + noRek + ", id_nasabah = " + Nasabah.id + ", kode_rahasia = " + finalHashCode + ", nomina; = " + nominal + ", ket = " + ket);
-                                } else{
-                                    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                        } catch (final JSONException e) {
+                            e.printStackTrace();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Log.e(TAG, "Json error parsing: " + e.getMessage());
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            });
                         }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                        }
-                    });
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+                    }
+                });
             } else {
                 intent.putExtra("noRek", noRek);
                 intent.putExtra("nominal", nominal);
