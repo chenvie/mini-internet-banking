@@ -58,9 +58,9 @@ export class PembelianComponent implements OnInit {
     this.txtStatus = this.status ? 'Berhasil' : 'Gagal';
     this.page = 3;
     if (this.status) {
-      this.logger.info('username', this.login.userData.username, 'pulsa transaction success');
+      this.logger.info('transaction: username', this.login.userData.username, 'pulsa transaction success');
     } else {
-      this.logger.warn('username', this.login.userData.username, 'pulsa transaction failed');
+      this.logger.error('transaction: username', this.login.userData.username, 'pulsa transaction failed. Message:', this.keterangan);
     }
   }
 

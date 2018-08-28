@@ -45,11 +45,15 @@ export class MutasiRekComponent implements OnInit {
   async getMutasi() {
     const res = await this.info.getMutasi();
     this.trx = res.records;
-    const l = this.trx.length;
-    this.logger.info('fetching', l, 'records from mutation');
-    this.trx.forEach(t => {
-      t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
-    });
+    try {
+      const l = this.trx.length;
+      this.logger.info('mutation: username', this.login.userData.username, 'fetched', l, 'record(s)');
+      this.trx.forEach(t => {
+        t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
+      });
+    } catch (error) {
+      this.logger.info('mutation: username', this.login.userData.username, 'no record(s) fetched');
+    }
   }
 
 }

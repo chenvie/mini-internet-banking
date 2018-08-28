@@ -1,7 +1,7 @@
 <div *ngIf="page === 1">
   No rekening <input type="text" [(ngModel)]="dataTrf.no_rek_tujuan"><br>
   <span style="color:red;" *ngIf="!isNorekValid">nomor rekening tidak ditemukan<br></span>
-  Jumlah <input type="text" value="0" [(ngModel)]="dataTrf.nominal"><br>
+  Jumlah <input type="number" step="10000" value="0" [(ngModel)]="dataTrf.nominal"><br>
   Keterangan <input type="text" [(ngModel)]="dataTrf.keterangan"><br>
   <input type="button" value="submit" style="float: right;" (click)="validateNorek()"><br> <!-- pindah ke konfirmasi -->
 </div>

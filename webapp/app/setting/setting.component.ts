@@ -36,14 +36,14 @@ export class SettingComponent implements OnInit {
 
   validatePassword(): boolean {
     this.isPassBaruValid = this.validator.validatePassword(this.passBaru);
-    this.isPassSama = (this.passBaru === this.passRetype) && (this.validator.validateKode(this.passRetype));
-    return this.isPassBaruValid && this.isPassSama && this.passLama !== undefined;
+    this.isPassSama = (this.passBaru === this.passRetype);
+    return this.isPassBaruValid && this.isPassSama && this.passLama !== '';
   }
 
   validateKode(): boolean {
     this.isKodeBaruValid = this.validator.validateKode(this.kodeBaru);
-    this.isKodeSama = (this.kodeBaru === this.kodeRetype) && (this.validator.validateKode(this.kodeRetype));
-    return this.isKodeBaruValid && this.isKodeSama && this.kodeLama !== undefined;
+    this.isKodeSama = (this.kodeBaru === this.kodeRetype);
+    return this.isKodeBaruValid && this.isKodeSama && this.kodeLama !== '';
   }
 
   submitKodeBaru(): void {
@@ -58,16 +58,16 @@ export class SettingComponent implements OnInit {
       this.setting.changeKode(kodeUser).subscribe((data: any) => {
         alert(data['message']);
         if (data['update'] === true) {
-          this.logger.info('username', this.login.userData.username, 'change kode success');
+          this.logger.info('setting: username', this.login.userData.username, 'change kode success');
         } else {
-          this.logger.warn('username', this.login.userData.username, 'change kode failed');
+          this.logger.error('setting: username', this.login.userData.username, 'change kode failed. Message:', data['message']);
         }
       });
     } else {
       alert('gagal ubah kode rahasia');
       this.isKodeBaruValid = false;
       this.isKodeSama = false;
-      this.logger.warn('username', this.login.userData.username, 'change kode form invalid');
+      this.logger.error('setting: username', this.login.userData.username, 'change kode - form invalid');
     }
   }
 
@@ -83,16 +83,16 @@ export class SettingComponent implements OnInit {
       this.setting.changePassword(passUser).subscribe((data: any) => {
         alert(data['message']);
         if (data['update'] === true) {
-          this.logger.info('username', this.login.userData.username, 'change password success');
+          this.logger.info('setting: username', this.login.userData.username, 'change password success');
         } else {
-          this.logger.warn('username', this.login.userData.username, 'change password failed');
+          this.logger.error('setting: username', this.login.userData.username, 'change password failed. Message:', data['message']);
         }
       });
     } else {
       alert('gagal ubah password');
       this.isPassBaruValid = false;
       this.isPassSama = false;
-      this.logger.warn('username', this.login.userData.username, 'change password failed');
+      this.logger.error('setting: username', this.login.userData.username, 'change password - form invalid');
     }
   }
 

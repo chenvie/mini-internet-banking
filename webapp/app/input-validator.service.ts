@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoginService } from './login.service';
 
 import * as moment from 'moment';
+import { NGXLogger } from 'ngx-logger';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -10,52 +12,108 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
 export class InputValidatorService {
 
   tanggal: any;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private logger: NGXLogger,
+    private login: LoginService
   ) { }
 
   validatePassword(pass: string): boolean {
-    if (pass === undefined || pass === null) { return false; }
-    if (pass.length < 8) { return false; }
+    if (this.isNull(pass)) {
+      this.logger.error('input: username', this.login.userData.username, 'password null value');
+      return false;
+    }
+    if (pass.length < 8) {
+      this.logger.error('input: username', this.login.userData.username, 'password too short');
+      return false;
+    }
     const regex = /\W/g;
     const result = pass.match(regex);
-    if (result !== null) { return false; }
-    if (!this.validateTanggalPermutation(pass, this.tanggal)) { return false; }
+    if (result !== null) {
+      this.logger.error('input: username', this.login.userData.username, 'password contains non-alphanumeric character');
+      return false;
+    }
+    if (!this.validateTanggalPermutation(pass, this.tanggal)) {
+      this.logger.error('input: username', this.login.userData.username, 'password contains birth date');
+      return false;
+    }
     return true;
   }
 
   validateKode(kode: string): boolean {
-    if (kode === undefined || kode === null) { return false; }
-    if (kode.length < 6) { return false; }
+    if (this.isNull(kode)) {
+      this.logger.error('input: username', this.login.userData.username, 'secret code null value');
+      return false;
+    }
+    if (kode.length < 6) {
+      this.logger.error('input: username', this.login.userData.username, 'secret code too short');
+      return false;
+    }
     const regex = /\W/g;
     const result = kode.match(regex);
-    if (result !== null) { return false; }
-    if (!this.validateTanggalPermutation(kode, this.tanggal)) { return false; }
+    if (result !== null) {
+      this.logger.error('input: username', this.login.userData.username, 'secret code contains non-alphanumeric character');
+      return false;
+    }
+    if (!this.validateTanggalPermutation(kode, this.tanggal)) {
+      this.logger.error('input: username', this.login.userData.username, 'secret code contains birth date');
+      return false;
+    }
     return true;
   }
 
   validateTanggal(tanggal: string): boolean {
     this.tanggal = tanggal;
-    if (tanggal === undefined || tanggal === null) { return false; }
-    if (moment().year() - moment(tanggal).year() < 17) { return false; }
+    if (this.isNull(tanggal)) {
+      this.logger.error('registration: username', this.login.userData.username, 'date null value');
+      return false;
+    }
+    if (moment().year() - moment(tanggal).year() < 17) {
+      this.logger.error('registration: username', this.login.userData.username, 'age less than 17');
+      return false;
+    }
     return true;
   }
 
   validateRangeTanggal(dariTanggal: string, hinggaTanggal: string): boolean {
-    if (dariTanggal === undefined || hinggaTanggal === undefined) { return false; }
-    if (dariTanggal === '' || hinggaTanggal === '') { return false; }
-    if (moment(dariTanggal) > moment() || moment(hinggaTanggal) > moment()) { return false; }
-    if (moment(dariTanggal) > moment(hinggaTanggal)) { return false; }
-    if (moment(dariTanggal) < moment().subtract(30, 'd')) { return false; }
+    if (this.isNull(dariTanggal)) {
+      this.logger.error('histori: username', this.login.userData.username, 'initial date null value');
+      return false;
+    }
+    if (this.isNull(hinggaTanggal)) {
+      this.logger.error('histori: username', this.login.userData.username, 'target date null value');
+      return false;
+    }
+    if (moment(dariTanggal) > moment() || moment(hinggaTanggal) > moment()) {
+      this.logger.error('histori: username', this.login.userData.username, 'target date larger than current date');
+      return false;
+    }
+    if (moment(dariTanggal) > moment(hinggaTanggal)) {
+      this.logger.error('histori: username', this.login.userData.username, 'target date larger than initial date');
+      return false;
+    }
+    if (moment(dariTanggal) < moment().subtract(30, 'd')) {
+      this.logger.error('histori: username', this.login.userData.username, 'initial date more than 30 days behind');
+      return false;
+    }
     return true;
   }
 
   validateLogin(username: string, password: string): boolean {
-    return username !== null && password !== null;
+    if (this.isNull(username)) {
+      this.logger.error('login: username null value');
+      return false;
+    }
+    if (this.isNull(password)) {
+      this.logger.error('login: password null value');
+      return false;
+    }
+    return true;
   }
 
   validateTanggalPermutation(sequence: string, tanggal: string): boolean {
@@ -75,9 +133,18 @@ export class InputValidatorService {
   }
 
   validatePembelian(dataBeli: any): boolean {
-    if (dataBeli.no_hp_tujuan === '' || dataBeli.no_hp_tujuan === null) { return false; }
-    if (dataBeli.provider === null) { return false; }
-    if (dataBeli.nominal === null) { return false; }
+    if (this.isNull(dataBeli.no_hp_tujuan)) {
+      this.logger.error('transaction: username', this.login.userData.username, 'target phone number null value');
+      return false;
+    }
+    if (this.isNull(dataBeli.provider)) {
+      this.logger.error('transaction: username', this.login.userData.username, 'provider null value');
+      return false;
+    }
+    if (this.isNull(dataBeli.nominal)) {
+      this.logger.error('transaction: username', this.login.userData.username, 'nominal null value');
+      return false;
+    }
     return true;
   }
 
@@ -85,5 +152,12 @@ export class InputValidatorService {
     const url = 'http://localhost/api/transfer/cek-no-rek.php';
     const res = await this.http.post(url, dataTrf, httpOptions).toPromise();
     return <any>res;
+  }
+
+  isNull(val: string): boolean {
+    if (val === null) { return true; }
+    if (val === undefined) { return true; }
+    if (val === '') { return true; }
+    return false;
   }
 }

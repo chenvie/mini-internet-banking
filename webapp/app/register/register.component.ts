@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { InputValidatorService } from '../input-validator.service';
 import { RegisterService } from '../register.service';
 import { LoginService } from '../login.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,7 @@ export class RegisterComponent implements OnInit {
   isPassValid = false;
   isKodeValid = false;
   isTanggalValid = false;
+  isFormValid = true;
   userData = {
     nama_lengkap: null,
     email: null,
@@ -22,8 +24,7 @@ export class RegisterComponent implements OnInit {
     no_ktp: null,
     tgl_lahir: null,
     alamat: null,
-    kode_rahasia: null,
-    id_nasabah: 10 // id sementara, nunggu id generator dari backend
+    kode_rahasia: null
   };
   message: string;
 
@@ -31,7 +32,9 @@ export class RegisterComponent implements OnInit {
     private validator: InputValidatorService,
     private register: RegisterService,
     private login: LoginService,
-    private route: Router) { }
+    private route: Router,
+    private logger: NGXLogger
+  ) { }
 
   ngOnInit() {
   }
@@ -51,6 +54,16 @@ export class RegisterComponent implements OnInit {
   }
 
   validateForm(): boolean {
+    for (const key of Object.keys(this.userData)) {
+      if (this.userData[key] === null || this.userData[key] === '') {
+        this.logger.error('registration:', key, 'null value');
+        this.isFormValid = false;
+      }
+    }
+    if (!this.isFormValid) {
+      this.isFormValid = true;
+      return false;
+    }
     this.isTanggalValid = this.validator.validateTanggal(this.userData.tgl_lahir); // harus diatas, menentukan tanggal di service
     this.isPassValid = this.validator.validatePassword(this.userData.password);
     this.isKodeValid = this.validator.validateKode(this.userData.kode_rahasia);
@@ -60,11 +73,18 @@ export class RegisterComponent implements OnInit {
   submitForm() {
 
     if (this.validateForm()) {
-      this.register.register(this.userData).subscribe((data: any) => alert(data['message'] + '\nSilahkan login pada halaman utama.'));
+      this.register.register(this.userData).subscribe((data: any) => {
+        alert(data['message']);
+        if (data['message'] === 'Pendaftaran gagal') {
+          this.logger.warn('registration: create new account failed');
+        } else {
+          this.logger.info('registration: create new account success'); }
+      });
       this.resetForm();
       this.toggleRegForm();
     } else {
       alert('pengisian formulir salah');
+      this.logger.warn('registration: create new account failed');
     }
   }
 }

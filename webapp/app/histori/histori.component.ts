@@ -56,11 +56,15 @@ export class HistoriComponent implements OnInit {
     this.historiData.dariTanggal = moment(this.historiData.dariTanggal).format('DD MMMM YYYY');
     this.historiData.hinggaTanggal = moment(this.historiData.hinggaTanggal).format('DD MMMM YYYY');
     this.trx = res.records;
-    const l = this.trx.length;
-    this.logger.info('fetching', l, 'records from history');
-    this.trx.forEach(t => {
-      t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
-    });
+    try {
+      const l = this.trx.length;
+      this.logger.info('histori: username', this.login.userData.username, 'fetched', l, 'record(s)');
+      this.trx.forEach(t => {
+        t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
+      });
+    } catch (error) {
+      this.logger.info('histori: username', this.login.userData.username, 'fetched 0 record(s)');
+    }
     this.page = 2;
   }
 
