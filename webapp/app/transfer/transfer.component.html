@@ -1,21 +1,50 @@
-<div *ngIf="page === 1">
-  No rekening <input type="text" [(ngModel)]="dataTrf.no_rek_tujuan"><br>
-  <span style="color:red;" *ngIf="!isNorekValid">nomor rekening tidak ditemukan<br></span>
-  Jumlah <input type="number" step="10000" value="0" [(ngModel)]="dataTrf.nominal"><br>
-  Keterangan <input type="text" [(ngModel)]="dataTrf.keterangan"><br>
-  <input type="button" value="submit" style="float: right;" (click)="validateNorek()"><br> <!-- pindah ke konfirmasi -->
+<div class="card-body" *ngIf= "page === 1">
+  <form [formGroup]="angForm" novalidate>
+    <div class="form-group">
+      <label>No&nbsp;Rekening</label>
+      <input type="text" class="form-control" [(ngModel)]="dataTrf.no_rek_tujuan" formControlName="no_rek_tujuan" #no_rek_tujuan />
+    </div>
+    <div *ngIf="angForm.controls['no_rek_tujuan'].invalid && (angForm.controls['no_rek_tujuan'].dirty || angForm.controls['no_rek_tujuan'].touched)" class="alert alert-danger">
+      <div *ngIf="angForm.controls['no_rek_tujuan'].errors.required">
+        Mohon masukan nomor rekening !
+      </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="!isNorekValid">Nomor rekening tidak ditemukan !</div>
+    <div class="form-group">
+      <label>Jumlah</label> <input type="text" class="form-control" [(ngModel)]="dataTrf.nominal" formControlName="nominal" #nominal/>
+    </div>
+    <div *ngIf="angForm.controls['nominal'].invalid && (angForm.controls['nominal'].dirty || angForm.controls['nominal'].touched)" class="alert alert-danger">
+      <div *ngIf="angForm.controls['nominal'].errors.required">
+        Mohon masukan nominal rupiah !
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Keterangan</label>
+      <input type="text" class="form-control" [(ngModel)]="dataTrf.keterangan" formControlName="keterangan" #keterangan/>
+    </div>
+    <div *ngIf="angForm.controls['keterangan'].invalid && (angForm.controls['keterangan'].dirty || angForm.controls['keterangan'].touched)" class="alert alert-danger">
+      <div *ngIf="angForm.controls['keterangan'].errors.required">
+        Mohon masukan keterangan !
+      </div>
+    </div>
+    <div class="alert alert-danger" span *ngIf="!isFormValid">Form tidak boleh kosong</div>
+      <div class="form-group">
+        <button (click)="validateNorek()" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary">Add</button>
+      </div>
+  </form>
 </div>
+
 <div *ngIf="page === 2">
-    No rekening <span style="float: right;"> {{dataTrf.no_rek_tujuan}} </span><br>
-    Jumlah <span style="float: right;"> {{dataTrf.nominal}} </span><br>
-    Keterangan <span style="float: right;"> {{dataTrf.keterangan}} </span><br>
-    Kode Rahasia <input type="password" [(ngModel)]="dataTrf.kode_rahasia"><br>
-    <input type="button" value="submit" style="float: right;" (click)="doTransfer()"><br> <!-- pindah ke hasil -->
+  No rekening <span style="float: right;"> {{dataTrf.no_rek_tujuan}} </span><br>
+  Jumlah <span style="float: right;"> {{dataTrf.nominal}} </span><br>
+  Keterangan <span style="float: right;"> {{dataTrf.keterangan}} </span><br>
+  Kode Rahasia <input type="password" [(ngModel)]="dataTrf.kode_rahasia"><br>
+  <input type="button" value="submit" style="float: right;" (click)="doTransfer()"><br> <!-- pindah ke hasil -->
 </div>
 <div *ngIf="page === 3">
-  Transfer <span> {{status}} </span><br>
-  <span *ngIf="!isSuccess"> {{message}} </span><br><br>
-  No rekening <span style="float: right;"> {{dataTrf.no_rek_tujuan}} </span><br>
-  Jumlah <span style="float: right;"> Rp. {{dataTrf.nominal}} </span><br>
-  Keterangan <span style="float: right;"> {{dataTrf.keterangan}} </span><br>  
+Transfer <span> {{status}} </span><br>
+<span *ngIf="!isSuccess"> {{message}} </span><br><br>
+No rekening <span style="float: right;"> {{dataTrf.no_rek_tujuan}} </span><br>
+Jumlah <span style="float: right;"> Rp. {{dataTrf.nominal}} </span><br>
+Keterangan <span style="float: right;"> {{dataTrf.keterangan}} </span><br>  
 </div>

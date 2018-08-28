@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputValidatorService } from '../input-validator.service';
 import { RegisterService } from '../register.service';
 import { LoginService } from '../login.service';
 import { NGXLogger } from 'ngx-logger';
+
 
 @Component({
   selector: 'app-register',
@@ -27,14 +29,29 @@ export class RegisterComponent implements OnInit {
     kode_rahasia: null
   };
   message: string;
+  angForm: FormGroup;
 
   constructor(
     private validator: InputValidatorService,
     private register: RegisterService,
+    private fb : FormBuilder,
     private login: LoginService,
     private route: Router,
     private logger: NGXLogger
-  ) { }
+  ) 
+    { this.cekForm(); }
+
+    cekForm(){
+      this.angForm=this.fb.group({
+        name: ['', Validators.required],
+        email:['', Validators.required],
+        pass: ['', Validators.required],
+        ktp: ['', Validators.required],
+        tgl: ['', Validators.required],
+        alamat: ['', Validators.required],
+        kode: ['', Validators.required]
+      });
+    }
 
   ngOnInit() {
   }

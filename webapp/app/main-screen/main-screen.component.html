@@ -1,11 +1,11 @@
-<div style="float: left;">
-  <a [routerLink]="[ '/main/info-saldo' ]">info saldo</a><br><br>
-  <a [routerLink]="[ '/main/mutasi-rek' ]">mutasi rekening</a><br><br>
-  <a [routerLink]="[ '/main/transfer' ]">transfer</a><br><br>
-  <a [routerLink]="[ '/main/pembelian' ]">pembelian</a><br><br>
-  <a [routerLink]="[ '/main/histori' ]">hitori transaksi</a><br><br>
-  <a [routerLink]="[ '/main/setting' ]">account setting</a><br><br>
+<div class="btn-group-vertical">
+  <button class="btn btn-primary"><a [routerLink]="[ '/main/info-saldo' ]">Info Saldo</a></button>
+  <button class="btn btn-primary"><a [routerLink]="[ '/main/mutasi-rek' ]">Mutasi Rekening</a></button>
+  <button class="btn btn-primary"><a [routerLink]="[ '/main/transfer' ]">Transfer</a></button>
+  <button class="btn btn-primary"><a [routerLink]="[ '/main/pembelian' ]">Pembelian</a></button>
+  <button class="btn btn-primary"><a [routerLink]="[ '/main/histori' ]">Histori Transaksi</a></button>
+  <button class="btn btn-primary"><a [routerLink]="[ '/main/setting' ]">Account Setting</a></button>
 </div>
-<div style="float: right;">
+<div class="card" style="float: right;">
   <router-outlet></router-outlet>
 </div>

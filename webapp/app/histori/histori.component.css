@@ -1,1 +1,13 @@
-/*  */
+.header{
+    position: fixed;
+    background-color: white;
+    width: auto;
+    z-index: 1;
+}
+.date{
+    color: red;
+}
+.histori{
+    position: absolute;
+    top: 50pt;
+}

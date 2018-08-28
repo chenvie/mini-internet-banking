@@ -1,15 +1,84 @@
-<a [routerLink]="[ '/login' ]" (click)="toggleRegForm()">buka rekening</a><br><br>
-<div [hidden]="!isHidden">
-	nama lengkap <input type="text" [(ngModel)]="userData.nama_lengkap"><br><br>
-	email <input type="email" [(ngModel)]="userData.email"><br><br>
-	password <input type="password" [(ngModel)]="userData.password"><br> <!-- 8alfa -->
-	<span *ngIf="!isPassValid" style="color: red">Password minimal 8 karakter alfanumerik, tidak boleh tanggal lahir</span><br>
-	no ktp <input type="number" [(ngModel)]="userData.no_ktp"><br><br> 
-	tgl lahir <input type="date" [(ngModel)]="userData.tgl_lahir"><br>
-	<span *ngIf="!isTanggalValid" style="color: red">Umur minimal 17 tahun</span><br>
-	alamat <input type="text" [(ngModel)]="userData.alamat"><br><br>
-	kode rahasia <input type="password" [(ngModel)]="userData.kode_rahasia" maxlength="6"><br> <!-- 6alfa -->
-	<span *ngIf="!isKodeValid" style="color: red">Kode 6 karakter alfanumerik, tidak boleh tanggal lahir</span><br>
-	<input type="button" value="submit" (click)="submitForm()">
-	<input type="button" value="reset" (click)="resetForm()">
+<button class="btn btn-info" (click)="toggleRegForm()">buka rekening</button><br><br>
+<div [hidden]="!isHidden" class="card">
+	<div class="card-body">
+		<form [formGroup]="angForm" novalidate>
+			<div class="form-group">
+				<label class="col-md-6">Nama Lengkap: </label>
+				<input type="text" class="form-control" [(ngModel)]="userData.nama_lengkap" formControlName="name" #name />
+			</div>
+			<div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" class="alert alert-danger">
+				<div *ngIf="angForm.controls['name'].errors.required">
+					Mohon masukan nama lengkap anda!
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-4">Email: </label>
+				<input type="text" class="form-control"  [(ngModel)]="userData.email" formControlName="email" #email/>
+			</div>
+			<div *ngIf="angForm.controls['email'].invalid && (angForm.controls['email'].dirty || angForm.controls['email'].touched)" class="alert alert-danger">
+				<div *ngIf="angForm.controls['email'].errors.required">
+					Mohon masukan Email anda!
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-4">Password: </label>
+				<input type="password" class="form-control" [(ngModel)]="userData.password" formControlName="pass" #pass/>
+			</div>
+			<div *ngIf="angForm.controls['pass'].invalid && (angForm.controls['pass'].dirty || angForm.controls['pass'].touched)" class="alert alert-danger">
+				<div *ngIf="angForm.controls['pass'].errors.required">
+					Mohon masukan kata sandi anda!
+				</div>
+				<div *ngIf="!isPassValid" class="alert alert-danger form-alert">
+					Password minimal 8 karakter alfanumerik, tidak boleh tanggal lahir!
+			</div>
+			
+		</div>
+		<div class="form-group">
+			<label class="col-md-4">No KTP: </label>
+			<input type="number" class="form-control" [(ngModel)]="userData.no_ktp" formControlName="ktp" #ktp/>
+		</div>
+		<div *ngIf="angForm.controls['ktp'].invalid && (angForm.controls['ktp'].dirty || angForm.controls['ktp'].touched)" class="alert alert-danger">
+			<div *ngIf="angForm.controls['ktp'].errors.required">
+				Mohon masukan nomor KTP anda!
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-4">Tanggal Lahir: </label>
+			<input type="text" class="form-control" [(ngModel)]="userData.tgl_lahir" formControlName="tgl" #tgl/>
+		</div>
+		<div *ngIf="angForm.controls['tgl'].invalid && (angForm.controls['tgl'].dirty || angForm.controls['tgl'].touched)" class="alert alert-danger">
+			<div *ngIf="angForm.controls['tgl'].errors.required">
+				Mohon masukan tanggal lahir anda!
+			</div>
+		</div>
+		<div *ngIf="!isTanggalValid" class="alert alert-danger form-alert">
+			Umur minimal 17 tahun!
+	</div>
+	<div class="form-group">
+		<label class="col-md-4">Alamat: </label>
+		<input type="text" class="form-control"  [(ngModel)]="userData.alamat" formControlName="alamat" #alamat/>
+	</div>
+	<div *ngIf="angForm.controls['alamat'].invalid && (angForm.controls['alamat'].dirty || angForm.controls['alamat'].touched)" class="alert alert-danger">
+		<div *ngIf="angForm.controls['alamat'].errors.required">
+			Mohon masukan alamat anda!
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-4">Kode Rahasia: </label>
+		<input type="password" class="form-control" [(ngModel)]="userData.kode_rahasia" maxlength="6" formControlName="kode" #kode/>
+	</div>
+	<div *ngIf="angForm.controls['kode'].invalid && (angForm.controls['kode'].dirty || angForm.controls['kode'].touched)" class="alert alert-danger">
+		<div *ngIf="angForm.controls['kode'].errors.required">
+			Mohon masukan kode rahasia anda.
+		</div>
+	</div>
+	<div *ngIf="!isKodeValid" class="alert alert-danger form-alert">
+		Kode minimal 6 karakter alfanumerik!
+</div>
+				<div class="form-group">
+					<button (click)="submitForm()" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-success">Submit</button>
+					<button (click)="resetForm()" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-default">Reset</button>
+				</div>
+		</form>
+	</div>
 </div>

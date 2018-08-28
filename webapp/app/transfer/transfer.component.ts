@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { InputValidatorService } from '../input-validator.service';
 import { TransferService } from '../transfer.service';
 import { NGXLogger } from 'ngx-logger';
@@ -25,14 +26,24 @@ export class TransferComponent implements OnInit {
   isSuccess = false;
   message: string;
   status = 'Gagal';
+  angForm: FormGroup;
 
   constructor(
     private login: LoginService,
+    private fb: FormBuilder,
     private transfer: TransferService,
     private route: Router,
     private validator: InputValidatorService,
     private logger: NGXLogger
-  ) { }
+  ) { this.createForm(); }
+
+  createForm() {
+    this.angForm = this.fb.group({
+      no_rek_tujuan: ['', Validators.required],
+      nominal: ['',Validators.required],
+      keterangan: ['',Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     if (!this.login.isLoginValid) { this.route.navigate(['login']); }

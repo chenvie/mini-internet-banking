@@ -1,1 +1,10 @@
-/*  */
+.card-body{
+    display: inline-block;
+}
+
+form{
+    position: absolute;
+    top: 10pt;
+    left: 30pt;
+}
+

@@ -1,1 +1,24 @@
-/*  */
+.btn-group-vertical{
+    float: left;
+    margin: 100px 0px 50px 25px;
+    width: 350px;
+}
+ a{
+     color: white;
+     font-size: 30px;
+ }
+ button{
+    padding: 9pt;
+ }
+
+ .card{
+     float: right;
+     border-style: double;
+     border-color: cornflowerblue;
+     left: 310pt;
+     top: 55pt;
+     height:400pt;
+     width:700pt ;
+     position: absolute;
+     overflow: scroll;
+ }

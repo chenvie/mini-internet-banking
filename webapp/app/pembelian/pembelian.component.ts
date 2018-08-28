@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PembelianService } from '../pembelian.service';
 import { InputValidatorService } from '../input-validator.service';
 import { LoginService } from '../login.service';
@@ -26,13 +27,24 @@ export class PembelianComponent implements OnInit {
   txtStatus: string;
   isFormValid = false;
   isKodeValid = false;
+  angForm: FormGroup;
 
   constructor(
     private beli: PembelianService,
     private validator: InputValidatorService,
     private route: Router,
     private login: LoginService,
-    private logger: NGXLogger) { }
+    private fb: FormBuilder,
+    private logger: NGXLogger) 
+    { this.cekForm(); }
+
+    cekForm() {
+      this.angForm= this.fb.group({
+        no_hp_tujuan: ['', Validators.required],
+        provider: ['', Validators.required],
+        nominal: ['', Validators.required]
+      })
+    }
 
   ngOnInit() {
     if (!this.login.isLoginValid) { this.route.navigate(['login']); }

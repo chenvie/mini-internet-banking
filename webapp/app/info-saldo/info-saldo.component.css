@@ -1,1 +1,11 @@
 /*  */
+div{
+    margin-top: 50pt;
+    margin-left: 50pt;
+}
+
+.saldo{
+    position: absolute;
+    right: 50pt;
+    color: gray;
+}

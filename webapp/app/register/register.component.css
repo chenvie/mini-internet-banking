@@ -1,1 +1,25 @@
-/*  */
+.card{
+    border-color: cornflowerblue;
+    border-style: solid;
+    left: 50pt;
+    height:400pt;
+    width:350pt ;
+    position: absolute;
+    overflow: scroll;
+}
+
+.form-horizontal{
+    position: absolute;
+    margin-left: 100pt;
+}
+.form-group{
+    width: auto;
+}
+
+.btn-info{
+    position: absolute;
+    left: 110pt;
+}
+
+
+
