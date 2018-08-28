@@ -5,9 +5,11 @@
   <input type="button" value="submit" style="float: right;" (click)="getHistori()"><br> <!-- ke hasil -->
 </div>
 <div *ngIf="page === 2">
+  <div class="header">
   Histori Transaksi<br>
-  <span style="color: red"> {{historiData.dariTanggal}} </span> - <span style="color: red"> {{historiData.hinggaTanggal}} </span><br><br>  
-  <ul>
+  <span class="date"> {{historiData.dariTanggal}} - {{historiData.hinggaTanggal}} </span><br><br>  
+  </div>
+  <ul class="histori">
     <li *ngFor="let t of trx">
       <span> {{t.tgl_trans}} </span><br>
       <!--  -->

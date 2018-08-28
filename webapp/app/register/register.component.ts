@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputValidatorService } from '../input-validator.service';
 import { RegisterService } from '../register.service';
 import { LoginService } from '../login.service';
+
 
 @Component({
   selector: 'app-register',
@@ -26,12 +28,27 @@ export class RegisterComponent implements OnInit {
     id_nasabah: 10 // id sementara, nunggu id generator dari backend
   };
   message: string;
+  angForm: FormGroup;
 
   constructor(
     private validator: InputValidatorService,
     private register: RegisterService,
+    private fb : FormBuilder,
     private login: LoginService,
-    private route: Router) { }
+    private route: Router) 
+    { this.cekForm(); }
+
+    cekForm(){
+      this.angForm=this.fb.group({
+        name: ['', Validators.required],
+        email:['', Validators.required],
+        pass: ['', Validators.required],
+        ktp: ['', Validators.required],
+        tgl: ['', Validators.required],
+        alamat: ['', Validators.required],
+        kode: ['', Validators.required]
+      });
+    }
 
   ngOnInit() {
   }

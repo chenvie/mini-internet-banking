@@ -1,32 +1,59 @@
-<div *ngIf="page === 1">
-  NO HP <input type="text" [(ngModel)]="dataBeli.no_hp_tujuan"><br>
-  Provider
-  <select [(ngModel)]="dataBeli.provider">
-    <option value="indosat">indosat</option>
-    <option value="xl">XL</option>
-    <option value="simpati">simpati</option>
-    <option value="smartfren">smartfren</option>
-  </select><br>
-  Nominal
-  <select [(ngModel)]="dataBeli.nominal">
-    <option value="25000">25000</option>
-    <option value="50000">50000</option>
-    <option value="100000">100000</option>
-  </select><br>
-  <span *ngIf="!isFormValid" style="color: red;">Form tidak boleh kosong</span><br>
-  <input type="button" value="submit" style="float: right;" (click)=nextPage()><br> <!-- ke konfirmasi -->
+<div class="card-body" *ngIf= "page === 1">
+  <form [formGroup]="angForm" novalidate>
+    <div class="form-group">
+      <label>No&nbsp;HP</label>
+      <input type="text" class="form-control" [(ngModel)]="dataBeli.no_hp_tujuan" formControlName="no_hp_tujuan" #no_hp_tujuan />
+    </div>
+    <div *ngIf="angForm.controls['no_hp_tujuan'].invalid && (angForm.controls['no_hp_tujuan'].dirty || angForm.controls['no_hp_tujuan'].touched)" class="alert alert-danger">
+      <div *ngIf="angForm.controls['no_hp_tujuan'].errors.required">
+        Mohon masukan nomor handphone !
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Provider</label> 
+      <select class="form-control" [(ngModel)]="dataBeli.provider" formControlName="provider" #provider>
+        <option value="indosat">indosat</option>
+        <option value="xl">XL</option>
+        <option value="simpati">simpati</option>
+        <option value="smartfren">smartfren</option>
+      </select>
+    </div>
+    <div *ngIf="angForm.controls['provider'].invalid && (angForm.controls['provider'].dirty || angForm.controls['provider'].touched)" class="alert alert-danger">
+      <div *ngIf="angForm.controls['provider'].errors.required">
+        Mohon pilih provider !
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Tarif</label>
+      <select class="form-control" [(ngModel)]="dataBeli.nominal" formControlName="nominal" #nominal>
+        <option value="25000">25000</option>
+        <option value="50000">50000</option>
+        <option value="100000">100000</option>
+      </select>
+    </div>
+    <div *ngIf="angForm.controls['nominal'].invalid && (angForm.controls['nominal'].dirty || angForm.controls['nominal'].touched)" class="alert alert-danger">
+      <div *ngIf="angForm.controls['nominal'].errors.required">
+        Mohon pilih tarif !
+      </div>
+    </div>
+    <div class="alert alert-danger" span *ngIf="!isFormValid">Form tidak boleh kosong</div>
+      <div class="form-group">
+        <button (click)="nextPage()" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary">Add</button>
+      </div>
+  </form>
 </div>
+
 <div *ngIf="page === 2">
-    No HP <span style="float: right;"> {{dataBeli.no_hp_tujuan}} </span><br>
-    Provider <span style="float: right;"> {{dataBeli.provider}} </span><br>
-    Nominal <span style="float: right;"> {{dataBeli.nominal}} </span><br>
-    Kode Rahasia <input type="password" maxlength="6" [(ngModel)]="dataBeli.kode_rahasia"><br>
-    <input type="button" value="submit" style="float: right;" (click)="submitPulsa()"><br> <!-- ke hasil -->
+  No HP <span style="float: right;"> {{dataBeli.no_hp_tujuan}} </span><br>
+  Provider <span style="float: right;"> {{dataBeli.provider}} </span><br>
+  Nominal <span style="float: right;"> {{dataBeli.nominal}} </span><br>
+  Kode Rahasia <input type="password" maxlength="6" [(ngModel)]="dataBeli.kode_rahasia"><br>
+  <input type="button" value="submit" style="float: right;" (click)="submitPulsa()"><br> <!-- ke hasil -->
 </div>
 <div *ngIf="page === 3">
-    Pembelian pulsa <span> {{txtStatus}} </span><br>
-    <span *ngIf="!status"> {{keterangan}} </span><br><br>
-    No HP <span style="float: right;"> {{dataBeli.no_hp_tujuan}} </span><br>
-    Provider <span style="float: right;">  {{dataBeli.provider}} </span><br>
-    Nominal <span style="float: right;"> {{dataBeli.nominal}} </span><br>
+  Pembelian pulsa <span> {{txtStatus}} </span><br>
+  <span *ngIf="!status"> {{keterangan}} </span><br><br>
+  No HP <span style="float: right;"> {{dataBeli.no_hp_tujuan}} </span><br>
+  Provider <span style="float: right;">  {{dataBeli.provider}} </span><br>
+  Nominal <span style="float: right;"> {{dataBeli.nominal}} </span><br>
 </div>

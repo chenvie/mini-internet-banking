@@ -1,19 +1,39 @@
-<div>
+<div class="container1">
   <h3>ubah password</h3>
-  password sekarang <input type="password" [(ngModel)]="passLama"><br>
-  password baru <input type="password" [(ngModel)]="passBaru"><br>
-  <span *ngIf="!isPassBaruValid" style="color: red">Password minimal 8 karakter alfanumerik <br></span>
-  retype password <input type="password" [(ngModel)]="passRetype"><br>
-  <span *ngIf="!isPassSama" style="color: red">Masukkan password baru sekali lagi <br></span>
+  <div class="form-group">
+  <label> password sekarang</label> 
+  <input type="password" class="form-control" [(ngModel)]="passLama">
+  </div>
+  <div class="form-group">
+  <label >password baru</label> 
+  <input type="password" class="form-control" [(ngModel)]="passBaru">
+  </div>
+  <div *ngIf="!isPassBaruValid" class="alert alert-danger form-alert">
+    Password minimal 8 karakter alfanumerik
+</div>
+  <div class="form-group">
+  <label>retype password</label> 
+  <input type="password" class="form-control" [(ngModel)]="passRetype">
+  </div>
+  <div *ngIf="!isPassSama" class="alert alert-danger form-alert">Masukkan password baru sekali lagi <br></div>
   <input type="button" value="submit" style="float: right;" (click)="submitPassBaru(); resetForm();"><br>
 </div>
 <br>
-<div>
+<div class="container2">
     <h3>ubah kode rahasia</h3>
-    kode sekarang <input type="password" [(ngModel)]="kodeLama" maxlength="6"><br>
-    kode baru <input type="password" [(ngModel)]="kodeBaru" maxlength="6"><br>
-    <span *ngIf="!isKodeBaruValid" style="color: red">Kode 6 karakter alfanumerik <br></span>
-    retype kode <input type="password" [(ngModel)]="kodeRetype" maxlength="6"><br>
-    <span *ngIf="!isKodeSama" style="color: red">Masukkan kode baru sekali lagi <br></span>
+    <div class="form-group">
+    <label> kode sekarang</label>
+     <input type="password" class="form-control" [(ngModel)]="kodeLama" maxlength="6">
+    </div>
+    <div class="form-group">
+    <label>kode baru</label> 
+    <input type="password" class="form-control" [(ngModel)]="kodeBaru" maxlength="6">
+    </div>
+    <div *ngIf="!isKodeBaruValid" class="alert alert-danger form-alert">Kode 6 karakter alfanumerik</div>
+    <div class="form-group">
+    <label>retype kode</label>
+    <input type="password" class="form-control" [(ngModel)]="kodeRetype" maxlength="6">
+    </div>
+    <div *ngIf="!isKodeSama" class="alert alert-danger form-alert">Masukkan kode baru sekali lagi</div>
     <input type="button" value="submit" style="float: right;" (click)="submitKodeBaru(); resetForm();"><br>
 </div>

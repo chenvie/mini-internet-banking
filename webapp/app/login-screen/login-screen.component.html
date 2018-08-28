@@ -3,7 +3,9 @@
   <div id="loginsection" style="float: right;">
   username<input type="text" [(ngModel)]="userLogin.username"><br><br>
   password<input type="password" [(ngModel)]="userLogin.password"><br><br>
-  <span *ngIf="!isLoginApproved" style="color: red">username / password salah</span><br>
+  <div [hidden]="!isLoginApproved" class="alert alert-danger form-alert">
+    Umur minimal 17 tahun!
+</div>
   <input type="button" value="Login" style="float: right" (click)="login()">
   </div>
 </div>
