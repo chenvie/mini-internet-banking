@@ -142,6 +142,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                 hashCode = "0" + hashCode;
             }
         } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "Hashing password failed: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -161,6 +162,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                         jsonParams.put("kode_rahasia", hashCode);
                         jsonParams.put("nominal", nominal);
                     } catch (JSONException e) {
+                        Log.e(TAG, "Failed to create JSONObject for post param: " + e.getMessage());
                         e.printStackTrace();
                     }
 
@@ -193,6 +195,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                                 final String message = jsonObject.getString("message");
 
                                 if (status.equalsIgnoreCase("true")){
+                                    Log.i(TAG, "Buying Success, sending uname, noHp, nominal, provider, nasabah id, and secret code as parameter");
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -212,6 +215,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
                                 } else{
+                                    Log.e(TAG, "Buying Failed with message: " + message);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -220,16 +224,12 @@ public class BuyingCodeActivity extends AppCompatActivity {
                                     });
                                 }
                             } catch (final JSONException e) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(mContext, "JSON parsing error : " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                });
+                                Log.e(TAG, "Json parsing error: " + e.getMessage());
                             }
                         }
                     });
                 } else {
+                    Log.e(TAG, "Balance not enough");
                     intent.putExtra("noHp", noHp);
                     intent.putExtra("nominal", nominal);
                     intent.putExtra("provider", provider);
@@ -237,10 +237,12 @@ public class BuyingCodeActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             } else {
+                Log.e(TAG, "Handphone number empty");
                 Toast.makeText(this, "Nomor HP harus diisi!", Toast.LENGTH_LONG).show();
             }
         } else{
-          Toast.makeText(this, "Kode Rahasia salah!" + Nasabah.code, Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Secret code wrong");
+            Toast.makeText(this, "Kode Rahasia salah!" + Nasabah.code, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -291,6 +293,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");

@@ -47,7 +47,6 @@ public class SettingActivity extends AppCompatActivity {
     private Button btnChangePass, btnChangeCode;
     private Context mContext;
     private String TAG = SettingActivity.class.getSimpleName();
-
     private SharedPreferences sp;
 
     @Override
@@ -137,6 +136,7 @@ public class SettingActivity extends AppCompatActivity {
                 hashOPassword = "0" + hashOPassword;
             }
         } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "Hashing old password failed: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -157,6 +157,7 @@ public class SettingActivity extends AppCompatActivity {
                                 hashNPassword = "0" + hashNPassword;
                             }
                         } catch (NoSuchAlgorithmException e) {
+                            Log.e(TAG, "Hashing new password failed: " + e.getMessage());
                             e.printStackTrace();
                         }
 
@@ -173,6 +174,7 @@ public class SettingActivity extends AppCompatActivity {
                                 hashRPassword = "0" + hashRPassword;
                             }
                         } catch (NoSuchAlgorithmException e) {
+                            Log.e(TAG, "Hashing retype password failed: " + e.getMessage());
                             e.printStackTrace();
                         }
 
@@ -188,6 +190,7 @@ public class SettingActivity extends AppCompatActivity {
                             jsonParams.put("passwordb1", hashNPassword);
                             jsonParams.put("passwordb2", hashRPassword);
                         } catch (JSONException e) {
+                            Log.e(TAG, "Failed to create JSONOBject for post setting password param: " + e.getMessage());
                             e.printStackTrace();
                         }
 
@@ -215,6 +218,7 @@ public class SettingActivity extends AppCompatActivity {
                                     final String result = jsonObject.getString("message");
 
                                     if (result.equalsIgnoreCase("update password berhasil")) {
+                                        Log.i(TAG, "Update password success, sending oPass, nPass, rPass, and nasabah id as parameter");
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -227,6 +231,7 @@ public class SettingActivity extends AppCompatActivity {
                                         Nasabah.password = finalHashNPassword;
                                         startActivity(intent);
                                     } else {
+                                        Log.e(TAG, "Update password failed");
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -236,11 +241,11 @@ public class SettingActivity extends AppCompatActivity {
                                         startActivity(intent);
                                     }
                                 } catch (final JSONException e) {
-                                    Log.e(TAG, "Json parsing error change code: " + e.getMessage());
+                                    Log.e(TAG, "Json parsing error: " + e.getMessage());
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(getApplicationContext(),"Json parsing error change code: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         });
                                 }
@@ -316,18 +321,22 @@ public class SettingActivity extends AppCompatActivity {
 //                            e.printStackTrace();
 //                        }
                     } else{
+                        Log.e(TAG, "Password didn't fulfill minimum requirement");
                         Toast.makeText(
                                 this,
                                 "Password harus terdiri min 8 karakter, alfanumerik dan tidak terdiri dari tanggal lahir!",
                                 Toast.LENGTH_LONG).show();
                     }
                 } else{
+                    Log.e(TAG, "New Password and Retype Password not same");
                     Toast.makeText(this, "Password baru dan Re-type password tidak sama!", Toast.LENGTH_LONG).show();
                 }
             } else{
+                Log.e(TAG, "Old Password wrong");
                 Toast.makeText(this, "Password sekarang salah!", Toast.LENGTH_LONG).show();
             }
         } else{
+            Log.e(TAG, "There is an empty field");
             Toast.makeText(this, "Semua kolom harus terisi!", Toast.LENGTH_LONG).show();
         }
     }
@@ -352,6 +361,7 @@ public class SettingActivity extends AppCompatActivity {
                 hashOCode = "0" + hashOCode;
             }
         } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "Hashing Old Code failed: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -372,6 +382,7 @@ public class SettingActivity extends AppCompatActivity {
                                 hashNCode = "0" + hashNCode;
                             }
                         } catch (NoSuchAlgorithmException e) {
+                            Log.e(TAG, "Hashing new Code Failed: " + e.getMessage());
                             e.printStackTrace();
                         }
 
@@ -388,6 +399,7 @@ public class SettingActivity extends AppCompatActivity {
                                 hashRCode = "0" + hashRCode;
                             }
                         } catch (NoSuchAlgorithmException e) {
+                            Log.e(TAG, "Hahing retype code failed: " + e.getMessage());
                             e.printStackTrace();
                         }
 
@@ -403,6 +415,7 @@ public class SettingActivity extends AppCompatActivity {
                             jsonParams.put("krb1", hashNCode);
                             jsonParams.put("krb2", hashRCode);
                         } catch (JSONException e) {
+                            Log.e(TAG, "Failed to create JSONObject for post setting code param: " + e.getMessage());
                             e.printStackTrace();
                         }
 
@@ -428,6 +441,7 @@ public class SettingActivity extends AppCompatActivity {
                                     final String result = jsonObject.getString("message");
 
                                     if (result.equalsIgnoreCase("update kode rahasia berhasil")) {
+                                        Log.i(TAG, "Update secret code success, sending oCode, nCode, rCode, and nasabah id as parameter");
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -440,6 +454,7 @@ public class SettingActivity extends AppCompatActivity {
                                         Nasabah.code = finalHashNCode;
                                         startActivity(intent);
                                     } else{
+                                        Log.e(TAG, "Update password failed with message: " + result);
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -449,11 +464,11 @@ public class SettingActivity extends AppCompatActivity {
                                         startActivity(intent);
                                     }
                                 } catch (final JSONException e) {
-                                    Log.e(TAG, "Json parsing error change code: " + e.getMessage());
+                                    Log.e(TAG, "Json parsing error: " + e.getMessage());
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(getApplicationContext(),"Json parsing error change code: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         });
                                 }
@@ -591,6 +606,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");

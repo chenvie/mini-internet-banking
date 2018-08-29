@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,7 @@ public class HistoryActivity extends AppCompatActivity {
     private String dateTo, dateFrom;
     private String histDateFrom, histDateTo;
     private long checkDateFrom, checkDateTo;
-
+    private String TAG = HistoryActivity.class.getSimpleName();
     private SharedPreferences sp;
 
     @Override
@@ -155,7 +156,9 @@ public class HistoryActivity extends AppCompatActivity {
             from = inputFormat.parse(histDateFrom.toString());
             dateFrom = outputFormat.format(from);
         } catch (ParseException e) {
+            Log.e(TAG, "Failed to parse date");
             e.printStackTrace();
+
         }
 
         Date to = null;
@@ -163,7 +166,9 @@ public class HistoryActivity extends AppCompatActivity {
             to = inputFormat.parse(histDateTo.toString());
             dateTo = outputFormat.format(to);
         } catch (ParseException e) {
+            Log.e(TAG, "Failed to parse date");
             e.printStackTrace();
+
         }
 
         long day30 = 30l * 24 * 60 * 60 * 1000;
@@ -174,6 +179,7 @@ public class HistoryActivity extends AppCompatActivity {
             intent.putExtra("dateTo", dateTo);
             startActivity(intent);
         } else{
+            Log.e(TAG, "Date from and to exceed 30 days");
             Toast.makeText(this, "Pemilihan tanggal from dan to harus dalam rentang 30 hari!", Toast.LENGTH_LONG).show();
         }
     }
@@ -225,6 +231,7 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");

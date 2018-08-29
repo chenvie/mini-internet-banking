@@ -11,26 +11,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class BuyingActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -41,6 +29,7 @@ public class BuyingActivity extends AppCompatActivity {
     private static final String[]provider = {"Telkomsel", "Indosat", "XL", "Smartfren"};
     private static final String[]nominal = {"50000", "100000", "150000"};
     private Context mContext;
+    private String TAG = BuyingActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,6 +110,7 @@ public class BuyingActivity extends AppCompatActivity {
             intent.putExtra("provider", provider);
             startActivity(intent);
         } else{
+            Log.e(TAG, "Handphone number is empty");
             Toast.makeText(this, "Nomor HP harus diisi!", Toast.LENGTH_LONG).show();
         }
     }
@@ -172,6 +162,7 @@ public class BuyingActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");

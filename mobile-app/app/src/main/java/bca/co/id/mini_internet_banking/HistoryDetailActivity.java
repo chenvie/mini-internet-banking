@@ -108,8 +108,9 @@ public class HistoryDetailActivity extends AppCompatActivity {
                         listTrans.add(new Transaction(tgl_trans, tujuan, ket, Float.parseFloat(nominal), status));
                     }
                     historyAdapter.notifyDataSetChanged();
+                    Log.i(TAG, "Getting history data success, sending nasabah id, date from and date to as parameter");
                 } catch (JSONException e) {
-                    Log.e(TAG, "Json parsing error login: " + e.getMessage());
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
                 }
             }
         });
@@ -282,6 +283,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");

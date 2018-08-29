@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+//NOT USED
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context mContext){
         super(mContext, "nasabah_ibank", null, 1);

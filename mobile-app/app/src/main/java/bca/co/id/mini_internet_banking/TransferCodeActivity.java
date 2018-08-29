@@ -138,6 +138,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                 hashCode = "0" + hashCode;
             }
         } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "Hashing password failed: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -159,6 +160,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                     jsonParams.put("nominal", nominal);
                     jsonParams.put("keterangan", ket);
                 } catch (JSONException e) {
+                    Log.e(TAG, "Error create JSONObject for post param: " + e.getMessage());
                     e.printStackTrace();
                 }
 
@@ -192,6 +194,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                             final String message = jsonObject.getString("message");
 
                             if (status.equalsIgnoreCase("true")){
+                                Log.i(TAG, "Transfer success, sending receiver rekeningNum, uname, nasabah id, nominal, secret code and info as parameter");
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -209,10 +212,11 @@ public class TransferCodeActivity extends AppCompatActivity {
                                 intent.putExtra("status", true);
                                 startActivity(intent);
                             } else{
+                                Log.e(TAG, "Tranfer failed with message: " + message);
                                 Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
                             }
                         } catch (final JSONException e) {
-                            e.printStackTrace();
+                            Log.e(TAG, "Json parsing error: " + e.getMessage());
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -223,6 +227,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                     }
                 });
             } else {
+                Log.e(TAG, "Balance is not enough");
                 intent.putExtra("noRek", noRek);
                 intent.putExtra("nominal", nominal);
                 intent.putExtra("ket", ket);
@@ -230,6 +235,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         } else{
+            Log.e(TAG, "Secret code wrong");
             Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }
     }
@@ -281,6 +287,7 @@ public class TransferCodeActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");

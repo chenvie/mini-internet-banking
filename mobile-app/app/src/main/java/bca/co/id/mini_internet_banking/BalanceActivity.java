@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ import java.text.NumberFormat;
 public class BalanceActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private TextView txtNorekNasabah, txtSaldoNasabah, txtNameNasabah;
-
+    private String TAG = BalanceActivity.class.getSimpleName();
     private SharedPreferences sp;
 
     @Override
@@ -124,6 +125,7 @@ public class BalanceActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");

@@ -128,6 +128,7 @@ public class NewRekeningActivity extends AppCompatActivity {
                 hashPassword = "0" + hashPassword;
             }
         } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "Hashing password failed: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -144,6 +145,7 @@ public class NewRekeningActivity extends AppCompatActivity {
                 hashCode = "0" + hashCode;
             }
         } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "Hashing secret code failed: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -165,6 +167,7 @@ public class NewRekeningActivity extends AppCompatActivity {
                     jsonParams.put("alamat", address);
                     jsonParams.put("kode_rahasia", hashCode);
                 } catch (JSONException e) {
+                    Log.e(TAG, "Failed to create JSONObject for post param: " + e.getMessage());
                     e.printStackTrace();
                 }
 
@@ -202,8 +205,10 @@ public class NewRekeningActivity extends AppCompatActivity {
                                 Nasabah.birthday = birthday;
                                 Nasabah.address = address;
                                 Nasabah.code = finalHashCode;
+                                Log.i(TAG, "Registering nasabah suceess, sending name, email, password, ktpNum, birthday, address, secret code as parameter");
 
                                 if (getNasabahData()){
+                                    Log.i(TAG, "Getting nasabah data success");
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {

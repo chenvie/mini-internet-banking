@@ -110,8 +110,9 @@ public class MutationActivity extends AppCompatActivity {
                     }
 
                     mutationAdapter.notifyDataSetChanged();
-                    Log.d(TAG, "no_rek_pengirim = " + no_rek_pengirim);
+                    Log.i(TAG, "Getting Mutation Data Success, sending nasabah id as parameter");
                 } catch (JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -311,6 +312,7 @@ public class MutationActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");

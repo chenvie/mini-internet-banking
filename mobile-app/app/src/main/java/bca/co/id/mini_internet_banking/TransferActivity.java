@@ -123,6 +123,7 @@ public class TransferActivity extends AppCompatActivity {
                 jsonParams.put("nominal", nominal);
                 jsonParams.put("keterangan", ket);
             } catch (JSONException e) {
+                Log.e(TAG, "Error create JSONObject for post param: " + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -156,11 +157,13 @@ public class TransferActivity extends AppCompatActivity {
                         final String message = jsonObject.getString("message");
 
                         if (check.equalsIgnoreCase("true")){
+                            Log.i(TAG, "checking receiver rekening num suceess");
                             intent.putExtra("noRek", message);
                             intent.putExtra("nominal", nominal);
                             intent.putExtra("ket", ket);
                             startActivity(intent);
                         } else{
+                            Log.e(TAG, "Checking receiver rekening num failed: " + message);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -169,11 +172,13 @@ public class TransferActivity extends AppCompatActivity {
                             });
                         }
                     } catch (JSONException e) {
+                        Log.e(TAG, "Json parsing error: " + e.getMessage());
                         e.printStackTrace();
                     }
                 }
             });
         } else{
+            Log.e(TAG, "Secret code wrong");
             Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }
     }
@@ -225,6 +230,7 @@ public class TransferActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");

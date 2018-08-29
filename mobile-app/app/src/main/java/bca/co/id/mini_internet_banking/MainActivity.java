@@ -28,6 +28,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.android.LogcatAppender;
+import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.FileAppender;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import okhttp3.Call;
@@ -50,14 +55,15 @@ public class MainActivity extends AppCompatActivity {
     private String id, username, name, password, code, birthday, rekeningNum, saldo;
     private SharedPreferences sp;
 
-    //static private final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
+    //private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //LOG.info("Magang Internet Banking");
+        //configureLogbackDirectly();
+        //Logger logger = LoggerFactory.getLogger(MainActivity.class);
 
         mContext = this;
 
@@ -72,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             Nasabah.birthday = sp.getString("birthday", "");
             Nasabah.rekeningNum = sp.getString("rekeningNum", "");
             Nasabah.saldo = sp.getFloat("saldo", 0);
+            Log.i(TAG, "Get Nasabah data from session");
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();
@@ -105,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(){
+        //logger.info("Login Magang Internet Banking");
         final String username = txtUname_login.getText().toString();
         final String password = txtPwd_login.getText().toString();
 
@@ -122,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            Log.e(TAG, "Failed to hashing password: " + e.getMessage());
         }
 
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -135,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             json.put("password", hashPassword);
         } catch(JSONException e){
             // TODO Auto-generated catch block
+            Log.e(TAG, "Failed to create JSONObject for post param: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -162,22 +172,26 @@ public class MainActivity extends AppCompatActivity {
                     String login = jsonObject.getString("login");
                     if (login.equalsIgnoreCase("true")){
                         Nasabah.username = username;
+                        Log.i(TAG, "Login Success, sending username and password as parameter");
 
                         try {
                             if (getNasabahData()){
+                                Log.i(TAG, "Get Nasabah Data Success");
                                 Intent intent = new Intent(mContext, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e(TAG, "Get Nasabah data error");
                             Toast.makeText(mContext, "Get Nasabah data error", Toast.LENGTH_LONG).show();
                         }
                     } else{
+                        Log.e(TAG, "Username atau password salah !");
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(mContext, "LOGIN GAGAL !", Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext, "Username atau password salah!", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -282,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String responseBody = response.body().string().toString();
                 try {
+                    Log.i(TAG, "Get Nasabah data on progrees, sending username as parameter");
                     JSONObject jsonObject = new JSONObject(responseBody);
                     id = jsonObject.getString("id_nasabah");
                     username = jsonObject.getString("username");
@@ -390,4 +405,40 @@ public class MainActivity extends AppCompatActivity {
         });*/
         return true;
     }
+
+//    private void configureLogbackDirectly() {
+//        // reset the default context (which may already have been initialized)
+//        // since we want to reconfigure it
+//        LoggerContext lc = (LoggerContext)LoggerFactory.getILoggerFactory();
+//        lc.reset();
+//
+//        // setup FileAppender
+//        PatternLayoutEncoder encoder1 = new PatternLayoutEncoder();
+//        encoder1.setContext(lc);
+//        encoder1.setPattern("%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n");
+//        encoder1.start();
+//
+//        FileAppender<ILoggingEvent> fileAppender = new FileAppender<ILoggingEvent>();
+//        fileAppender.setContext(lc);
+//        fileAppender.setFile(this.getFileStreamPath("app.log").getAbsolutePath());
+//        fileAppender.setEncoder(encoder1);
+//        fileAppender.start();
+//
+//        // setup LogcatAppender
+//        PatternLayoutEncoder encoder2 = new PatternLayoutEncoder();
+//        encoder2.setContext(lc);
+//        encoder2.setPattern("[%thread] %msg%n");
+//        encoder2.start();
+//
+//        LogcatAppender logcatAppender = new LogcatAppender();
+//        logcatAppender.setContext(lc);
+//        logcatAppender.setEncoder(encoder2);
+//        logcatAppender.start();
+//
+//        // add the newly created appenders to the root logger;
+//        // qualify Logger to disambiguate from org.slf4j.Logger
+//        ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+//        root.addAppender(fileAppender);
+//        root.addAppender(logcatAppender);
+//    }
 }

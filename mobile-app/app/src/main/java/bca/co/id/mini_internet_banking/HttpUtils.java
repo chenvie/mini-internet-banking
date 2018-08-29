@@ -4,6 +4,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+//NOT USED
 public class HttpUtils {
     private static final String BASE_URL = "http://localhost/mini-internet-banking/coba-API/";
 
