@@ -91,4 +91,21 @@
             - array [records] : kode_transaksi,no_rek,tgl_trans,tujuan,jenis,keterangan,nominal
          - out jika tidak ada data :
             - message : pesan belum ada mutasi dalam 7 hari kebelakang
-            
+
+Logger
+======
+Menambahkan file .txt pada folder logger dengan format tanggal YYYYMMDD hari ini (mis. 20180829.txt)
+Melakukan pengecekan apakah file untuk hari ini sudah ada, jika belum akan dibuat
+Menambahkan (append) masukan dari parameter POST ke file .txt yang sudah ada dengan format berikut
+Ex: 
+    06:53:48 [ERROR] input: username b20 password null value
+        ^        ^                     ^
+      stamp    level                 pesan
+
+URL:
+    [POST]  /API/logger/log.php
+Accept:
+    'level'     : level logging (INFO, WARNING, ERROR, DEBUG, dll)
+    'message'   : pesan log
+Return:
+    none
