@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputValidatorService } from '../input-validator.service';
 import { TransferService } from '../transfer.service';
 import { NGXLogger } from 'ngx-logger';
@@ -40,8 +40,8 @@ export class TransferComponent implements OnInit {
   createForm() {
     this.angForm = this.fb.group({
       no_rek_tujuan: ['', Validators.required],
-      nominal: ['',Validators.required],
-      keterangan: ['',Validators.required]
+      nominal: ['', Validators.required],
+      keterangan: ['', Validators.required]
     });
   }
 
@@ -55,20 +55,24 @@ export class TransferComponent implements OnInit {
 
   async validateNorek() {
     if (this.dataTrf.no_rek_tujuan === null || this.dataTrf.no_rek_tujuan === '') {
-      this.logger.error('transfer: username', this.login.userData.username, 'norek value null');
+      const log = 'transfer: username ' + this.login.userData.username + ' norek value null';
+      this.logger.error(log);
       return;
     }
     if (this.dataTrf.nominal === null || this.dataTrf.nominal === '') {
-      this.logger.error('transfer: username', this.login.userData.username, 'nominal value null');
+      const log = 'transfer: username ' + this.login.userData.username + ' nominal value null';
+      this.logger.error(log);
       return;
     }
     const res = await this.validator.validateNorek(this.dataTrf);
     this.isNorekValid = res.check === 'True' ? true : false;
     if (this.isNorekValid) {
       this.page = 2;
-      this.logger.info('transfer: username', this.login.userData.username, 'transfer to', this.dataTrf.no_rek_tujuan, 'norek valid');
+      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' norek valid';
+      this.logger.info(log);
     } else {
-      this.logger.error('transfer: username', this.login.userData.username, 'transfer to', this.dataTrf.no_rek_tujuan, 'norek invalid');
+      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' norek invalid';
+      this.logger.error(log);
     }
   }
 
@@ -79,10 +83,12 @@ export class TransferComponent implements OnInit {
     this.page = 3;
     if (this.isSuccess) {
       this.status = 'Berhasil';
-      this.logger.info('transfer: username', this.login.userData.username, 'transfer to', this.dataTrf.no_rek_tujuan, 'success');
+      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' success';
+      this.logger.info(log);
     } else {
-      this.logger.error('transfer: username', this.login.userData.username, 'transfer to',
-      this.dataTrf.no_rek_tujuan, 'failed. Message:', this.message);
+      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' +
+        this.dataTrf.no_rek_tujuan + ' failed. Message: ' + this.message;
+      this.logger.error(log);
     }
   }
 }

@@ -36,7 +36,11 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG})
+    LoggerModule.forRoot({
+      level: NgxLoggerLevel.DEBUG,
+      serverLoggingUrl: 'http://localhost/api/logger/log.php',
+      serverLogLevel: NgxLoggerLevel.DEBUG
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

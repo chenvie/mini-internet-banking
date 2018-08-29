@@ -35,15 +35,15 @@ export class PembelianComponent implements OnInit {
     private route: Router,
     private login: LoginService,
     private fb: FormBuilder,
-    private logger: NGXLogger) 
-    { this.cekForm(); }
+    private logger: NGXLogger
+  ) { this.cekForm(); }
 
     cekForm() {
-      this.angForm= this.fb.group({
+      this.angForm = this.fb.group({
         no_hp_tujuan: ['', Validators.required],
         provider: ['', Validators.required],
         nominal: ['', Validators.required]
-      })
+      });
     }
 
   ngOnInit() {
@@ -70,9 +70,11 @@ export class PembelianComponent implements OnInit {
     this.txtStatus = this.status ? 'Berhasil' : 'Gagal';
     this.page = 3;
     if (this.status) {
-      this.logger.info('transaction: username', this.login.userData.username, 'pulsa transaction success');
+      const log = 'transaction: username ' + this.login.userData.username + ' pulsa transaction success';
+      this.logger.info(log);
     } else {
-      this.logger.error('transaction: username', this.login.userData.username, 'pulsa transaction failed. Message:', this.keterangan);
+      const log = 'transaction: username ' + this.login.userData.username + ' pulsa transaction failed. Message: ' + this.keterangan;
+      this.logger.error(log);
     }
   }
 

@@ -35,20 +35,24 @@ export class LoginService {
     const res = await this.getLoginValidation(userLogin);
     this.isLoginValid = res.login;
     if (!this.isLoginValid) {
-      this.logger.warn('login: username', userLogin.username, 'login credentials invalid');
+      const log = 'login: username ' + userLogin.username + ' login credentials invalid';
+      this.logger.warn(log);
       return false;
     } else {
-      this.logger.info('login: username', userLogin.username, 'login credentials verified');
+      const log = 'login: username ' + userLogin.username + ' login credentials verified';
+      this.logger.info(log);
     }
     this.userData = await this.getUserData(userLogin.username);
     for (const key of Object.keys(this.userData)) {
       const val = this.userData[key];
       if (val === '') {
-        this.logger.error('login: username', userLogin.username, 'error fetching', key);
+        const log = 'login: username ' + userLogin.username + ' error fetching' + key;
+        this.logger.error(log);
         return false;
       }
     }
-    this.logger.info('login: username', this.userData.username, 'fetch user data success');
+    const log = 'login: username ' + this.userData.username + ' fetch user data success';
+    this.logger.info(log);
     return true;
     // only return true / false
     // call [getUserData] to get user data from DB
