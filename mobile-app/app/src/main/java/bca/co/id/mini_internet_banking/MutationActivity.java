@@ -17,26 +17,24 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MutationActivity extends AppCompatActivity {
@@ -47,6 +45,8 @@ public class MutationActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private TextView txtMutationDate, txtNorekMutasi;
     private final String TAG = MutationActivity.class.getSimpleName();
+    private List<String> listLog = new ArrayList<String>();
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class MutationActivity extends AppCompatActivity {
 
         final OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://10.0.2.2/mini-internet-banking/API/transaksi/read-mutasi.php").newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadMutation).newBuilder();
         urlBuilder.addQueryParameter("id", Nasabah.id);
 
         String url = urlBuilder.build().toString();
@@ -73,7 +73,8 @@ public class MutationActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "Error in getting response get request with query string okhttp");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
+                Log.e(TAG, "Error in getting response from async okhttp call");
             }
 
             @Override
@@ -110,8 +111,11 @@ public class MutationActivity extends AppCompatActivity {
                     }
 
                     mutationAdapter.notifyDataSetChanged();
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting Mutation Data Success, sending nasabag id as parameter");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
                     Log.i(TAG, "Getting Mutation Data Success, sending nasabah id as parameter");
                 } catch (JSONException e) {
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
                     e.printStackTrace();
                 }
@@ -152,117 +156,6 @@ public class MutationActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        RequestParams rp = new RequestParams();
-//        rp.add("id", Nasabah.id);
-//
-//        client.get(this, "http://10.0.2.2/mini-internet-banking/API/transaksi/read-mutasi.php", rp, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//                setContentView(R.layout.activity_mutation);
-//                rcyMutation = findViewById(R.id.rcyMutation);
-//                txtMutationDate = findViewById(R.id.txtMutationDate);
-//                txtNorekMutasi = findViewById(R.id.txtNorekMutasi);
-//
-//                String json = new String(responseBody);
-//
-//                try {
-//                    JSONObject jsonObject = new JSONObject(json);
-//                    JSONArray jsonTanggal = jsonObject.getJSONArray("tanggal");
-//                    JSONArray jsonRecords = jsonObject.getJSONArray("records");
-//
-//                    String tgl_awal = jsonTanggal.getJSONObject(0).getString("tgl_awal");
-//                    String tgl_akhir = jsonTanggal.getJSONObject(0).getString("tgl_akhir");
-//                    String norek = jsonTanggal.getJSONObject(0).getString("no_rek_pengirim");
-//
-//                    Log.e(MutationActivity.class.getSimpleName(), "Tanggal awal = " + tgl_awal);
-//                    txtMutationDate.setText(tgl_awal + " - " + tgl_akhir);
-//                    txtNorekMutasi.setText(norek);
-//
-//                    /*String[] months = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
-//                    if (tgl_awal != null && tgl_awal != "" && tgl_akhir != null && tgl_akhir != "") {
-//                        String[] fDate = {};
-//                        fDate[0] = tgl_awal.substring(8, 9);
-//                        fDate[1] = months[Integer.parseInt(tgl_awal.substring(5, 6)) - 1];
-//                        fDate[2] = tgl_awal.substring(0, 3);
-//
-//                        String[] lDate = {};
-//                        lDate[0] = tgl_akhir.substring(8, 9);
-//                        lDate[1] = months[Integer.parseInt(tgl_akhir.substring(5, 6)) - 1];
-//                        lDate[2] = tgl_akhir.substring(0, 3);
-//
-//                        String mutationDate = fDate[0] + fDate[1] + fDate[2] + " - " + lDate[0] + lDate[1] + lDate[2];
-//
-//                        txtMutationDate.setText(mutationDate);
-//                        txtNorekMutasi.setText(norek);
-//                    }*/
-//
-//                    List<Transaction> listTrans = new ArrayList<Transaction>();
-//                    mutationAdapter = new MutationAdapter(listTrans, mContext);
-//
-//                    RecyclerView.LayoutManager lm = new LinearLayoutManager(mContext);
-//                    rcyMutation.setLayoutManager(lm);
-//                    rcyMutation.setItemAnimator(new DefaultItemAnimator());
-//                    rcyMutation.setAdapter(mutationAdapter);
-//
-//                    for (int i = 0; i < jsonRecords.length(); i++) {
-//                        String tgl_trans = jsonRecords.getJSONObject(i).getString("tgl_trans");
-//                        String tujuan = jsonRecords.getJSONObject(i).getString("tujuan");
-//                        String info = jsonRecords.getJSONObject(i).getString("jenis") + jsonRecords.getJSONObject(i).getString("keterangan");
-//                        String nominal = jsonRecords.getJSONObject(i).getString("nominal");
-//
-//                        listTrans.add(new Transaction(tgl_trans, tujuan, info, Float.parseFloat(nominal)));
-//                    }
-//
-//                    mutationAdapter.notifyDataSetChanged();
-//
-//                    Toolbar toolbar = findViewById(R.id.mutation_toolbar);
-//                    setSupportActionBar(toolbar);
-//                    ActionBar actionbar = getSupportActionBar();
-//                    actionbar.setDisplayHomeAsUpEnabled(true);
-//                    actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-//
-//                    mDrawerLayout = findViewById(R.id.drawer_layout);
-//
-//                    NavigationView navigationView = findViewById(R.id.nav_view);
-//                    navigationView.setNavigationItemSelectedListener(
-//                            new NavigationView.OnNavigationItemSelectedListener() {
-//                                @Override
-//                                public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                                    int id = menuItem.getItemId();
-//                                    if (id == R.id.nav_home){
-//                                        loadHomeView();
-//                                    } else if (id == R.id.nav_balance) {
-//                                        loadBalanceInfoView();
-//                                    }else if (id == R.id.nav_mutation){
-//                                        loadMutationView();
-//                                    } else if (id == R.id.nav_transfer) {
-//                                        loadTransferView();
-//                                    } else if (id == R.id.nav_buying){
-//                                        loadBuyingView();
-//                                    } else if (id == R.id.nav_history){
-//                                        loadHistoryView();
-//                                    } else if (id == R.id.nav_setting){
-//                                        loadSettingView();
-//                                    } else{
-//                                        loadLoginView();
-//                                    }
-//                                    return true;
-//                                }
-//                            });
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -276,42 +169,50 @@ public class MutationActivity extends AppCompatActivity {
     }
 
     private void loadHomeView() {
+        writeLogs();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void loadBalanceInfoView(){
+        writeLogs();
         Intent intent = new Intent(this, BalanceActivity.class);
         startActivity(intent);
     }
 
     private void loadMutationView(){
+        writeLogs();
         Intent intent = new Intent(this, MutationActivity.class);
         startActivity(intent);
     }
 
     private void loadTransferView(){
+        writeLogs();
         Intent intent = new Intent(this, TransferActivity.class);
         startActivity(intent);
     }
 
     private void loadBuyingView(){
+        writeLogs();
         Intent intent = new Intent(this, BuyingActivity.class);
         startActivity(intent);
     }
 
     private void loadHistoryView(){
+        writeLogs();
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
     private void loadSettingView(){
+        writeLogs();
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
     }
 
     private void loadLoginView(){
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
@@ -325,8 +226,52 @@ public class MutationActivity extends AppCompatActivity {
         spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
+        writeLogs();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void writeLogs(){
+        OkHttpClient client = new OkHttpClient();
+        String url = HttpClientURL.urlWriteLog;
+        MediaType JSON = MediaType.parse("application/json' charset=utf-8");
+
+        JSONArray arrLog = new JSONArray(listLog);
+
+        JSONObject jsonLogs = new JSONObject();
+        try {
+            jsonLogs.put("logs", arrLog);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e(TAG, jsonLogs.toString());
+
+        RequestBody body = RequestBody.create(JSON, jsonLogs.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.i(TAG, "Write log success");
+                } else{
+                    Log.i(TAG, "Write log failed");
+                }
+
+                //String responseBody = response.body().string().toString();
+                //Log.e(TAG, responseBody);
+            }
+        });
     }
 }

@@ -19,11 +19,26 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class HistoryActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -35,6 +50,8 @@ public class HistoryActivity extends AppCompatActivity {
     private long checkDateFrom, checkDateTo;
     private String TAG = HistoryActivity.class.getSimpleName();
     private SharedPreferences sp;
+    private List<String> listLog = new ArrayList<String>();
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -156,7 +173,8 @@ public class HistoryActivity extends AppCompatActivity {
             from = inputFormat.parse(histDateFrom.toString());
             dateFrom = outputFormat.format(from);
         } catch (ParseException e) {
-            Log.e(TAG, "Failed to parse date");
+            Log.e(TAG, "Failed to parse date" + e.getMessage());
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to parse date");
             e.printStackTrace();
 
         }
@@ -166,7 +184,8 @@ public class HistoryActivity extends AppCompatActivity {
             to = inputFormat.parse(histDateTo.toString());
             dateTo = outputFormat.format(to);
         } catch (ParseException e) {
-            Log.e(TAG, "Failed to parse date");
+            Log.e(TAG, "Failed to parse date" + e.getMessage());
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to parse date");
             e.printStackTrace();
 
         }
@@ -174,12 +193,16 @@ public class HistoryActivity extends AppCompatActivity {
         long day30 = 30l * 24 * 60 * 60 * 1000;
         boolean result = checkDateTo < (checkDateFrom + day30);
         if (result){
+            writeLogs();
             Intent intent = new Intent(this, HistoryDetailActivity.class);
             intent.putExtra("dateFrom", dateFrom);
             intent.putExtra("dateTo", dateTo);
             startActivity(intent);
         } else{
             Log.e(TAG, "Date from and to exceed 30 days");
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Date from and to exceed 30 days");
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Date from = " + from);
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Date to = " + to);
             Toast.makeText(this, "Pemilihan tanggal from dan to harus dalam rentang 30 hari!", Toast.LENGTH_LONG).show();
         }
     }
@@ -195,43 +218,51 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void loadHomeView() {
+        writeLogs();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void loadBalanceInfoView(){
+        writeLogs();
         Intent intent = new Intent(this, BalanceActivity.class);
         startActivity(intent);
     }
 
     private void loadMutationView(){
+        writeLogs();
         Intent intent = new Intent(this, MutationActivity.class);
         startActivity(intent);
     }
 
     private void loadTransferView(){
+        writeLogs();
         Intent intent = new Intent(this, TransferActivity.class);
         startActivity(intent);
     }
 
     private void loadBuyingView(){
+        writeLogs();
         Intent intent = new Intent(this, BuyingActivity.class);
         startActivity(intent);
     }
 
     private void loadHistoryView(){
+        writeLogs();
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
     private void loadSettingView(){
+        writeLogs();
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
     }
 
     private void loadLoginView(){
         Log.i(TAG, "Logout, remove session from app");
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Logout remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
@@ -244,8 +275,52 @@ public class HistoryActivity extends AppCompatActivity {
         spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
+        writeLogs();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void writeLogs(){
+        OkHttpClient client = new OkHttpClient();
+        String url = HttpClientURL.urlWriteLog;
+        MediaType JSON = MediaType.parse("application/json' charset=utf-8");
+
+        JSONArray arrLog = new JSONArray(listLog);
+
+        JSONObject jsonLogs = new JSONObject();
+        try {
+            jsonLogs.put("logs", arrLog);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e(TAG, jsonLogs.toString());
+
+        RequestBody body = RequestBody.create(JSON, jsonLogs.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.i(TAG, "Write log success");
+                } else{
+                    Log.i(TAG, "Write log failed");
+                }
+
+                //String responseBody = response.body().string().toString();
+                //Log.e(TAG, responseBody);
+            }
+        });
     }
 }

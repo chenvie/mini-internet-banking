@@ -1,7 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
 import android.app.DatePickerDialog;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,24 +14,21 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -41,7 +37,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class NewRekeningActivity extends AppCompatActivity {
     private EditText new_name, new_email, new_password, new_ktp, new_birthday, new_address, new_code;
@@ -51,6 +46,8 @@ public class NewRekeningActivity extends AppCompatActivity {
     private Context mContext;
     private SharedPreferences sp;
     private String id, username, name, password, code, birthday, rekeningNum, saldo;
+    private List<String> listLog = new ArrayList<String>();
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,6 +125,7 @@ public class NewRekeningActivity extends AppCompatActivity {
                 hashPassword = "0" + hashPassword;
             }
         } catch (NoSuchAlgorithmException e) {
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing password failed: " + e.getMessage());
             Log.e(TAG, "Hashing password failed: " + e.getMessage());
             e.printStackTrace();
         }
@@ -146,6 +144,7 @@ public class NewRekeningActivity extends AppCompatActivity {
             }
         } catch (NoSuchAlgorithmException e) {
             Log.e(TAG, "Hashing secret code failed: " + e.getMessage());
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing secret code failed: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -155,7 +154,7 @@ public class NewRekeningActivity extends AppCompatActivity {
             if (CodeStrength.calculateStrength(code).getValue() > CodeStrength.MEDIUM.getValue()) {
                 OkHttpClient client = new OkHttpClient();
                 MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-                String url = "http://10.0.2.2/mini-internet-banking/API/nasabah/create.php";
+                String url = HttpClientURL.urlCreateNasabah;
 
                 JSONObject jsonParams = new JSONObject();
                 try {
@@ -168,6 +167,7 @@ public class NewRekeningActivity extends AppCompatActivity {
                     jsonParams.put("kode_rahasia", hashCode);
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to create JSONObject for post param: " + e.getMessage());
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to create JSONObject for post param: " + e.getMessage());
                     e.printStackTrace();
                 }
 
@@ -185,6 +185,7 @@ public class NewRekeningActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         Log.e(TAG, "error in getting response using async okhttp call");
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
                     }
 
                     @Override
@@ -206,15 +207,25 @@ public class NewRekeningActivity extends AppCompatActivity {
                                 Nasabah.address = address;
                                 Nasabah.code = finalHashCode;
                                 Log.i(TAG, "Registering nasabah suceess, sending name, email, password, ktpNum, birthday, address, secret code as parameter");
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Registering nasabah sucess, sending name, email, password, ktpNum, birthday, address, secret code as parameter");
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Name = " + name);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Email = " + email);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Password = " + finalHashPassword);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "KtpNum = " + ktp);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Birthday = " + birthday);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Address = " + address);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Secret Code = " + finalHashCode);
 
                                 if (getNasabahData()){
                                     Log.i(TAG, "Getting nasabah data success");
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting Nasabah data success");
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             Toast.makeText(mContext, "Pembukaan Rekening Berhasil!", Toast.LENGTH_LONG).show();
                                         }
                                     });
+                                    writeLogs();
                                     Intent intent = new Intent(mContext, NewUsernameActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -225,57 +236,6 @@ public class NewRekeningActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-//                StringEntity entity = new StringEntity(jsonParams.toString());
-//                client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/create.php", entity, "application/json",  new AsyncHttpResponseHandler() {
-//                    @Override
-//                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//                        String json = new String(responseBody);
-//                        int jsonStart = json.indexOf("{");
-//                        int jsonEnd = json.indexOf("}");
-//
-//                        if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
-//                            json = json.substring(jsonStart, jsonEnd+1);
-//                        }
-//
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(json);
-//                            String result = jsonObject.getString("message");
-//                            String username = jsonObject.getString("username");
-//
-//                            if (result.equalsIgnoreCase("pendaftaran berhasil")){
-//                                Nasabah.name = name;
-//                                Nasabah.username = username;
-//                                Nasabah.email = email;
-//                                Nasabah.password = finalHashPassword;
-//                                Nasabah.ktpNum = ktp;
-//                                Nasabah.birthday = birthday;
-//                                Nasabah.address = address;
-//                                Nasabah.code = finalHashCode;
-//
-//                                if (getNasabahData()){
-//                                    Toast.makeText(mContext, "Pembukaan Rekening Berhasil!", Toast.LENGTH_LONG).show();
-//                                    Intent intent = new Intent(mContext, NewUsernameActivity.class);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-//                            }
-//                        } catch (final JSONException e) {
-//                            Log.e(TAG, "Json parsing error open rek: " + e.getMessage());
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    Toast.makeText(getApplicationContext(),"Json parsing error login: " + e.getMessage(), Toast.LENGTH_LONG).show();
-//                                }
-//                            });
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//
-//                    }
-//                });
             } else{
                 Toast.makeText(this, "Kode Rahasia harus terdiri 6 karakter, alfanumerik dan tidak terdiri dari tanggal lahir", Toast.LENGTH_LONG).show();
             }
@@ -287,7 +247,7 @@ public class NewRekeningActivity extends AppCompatActivity {
     private boolean getNasabahData() throws JSONException {
         final OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://10.0.2.2/mini-internet-banking/API/nasabah/read-one.php").newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
         urlBuilder.addQueryParameter("unm", Nasabah.username);
 
         String url = urlBuilder.build().toString();
@@ -299,7 +259,8 @@ public class NewRekeningActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "OkHttp Call Failed");
+                Log.e(TAG, "Error in getting response from async okhttp call");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
             }
 
             @Override
@@ -341,10 +302,54 @@ public class NewRekeningActivity extends AppCompatActivity {
                     spEdit.putFloat("saldo", Nasabah.saldo);
                     spEdit.commit();
                 } catch (JSONException e) {
-                    Log.e(TAG, "Json parsing error get data: " + e.getMessage());
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                 }
             }
         });
         return true;
+    }
+
+    private void writeLogs(){
+        OkHttpClient client = new OkHttpClient();
+        String url = HttpClientURL.urlWriteLog;
+        MediaType JSON = MediaType.parse("application/json' charset=utf-8");
+
+        JSONArray arrLog = new JSONArray(listLog);
+
+        JSONObject jsonLogs = new JSONObject();
+        try {
+            jsonLogs.put("logs", arrLog);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e(TAG, jsonLogs.toString());
+
+        RequestBody body = RequestBody.create(JSON, jsonLogs.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.i(TAG, "Write log success");
+                } else{
+                    Log.i(TAG, "Write log failed");
+                }
+
+                //String responseBody = response.body().string().toString();
+                //Log.e(TAG, responseBody);
+            }
+        });
     }
 }

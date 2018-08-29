@@ -1,0 +1,59 @@
+
+29-08-2018 03:53:08 | MainActivity | [INFO] : Login success, sending username and password as parameter
+29-08-2018 03:53:08 | MainActivity | [INFO] : Username = Vievin13
+29-08-2018 03:53:08 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+29-08-2018 03:53:08 | MainActivity | [INFO] : Get Nasabah Data Success
+29-08-2018 03:53:15 | MutationActivity | [INFO] : Getting Mutation Data Success, sending nasabag id as parameter
+29-08-2018 03:53:15 | MutationActivity | [INFO] : Nasabah id = 15
+29-08-2018 03:53:42 | TransferActivity | [INFO] : Checking receiver rekening num success, sending receiver rekNum, nominal, info, and nasabah id as parameter
+29-08-2018 03:53:42 | TransferActivity | [INFO] : Receiver RekNum = 037014
+29-08-2018 03:53:42 | TransferActivity | [INFO] : Nominal = 25000
+29-08-2018 03:53:42 | TransferActivity | [INFO] : Info = bayar makan
+29-08-2018 03:53:42 | TransferActivity | [INFO] : Nasabah id = 15
+29-08-2018 03:53:46 | TransferCodeActivity | [ERROR] : Secret code wrong
+29-08-2018 03:53:53 | TransferCodeActivity | [INFO] : Transfer success, sending receiver rekeningNum, uname, nasabah id, nominal, secret code and info as parameter
+29-08-2018 03:53:53 | TransferCodeActivity | [INFO] : Nasabah username = Vievin13
+29-08-2018 03:53:53 | TransferCodeActivity | [INFO] : Nasabah id = 15
+29-08-2018 03:53:53 | TransferCodeActivity | [INFO] : Receiver RekNum = 037014
+29-08-2018 03:53:53 | TransferCodeActivity | [INFO] : Nominal = 25000
+29-08-2018 03:53:53 | TransferCodeActivity | [INFO] : Info = bayar makan
+29-08-2018 03:53:53 | TransferCodeActivity | [INFO] : Secret Code = 1c88b390f7a3d49edfbeff983c85c2f4
+29-08-2018 03:53:56 | MutationActivity | [INFO] : Getting Mutation Data Success, sending nasabag id as parameter
+29-08-2018 03:53:56 | MutationActivity | [INFO] : Nasabah id = 15
+29-08-2018 03:54:17 | BuyingCodeActivity | [INFO] : Buying Success, sending uname, noHp, nominal, provider, nasabah id, and secret code as parameter
+29-08-2018 03:54:17 | BuyingCodeActivity | [INFO] : Uname = Vievin13
+29-08-2018 03:54:17 | BuyingCodeActivity | [INFO] : NoHp = 085229175677
+29-08-2018 03:54:17 | BuyingCodeActivity | [INFO] : Nominal = 50000
+29-08-2018 03:54:17 | BuyingCodeActivity | [INFO] : Provider = Telkomsel
+29-08-2018 03:54:17 | BuyingCodeActivity | [INFO] : Nasabah id = 15
+29-08-2018 03:54:17 | BuyingCodeActivity | [INFO] : Secret code = 1c88b390f7a3d49edfbeff983c85c2f4
+29-08-2018 03:54:29 | HistoryDetailActivity | [INFO] : Getting history data success, sending nasabah id, date from and date to as parameter
+29-08-2018 03:54:29 | HistoryDetailActivity | [INFO] : Nasabah id = 15
+29-08-2018 03:54:29 | HistoryDetailActivity | [INFO] : Date from = Wed, 29 Aug 2018
+29-08-2018 03:54:29 | HistoryDetailActivity | [INFO] : Date to = Fri, 31 Aug 2018
+29-08-2018 03:56:14 | SettingActivity | [ERROR] : There is an empty field
+29-08-2018 03:56:19 | SettingActivity | [ERROR] : Old password wrong
+29-08-2018 03:56:24 | SettingActivity | [ERROR] : New password dan retype password not same
+29-08-2018 03:56:32 | SettingActivity | [INFO] : Update password success, sending oPass, nPass, rPass, and nasabah id as parameter
+29-08-2018 03:56:32 | SettingActivity | [INFO] : Old Password (oPass) = ff68179dddd38692293d04c091d017ff
+29-08-2018 03:56:32 | SettingActivity | [INFO] : New Password (nPass) = d5b03c3abc36aa1cfc9d4e35599aac15
+29-08-2018 03:56:32 | SettingActivity | [INFO] : Retype Password (rPass = d5b03c3abc36aa1cfc9d4e35599aac15
+29-08-2018 03:56:32 | SettingActivity | [INFO] : Nasabah id = 15
+29-08-2018 03:56:46 | SettingActivity | [ERROR] : Password didn;t fulfill minimum requirement
+29-08-2018 03:56:54 | SettingActivity | [INFO] : Update password success, sending oPass, nPass, rPass, and nasabah id as parameter
+29-08-2018 03:56:54 | SettingActivity | [INFO] : Old Password (oPass) = d5b03c3abc36aa1cfc9d4e35599aac15
+29-08-2018 03:56:54 | SettingActivity | [INFO] : New Password (nPass) = ff68179dddd38692293d04c091d017ff
+29-08-2018 03:56:54 | SettingActivity | [INFO] : Retype Password (rPass = ff68179dddd38692293d04c091d017ff
+29-08-2018 03:56:54 | SettingActivity | [INFO] : Nasabah id = 15
+29-08-2018 03:57:05 | SettingActivity | [ERROR] : New Code and Retype Code not same
+29-08-2018 03:57:16 | SettingActivity | [INFO] : Update secret code sucess, sending oCode, nCode, rCode, and nasabah id as parameter
+29-08-2018 03:57:16 | SettingActivity | [INFO] : Old Secret Code (oCode) = 1c88b390f7a3d49edfbeff983c85c2f4
+29-08-2018 03:57:16 | SettingActivity | [INFO] : New Secret Code (nCode) = bc310cce84a058d655744d46b7d5a9c0
+29-08-2018 03:57:16 | SettingActivity | [INFO] : Retype Secret Code (rCode) = bc310cce84a058d655744d46b7d5a9c0
+29-08-2018 03:57:24 | SettingActivity | [ERROR] : New Code and Retype Code not same
+29-08-2018 03:57:34 | SettingActivity | [ERROR] : Secret code didn't fulfill minimum requirement
+29-08-2018 03:57:45 | SettingActivity | [INFO] : Update secret code sucess, sending oCode, nCode, rCode, and nasabah id as parameter
+29-08-2018 03:57:45 | SettingActivity | [INFO] : Old Secret Code (oCode) = bc310cce84a058d655744d46b7d5a9c0
+29-08-2018 03:57:45 | SettingActivity | [INFO] : New Secret Code (nCode) = 1c88b390f7a3d49edfbeff983c85c2f4
+29-08-2018 03:57:45 | SettingActivity | [INFO] : Retype Secret Code (rCode) = 1c88b390f7a3d49edfbeff983c85c2f4
+29-08-2018 03:58:32 | MainActivity | [ERROR] : Get Nasabah data from session

@@ -16,26 +16,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -53,6 +51,8 @@ public class TransferCodeActivity extends AppCompatActivity {
     private Context mContext;
     private SharedPreferences sp;
     private String TAG = TransferCodeActivity.class.getSimpleName();
+    private List<String> listLog = new ArrayList<String>();
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -138,6 +138,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                 hashCode = "0" + hashCode;
             }
         } catch (NoSuchAlgorithmException e) {
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing password failed");
             Log.e(TAG, "Hashing password failed: " + e.getMessage());
             e.printStackTrace();
         }
@@ -149,7 +150,7 @@ public class TransferCodeActivity extends AppCompatActivity {
             if (temp > 0) {
                 OkHttpClient client = new OkHttpClient();
                 MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-                String url = "http://10.0.2.2/mini-internet-banking/API/transfer/create.php";
+                String url = HttpClientURL.urlTransfer;
 
                 JSONObject jsonParams = new JSONObject();
                 try {
@@ -160,6 +161,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                     jsonParams.put("nominal", nominal);
                     jsonParams.put("keterangan", ket);
                 } catch (JSONException e) {
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error create JSONObejct for post param");
                     Log.e(TAG, "Error create JSONObject for post param: " + e.getMessage());
                     e.printStackTrace();
                 }
@@ -171,9 +173,11 @@ public class TransferCodeActivity extends AppCompatActivity {
                         .post(body)
                         .build();
 
+                final String finalHashCode = hashCode;
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
                         Log.e(TAG, "error getting response from async okhttp call");
                     }
 
@@ -194,7 +198,14 @@ public class TransferCodeActivity extends AppCompatActivity {
                             final String message = jsonObject.getString("message");
 
                             if (status.equalsIgnoreCase("true")){
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Transfer success, sending receiver rekeningNum, uname, nasabah id, nominal, secret code and info as parameter");
                                 Log.i(TAG, "Transfer success, sending receiver rekeningNum, uname, nasabah id, nominal, secret code and info as parameter");
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah username = " + Nasabah.username);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Receiver RekNum = " + noRek);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nominal = " + nominal);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Info = " + ket);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Secret Code = " + finalHashCode);
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -210,31 +221,31 @@ public class TransferCodeActivity extends AppCompatActivity {
                                 intent.putExtra("nominal", nominal);
                                 intent.putExtra("ket", ket);
                                 intent.putExtra("status", true);
+                                writeLogs();
                                 startActivity(intent);
                             } else{
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Transfer failed with message: " + message);
                                 Log.e(TAG, "Tranfer failed with message: " + message);
                                 Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
                             }
                         } catch (final JSONException e) {
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                             Log.e(TAG, "Json parsing error: " + e.getMessage());
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Log.e(TAG, "Json error parsing: " + e.getMessage());
-                                }
-                            });
                         }
                     }
                 });
             } else {
                 Log.e(TAG, "Balance is not enough");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Balance is not enough");
                 intent.putExtra("noRek", noRek);
                 intent.putExtra("nominal", nominal);
                 intent.putExtra("ket", ket);
                 intent.putExtra("status", false);
+                writeLogs();
                 startActivity(intent);
             }
         } else{
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Secret code wrong");
             Log.e(TAG, "Secret code wrong");
             Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }
@@ -251,42 +262,50 @@ public class TransferCodeActivity extends AppCompatActivity {
     }
 
     private void loadHomeView() {
+        writeLogs();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void loadBalanceInfoView(){
+        writeLogs();
         Intent intent = new Intent(this, BalanceActivity.class);
         startActivity(intent);
     }
 
     private void loadMutationView(){
+        writeLogs();
         Intent intent = new Intent(this, MutationActivity.class);
         startActivity(intent);
     }
 
     private void loadTransferView(){
+        writeLogs();
         Intent intent = new Intent(this, TransferActivity.class);
         startActivity(intent);
     }
 
     private void loadBuyingView(){
+        writeLogs();
         Intent intent = new Intent(this, BuyingActivity.class);
         startActivity(intent);
     }
 
     private void loadHistoryView(){
+        writeLogs();
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
     private void loadSettingView(){
+        writeLogs();
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
     }
 
     private void loadLoginView(){
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
@@ -300,8 +319,52 @@ public class TransferCodeActivity extends AppCompatActivity {
         spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
+        writeLogs();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void writeLogs(){
+        OkHttpClient client = new OkHttpClient();
+        String url = HttpClientURL.urlWriteLog;
+        MediaType JSON = MediaType.parse("application/json' charset=utf-8");
+
+        JSONArray arrLog = new JSONArray(listLog);
+
+        JSONObject jsonLogs = new JSONObject();
+        try {
+            jsonLogs.put("logs", arrLog);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e(TAG, jsonLogs.toString());
+
+        RequestBody body = RequestBody.create(JSON, jsonLogs.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.i(TAG, "Write log success");
+                } else{
+                    Log.i(TAG, "Write log failed");
+                }
+
+                //String responseBody = response.body().string().toString();
+                //Log.e(TAG, responseBody);
+            }
+        });
     }
 }

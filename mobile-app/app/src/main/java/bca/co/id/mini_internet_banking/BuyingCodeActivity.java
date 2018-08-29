@@ -14,30 +14,26 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -55,6 +51,8 @@ public class BuyingCodeActivity extends AppCompatActivity {
     private String noHp, provider, nominal;
     private Context mContext;
     private String TAG = BuyingCodeActivity.class.getSimpleName();
+    private List<String> listLog = new ArrayList<String>();
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -142,6 +140,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                 hashCode = "0" + hashCode;
             }
         } catch (NoSuchAlgorithmException e) {
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing password failed: " + e.getMessage());
             Log.e(TAG, "Hashing password failed: " + e.getMessage());
             e.printStackTrace();
         }
@@ -151,7 +150,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                 if (temp > 0) {
                     OkHttpClient client = new OkHttpClient();
                     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-                    String url = "http://10.0.2.2/mini-internet-banking/API/pulsa/create.php";
+                    String url = HttpClientURL.urlBuying;
 
                     JSONObject jsonParams = new JSONObject();
                     try {
@@ -162,6 +161,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                         jsonParams.put("kode_rahasia", hashCode);
                         jsonParams.put("nominal", nominal);
                     } catch (JSONException e) {
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to create JSONObject for post param: " + e.getMessage());
                         Log.e(TAG, "Failed to create JSONObject for post param: " + e.getMessage());
                         e.printStackTrace();
                     }
@@ -173,9 +173,11 @@ public class BuyingCodeActivity extends AppCompatActivity {
                             .post(body)
                             .build();
 
+                    final String finalHashCode = hashCode;
                     client.newCall(request).enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
                             Log.e(TAG, "error in getting respose from async okhttp call");
                         }
 
@@ -195,6 +197,13 @@ public class BuyingCodeActivity extends AppCompatActivity {
                                 final String message = jsonObject.getString("message");
 
                                 if (status.equalsIgnoreCase("true")){
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Buying Success, sending uname, noHp, nominal, provider, nasabah id, and secret code as parameter");
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Uname = " + Nasabah.username);
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "NoHp = " + noHp);
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nominal = " + nominal);
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Provider = " + provider);
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Secret code = " + finalHashCode);
                                     Log.i(TAG, "Buying Success, sending uname, noHp, nominal, provider, nasabah id, and secret code as parameter");
                                     runOnUiThread(new Runnable() {
                                         @Override
@@ -212,10 +221,12 @@ public class BuyingCodeActivity extends AppCompatActivity {
                                     spEdit.putFloat("saldo", Nasabah.saldo);
                                     spEdit.commit();
 
+                                    writeLogs();
                                     startActivity(intent);
                                     finish();
                                 } else{
                                     Log.e(TAG, "Buying Failed with message: " + message);
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Buying Failed with message: " + message);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -224,23 +235,28 @@ public class BuyingCodeActivity extends AppCompatActivity {
                                     });
                                 }
                             } catch (final JSONException e) {
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                                 Log.e(TAG, "Json parsing error: " + e.getMessage());
                             }
                         }
                     });
                 } else {
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Balance not enough");
                     Log.e(TAG, "Balance not enough");
                     intent.putExtra("noHp", noHp);
                     intent.putExtra("nominal", nominal);
                     intent.putExtra("provider", provider);
                     intent.putExtra("status", false);
+                    writeLogs();
                     startActivity(intent);
                 }
             } else {
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Handphone number empty");
                 Log.e(TAG, "Handphone number empty");
                 Toast.makeText(this, "Nomor HP harus diisi!", Toast.LENGTH_LONG).show();
             }
         } else{
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Secret code wrong");
             Log.e(TAG, "Secret code wrong");
             Toast.makeText(this, "Kode Rahasia salah!" + Nasabah.code, Toast.LENGTH_LONG).show();
         }
@@ -257,42 +273,50 @@ public class BuyingCodeActivity extends AppCompatActivity {
     }
 
     private void loadHomeView() {
+        writeLogs();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void loadBalanceInfoView(){
+        writeLogs();
         Intent intent = new Intent(this, BalanceActivity.class);
         startActivity(intent);
     }
 
     private void loadMutationView(){
+        writeLogs();
         Intent intent = new Intent(this, MutationActivity.class);
         startActivity(intent);
     }
 
     private void loadTransferView(){
+        writeLogs();
         Intent intent = new Intent(this, TransferActivity.class);
         startActivity(intent);
     }
 
     private void loadBuyingView(){
+        writeLogs();
         Intent intent = new Intent(this, BuyingActivity.class);
         startActivity(intent);
     }
 
     private void loadHistoryView(){
+        writeLogs();
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
     private void loadSettingView(){
+        writeLogs();
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
     }
 
     private void loadLoginView(){
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
@@ -306,8 +330,52 @@ public class BuyingCodeActivity extends AppCompatActivity {
         spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
+        writeLogs();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void writeLogs(){
+        OkHttpClient client = new OkHttpClient();
+        String url = HttpClientURL.urlWriteLog;
+        MediaType JSON = MediaType.parse("application/json' charset=utf-8");
+
+        JSONArray arrLog = new JSONArray(listLog);
+
+        JSONObject jsonLogs = new JSONObject();
+        try {
+            jsonLogs.put("logs", arrLog);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e(TAG, jsonLogs.toString());
+
+        RequestBody body = RequestBody.create(JSON, jsonLogs.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.i(TAG, "Write log success");
+                } else{
+                    Log.i(TAG, "Write log failed");
+                }
+
+                //String responseBody = response.body().string().toString();
+                //Log.e(TAG, responseBody);
+            }
+        });
     }
 }

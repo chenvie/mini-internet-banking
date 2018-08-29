@@ -27,13 +27,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -47,6 +50,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
     private Context mContext;
     private SharedPreferences sp;
     private String TAG = HistoryDetailActivity.class.getSimpleName();
+    private List<String> listLog = new ArrayList<String>();
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         txtHistoryRange.setText(from + " - " + to);
 
         final OkHttpClient client = new OkHttpClient();
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://10.0.2.2/mini-internet-banking/API/transaksi/read-history.php").newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadHistory).newBuilder();
         urlBuilder.addQueryParameter("id", Nasabah.id);
         urlBuilder.addQueryParameter("tgl_awal", from);
         urlBuilder.addQueryParameter("tgl_akhir", to);
@@ -79,7 +84,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "Error in getting response get request with query string okhttp");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
+                Log.e(TAG, "Error in getting response from async okhttp call");
             }
 
             @Override
@@ -108,8 +114,13 @@ public class HistoryDetailActivity extends AppCompatActivity {
                         listTrans.add(new Transaction(tgl_trans, tujuan, ket, Float.parseFloat(nominal), status));
                     }
                     historyAdapter.notifyDataSetChanged();
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting history data success, sending nasabah id, date from and date to as parameter");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Date from = " + from);
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Date to = " + to);
                     Log.i(TAG, "Getting history data success, sending nasabah id, date from and date to as parameter");
                 } catch (JSONException e) {
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
                 }
             }
@@ -149,91 +160,6 @@ public class HistoryDetailActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        RequestParams rp = new RequestParams();
-//        rp.add("id", Nasabah.id);
-//        rp.add("tgl_awal", from);
-//        rp.add("tgl_akhir", to);
-//
-//        client.get(this, "http://10.0.2.2/mini-internet-banking/API/transaksi/read-history.php", rp, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//                setContentView(R.layout.activity_history_detail);
-//                txtHistoryRange = findViewById(R.id.txtHistoryRange);
-//                rcyHistory = findViewById(R.id.rcyHistory);
-//
-//                txtHistoryRange.setText(from + " - " + to);
-//
-//                List<Transaction> listTrans = new ArrayList<Transaction>();
-//                historyAdapter = new HistoryAdapter(listTrans, mContext);
-//
-//                RecyclerView.LayoutManager lm = new LinearLayoutManager(mContext);
-//                rcyHistory.setLayoutManager(lm);
-//                rcyHistory.setItemAnimator(new DefaultItemAnimator());
-//                rcyHistory.setAdapter(historyAdapter);
-//
-//                String json = new String(responseBody);
-//                try {
-//                    JSONObject jsonObject = new JSONObject(json);
-//                    JSONArray jsonRecords = jsonObject.getJSONArray("records");
-//
-//                    for (int i = 0; i < jsonRecords.length(); i++){
-//                        String tgl_trans = jsonRecords.getJSONObject(i).getString("tgl_trans");
-//                        String tujuan = jsonRecords.getJSONObject(i).getString("tujuan");
-//                        String ket = jsonRecords.getJSONObject(i).getString("keterangan");
-//                        String nominal = jsonRecords.getJSONObject(i).getString("nominal");
-//                        String status = jsonRecords.getJSONObject(i).getString("status");
-//
-//                        listTrans.add(new Transaction(tgl_trans, tujuan, ket, Float.parseFloat(nominal), status));
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                historyAdapter.notifyDataSetChanged();
-//
-//                Toolbar toolbar = findViewById(R.id.history_detail_toolbar);
-//                setSupportActionBar(toolbar);
-//                ActionBar actionbar = getSupportActionBar();
-//                actionbar.setDisplayHomeAsUpEnabled(true);
-//                actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-//
-//                mDrawerLayout = findViewById(R.id.drawer_layout);
-//
-//                NavigationView navigationView = findViewById(R.id.nav_view);
-//                navigationView.setNavigationItemSelectedListener(
-//                        new NavigationView.OnNavigationItemSelectedListener() {
-//                            @Override
-//                            public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                                int id = menuItem.getItemId();
-//                                if (id == R.id.nav_home){
-//                                    loadHomeView();
-//                                } else if (id == R.id.nav_balance) {
-//                                    loadBalanceInfoView();
-//                                }else if (id == R.id.nav_mutation){
-//                                    loadMutationView();
-//                                } else if (id == R.id.nav_transfer) {
-//                                    loadTransferView();
-//                                } else if (id == R.id.nav_buying){
-//                                    loadBuyingView();
-//                                } else if (id == R.id.nav_history){
-//                                    loadHistoryView();
-//                                } else if (id == R.id.nav_setting){
-//                                    loadSettingView();
-//                                } else{
-//                                    loadLoginView();
-//                                }
-//                                return true;
-//                            }
-//                        });
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -247,42 +173,50 @@ public class HistoryDetailActivity extends AppCompatActivity {
     }
 
     private void loadHomeView() {
+        writeLogs();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void loadBalanceInfoView(){
+        writeLogs();
         Intent intent = new Intent(this, BalanceActivity.class);
         startActivity(intent);
     }
 
     private void loadMutationView(){
+        writeLogs();
         Intent intent = new Intent(this, MutationActivity.class);
         startActivity(intent);
     }
 
     private void loadTransferView(){
+        writeLogs();
         Intent intent = new Intent(this, TransferActivity.class);
         startActivity(intent);
     }
 
     private void loadBuyingView(){
+        writeLogs();
         Intent intent = new Intent(this, BuyingActivity.class);
         startActivity(intent);
     }
 
     private void loadHistoryView(){
+        writeLogs();
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
     private void loadSettingView(){
+        writeLogs();
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
     }
 
     private void loadLoginView(){
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
@@ -296,8 +230,52 @@ public class HistoryDetailActivity extends AppCompatActivity {
         spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
+        writeLogs();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void writeLogs(){
+        OkHttpClient client = new OkHttpClient();
+        String url = HttpClientURL.urlWriteLog;
+        MediaType JSON = MediaType.parse("application/json' charset=utf-8");
+
+        JSONArray arrLog = new JSONArray(listLog);
+
+        JSONObject jsonLogs = new JSONObject();
+        try {
+            jsonLogs.put("logs", arrLog);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e(TAG, jsonLogs.toString());
+
+        RequestBody body = RequestBody.create(JSON, jsonLogs.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.i(TAG, "Write log success");
+                } else{
+                    Log.i(TAG, "Write log failed");
+                }
+
+                //String responseBody = response.body().string().toString();
+                //Log.e(TAG, responseBody);
+            }
+        });
     }
 }

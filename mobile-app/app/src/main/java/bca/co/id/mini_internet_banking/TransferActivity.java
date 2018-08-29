@@ -19,17 +19,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -46,6 +45,8 @@ public class TransferActivity extends AppCompatActivity {
     private Context mContext;
     private SharedPreferences sp;
     private String TAG = TransferActivity.class.getSimpleName();
+    private List<String> listLog = new ArrayList<String>();
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,7 +115,7 @@ public class TransferActivity extends AppCompatActivity {
         if (!noRek.equals("") && !nominal.equals("") && !ket.equals("")){
             OkHttpClient client = new OkHttpClient();
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-            String url = "http:10.0.2.2/mini-internet-banking/API/transfer/cek-no-rek.php";
+            String url = HttpClientURL.urlCheckRekNum;
 
             JSONObject jsonParams = new JSONObject();
             try {
@@ -124,6 +125,7 @@ public class TransferActivity extends AppCompatActivity {
                 jsonParams.put("keterangan", ket);
             } catch (JSONException e) {
                 Log.e(TAG, "Error create JSONObject for post param: " + e.getMessage());
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error create JSONObejct for post param: " + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -138,6 +140,7 @@ public class TransferActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.e(TAG, "error in getting response from async okhttp call");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
                 }
 
                 @Override
@@ -157,13 +160,20 @@ public class TransferActivity extends AppCompatActivity {
                         final String message = jsonObject.getString("message");
 
                         if (check.equalsIgnoreCase("true")){
-                            Log.i(TAG, "checking receiver rekening num suceess");
+                            Log.i(TAG, "checking receiver rekening num success, sending receiver rekNum, nominal, info, and nasabah id as parameter");
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Checking receiver rekening num success, sending receiver rekNum, nominal, info, and nasabah id as parameter");
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Receiver RekNum = " + noRek);
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nominal = " + nominal);
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Info = " + ket);
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
                             intent.putExtra("noRek", message);
                             intent.putExtra("nominal", nominal);
                             intent.putExtra("ket", ket);
+                            writeLogs();
                             startActivity(intent);
                         } else{
                             Log.e(TAG, "Checking receiver rekening num failed: " + message);
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Checking receiver num failed: " + message);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -172,6 +182,7 @@ public class TransferActivity extends AppCompatActivity {
                             });
                         }
                     } catch (JSONException e) {
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                         Log.e(TAG, "Json parsing error: " + e.getMessage());
                         e.printStackTrace();
                     }
@@ -179,6 +190,7 @@ public class TransferActivity extends AppCompatActivity {
             });
         } else{
             Log.e(TAG, "Secret code wrong");
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Secret code wrong");
             Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }
     }
@@ -194,43 +206,51 @@ public class TransferActivity extends AppCompatActivity {
     }
 
     private void loadHomeView() {
+        writeLogs();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void loadBalanceInfoView(){
+        writeLogs();
         Intent intent = new Intent(this, BalanceActivity.class);
         startActivity(intent);
     }
 
     private void loadMutationView(){
+        writeLogs();
         Intent intent = new Intent(this, MutationActivity.class);
         startActivity(intent);
     }
 
     private void loadTransferView(){
+        writeLogs();
         Intent intent = new Intent(this, TransferActivity.class);
         startActivity(intent);
     }
 
     private void loadBuyingView(){
+        writeLogs();
         Intent intent = new Intent(this, BuyingActivity.class);
         startActivity(intent);
     }
 
     private void loadHistoryView(){
+        writeLogs();
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
     private void loadSettingView(){
+        writeLogs();
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
     }
 
     private void loadLoginView(){
         Log.i(TAG, "Logout, remove session from app");
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
@@ -243,8 +263,52 @@ public class TransferActivity extends AppCompatActivity {
         spEdit.putFloat("saldo", 0);
         spEdit.commit();
 
+        writeLogs();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void writeLogs(){
+        OkHttpClient client = new OkHttpClient();
+        String url = HttpClientURL.urlWriteLog;
+        MediaType JSON = MediaType.parse("application/json' charset=utf-8");
+
+        JSONArray arrLog = new JSONArray(listLog);
+
+        JSONObject jsonLogs = new JSONObject();
+        try {
+            jsonLogs.put("logs", arrLog);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e(TAG, jsonLogs.toString());
+
+        RequestBody body = RequestBody.create(JSON, jsonLogs.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.i(TAG, "Write log success");
+                } else{
+                    Log.i(TAG, "Write log failed");
+                }
+
+                //String responseBody = response.body().string().toString();
+                //Log.e(TAG, responseBody);
+            }
+        });
     }
 }

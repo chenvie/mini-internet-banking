@@ -3,7 +3,6 @@ package bca.co.id.mini_internet_banking;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,38 +12,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.android.LogcatAppender;
-import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.FileAppender;
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class MainActivity extends AppCompatActivity {
     private EditText txtUname_login, txtPwd_login;
@@ -54,16 +42,13 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
     private String id, username, name, password, code, birthday, rekeningNum, saldo;
     private SharedPreferences sp;
-
-    //private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
+    private List<String> listLog = new ArrayList<String>();
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //configureLogbackDirectly();
-        //Logger logger = LoggerFactory.getLogger(MainActivity.class);
 
         mContext = this;
 
@@ -79,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
             Nasabah.rekeningNum = sp.getString("rekeningNum", "");
             Nasabah.saldo = sp.getFloat("saldo", 0);
             Log.i(TAG, "Get Nasabah data from session");
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Get Nasabah data from session");
+
+            writeLogs();
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();
@@ -112,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(){
-        //logger.info("Login Magang Internet Banking");
         final String username = txtUname_login.getText().toString();
         final String password = txtPwd_login.getText().toString();
 
@@ -131,12 +118,13 @@ public class MainActivity extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             Log.e(TAG, "Failed to hashing password: " + e.getMessage());
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to hashing password: " + e.getMessage());
         }
 
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
         final OkHttpClient client = new OkHttpClient();
-        String url = "http://10.0.2.2/mini-internet-banking/API/nasabah/login.php";
+        String url = HttpClientURL.urlLogin;
 
         JSONObject json = new JSONObject();
         try {
@@ -145,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         } catch(JSONException e){
             // TODO Auto-generated catch block
             Log.e(TAG, "Failed to create JSONObject for post param: " + e.getMessage());
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to create JSONObject for post param: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -155,10 +144,12 @@ public class MainActivity extends AppCompatActivity {
                 .post(body)
                 .build();
 
+        final String finalHashPassword = hashPassword;
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "error in getting response using async okhttp call");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response using async okhttp call");
             }
 
             @Override
@@ -173,21 +164,28 @@ public class MainActivity extends AppCompatActivity {
                     if (login.equalsIgnoreCase("true")){
                         Nasabah.username = username;
                         Log.i(TAG, "Login Success, sending username and password as parameter");
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Login success, sending username and password as parameter");
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Username = " + username);
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Password = " + finalHashPassword);
 
                         try {
                             if (getNasabahData()){
                                 Log.i(TAG, "Get Nasabah Data Success");
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get Nasabah Data Success");
+                                writeLogs();
                                 Intent intent = new Intent(mContext, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e(TAG, "Get Nasabah data error");
+                            Log.e(TAG, "Get Nasabah data error: " + e.getMessage());
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Get Nasabah data error: " + e.getMessage());
                             Toast.makeText(mContext, "Get Nasabah data error", Toast.LENGTH_LONG).show();
                         }
                     } else{
-                        Log.e(TAG, "Username atau password salah !");
+                        Log.e(TAG, "Username or password wrong");
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Username or password wrong");
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -196,80 +194,15 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 } catch (JSONException e) {
-                    Log.e(TAG, "Json parsing error login: " + e.getMessage());
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                 }
             }
         });
-
-//        AsyncHttpClient client = new AsyncHttpClient();
-//
-//        JSONObject jsonParams = new JSONObject();
-//        try {
-//            jsonParams.put("username", username);
-//            jsonParams.put("password", hashPassword);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        /*RequestParams rp = new RequestParams();
-//        rp.add("username", username);
-//        rp.add("password", password);*/
-//
-//        try {
-//            StringEntity entity = new StringEntity(jsonParams.toString());
-//
-//            client.post(mContext, "http://10.0.2.2/mini-internet-banking/API/nasabah/login.php", entity, "application/json", new AsyncHttpResponseHandler() {
-//                @Override
-//                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//                    String json = new String(responseBody);
-//                    int jsonStart = json.indexOf("{");
-//                    int jsonEnd = json.indexOf("}");
-//
-//                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
-//                        json = json.substring(jsonStart, jsonEnd+1);
-//                    }
-//
-//                    try {
-//                        JSONObject jsonObject = new JSONObject(json);
-//                        String login = jsonObject.getString("login");
-//                        if (login.equalsIgnoreCase("true")){
-//                            Nasabah.username = username;
-//
-//                            try {
-//                                if (getNasabahData()){
-//                                    Intent intent = new Intent(mContext, HomeActivity.class);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                                Toast.makeText(mContext, "Get Nasabah data error", Toast.LENGTH_LONG).show();
-//                            }
-//                        } else{
-//                            Toast.makeText(mContext, "Username atau password Salah!", Toast.LENGTH_LONG).show();
-//                        }
-//                    } catch(final JSONException e){
-//                        Log.e(TAG, "Json parsing error login: " + e.getMessage());
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Toast.makeText(getApplicationContext(),"Json parsing error login: " + e.getMessage(), Toast.LENGTH_LONG).show();
-//                            }
-//                        });
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//
-//                }
-//            });
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void loadNewRekeningView(){
+        writeLogs();
         Intent intent = new Intent(this, NewRekeningActivity.class);
         startActivity(intent);
     }
@@ -277,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean getNasabahData() throws JSONException {
         final OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://10.0.2.2/mini-internet-banking/API/nasabah/read-one.php").newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
         urlBuilder.addQueryParameter("unm", Nasabah.username);
 
         String url = urlBuilder.build().toString();
@@ -289,7 +222,8 @@ public class MainActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "OkHttp Call Failed");
+                Log.e(TAG, "error in getting response from async okhttp call");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
             }
 
             @Override
@@ -297,6 +231,8 @@ public class MainActivity extends AppCompatActivity {
                 String responseBody = response.body().string().toString();
                 try {
                     Log.i(TAG, "Get Nasabah data on progrees, sending username as parameter");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get nasabah data on progress, sending username as parameter");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Username = " + Nasabah.username);
                     JSONObject jsonObject = new JSONObject(responseBody);
                     id = jsonObject.getString("id_nasabah");
                     username = jsonObject.getString("username");
@@ -332,113 +268,54 @@ public class MainActivity extends AppCompatActivity {
                     spEdit.putFloat("saldo", Nasabah.saldo);
                     spEdit.commit();
                 } catch (JSONException e) {
-                    Log.e(TAG, "Json parsing error get data: " + e.getMessage());
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                 }
             }
         });
-
-        /*AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams rp = new RequestParams();
-        rp.add("unm", Nasabah.username);
-        client.get(this, "http://10.0.2.2/mini-internet-banking/API/nasabah/read-one.php", rp, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String json = new String(responseBody);
-                int jsonStart = json.indexOf("{");
-                int jsonEnd = json.indexOf("}");
-
-                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart){
-                    json = json.substring(jsonStart, jsonEnd+1);
-                }
-
-                try{
-                    JSONObject jsonObject = new JSONObject(json);
-
-                    id = jsonObject.getString("id_nasabah");
-                    username = jsonObject.getString("username");
-                    password = jsonObject.getString("password");
-                    name = jsonObject.getString("nama_lengkap");
-                    code = jsonObject.getString("kode_rahasia");
-                    birthday = jsonObject.getString("tgl_lahir");
-                    rekeningNum = jsonObject.getString("no_rek");
-                    saldo = jsonObject.getString("jml_saldo");
-
-                    Nasabah.id = id;
-                    Nasabah.name = name;
-                    Nasabah.username = username;
-                    Nasabah.password = password;
-                    Nasabah.code = code;
-                    Nasabah.birthday = birthday;
-                    Nasabah.rekeningNum = rekeningNum;
-                    if (saldo != null && saldo != "") {
-                        Nasabah.saldo = Float.parseFloat(saldo);
-                    }else{
-                        Nasabah.saldo = 0;
-                    }
-
-                    SharedPreferences.Editor spEdit = sp.edit();
-                    spEdit.putBoolean("isLogin", true);
-                    spEdit.putString("id", Nasabah.id);
-                    spEdit.putString("name", Nasabah.name);
-                    spEdit.putString("username", Nasabah.username);
-                    spEdit.putString("password", Nasabah.password);
-                    spEdit.putString("code", Nasabah.code);
-                    spEdit.putString("birthday", Nasabah.birthday);
-                    spEdit.putString("rekeningNum", Nasabah.rekeningNum);
-                    spEdit.putFloat("saldo", Nasabah.saldo);
-                    spEdit.commit();
-                } catch(final JSONException e){
-                    Log.e(TAG, "Json parsing error get data: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),"Json parsing error get data: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });*/
         return true;
     }
 
-//    private void configureLogbackDirectly() {
-//        // reset the default context (which may already have been initialized)
-//        // since we want to reconfigure it
-//        LoggerContext lc = (LoggerContext)LoggerFactory.getILoggerFactory();
-//        lc.reset();
-//
-//        // setup FileAppender
-//        PatternLayoutEncoder encoder1 = new PatternLayoutEncoder();
-//        encoder1.setContext(lc);
-//        encoder1.setPattern("%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n");
-//        encoder1.start();
-//
-//        FileAppender<ILoggingEvent> fileAppender = new FileAppender<ILoggingEvent>();
-//        fileAppender.setContext(lc);
-//        fileAppender.setFile(this.getFileStreamPath("app.log").getAbsolutePath());
-//        fileAppender.setEncoder(encoder1);
-//        fileAppender.start();
-//
-//        // setup LogcatAppender
-//        PatternLayoutEncoder encoder2 = new PatternLayoutEncoder();
-//        encoder2.setContext(lc);
-//        encoder2.setPattern("[%thread] %msg%n");
-//        encoder2.start();
-//
-//        LogcatAppender logcatAppender = new LogcatAppender();
-//        logcatAppender.setContext(lc);
-//        logcatAppender.setEncoder(encoder2);
-//        logcatAppender.start();
-//
-//        // add the newly created appenders to the root logger;
-//        // qualify Logger to disambiguate from org.slf4j.Logger
-//        ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-//        root.addAppender(fileAppender);
-//        root.addAppender(logcatAppender);
-//    }
+    private void writeLogs(){
+        OkHttpClient client = new OkHttpClient();
+        String url = HttpClientURL.urlWriteLog;
+        MediaType JSON = MediaType.parse("application/json' charset=utf-8");
+
+        JSONArray arrLog = new JSONArray(listLog);
+
+        JSONObject jsonLogs = new JSONObject();
+        try {
+            jsonLogs.put("logs", arrLog);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e(TAG, jsonLogs.toString());
+
+        RequestBody body = RequestBody.create(JSON, jsonLogs.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.i(TAG, "Write log success");
+                } else{
+                    Log.i(TAG, "Write log failed");
+                }
+
+                //String responseBody = response.body().string().toString();
+                //Log.e(TAG, responseBody);
+            }
+        });
+    }
 }
