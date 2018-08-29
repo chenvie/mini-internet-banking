@@ -34,17 +34,16 @@ export class RegisterComponent implements OnInit {
   constructor(
     private validator: InputValidatorService,
     private register: RegisterService,
-    private fb : FormBuilder,
+    private fb: FormBuilder,
     private login: LoginService,
     private route: Router,
     private logger: NGXLogger
-  ) 
-    { this.cekForm(); }
+  ) { this.cekForm(); }
 
-    cekForm(){
-      this.angForm=this.fb.group({
+    cekForm() {
+      this.angForm = this.fb.group({
         name: ['', Validators.required],
-        email:['', Validators.required],
+        email: ['', Validators.required],
         pass: ['', Validators.required],
         ktp: ['', Validators.required],
         tgl: ['', Validators.required],
@@ -73,7 +72,8 @@ export class RegisterComponent implements OnInit {
   validateForm(): boolean {
     for (const key of Object.keys(this.userData)) {
       if (this.userData[key] === null || this.userData[key] === '') {
-        this.logger.error('registration:', key, 'null value');
+        const log = 'registration: ' + key + ' null value';
+        this.logger.error(log);
         this.isFormValid = false;
       }
     }
@@ -93,15 +93,18 @@ export class RegisterComponent implements OnInit {
       this.register.register(this.userData).subscribe((data: any) => {
         alert(data['message']);
         if (data['message'] === 'Pendaftaran gagal') {
-          this.logger.warn('registration: create new account failed');
+          const log = 'registration: create new account failed';
+          this.logger.warn(log);
         } else {
-          this.logger.info('registration: create new account success'); }
+          const log = 'registration: create new account success';
+          this.logger.info(log); }
       });
       this.resetForm();
       this.toggleRegForm();
     } else {
       alert('pengisian formulir salah');
-      this.logger.warn('registration: create new account failed');
+      const log = 'registration: create new account failed';
+      this.logger.warn(log);
     }
   }
 }

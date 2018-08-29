@@ -25,21 +25,25 @@ export class InputValidatorService {
 
   validatePassword(pass: string): boolean {
     if (this.isNull(pass)) {
-      this.logger.error('input: username', this.login.userData.username, 'password null value');
+      const log = 'input: username ' + this.login.userData.username + ' password null value';
+      this.logger.error(log);
       return false;
     }
     if (pass.length < 8) {
-      this.logger.error('input: username', this.login.userData.username, 'password too short');
+      const log = 'input: username ' + this.login.userData.username + ' password too short';
+      this.logger.error(log);
       return false;
     }
     const regex = /\W/g;
     const result = pass.match(regex);
     if (result !== null) {
-      this.logger.error('input: username', this.login.userData.username, 'password contains non-alphanumeric character');
+      const log = 'input: username ' + this.login.userData.username + ' password contains non-alphanumeric character';
+      this.logger.error(log);
       return false;
     }
     if (!this.validateTanggalPermutation(pass, this.tanggal)) {
-      this.logger.error('input: username', this.login.userData.username, 'password contains birth date');
+      const log = 'input: username ' + this.login.userData.username + ' password contains birth date';
+      this.logger.error(log);
       return false;
     }
     return true;
@@ -47,21 +51,25 @@ export class InputValidatorService {
 
   validateKode(kode: string): boolean {
     if (this.isNull(kode)) {
-      this.logger.error('input: username', this.login.userData.username, 'secret code null value');
+      const log = 'input: username ' + this.login.userData.username + ' secret code null value';
+      this.logger.error(log);
       return false;
     }
     if (kode.length < 6) {
-      this.logger.error('input: username', this.login.userData.username, 'secret code too short');
+      const log = 'input: username ' + this.login.userData.username + ' secret code too short';
+      this.logger.error(log);
       return false;
     }
     const regex = /\W/g;
     const result = kode.match(regex);
     if (result !== null) {
-      this.logger.error('input: username', this.login.userData.username, 'secret code contains non-alphanumeric character');
+      const log = 'input: username ' + this.login.userData.username + ' secret code contains non-alphanumeric character';
+      this.logger.error(log);
       return false;
     }
     if (!this.validateTanggalPermutation(kode, this.tanggal)) {
-      this.logger.error('input: username', this.login.userData.username, 'secret code contains birth date');
+      const log = 'input: username ' + this.login.userData.username + ' secret code contains birth date';
+      this.logger.error(log);
       return false;
     }
     return true;
@@ -70,11 +78,13 @@ export class InputValidatorService {
   validateTanggal(tanggal: string): boolean {
     this.tanggal = tanggal;
     if (this.isNull(tanggal)) {
-      this.logger.error('registration: username', this.login.userData.username, 'date null value');
+      const log = 'registration: username ' + this.login.userData.username + ' date null value';
+      this.logger.error(log);
       return false;
     }
     if (moment().year() - moment(tanggal).year() < 17) {
-      this.logger.error('registration: username', this.login.userData.username, 'age less than 17');
+      const log = 'registration: username ' + this.login.userData.username + ' age less than 17';
+      this.logger.error(log);
       return false;
     }
     return true;
@@ -82,23 +92,28 @@ export class InputValidatorService {
 
   validateRangeTanggal(dariTanggal: string, hinggaTanggal: string): boolean {
     if (this.isNull(dariTanggal)) {
-      this.logger.error('histori: username', this.login.userData.username, 'initial date null value');
+      const log = 'histori: username ' + this.login.userData.username + ' initial date null value';
+      this.logger.error(log);
       return false;
     }
     if (this.isNull(hinggaTanggal)) {
-      this.logger.error('histori: username', this.login.userData.username, 'target date null value');
+      const log = 'histori: username ' + this.login.userData.username + ' target date null value';
+      this.logger.error(log);
       return false;
     }
     if (moment(dariTanggal) > moment() || moment(hinggaTanggal) > moment()) {
-      this.logger.error('histori: username', this.login.userData.username, 'target date larger than current date');
+      const log = 'histori: username ' + this.login.userData.username + ' target date larger than current date';
+      this.logger.error(log);
       return false;
     }
     if (moment(dariTanggal) > moment(hinggaTanggal)) {
-      this.logger.error('histori: username', this.login.userData.username, 'target date larger than initial date');
+      const log = 'histori: username ' + this.login.userData.username + ' target date larger than initial date';
+      this.logger.error(log);
       return false;
     }
     if (moment(dariTanggal) < moment().subtract(30, 'd')) {
-      this.logger.error('histori: username', this.login.userData.username, 'initial date more than 30 days behind');
+      const log = 'histori: username ' + this.login.userData.username + ' initial date more than 30 days behind';
+      this.logger.error(log);
       return false;
     }
     return true;
@@ -106,11 +121,13 @@ export class InputValidatorService {
 
   validateLogin(username: string, password: string): boolean {
     if (this.isNull(username)) {
-      this.logger.error('login: username null value');
+      const log = 'login: username null value';
+      this.logger.error(log);
       return false;
     }
     if (this.isNull(password)) {
-      this.logger.error('login: password null value');
+      const log = 'login: password null value';
+      this.logger.error(log);
       return false;
     }
     return true;
@@ -134,15 +151,18 @@ export class InputValidatorService {
 
   validatePembelian(dataBeli: any): boolean {
     if (this.isNull(dataBeli.no_hp_tujuan)) {
-      this.logger.error('transaction: username', this.login.userData.username, 'target phone number null value');
+      const log = 'transaction: username ' + this.login.userData.username + ' target phone number null value';
+      this.logger.error(log);
       return false;
     }
     if (this.isNull(dataBeli.provider)) {
-      this.logger.error('transaction: username', this.login.userData.username, 'provider null value');
+      const log = 'transaction: username ' + this.login.userData.username + ' provider null value';
+      this.logger.error(log);
       return false;
     }
     if (this.isNull(dataBeli.nominal)) {
-      this.logger.error('transaction: username', this.login.userData.username, 'nominal null value');
+      const log = 'transaction: username ' + this.login.userData.username + ' nominal null value';
+      this.logger.error(log);
       return false;
     }
     return true;

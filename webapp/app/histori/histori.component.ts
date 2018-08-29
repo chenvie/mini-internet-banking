@@ -58,12 +58,14 @@ export class HistoriComponent implements OnInit {
     this.trx = res.records;
     try {
       const l = this.trx.length;
-      this.logger.info('histori: username', this.login.userData.username, 'fetched', l, 'record(s)');
+      const log = 'histori: username ' + this.login.userData.username + ' fetched ' + l + ' record(s)';
+      this.logger.info(log);
       this.trx.forEach(t => {
         t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
       });
     } catch (error) {
-      this.logger.info('histori: username', this.login.userData.username, 'fetched 0 record(s)');
+      const log = 'histori: username ' + this.login.userData.username + ' fetched 0 record(s)';
+      this.logger.info(log);
     }
     this.page = 2;
   }
