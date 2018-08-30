@@ -1,0 +1,4 @@
+[2018-08-27 10:38:09] files.ERROR: Pembelian pulsa gagal {"karena":"Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda"} 
+[2018-08-27 10:40:44] files.ERROR: Pembelian pulsa gagal {"username":"cipe"} 
+[2018-08-27 10:41:59] files.ERROR: Pembelian pulsa gagal {"cipe":"Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda"} 
+[2018-08-27 10:43:35] files.ERROR: Pembelian pulsa gagal username {"cipe":"Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda"} 

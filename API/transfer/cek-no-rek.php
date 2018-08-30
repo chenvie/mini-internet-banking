@@ -11,6 +11,7 @@ include_once '../config/database.php';
 
 // instantiate transfer object
 include_once '../objects/transfer.php';
+include_once '../monolog.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -40,5 +41,8 @@ else{
             "message" => $transfer->message
         )
     );
+    $log->error('Nomer Rekening', [$transfer->no_rek_tujuan => $transfer->message]);
 }
+
 ?>
+

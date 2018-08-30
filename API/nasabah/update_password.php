@@ -9,6 +9,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/nasabah.php';
+
+include_once '../monolog.php';
  
 // get database connection
 $database = new Database();
@@ -39,23 +41,27 @@ $nasabah->readOnePwd($data->id_nasabah);
                         array("update" => true,
                             "message" => "Update password berhasil")
                     );
+                    $log->info('Update password berhasil',['id_nasabah' => $data->id_nasabah]);
                 } // if unable to update the nasabah, tell the user
                 else {
                     echo json_encode(
                         array("update" => false,
                             "message" => "Update password gagal")
                     );
+                    $log->error('update password gagal', ['id_nasabah' => $data->id_nasabah]);
                 }
             } else {
                 echo json_encode(
                     array("update" => false,
                         "message" => "password baru tidak sama")
                 );
+                $log->error('Password baru tidak sama', ['id_nasabah' => $data->id_nasabah]);
             }
         } else {
             echo json_encode(
                 array("update" => false,
                     "message" => "password lama salah")
             );
+            $log->error('Password lama salah', ['id_nasabah' => $data->id_nasabah]);
         }
 ?>

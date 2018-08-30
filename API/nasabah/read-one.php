@@ -1,4 +1,6 @@
 <?php
+
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET");
@@ -8,6 +10,7 @@ header('Content-Type: application/json');
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/nasabah.php';
+include_once '../monolog.php';
 
 // get database connection
 $database = new Database();
@@ -37,4 +40,5 @@ $nasabah_arr = array(
 
 // make it json format
 print_r(json_encode($nasabah_arr));
+$log->debug('I am debug');
 ?>

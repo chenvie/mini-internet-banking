@@ -54,7 +54,8 @@ class Nasabah
         return $stmt;
     }
 
-    //menghasilkan nomor rekening baru untuk nasabah yang berhasil daftar, dengan mengambil 3 karakter depan adalah kode cabang dan 3 karakter belakang adalah nomor urut
+    //menghasilkan nomor rekening baru untuk nasabah yang berhasil daftar, 
+    //dengan mengambil 3 karakter depan adalah kode cabang dan 3 karakter belakang adalah nomor urut
     function generateNoRek(){
         $awalan_rek = "03700";
         $sql = "SELECT COUNT(id_nasabah) as jml FROM nasabah";

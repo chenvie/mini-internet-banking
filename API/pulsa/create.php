@@ -12,6 +12,8 @@ include_once '../config/database.php';
 // instantiate pulsa object
 include_once '../objects/pulsa.php';
 
+include_once '../monolog.php';
+
 $database = new Database();
 $db = $database->getConnection();
 
@@ -34,11 +36,15 @@ if($pulsa->create()){
         array("pulsa" => true,
             "message" => $pulsa->message)
     );
+    $log->info('Pembelian pulsa sukses',['username' => $data->username]);
 }
+
 else{
     echo json_encode(
         array("pulsa" => false,
             "message" => $pulsa->message)
     );
+    $log->info('Pembelian pulsa gagal',['username' => $data->username]);
+    $log->error('Pembelian pulsa gagal', [$data->username => $pulsa->message]);
 }
 ?>

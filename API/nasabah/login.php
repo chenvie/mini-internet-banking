@@ -11,6 +11,7 @@ include_once '../config/database.php';
 
 // instantiate products object
 include_once '../objects/nasabah.php';
+include_once '../monolog.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -31,6 +32,7 @@ if($nasabah->login()){
         array("login" => true
         )
     );
+    $log->info('User login',['username' => $data->username]);
 }
 
 // if unable to login
@@ -39,5 +41,10 @@ else{
         array("login" => false
             )
     );
+    
+    $log->info('User failed login', ['username' => $data->username]);
+    //$log->warning('testing');
+    //$log->error('Error login', array('username' => $data->username));
+    //$log->error('I am error', array('username' => $data->username));
 }
 ?>

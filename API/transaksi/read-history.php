@@ -6,6 +6,7 @@ header("Content-Type: application/json; charset=UTF-8");
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/transaksi.php';
+include_once '../monolog.php';
 
 // instantiate database and transaksi object
 $database = new Database();
@@ -56,10 +57,12 @@ if($num>0){
         array_push($history_arr["records"], $history_item);
     }
     echo json_encode($history_arr);
+    $log->info('Cek History Transaksi',['id_nasabah' => $transaksi->id_nasabah]);
 }
 else{
     echo json_encode(
         array("message" => "Tidak ada history diantara hari yang dipilih.")
     );
+    $log->error('Tidak ada history diantara hari yang dipilih', ['id_nasabah' => $transaksi->id_nasabah]);
 }
 ?>

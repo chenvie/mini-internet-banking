@@ -12,6 +12,8 @@ include_once '../config/database.php';
 // instantiate products object
 include_once '../objects/nasabah.php';
 
+include_once '../monolog.php';
+
 $database = new Database();
 $db = $database->getConnection();
 
@@ -63,6 +65,7 @@ $data = json_decode(file_get_contents("php://input"));
                         array("message" => "Pendaftaran berhasil",
                             "username" => $nasabah->username)
                     );
+                    $log->info('User registered',['username' => $nasabah->username]);
                 }
 
         // if unable to create the nasabah, tell the user
@@ -70,6 +73,7 @@ $data = json_decode(file_get_contents("php://input"));
                     echo json_encode(
                         array("message" => "Pendaftaran gagal")
                     );
+                    $log->error('User failed registered', ['username' => $nasabah->username]);
                 }
 //            }
 //    else{

@@ -12,6 +12,8 @@ include_once '../config/database.php';
 // instantiate transfer object
 include_once '../objects/transfer.php';
 
+include_once '../monolog.php';
+
 $database = new Database();
 $db = $database->getConnection();
 
@@ -34,11 +36,16 @@ if($transfer->create()){
         array("transfer" => true,
         "message" => $transfer->message)
     );
+    $log->info('Transfer sukses',['username' => $data->username]);
 }
 else{
     echo json_encode(
         array("transfer" => false,
             "message" => $transfer->message)
     );
+    $log->info('Transfer gagal',['username' => $data->username]);
+    $log->error('Transfer gagal', ['username' => $transfer->message]);
+    
 }
+
 ?>

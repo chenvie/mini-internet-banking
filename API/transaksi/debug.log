@@ -1,0 +1,6 @@
+[2018-08-28 04:20:25] files.ERROR: Belum ada mutasi dalam 7 hari terakhir {"id_nasabah":"9"} 
+[2018-08-28 04:27:56] files.INFO: Mutasi rekening {"id_nasabah":"2"} 
+[2018-08-28 04:37:05] files.INFO: Cek History Transaksi {"id_nasabah":"2"} 
+[2018-08-28 04:37:50] files.INFO: Cek History Transaksi {"id_nasabah":"2"} 
+[2018-08-28 04:38:06] files.ERROR: Tidak ada history diantara hari yang dipilih {"id_nasabah":"2"} 
+[2018-08-28 04:38:28] files.INFO: Cek History Transaksi {"id_nasabah":"2"} 
