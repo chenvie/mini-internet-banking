@@ -50,7 +50,7 @@ class Transfer
         return $c;
     }
 
-    //cek nomor rekening, jika tidak ada akan dilakukan pencatatan gagal transfer di tabel transaksi dan transfer
+    //cek nomor rekening
     function cekNoRek()
     {
         // query to insert record
@@ -137,7 +137,6 @@ class Transfer
         }
     }
 
-    //cek kode rahasia
     function cekKodeRahasia($uname,$kr)
     {
         $query = "SELECT  kode_rahasia from 
@@ -167,7 +166,6 @@ class Transfer
         return false;
     }
 
-    // mendapat saldo dari satu nasabah
     function getSaldo($id)
     {
         if ($id == $this->id_nasabah)
@@ -190,7 +188,7 @@ class Transfer
         return $cek;
     }
 
-    //transfer dan pencatatan transfer di tabel transaksi dan transfer
+    //transfer
     function create()
     {
         $this->jml_saldo = $this->getSaldo($this->id_nasabah);

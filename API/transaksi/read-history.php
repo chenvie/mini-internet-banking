@@ -6,9 +6,8 @@ header("Content-Type: application/json; charset=UTF-8");
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/transaksi.php';
-include_once '../monolog.php';
 
-// instantiate database and transaksi object
+// instantiate database and products object
 $database = new Database();
 $db = $database->getConnection();
 
@@ -20,14 +19,14 @@ $transaksi->id_nasabah = isset($_GET['id']) ? $_GET['id'] : die();
 $transaksi->tgl_awal = isset($_GET['tgl_awal']) ? $_GET['tgl_awal'] : die();
 $transaksi->tgl_akhir = isset($_GET['tgl_akhir']) ? $_GET['tgl_akhir'] : die();
 
-// query transaksi
+// query products
 $stmt = $transaksi->readHistory();
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
 if($num>0){
 
-    // history array
+    // products array
     $history_arr=array();
     $history_arr["tanggal"]=array();
     $history_arr["records"]=array();
@@ -54,15 +53,21 @@ if($num>0){
             "nominal" => $nominal,
             "status" => $status
         );
+
         array_push($history_arr["records"], $history_item);
     }
+
     echo json_encode($history_arr);
-    $log->info('Cek History Transaksi',['id_nasabah' => $transaksi->id_nasabah]);
 }
+
 else{
     echo json_encode(
-        array("message" => "Tidak ada history diantara hari yang dipilih.")
+        array("message" => "Belum ada mutasi dalam 7 hari terakhir.")
     );
-    $log->error('Tidak ada history diantara hari yang dipilih', ['id_nasabah' => $transaksi->id_nasabah]);
 }
+//echo json_encode(
+//  array("tgl1" => $transaksi->tgl_awal,
+//      "tgl2" => $transaksi->tgl_akhir,
+//  "id" => $transaksi->id_nasabah)
+//);
 ?>

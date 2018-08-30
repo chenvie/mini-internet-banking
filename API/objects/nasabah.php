@@ -5,6 +5,7 @@ class Nasabah
     // database connection and table name
     private $conn;
     private $table_name = "nasabah";
+    //private $table_name2 = "rekening";
 
     // object properties
     public $id_nasabah;
@@ -54,8 +55,6 @@ class Nasabah
         return $stmt;
     }
 
-    //menghasilkan nomor rekening baru untuk nasabah yang berhasil daftar, 
-    //dengan mengambil 3 karakter depan adalah kode cabang dan 3 karakter belakang adalah nomor urut
     function generateNoRek(){
         $awalan_rek = "03700";
         $sql = "SELECT COUNT(id_nasabah) as jml FROM nasabah";
@@ -72,7 +71,7 @@ class Nasabah
         $c = $awalan_rek . $this->jml_nsb;
         return $c;
     }
-    // menghasilkan username untuk nasabah yang mendaftar dengan mengambil nama depan ditambah dengan angka urutan
+
     function generateUsername($nama){
         $sql = "SELECT COUNT(id_nasabah) as jml FROM nasabah";
         $stmt = $this->conn->prepare($sql);
@@ -143,6 +142,41 @@ class Nasabah
 
     }
 
+//    //mencari no rek sekarang
+//    function rekCount(){
+//        // query to check latest no rek count
+//        $query = "SELECT no_rek from " . $this->table_name2;
+//        // prepare query
+//        $stmt = $this->conn->prepare($query);
+//        // executing the query
+//        $stmt->execute();
+//        // getting the count of rekening
+//        $num = $stmt->rowCount();
+//        $stmt->close();
+//        return $num+1;
+//    }
+//    //create rekening
+//    function createRek($id_nasabah,$rek)
+//    {
+//        // query to insert record for rekening nasabah
+//        $query = "INSERT INTO
+//                " . $this->table_name2 . "
+//            SET
+//                no_rek=:no_rek, jml_saldo=:jml_saldo, id_nasabah=:id_nasabah, kode_cabang=:kode_cabang";
+//
+//        // prepare query
+//        $stmt = $this->conn->prepare($query);
+//        $kcb = 'asd2';
+//        // bind values
+//        $stmt->bindParam(":id_nasabah", $id_nasabah);
+//        $stmt->bindParam(":no_rek", $rek);
+//        $stmt->bindParam(":jml_saldo", 500000);
+//        $stmt->bindParam(":kode_cabang", $kcb);
+//        if ($stmt->execute())
+//        {return true;}
+//        return false;
+//    }
+
 // login
     function login()
     {
@@ -181,7 +215,7 @@ class Nasabah
 
     }
 
-// membaca satu data nasabah yang akan digunakan di aplikasi
+// used when filling up the update products form
     function readOne()
     {
 
@@ -199,7 +233,7 @@ class Nasabah
         $stmt = $this->conn->prepare($query);
 
         // bind id of products to be updated
-        $stmt->bindParam(1, $this->username);
+        $stmt->bindParam(1, $this->id);
 
         // execute query
         $stmt->execute();
@@ -218,7 +252,37 @@ class Nasabah
         $this->no_rek = $row['no_rek'];
     }
 
-    //membaca data password dari satu nasabah, digunakan saat update password
+//// baca saldo rekening satu nasabah
+//    function readOneSaldo()
+//    {
+//
+//        // query to read single record
+//        $query = "SELECT
+//                no_rek,jml_saldo
+//            FROM
+//                " . $this->table_name2 . "
+//            WHERE
+//                id_nasabah = ?
+//            LIMIT
+//                0,1";
+//
+//        // prepare query statement
+//        $stmt = $this->conn->prepare($query);
+//
+//        // bind id of products to be updated
+//        $stmt->bindParam(1, $this->id);
+//
+//        // execute query
+//        $stmt->execute();
+//
+//        // get retrieved row
+//        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+//
+//        // set values to object properties
+//        $this->no_rek = $row['no_rek'];
+//        $this->jml_saldo = $row['jml_saldo'];
+//    }
+
     function readOnePwd($id)
     {
 
@@ -248,7 +312,6 @@ class Nasabah
         $this->password = $row['password'];
     }
 
-    //membaca data kode rahasia dari satu nasabah, digunakan saat update kode rahasia
     function readOneKode($id)
     {
 
@@ -277,6 +340,35 @@ class Nasabah
         // set values to object properties
         $this->kode_rahasia = $row['kode_rahasia'];
     }
+
+//    function readOneTglLahir($id)
+//    {
+//
+//        // query to read single record
+//        $query = "SELECT
+//                tgl_lahir
+//            FROM
+//                " . $this->table_name . "
+//            WHERE
+//                id_nasabah = ?
+//            LIMIT
+//                0,1";
+//
+//        // prepare query statement
+//        $stmt = $this->conn->prepare($query);
+//
+//        // bind id of products to be updated
+//        $stmt->bindParam(1, $id);
+//
+//        // execute query
+//        $stmt->execute();
+//
+//        // get retrieved row
+//        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+//
+//        // set values to object properties
+//        $this->tgl_lahir = $row['tgl_lahir'];
+//    }
 
 //update password
     function update_password(){
@@ -313,7 +405,7 @@ class Nasabah
         }
         return false;
     }
-//update kode rahasia
+//update kata rahasia
     function update_kode_rahasia(){
 
         // update query

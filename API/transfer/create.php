@@ -9,10 +9,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // get database connection
 include_once '../config/database.php';
 
-// instantiate transfer object
+// instantiate products object
 include_once '../objects/transfer.php';
-
-include_once '../monolog.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -22,7 +20,7 @@ $transfer = new Transfer($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// set transfer property values
+// set products property values
 $transfer->username = $data->username;
 $transfer->no_rek_tujuan = $data->no_rek_tujuan;
 $transfer->id_nasabah = $data->id_nasabah;
@@ -36,16 +34,11 @@ if($transfer->create()){
         array("transfer" => true,
         "message" => $transfer->message)
     );
-    $log->info('Transfer sukses',['username' => $data->username]);
 }
 else{
     echo json_encode(
         array("transfer" => false,
             "message" => $transfer->message)
     );
-    $log->info('Transfer gagal',['username' => $data->username]);
-    $log->error('Transfer gagal', ['username' => $transfer->message]);
-    
 }
-
 ?>
