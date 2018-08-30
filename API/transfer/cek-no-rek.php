@@ -9,9 +9,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // get database connection
 include_once '../config/database.php';
 
-// instantiate transfer object
+// instantiate products object
 include_once '../objects/transfer.php';
-include_once '../monolog.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -21,7 +20,7 @@ $transfer = new Transfer($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// set transfer property values
+// set products property values
 $transfer->no_rek_tujuan = $data->no_rek_tujuan;
 $transfer->id_nasabah = $data->id_nasabah;
 $transfer->nominal = $data->nominal;
@@ -35,14 +34,14 @@ if($transfer->cekNoRek()){
         )
     );
 }
+
+// if unable to login
 else{
     echo json_encode(
         array("check" => "False",
-            "message" => $transfer->message
+            "message" => $transfer->message,
+            "status" => $transfer->status
         )
     );
-    $log->error('Nomer Rekening', [$transfer->no_rek_tujuan => $transfer->message]);
 }
-
 ?>
-

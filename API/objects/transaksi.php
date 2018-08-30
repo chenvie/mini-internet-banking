@@ -19,6 +19,8 @@ class Transaksi
     {
         $this->conn = $db;
     }
+
+    //mendapat nomor rekening dari suatu nasabah
     function getNoRek($id)
     {
         // query to read single record
@@ -41,6 +43,8 @@ class Transaksi
         // set values to object properties
         $this->no_rek = $row['no_rek'];
     }
+
+    //cek mutasi yang terjadi
     function readMutasi()
     {
         $this->getNoRek($this->id_nasabah);
@@ -66,13 +70,17 @@ class Transaksi
         $this->tgl = htmlspecialchars(strip_tags($this->tgl));
         $this->limit_date = date('Y-m-d', strtotime('-7 days', strtotime($this->tgl)));
         $end_date = date('Y-m-d', strtotime('+1 days', strtotime($this->tgl)));
+
         $stmt->bindParam(":id_nasabah", $this->id_nasabah);
         $stmt->bindParam(":tgl1", $this->limit_date);
         $stmt->bindParam(":tgl2", $end_date);
+
         // execute query
         $stmt->execute();
         return $stmt;
     }
+
+    //cek history yang sudah terjadi
     function readHistory()
 {
     // select all mutasi untuk nasabah tertentu query
@@ -87,6 +95,8 @@ class Transaksi
 //                (t.tgl_trans >=:tgl_awal AND t.tgl_trans <=:tgl_akhir)
 //                ORDER BY t.tgl_trans  ASC";
         $query = "CALL getHistory(:id_nasabah,:tgl_awal,:tgl_akhir)";
+
+
     // prepare query statement
     $stmt = $this->conn->prepare($query);
     $this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));

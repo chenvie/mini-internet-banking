@@ -35,7 +35,7 @@ if($num>0){
         extract($row);
 
         $nasabah_item=array(
-            "id_nasabah" => $id_nasabah,
+            "id" => $id_nasabah,
             "email" => $email,
             "username" => $username,
             "password" => $password,
