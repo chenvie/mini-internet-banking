@@ -39,3 +39,5 @@
 [2018-08-27 08:44:26] files.INFO: User login {"username":"bonii"} []
 [2018-08-27 09:33:28] files.INFO: User login {"username":"bonii"} []
 [2018-08-27 09:48:50] files.ERROR: User failed login {"username":"bonii"} 
+[2018-08-30 13:24:03] files.INFO: User login {"username":"bonii"} 
+[2018-08-30 13:35:18] files.INFO: User failed login {"username":"bonii"} 

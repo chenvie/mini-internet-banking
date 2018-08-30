@@ -10,6 +10,7 @@ require_once 'vendor/autoload.php';
 use \Monolog\Logger;
 use \Monolog\Formatter\LineFormatter;
 use \Monolog\Handler\StreamHandler;
+date_default_timezone_set('Asia/Jakarta');
 //use \Monolog\Handler\FirePHPHandler;
 // Common logger
 $log = new Logger('files');
@@ -31,9 +32,9 @@ $errorHandler->setFormatter($formatter);
 
 
 
-// This will have both DEBUG and ERROR messages
+// This will have both DEBUG INFO and ERROR messages
 $log->pushHandler($debugHandler);
-// This will have only INFO messages
+// This will have both INFO and ERROR messages
 $log->pushHandler($infoHandler);
 // This will have only ERROR messages
 $log->pushHandler($errorHandler);
