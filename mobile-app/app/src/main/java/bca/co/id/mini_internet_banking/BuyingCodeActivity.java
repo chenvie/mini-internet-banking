@@ -79,6 +79,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
         txtNominalBuying.setText("Rp " + (formatter.format(Float.parseFloat(nominal))).toString() + ",-");
         txtProviderBuying.setText(provider);
 
+        //setting toolbar & navigation drawer
         Toolbar toolbar = findViewById(R.id.buying_code_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -122,6 +123,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
         });
     }
 
+    //send data to server using http POST and checking if saldo is enough
     private void submitBuying(){
         String code = txtCodeBuying.getText().toString();
         final float temp = Nasabah.saldo - Float.parseFloat(nominal);
@@ -336,6 +338,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

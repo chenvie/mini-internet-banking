@@ -62,6 +62,7 @@ public class TransferActivity extends AppCompatActivity {
         inputNominalTransfer = findViewById(R.id.inputNominalTransfer);
         inputKetTransfer = findViewById(R.id.inputKetTransfer);
 
+        //setting toolbar and navigation drawer
         Toolbar toolbar = findViewById(R.id.transfer_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -105,6 +106,7 @@ public class TransferActivity extends AppCompatActivity {
         });
     }
 
+    //checking if receiver rekening number is exist to server using http POST, if exist intent to activity_transfer_code
     private void submitTransfer(){
         final String noRek = inputNorekTransfer.getText().toString();
         final String nominal = inputNominalTransfer.getText().toString();
@@ -269,6 +271,7 @@ public class TransferActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

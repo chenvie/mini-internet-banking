@@ -20,11 +20,12 @@ public class NewUsernameActivity extends AppCompatActivity {
         txtNewUsername = findViewById(R.id.txtNewUsername);
         btnOk = findViewById(R.id.btnOk);
 
-        String[] names = Nasabah.name.split(" ");
-        String[] birthday = Nasabah.birthday.split("/");
-        String username = names[0] + birthday[0].substring(2, 3);
-        String rekening = "0000";
+//        String[] names = Nasabah.name.split(" ");
+//        String[] birthday = Nasabah.birthday.split("/");
+//        String username = names[0] + birthday[0].substring(2, 3);
+//        String rekening = "0000";
 
+        //set nasabah username
         txtNewUsername.setText(Nasabah.username);
 
         btnOk.setOnClickListener(new View.OnClickListener() {

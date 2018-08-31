@@ -1,5 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
+//list of API URL
 public class HttpClientURL {
     private static final String BASE_URL = "http://10.0.2.2/mini-internet-banking/API/";
 

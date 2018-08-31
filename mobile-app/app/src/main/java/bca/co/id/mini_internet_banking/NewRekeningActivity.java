@@ -67,6 +67,7 @@ public class NewRekeningActivity extends AppCompatActivity {
         new_code = findViewById(R.id.new_code);
         btnSubmitRekening = findViewById(R.id.btnSubmitRekening);
 
+        //set listener for date pciker dialog
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -78,6 +79,7 @@ public class NewRekeningActivity extends AppCompatActivity {
             }
         };
 
+        //show date picker dialog when EditText is tapped
         new_birthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +98,7 @@ public class NewRekeningActivity extends AppCompatActivity {
         });
     }
 
+    //set string date from date picker dialog
     private void updateLabel() {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -112,6 +115,7 @@ public class NewRekeningActivity extends AppCompatActivity {
         final String address = new_address.getText().toString();
         final String code = new_code.getText().toString();
 
+        //encrypt password using MD5 algorithm
         String hashPassword = "";
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
@@ -130,6 +134,7 @@ public class NewRekeningActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //encrypt secret code using MD5 algorithm
         String hashCode = "";
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
@@ -150,6 +155,7 @@ public class NewRekeningActivity extends AppCompatActivity {
 
         Nasabah.birthday = birthday;
 
+        //checking password strength & secret code strength, after that send http POST data to server about nasabah data
         if(PasswordStrength.calculateStrength(password).getValue() > PasswordStrength.MEDIUM.getValue()){
             if (CodeStrength.calculateStrength(code).getValue() > CodeStrength.MEDIUM.getValue()) {
                 OkHttpClient client = new OkHttpClient();
@@ -216,6 +222,7 @@ public class NewRekeningActivity extends AppCompatActivity {
                                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Address = " + address);
                                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Secret Code = " + finalHashCode);
 
+                                //call get nasabah data
                                 if (getNasabahData()){
                                     Log.i(TAG, "Getting nasabah data success");
                                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting Nasabah data success");
@@ -244,6 +251,7 @@ public class NewRekeningActivity extends AppCompatActivity {
         }
     }
 
+    //request nasabah data from server using http GET
     private boolean getNasabahData() throws JSONException {
         final OkHttpClient client = new OkHttpClient();
 
@@ -310,6 +318,7 @@ public class NewRekeningActivity extends AppCompatActivity {
         return true;
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

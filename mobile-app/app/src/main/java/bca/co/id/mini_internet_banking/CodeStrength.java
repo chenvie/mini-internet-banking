@@ -2,6 +2,7 @@ package bca.co.id.mini_internet_banking;
 
 import android.graphics.Color;
 
+//checking secret code strength (min char, alfanumerik, and not include birthday), min requirement strength --> MEDIUM
 public enum CodeStrength {
     WEAK(0, Color.RED), MEDIUM(1, Color.argb(255, 220, 185, 0)), STRONG(2, Color.GREEN), VERY_STRONG(3, Color.BLUE);
 

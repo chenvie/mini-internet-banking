@@ -66,6 +66,7 @@ public class SettingActivity extends AppCompatActivity {
         btnChangePass = findViewById(R.id.btnChangePass);
         btnChangeCode = findViewById(R.id.btnChangeCode);
 
+        //setting toolbar and navigation drawer
         Toolbar toolbar = findViewById(R.id.setting_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -116,6 +117,7 @@ public class SettingActivity extends AppCompatActivity {
         });
     }
 
+    //encrypt old, new and retype password, checking password strength, field empty, nPass = rPass, and send data to server
     private void changePassword(){
         final String oPass = txtOldPass.getText().toString();
         final String nPass = txtNewPass.getText().toString();
@@ -291,6 +293,7 @@ public class SettingActivity extends AppCompatActivity {
         }
     }
 
+    //encrypt old, new and retype secret code, checking secret code strength, field empty, nCode = rCode, and send data to server
     private void changeCode(){
         String oCode = txtOldCode.getText().toString();
         final String nCode = txtNewCode.getText().toString();
@@ -539,6 +542,7 @@ public class SettingActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

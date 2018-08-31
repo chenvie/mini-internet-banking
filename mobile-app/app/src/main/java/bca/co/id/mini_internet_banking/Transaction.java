@@ -1,5 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
+//local storage for transaction for mutation and history
 public class Transaction {
     private String date;
     private String goal;

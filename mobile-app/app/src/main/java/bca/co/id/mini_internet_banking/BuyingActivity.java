@@ -64,6 +64,7 @@ public class BuyingActivity extends AppCompatActivity {
         inputNoHpBuying = findViewById(R.id.inputNoHpBuying);
         btnSubmitBuying = findViewById(R.id.btnSubmitBuying);
 
+        //setting for spinner
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(BuyingActivity.this,
                 android.R.layout.simple_spinner_item,provider);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -74,6 +75,7 @@ public class BuyingActivity extends AppCompatActivity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inputNominalBuying.setAdapter(adapter2);
 
+        //setting toolbar & navigation drawer
         Toolbar toolbar = findViewById(R.id.buying_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -117,6 +119,7 @@ public class BuyingActivity extends AppCompatActivity {
         });
     }
 
+    //checking if handphone number is empty, if not go to activity_buying_code
     private void submitBuying(){
         String noHp = inputNoHpBuying.getText().toString();
         String provider = inputProviderBuying.getSelectedItem().toString();
@@ -211,6 +214,7 @@ public class BuyingActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

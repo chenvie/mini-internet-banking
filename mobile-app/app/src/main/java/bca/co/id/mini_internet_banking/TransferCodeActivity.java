@@ -75,10 +75,12 @@ public class TransferCodeActivity extends AppCompatActivity {
         nominal = intent.getStringExtra("nominal");
         ket = intent.getStringExtra("ket");
 
+        //set nominal, rekening number and info from data send by previous page (intent)
         txtNorekTransfer.setText(noRek);
         txtNominalTransfer.setText("Rp " + (formatter.format(Float.parseFloat(nominal))).toString() + ",-");
         txtKetTransfer.setText(ket);
 
+        //setting toolbar and navigation drawer
         Toolbar toolbar = findViewById(R.id.transfer_code_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -122,6 +124,7 @@ public class TransferCodeActivity extends AppCompatActivity {
         });
     }
 
+    //send transfer data to server after encrypt secret code
     private void submitTransfer(){
         String code = txtCodeTransfer.getText().toString();
 
@@ -325,6 +328,7 @@ public class TransferCodeActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

@@ -1,5 +1,6 @@
 package bca.co.id.mini_internet_banking;
 
+//local storage of nasabah data when application run
 public class Nasabah {
     protected static String id;
     protected static String name;
