@@ -30,7 +30,19 @@ export class LoginService {
     private logger: NGXLogger
   ) { }
 
-  async login(userLogin: any) {
+  /**
+   * Login to webapp
+   *
+   * @param {Object} userLogin data login
+   * @param {string} userLogin.username username
+   * @param {string} userLogin.password password
+   *
+   * @returns {boolean} Jika berhasil login dan fetch data return true, jika tidak false
+   */
+  async login(userLogin: {
+    username: string,
+    password: string
+  }) {
     userLogin.password = md5(userLogin.password);
     const res = await this.getLoginValidation(userLogin);
     this.isLoginValid = res.login;
@@ -54,10 +66,15 @@ export class LoginService {
     const log = 'login: username ' + this.userData.username + ' fetch user data success';
     this.logger.info(log);
     return true;
-    // only return true / false
-    // call [getUserData] to get user data from DB
   }
 
+  /**
+   * Ambil data user dari API
+   *
+   * @param {string} username username
+   *
+   * @returns {Promise<any>} Hasil request dari API dalam bentuk Promise
+   */
   async getUserData(username: string) {
     const url = 'http://localhost/api/nasabah/read-one.php';
     const param = '?unm=' + username;
@@ -65,6 +82,15 @@ export class LoginService {
     return <any[8]> res;
   }
 
+  /**
+   * Validasi login dari API
+   *
+   * @param {Object} userLogin data login
+   * @param {string} userLogin.username username
+   * @param {string} userLogin.password password
+   *
+   * @returns {Promise<any>} Hasil request dari API dalam bentuk Promise
+   */
   async getLoginValidation(userLogin: any) {
     const url = 'http://localhost/api/nasabah/login.php';
     const res = await this.http.post(url, userLogin, httpOptions).toPromise();
