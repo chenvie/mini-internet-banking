@@ -1,11 +1,9 @@
 <?php
 class Nasabah
 {
-
     // database connection and table name
     private $conn;
     private $table_name = "nasabah";
-    //private $table_name2 = "rekening";
 
     // object properties
     public $id_nasabah;
@@ -55,59 +53,60 @@ class Nasabah
         return $stmt;
     }
 
-    function generateNoRek(){
-        $awalan_rek = "03700";
-        $sql = "SELECT COUNT(id_nasabah) as jml FROM nasabah";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $this->jml_nsb = $row['jml'];
-        $this->jml_nsb = $this->jml_nsb+1;
-        if ($this->jml_nsb > 9) {
-                $awalan_rek = "0370";
-            } else if ($this->jml_nsb > 99) {
-                $awalan_rek = "037";
-            }
-        $c = $awalan_rek . $this->jml_nsb;
-        return $c;
-    }
-
-    function generateUsername($nama){
-        $sql = "SELECT COUNT(id_nasabah) as jml FROM nasabah";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $this->jml_nsb = $row['jml'];
-        $this->jml_nsb = $this->jml_nsb+1;
-
-        if (strpos($nama,' ') == null){
-            $this->username = $nama;
-        }else {
-            $this->username = substr($nama, 0, strpos($nama, ' '));
-        }
-        $c = $this->username.(string)$this->jml_nsb;
-        return $c;
-    }
+//    function generateNoRek(){
+//        $awalan_rek = "03700";
+//        $sql = "SELECT COUNT(id_nasabah) as jml FROM nasabah";
+//        $stmt = $this->conn->prepare($sql);
+//        $stmt->execute();
+//        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+//        $this->jml_nsb = $row['jml'];
+//        $this->jml_nsb = $this->jml_nsb+1;
+//        if ($this->jml_nsb > 9) {
+//                $awalan_rek = "0370";
+//            } else if ($this->jml_nsb > 99) {
+//                $awalan_rek = "037";
+//            }
+//        $c = $awalan_rek . $this->jml_nsb;
+//        return $c;
+//    }
+//
+//    function generateUsername($nama){
+//        $sql = "SELECT COUNT(id_nasabah) as jml FROM nasabah";
+//        $stmt = $this->conn->prepare($sql);
+//        $stmt->execute();
+//        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+//        $this->jml_nsb = $row['jml'];
+//        $this->jml_nsb = $this->jml_nsb+1;
+//
+//        if (strpos($nama,' ') == null){
+//            $this->username = $nama;
+//        }else {
+//            $this->username = substr($nama, 0, strpos($nama, ' '));
+//        }
+//        $c = $this->username.(string)$this->jml_nsb;
+//        return $c;
+//    }
 
     // create new nasabah
     function create()
     {
-        $this->no_rek = $this->generateNoRek();
-        $this->username = $this->generateUsername($this->nama_lengkap);
+//        $this->no_rek = $this->generateNoRek();
+//        $this->username = $this->generateUsername($this->nama_lengkap);
         //$this->no_rek = '037002';
         // query to insert record for nasabah
-        $query = "INSERT INTO
-                " . $this->table_name . "
-            SET
-                email=:email, username=:username, nama_lengkap=:nama_lengkap, password=:password, no_ktp=:no_ktp, tgl_lahir=:tgl_lahir, alamat=:alamat, kode_rahasia=:kode_rahasia, no_rek=:no_rek, jml_saldo=:jml_saldo, kode_cabang=:kode_cabang, created=:created";
+//        $query = "INSERT INTO
+//                " . $this->table_name . "
+//            SET
+//                email=:email, username=:username, nama_lengkap=:nama_lengkap, password=:password, no_ktp=:no_ktp, tgl_lahir=:tgl_lahir, alamat=:alamat, kode_rahasia=:kode_rahasia, no_rek=:no_rek, jml_saldo=:jml_saldo, kode_cabang=:kode_cabang, created=:created";
 
+        $query = "call create_nasabah(:nama_lengkap,:email,:password,:no_ktp,:tgl_lahir,:alamat,:kode_rahasia;";
         // prepare query
         $stmt = $this->conn->prepare($query);
 
         // sanitize
         //$this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
-        $this->username = htmlspecialchars(strip_tags($this->username));
-        $this->created = htmlspecialchars(strip_tags($this->created));
+//        $this->username = htmlspecialchars(strip_tags($this->username));
+//        $this->created = htmlspecialchars(strip_tags($this->created));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->nama_lengkap = htmlspecialchars(strip_tags($this->nama_lengkap));
         $this->password = htmlspecialchars(strip_tags($this->password));
@@ -115,26 +114,30 @@ class Nasabah
         $this->alamat = htmlspecialchars(strip_tags($this->alamat));
         $this->kode_rahasia = htmlspecialchars(strip_tags($this->kode_rahasia));
         $this->tgl_lahir = htmlspecialchars(strip_tags($this->tgl_lahir));
-        $this->no_rek = htmlspecialchars(strip_tags($this->no_rek));
-        $this->jml_saldo = htmlspecialchars(strip_tags($this->jml_saldo));
-        $this->kode_cabang = htmlspecialchars(strip_tags($this->kode_cabang));
+//        $this->no_rek = htmlspecialchars(strip_tags($this->no_rek));
+//        $this->jml_saldo = htmlspecialchars(strip_tags($this->jml_saldo));
+//        $this->kode_cabang = htmlspecialchars(strip_tags($this->kode_cabang));
 
         // bind values
         //$stmt->bindParam(":id_nasabah", $this->id_nasabah);
         $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":username", $this->username);
+//        $stmt->bindParam(":username", $this->username);
         $stmt->bindParam(":nama_lengkap", $this->nama_lengkap);
         $stmt->bindParam(":password", $this->password);
         $stmt->bindParam(":no_ktp", $this->no_ktp);
         $stmt->bindParam(":tgl_lahir", $this->tgl_lahir);
         $stmt->bindParam(":alamat", $this->alamat);
         $stmt->bindParam(":kode_rahasia", $this->kode_rahasia);
-        $stmt->bindParam(":created", $this->created);
-        $stmt->bindParam(":no_rek", $this->no_rek);
-        $stmt->bindParam(":jml_saldo", $this->jml_saldo);
-        $stmt->bindParam(":kode_cabang", $this->kode_cabang);
+//        $stmt->bindParam(":created", $this->created);
+//        $stmt->bindParam(":no_rek", $this->no_rek);
+//        $stmt->bindParam(":jml_saldo", $this->jml_saldo);
+//        $stmt->bindParam(":kode_cabang", $this->kode_cabang);
 
-        if ( $stmt->execute()) {
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->username = $row['uname'];
+
+        if ($this->username != "") {
             return true;
         }
 

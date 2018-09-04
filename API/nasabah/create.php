@@ -55,7 +55,7 @@ $data = json_decode(file_get_contents("php://input"));
                 $nasabah->tgl_lahir = date('Y-m-d',strtotime($data->tgl_lahir));
                 $nasabah->alamat = $data->alamat;
                 $nasabah->kode_rahasia = $data->kode_rahasia;
-                $nasabah->created = date('Y-m-d H:i:s');
+//                $nasabah->created = date('Y-m-d H:i:s');
 
         // create new nasabah
                 if($nasabah->create()){

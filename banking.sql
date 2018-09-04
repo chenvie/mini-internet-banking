@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2018 at 08:48 AM
+-- Generation Time: Sep 04, 2018 at 11:55 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -24,6 +24,44 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_nasabah` (IN `nama` VARCHAR(100), IN `email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kode_rahasia` VARCHAR(6))  NO SQL
+BEGIN
+
+DECLARE norek VARCHAR(6);
+DECLARE uname varchar(20);
+DECLARE selesai bool DEFAULT TRUE;
+DECLARE kc varchar(4) DEFAULT "asd1";
+
+/*Generate nomor rekening baru*/
+SELECT 
+    no_rek into norek
+FROM 
+   nasabah
+   ORDER by id_nasabah DESC LIMIT 1;
+
+SET norek = CAST(norek as int);
+SET norek = norek+1;
+SET norek = CAST(norek as char(6));
+SET norek = CONCAT(0,norek);
+
+/*Generate username baru*/
+
+SET uname = LEFT(nama,LOCATE(" ",nama) - 1);
+IF uname != ""
+THEN
+SET uname = concat(uname, RIGHT(norek,2));
+ELSE
+SET uname = concat(nama, RIGHT(norek,2));
+END IF;
+
+/*Membuat entry nasabah baru*/
+INSERT INTO nasabah 
+SET
+email=email, username=uname, nama_lengkap=nama, password=pwd, no_ktp=no_ktp, tgl_lahir=tgl_lahir, alamat=alamat, kode_rahasia=kode_rahasia, no_rek=norek, kode_cabang=kc;
+
+SELECT uname;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getHistory` (IN `id_nasabah` INT(10), IN `tgl_awal` DATE, IN `tgl_akhir` DATE)  BEGIN
 select DISTINCT t.kode_transaksi,t.tgl_trans, IF (substr(t.kode_transaksi,1,1) = '1',CONCAT('Transfer ke ',r.rek_transfer),'Pembelian Pulsa') as tujuan, IF (substr(t.kode_transaksi,1,1) = '1', r.keterangan,p.no_hp) as keterangan, IF (substr(t.kode_transaksi,1,1) = '1', r.nominal,p.nominal) as nominal, t.status from transaksi t, transfer r, pulsa p, nasabah n where n.id_nasabah = id_nasabah AND t.id_nasabah = n.id_nasabah AND (t.kode_transaksi = r.kode_transfer OR t.kode_transaksi = p.kode_pembelian) AND (t.tgl_trans >=tgl_awal AND t.tgl_trans <=tgl_akhir) ORDER BY t.tgl_trans ASC;
 END$$
@@ -39,9 +77,27 @@ select DISTINCT t.kode_transaksi,n.no_rek,t.tgl_trans,
                     IF (substr(t.kode_transaksi,1,1) = '1', r.keterangan,p.no_hp) as keterangan,
                     IF (substr(t.kode_transaksi,1,1) = '1', r.nominal,p.nominal) as nominal
                     from transaksi t, transfer r, pulsa p, nasabah n
-                    where (n.id_nasabah =id_nasabah AND (t.id_nasabah = n.id_nasabah or n.no_rek = r.rek_transfer)) AND 
+                    where (n.id_nasabah = id_nasabah AND (t.id_nasabah = n.id_nasabah or n.no_rek = r.rek_transfer)) AND 
                     (t.kode_transaksi = r.kode_transfer OR t.kode_transaksi = p.kode_pembelian) AND 
                     (t.tgl_trans >=tgl_awal AND t.tgl_trans <= tgl_akhir) AND 
+                    t.status = 'Berhasil'
+                    ORDER BY `t`.`tgl_trans`  ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getMutasi2` ()  NO SQL
+BEGIN
+select DISTINCT t.kode_transaksi,n.no_rek,t.tgl_trans,
+                    IF (substr(t.kode_transaksi,1,1) = '1', 
+                    (if (n.no_rek = r.rek_transfer,
+                    CONCAT('Transfer dari ',(SELECT no_rek from nasabah where id_nasabah = t.id_nasabah)),CONCAT('Transfer ke ',r.rek_transfer))),
+                    'Pembelian Pulsa') as tujuan,
+                    IF (substr(t.kode_transaksi,1,1) = '1',IF(n.no_rek = r.rek_transfer,'CR','DB'),'DB') as jenis,
+                    IF (substr(t.kode_transaksi,1,1) = '1', r.keterangan,p.no_hp) as keterangan,
+                    IF (substr(t.kode_transaksi,1,1) = '1', r.nominal,p.nominal) as nominal
+                    from transaksi t, transfer r, pulsa p, nasabah n
+                    where (n.id_nasabah = 2 AND (t.id_nasabah = n.id_nasabah or n.no_rek = r.rek_transfer)) AND 
+                    (t.kode_transaksi = r.kode_transfer OR t.kode_transaksi = p.kode_pembelian) AND 
+                    (t.tgl_trans >= '2018-08-13' AND t.tgl_trans <= '2018-08-21') AND 
                     t.status = 'Berhasil'
                     ORDER BY `t`.`tgl_trans`  ASC;
 END$$
@@ -85,7 +141,7 @@ CREATE TABLE `nasabah` (
   `alamat` varchar(100) NOT NULL,
   `kode_rahasia` varchar(6) NOT NULL,
   `no_rek` varchar(16) NOT NULL,
-  `jml_saldo` int(11) NOT NULL,
+  `jml_saldo` int(11) NOT NULL DEFAULT '450000',
   `kode_cabang` varchar(10) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -107,7 +163,7 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (11, 'kw@gmail.com', 'katon10', 'katon wijana', '123', '123', '2018-08-08', 'godean', '123', '037010', 400000, 'asd1', '2018-08-21 09:33:24'),
 (12, 'hb@gmail.com', 'halim12', 'halim budi', 'qwe', '123', '2018-08-09', 'maguwo', 'qwe', '037011', 500000, 'asd1', '2018-08-21 09:33:25'),
 (13, 'ivan@gmail.com', 'ivan12', 'ivan', 'qwe', '123', '2018-08-03', 'klitren', 'qwe', '037012', 450000, 'asd1', '2018-08-15 05:52:22'),
-(14, '', '13', '', '', '', '2018-08-01', '', '', '037013', 450000, 'asd1', '2018-08-15 21:34:59');
+(14, 'kf@gmail.com', 'Kornelius13', 'Kornelius Fredy', 'qwerty123', '3323051232960007', '1996-07-20', 'bonbin sana lagi', '123456', '037013', 450000, 'asd1', '2018-09-04 09:32:20');
 
 -- --------------------------------------------------------
 

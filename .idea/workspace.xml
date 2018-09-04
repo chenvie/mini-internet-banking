@@ -3,23 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0ada7616-1278-4f16-bce2-1cdfefe057a9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/.idea/workspace.xml" afterPath="$PROJECT_DIR$/API/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/create.php" afterPath="$PROJECT_DIR$/API/nasabah/create.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/login.php" afterPath="$PROJECT_DIR$/API/nasabah/login.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/read-one.php" afterPath="$PROJECT_DIR$/API/nasabah/read-one.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/read.php" afterPath="$PROJECT_DIR$/API/nasabah/read.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/update_kode_rahasia.php" afterPath="$PROJECT_DIR$/API/nasabah/update_kode_rahasia.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/nasabah/update_password.php" afterPath="$PROJECT_DIR$/API/nasabah/update_password.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/objects/nasabah.php" afterPath="$PROJECT_DIR$/API/objects/nasabah.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/objects/pulsa.php" afterPath="$PROJECT_DIR$/API/objects/pulsa.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/objects/transaksi.php" afterPath="$PROJECT_DIR$/API/objects/transaksi.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/objects/transfer.php" afterPath="$PROJECT_DIR$/API/objects/transfer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/pulsa/create.php" afterPath="$PROJECT_DIR$/API/pulsa/create.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/transaksi/read-history.php" afterPath="$PROJECT_DIR$/API/transaksi/read-history.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/transaksi/read-mutasi.php" afterPath="$PROJECT_DIR$/API/transaksi/read-mutasi.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/transfer/cek-no-rek.php" afterPath="$PROJECT_DIR$/API/transfer/cek-no-rek.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/transfer/create.php" afterPath="$PROJECT_DIR$/API/transfer/create.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/banking.sql" afterPath="$PROJECT_DIR$/banking.sql" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,34 +19,75 @@
       <file leaf-file-name="nasabah.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="549">
-              <caret line="436" column="35" lean-forward="false" selection-start-line="436" selection-start-column="35" selection-end-line="436" selection-end-column="35" />
+            <state relative-caret-position="1761">
+              <caret line="139" column="33" lean-forward="false" selection-start-line="139" selection-start-column="33" selection-end-line="139" selection-end-column="33" />
               <folding>
-                <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-                <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+                <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+                <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+                <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+                <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+                <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+                <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+                <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+                <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="read-history.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/transaksi/read-history.php">
+      <file leaf-file-name="create.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="28" column="14" lean-forward="false" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+            <state relative-caret-position="320">
+              <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="transaksi.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="transaksi.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/API/objects/transaksi.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="79" column="87" lean-forward="true" selection-start-line="79" selection-start-column="87" selection-end-line="79" selection-end-column="87" />
+            <state relative-caret-position="195">
+              <caret line="65" column="55" lean-forward="false" selection-start-line="65" selection-start-column="55" selection-end-line="65" selection-end-column="55" />
               <folding>
-                <marker date="1535611607000" expanded="true" signature="21:4950" ph="{...}" />
-                <marker date="1535611607000" expanded="true" signature="4187:4948" ph="{...}" />
+                <marker date="1536053813746" expanded="true" signature="21:5048" ph="{...}" />
+                <marker date="1536053813746" expanded="true" signature="5026:5046" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pulsa.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/objects/pulsa.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="92" column="5" lean-forward="false" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
+              <folding>
+                <marker date="1534756719768" expanded="true" signature="718:759" ph="SELECT COUNT... ${$this-&gt;table_name3}" />
+                <marker date="1534756719768" expanded="true" signature="1356:1509" ph="SELECT kode_... ${$this-&gt;table_name2}" />
+                <marker date="1534756719768" expanded="true" signature="2153:2230" ph="SELECT jml_s... ${$this-&gt;table_name2}" />
+                <marker date="1534756719768" expanded="true" signature="4066:4244" ph="INSERT INTO ${$this-&gt;table_name3}" />
+                <marker date="1534756719768" expanded="true" signature="4925:5097" ph="INSERT INTO ${$this-&gt;table_name}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="transfer.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/objects/transfer.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2856">
+              <caret line="192" column="5" lean-forward="false" selection-start-line="192" selection-start-column="5" selection-end-line="192" selection-end-column="5" />
+              <folding>
+                <marker date="1534824816001" expanded="true" signature="797:838" ph="SELECT COUNT... ${$this-&gt;table_name3}" />
+                <marker date="1534824816001" expanded="true" signature="1478:1590" ph="SELECT no_re... ${$this-&gt;table_name2}" />
+                <marker date="1534824816001" expanded="true" signature="2473:2651" ph="INSERT INTO ${$this-&gt;table_name3}" />
+                <marker date="1534824816001" expanded="true" signature="3388:3570" ph="INSERT INTO ${$this-&gt;table_name}" />
+                <marker date="1534824816001" expanded="true" signature="4351:4504" ph="SELECT kode_... ${$this-&gt;table_name2}" />
+                <marker date="1534824816001" expanded="true" signature="5379:5434" ph="SELECT jml_s... ${$this-&gt;table_name2}" />
+                <marker date="1534824816001" expanded="true" signature="8289:8467" ph="INSERT INTO ${$this-&gt;table_name3}" />
+                <marker date="1534824816001" expanded="true" signature="9200:9382" ph="INSERT INTO ${$this-&gt;table_name}" />
               </folding>
             </state>
           </provider>
@@ -82,7 +108,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/API/nasabah/create.php" />
         <option value="$PROJECT_DIR$/API/nasabah/read.php" />
         <option value="$PROJECT_DIR$/API/readme.md" />
         <option value="$PROJECT_DIR$/API/nasabah/login.php" />
@@ -95,9 +120,10 @@
         <option value="$PROJECT_DIR$/API/transfer/create.php" />
         <option value="$PROJECT_DIR$/API/objects/transfer.php" />
         <option value="$PROJECT_DIR$/API/objects/pulsa.php" />
-        <option value="$PROJECT_DIR$/API/objects/nasabah.php" />
         <option value="$PROJECT_DIR$/API/transaksi/read-history.php" />
         <option value="$PROJECT_DIR$/API/objects/transaksi.php" />
+        <option value="$PROJECT_DIR$/API/nasabah/create.php" />
+        <option value="$PROJECT_DIR$/API/objects/nasabah.php" />
       </list>
     </option>
   </component>
@@ -358,16 +384,20 @@
       <workItem from="1535514709340" duration="838000" />
       <workItem from="1535531847617" duration="1027000" />
       <workItem from="1535601887133" duration="2696000" />
+      <workItem from="1535618215354" duration="2176000" />
+      <workItem from="1536028637454" duration="237000" />
+      <workItem from="1536045774218" duration="6719000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48215000" />
+    <option name="totallyTimeSpent" value="57347000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22254759" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21303074" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -402,8 +432,14 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
           </folding>
         </state>
       </provider>
@@ -413,8 +449,14 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
           </folding>
         </state>
       </provider>
@@ -424,8 +466,14 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
           </folding>
         </state>
       </provider>
@@ -442,8 +490,14 @@
         <state relative-caret-position="7565">
           <caret line="445" column="5" lean-forward="false" selection-start-line="445" selection-start-column="5" selection-end-line="445" selection-end-column="5" />
           <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
           </folding>
         </state>
       </provider>
@@ -488,8 +542,14 @@
         <state relative-caret-position="3910">
           <caret line="230" column="24" lean-forward="false" selection-start-line="230" selection-start-column="24" selection-end-line="230" selection-end-column="24" />
           <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
           </folding>
         </state>
       </provider>
@@ -534,8 +594,14 @@
         <state relative-caret-position="3638">
           <caret line="214" column="24" lean-forward="false" selection-start-line="214" selection-start-column="24" selection-end-line="214" selection-end-column="24" />
           <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
           </folding>
         </state>
       </provider>
@@ -580,8 +646,14 @@
         <state relative-caret-position="1802">
           <caret line="106" column="29" lean-forward="false" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
           <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
           </folding>
         </state>
       </provider>
@@ -612,8 +684,14 @@
         <state relative-caret-position="1802">
           <caret line="106" column="29" lean-forward="true" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
           <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
           </folding>
         </state>
       </provider>
@@ -644,8 +722,14 @@
         <state relative-caret-position="187">
           <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
           <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
           </folding>
         </state>
       </provider>
@@ -670,24 +754,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="49" column="33" lean-forward="false" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/nasabah/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="22" column="14" lean-forward="false" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -712,13 +782,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/transaksi/read-mutasi.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="67" column="1" lean-forward="false" selection-start-line="67" selection-start-column="1" selection-end-line="67" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/transfer/create.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -733,20 +796,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/objects/pulsa.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1185">
-          <caret line="92" column="16" lean-forward="false" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/objects/transfer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1644">
-          <caret line="192" column="70" lean-forward="false" selection-start-line="192" selection-start-column="70" selection-end-line="192" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/nasabah/read-one.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -754,33 +803,94 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
+    <entry file="file://$PROJECT_DIR$/API/transaksi/read-history.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="436" column="35" lean-forward="false" selection-start-line="436" selection-start-column="35" selection-end-line="436" selection-end-column="35" />
-          <folding>
-            <marker date="1534739519234" expanded="true" signature="12982:13261" ph="..." />
-            <marker date="1534739519234" expanded="true" signature="13209:13251" ph="..." />
-          </folding>
+        <state relative-caret-position="476">
+          <caret line="28" column="14" lean-forward="false" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/transaksi/read-history.php">
+    <entry file="file://$PROJECT_DIR$/API/nasabah/read.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="28" column="14" lean-forward="false" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+        <state relative-caret-position="323">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/transaksi/read-mutasi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1139">
+          <caret line="67" column="1" lean-forward="false" selection-start-line="67" selection-start-column="1" selection-end-line="67" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/objects/transaksi.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="79" column="87" lean-forward="true" selection-start-line="79" selection-start-column="87" selection-end-line="79" selection-end-column="87" />
+        <state relative-caret-position="195">
+          <caret line="65" column="55" lean-forward="false" selection-start-line="65" selection-start-column="55" selection-end-line="65" selection-end-column="55" />
           <folding>
-            <marker date="1535611607000" expanded="true" signature="21:4950" ph="{...}" />
-            <marker date="1535611607000" expanded="true" signature="4187:4948" ph="{...}" />
+            <marker date="1536053813746" expanded="true" signature="21:5048" ph="{...}" />
+            <marker date="1536053813746" expanded="true" signature="5026:5046" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/objects/pulsa.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="92" column="5" lean-forward="false" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
+          <folding>
+            <marker date="1534756719768" expanded="true" signature="718:759" ph="SELECT COUNT... ${$this-&gt;table_name3}" />
+            <marker date="1534756719768" expanded="true" signature="1356:1509" ph="SELECT kode_... ${$this-&gt;table_name2}" />
+            <marker date="1534756719768" expanded="true" signature="2153:2230" ph="SELECT jml_s... ${$this-&gt;table_name2}" />
+            <marker date="1534756719768" expanded="true" signature="4066:4244" ph="INSERT INTO ${$this-&gt;table_name3}" />
+            <marker date="1534756719768" expanded="true" signature="4925:5097" ph="INSERT INTO ${$this-&gt;table_name}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/objects/transfer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2856">
+          <caret line="192" column="5" lean-forward="false" selection-start-line="192" selection-start-column="5" selection-end-line="192" selection-end-column="5" />
+          <folding>
+            <marker date="1534824816001" expanded="true" signature="797:838" ph="SELECT COUNT... ${$this-&gt;table_name3}" />
+            <marker date="1534824816001" expanded="true" signature="1478:1590" ph="SELECT no_re... ${$this-&gt;table_name2}" />
+            <marker date="1534824816001" expanded="true" signature="2473:2651" ph="INSERT INTO ${$this-&gt;table_name3}" />
+            <marker date="1534824816001" expanded="true" signature="3388:3570" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1534824816001" expanded="true" signature="4351:4504" ph="SELECT kode_... ${$this-&gt;table_name2}" />
+            <marker date="1534824816001" expanded="true" signature="5379:5434" ph="SELECT jml_s... ${$this-&gt;table_name2}" />
+            <marker date="1534824816001" expanded="true" signature="8289:8467" ph="INSERT INTO ${$this-&gt;table_name3}" />
+            <marker date="1534824816001" expanded="true" signature="9200:9382" ph="INSERT INTO ${$this-&gt;table_name}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/objects/nasabah.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1761">
+          <caret line="139" column="33" lean-forward="false" selection-start-line="139" selection-start-column="33" selection-end-line="139" selection-end-column="33" />
+          <folding>
+            <marker date="1536054666108" expanded="true" signature="788:1012" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="1262:1306" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="1831:1875" ph="SELECT COUNT... nasabah" />
+            <marker date="1536054666108" expanded="true" signature="2635:2971" ph="INSERT INTO ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="6429:6579" ph="SELECT usern... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="7625:7873" ph="SELECT id_na... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="9500:9677" ph="SELECT passw... ${$this-&gt;table_name}" />
+            <marker date="1536054666108" expanded="true" signature="10160:10341" ph="SELECT kode_... ${$this-&gt;table_name}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/nasabah/create.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
