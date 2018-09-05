@@ -114,7 +114,7 @@ public class TransferActivity extends AppCompatActivity {
 
         final Intent intent = new Intent(this, TransferCodeActivity.class);
 
-        if (!noRek.equals("") && !nominal.equals("") && !ket.equals("")){
+        if (!noRek.equals("") && !nominal.equals("")){
             OkHttpClient client = new OkHttpClient();
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             String url = HttpClientURL.urlCheckRekNum;
@@ -191,9 +191,9 @@ public class TransferActivity extends AppCompatActivity {
                 }
             });
         } else{
-            Log.e(TAG, "Secret code wrong");
+            Log.e(TAG, "Rekening Number or Nominal is empty");
             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Secret code wrong");
-            Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Nomor Rekening tujuan dan nominal tidak boleh kosong!", Toast.LENGTH_LONG).show();
         }
     }
 

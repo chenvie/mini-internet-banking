@@ -259,8 +259,8 @@ public class BuyingCodeActivity extends AppCompatActivity {
             }
         } else{
             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Secret code wrong");
-            Log.e(TAG, "Secret code wrong");
-            Toast.makeText(this, "Kode Rahasia salah!" + Nasabah.code, Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Secret code wrong, hashcode = " + hashCode + ", Nasabah.code = " + Nasabah.code);
+            Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }
     }
 

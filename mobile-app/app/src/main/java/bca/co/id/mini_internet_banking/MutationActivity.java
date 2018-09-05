@@ -61,8 +61,11 @@ public class MutationActivity extends AppCompatActivity {
 
         final OkHttpClient client = new OkHttpClient();
 
+        final SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+
         HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadMutation).newBuilder();
         urlBuilder.addQueryParameter("id", Nasabah.id);
+        urlBuilder.addQueryParameter("tgl", s.format(new Date()));
 
         String url = urlBuilder.build().toString();
 

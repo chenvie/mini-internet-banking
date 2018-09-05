@@ -277,7 +277,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        return true;
+
+        if (Nasabah.id != null && Nasabah.id != "") {
+            return true;
+        }
+        return false;
     }
 
     //send data to server

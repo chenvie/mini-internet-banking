@@ -198,20 +198,27 @@ public class NewRekeningActivity extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         String responseBody = response.body().string().toString();
 
+                        Log.e(TAG, responseBody);
+
                         try {
                             JSONObject jsonObject = new JSONObject(responseBody);
                             String result = jsonObject.getString("message");
-                            String username = jsonObject.getString("username");
+
+
+                            if (!result.equalsIgnoreCase("pendaftaran gagal")) {
+                                String username = jsonObject.getString("username");
+                                Nasabah.username = username;
+                            }
 
                             if (result.equalsIgnoreCase("pendaftaran berhasil")){
-                                Nasabah.name = name;
-                                Nasabah.username = username;
-                                Nasabah.email = email;
-                                Nasabah.password = finalHashPassword;
-                                Nasabah.ktpNum = ktp;
-                                Nasabah.birthday = birthday;
-                                Nasabah.address = address;
-                                Nasabah.code = finalHashCode;
+                                //Nasabah.name = name;
+                                //Nasabah.username = username;
+                                //Nasabah.email = email;
+                                //Nasabah.password = finalHashPassword;
+                                //Nasabah.ktpNum = ktp;
+                                //Nasabah.birthday = birthday;
+                                //Nasabah.address = address;
+                                //Nasabah.code = finalHashCode;
                                 Log.i(TAG, "Registering nasabah suceess, sending name, email, password, ktpNum, birthday, address, secret code as parameter");
                                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Registering nasabah sucess, sending name, email, password, ktpNum, birthday, address, secret code as parameter");
                                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Name = " + name);
