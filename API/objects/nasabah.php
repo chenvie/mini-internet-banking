@@ -99,7 +99,7 @@ class Nasabah
 //            SET
 //                email=:email, username=:username, nama_lengkap=:nama_lengkap, password=:password, no_ktp=:no_ktp, tgl_lahir=:tgl_lahir, alamat=:alamat, kode_rahasia=:kode_rahasia, no_rek=:no_rek, jml_saldo=:jml_saldo, kode_cabang=:kode_cabang, created=:created";
 
-        $query = "call create_nasabah(:nama_lengkap,:email,:password,:no_ktp,:tgl_lahir,:alamat,:kode_rahasia;";
+        $query = "call create_nasabah(:nama_lengkap,:email,:password,:no_ktp,:tgl_lahir,:alamat,:kode_rahasia);";
         // prepare query
         $stmt = $this->conn->prepare($query);
 
