@@ -84,8 +84,9 @@
     - read-mutasi
         - untuk melihat mutasi yang terjadi didalam rekeningnya baik masuk (Credit(CR)), atau keluar (Debet(DB)) dalam 7 hari kebelakang
         - in lewat url:
-            ./API/transaksi/read-mutasi.php?id=x
+            ./API/transaksi/read-mutasi.php?id=x&tgl=y
         - x diganti dengan id nasabah
+        - y diganti tanggal hari itu
         - out lewat json array $history_arr :
             - array [tanggal] : no_rek_pengirim,tgl_awal,tgl_akhir
             - array [records] : kode_transaksi,no_rek,tgl_trans,tujuan,jenis,keterangan,nominal

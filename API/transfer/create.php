@@ -27,12 +27,13 @@ $transfer->id_nasabah = $data->id_nasabah;
 $transfer->kode_rahasia = $data->kode_rahasia;
 $transfer->nominal = $data->nominal;
 $transfer->keterangan = $data->keterangan;
+$transfer->create();
 
 // create new transaksi transfer
-if($transfer->create()){
+if($transfer->status == "Berhasil"){
     echo json_encode(
         array("transfer" => true,
-        "message" => $transfer->message)
+            "message" => $transfer->message)
     );
 }
 else{
