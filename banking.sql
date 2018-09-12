@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2018 at 10:40 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Generation Time: Sep 12, 2018 at 11:56 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,42 +24,82 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `create_nasabah` (IN `nama` VARCHAR(100), IN `email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kode_rahasia` VARCHAR(6))  NO SQL
-BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cekNoRek` (IN `norek` VARCHAR(20), IN `id_nsb` INT(10), OUT `stts` VARCHAR(20), OUT `msg` VARCHAR(70))  NO SQL
+BEGIN 
+DECLARE jml int;
+DECLARE kodeT varchar(12) DEFAULT "1";
 
-DECLARE norek VARCHAR(6);
-DECLARE uname varchar(20);
-DECLARE selesai bool DEFAULT TRUE;
-DECLARE kc varchar(4) DEFAULT "asd1";
+SELECT COUNT(no_rek) into jml
+from nasabah
+where no_rek = norek;
 
-/*Generate nomor rekening baru*/
+
+if jml = 1 THEN
+SET stts = "Berhasil";
+SET msg = "Nomor rekening tujuan ditemukan";
+ELSE 
+SET stts = "Gagal";
+SET msg = "Nomor rekening tujuan tidak ditemukan";
+end if;
+
+if stts = "Gagal" THEN
+
+/*generate kode trans*/
 SELECT 
-    no_rek into norek
+    count(kode_transaksi) into jml
 FROM 
-   nasabah
-   ORDER by id_nasabah DESC LIMIT 1;
+   transaksi;
 
-SET norek = CAST(norek as int);
-SET norek = norek+1;
-SET norek = CAST(norek as char(6));
-SET norek = CONCAT(0,norek);
-
-/*Generate username baru*/
-
-SET uname = LEFT(nama,LOCATE(" ",nama) - 1);
-IF uname != ""
-THEN
-SET uname = concat(uname, RIGHT(norek,2));
+SET jml = jml +1;
+if jml > 9 THEN
+SET kodeT = concat(kodeT,"00");
+ELSEIF jml > 99 THEN
+SET kodeT = concat(kodeT,"0");
+ELSEIF jml <9 THEN
+SET kodeT = concat(kodeT,"000");
 ELSE
-SET uname = concat(nama, RIGHT(norek,2));
+SET kodeT = kodeT;
 END IF;
 
-/*Membuat entry nasabah baru*/
-INSERT INTO nasabah 
-SET
-email=email, username=uname, nama_lengkap=nama, password=pwd, no_ktp=no_ktp, tgl_lahir=tgl_lahir, alamat=alamat, kode_rahasia=kode_rahasia, no_rek=norek, kode_cabang=kc;
+SET jml = CAST(jml as char(6));
+SET kodeT = concat(kodeT,jml);
 
-SELECT uname;
+insert into transaksi SET kode_transaksi = kodeT,id_nasabah = id_nsb,status = stts, ket_status = msg;
+END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `generateKodeTransaksi` (IN `jenis` VARCHAR(1))  NO SQL
+BEGIN
+DECLARE kodeT varchar(12);
+DECLARE jml int;
+
+if jenis = "P" THEN
+SET kodeT = "2";
+ELSE
+SET kodeT = "1";
+END IF;
+
+SELECT 
+    count(kode_transaksi) into jml
+FROM 
+   transaksi;
+
+SET jml = jml +1;
+if jml > 9 THEN
+SET kodeT = concat(kodeT,"00");
+ELSEIF jml > 99 THEN
+SET kodeT = concat(kodeT,"0");
+ELSEIF jml <9 THEN
+SET kodeT = concat(kodeT,"000");
+ELSE
+SET kodeT = kodeT;
+END IF;
+
+SET jml = CAST(jml as char(6));
+SET kodeT = concat(kodeT,jml);
+
+
+SELECT kodeT as 'kode_trans';
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getHistory` (IN `id_nasabah` INT(10), IN `tgl_awal` DATE, IN `tgl_akhir` DATE)  BEGIN
@@ -104,6 +142,310 @@ select DISTINCT t.kode_transaksi,n.no_rek,t.tgl_trans,
                     ORDER BY `t`.`tgl_trans`  ASC;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (INOUT `uname` VARCHAR(20), IN `pwd` VARCHAR(20), OUT `stts` BOOLEAN)  NO SQL
+BEGIN
+DECLARE jml int;
+/*DECLARE uname_temp,pwd_temp varchar(20);
+select username into uname_temp, password into pwd_temp */
+SELECT COUNT(id_nasabah) into jml
+from nasabah 
+where username = uname and password = pwd;
+
+IF jml = 1 THEN
+SET stts = True;
+ELSE
+SET uname = "";
+SET stts = False;
+END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postNasabah` (IN `nama` VARCHAR(100), IN `email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kode_rahasia` VARCHAR(6), OUT `uname` VARCHAR(20))  NO SQL
+BEGIN
+
+DECLARE norek VARCHAR(6);
+DECLARE selesai bool DEFAULT TRUE;
+DECLARE kc varchar(4) DEFAULT "asd1";
+
+/*Generate nomor rekening baru*/
+/*ini kalo blm ada nasabah sebelumnya bakal error, bisa diganti pake logika awalnya tapi mager thx, penting paham ya kalo ini salah, harusnya pake logika yg lain thx*/
+SELECT 
+    no_rek into norek
+FROM 
+   nasabah
+   ORDER by id_nasabah DESC LIMIT 1;
+
+SET norek = CAST(norek as int);
+SET norek = norek+1;
+SET norek = CAST(norek as char(6));
+SET norek = CONCAT(0,norek);
+
+/*Generate username baru*/
+
+SET uname = LEFT(nama,LOCATE(" ",nama) - 1);
+IF uname != ""
+THEN
+SET uname = concat(uname, RIGHT(norek,2));
+ELSE
+SET uname = concat(nama, RIGHT(norek,2));
+END IF;
+
+/*Membuat entry nasabah baru*/
+INSERT INTO nasabah 
+SET
+email=email, username=uname, nama_lengkap=nama, password=pwd, no_ktp=no_ktp, tgl_lahir=tgl_lahir, alamat=alamat, kode_rahasia=kode_rahasia, no_rek=norek, kode_cabang=kc;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postNasabah2` (IN `nama` VARCHAR(100), IN `email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kode_rahasia` VARCHAR(6), OUT `uname` VARCHAR(20), OUT `out_code` VARCHAR(10), OUT `out_msg` VARCHAR(40))  NO SQL
+BEGIN
+
+DECLARE norek VARCHAR(6);
+DECLARE kc varchar(4) DEFAULT "asd1";
+
+/*Generate nomor rekening baru*/
+SELECT 
+    no_rek into norek
+FROM 
+   nasabah
+   ORDER by id_nasabah DESC LIMIT 1;
+
+SET norek = CAST(norek as int);
+SET norek = norek+1;
+SET norek = CAST(norek as char(6));
+SET norek = CONCAT(0,norek);
+
+/*Generate username baru*/
+
+SET uname = LEFT(nama,LOCATE(" ",nama) - 1);
+IF uname != ""
+THEN
+SET uname = concat(uname, RIGHT(norek,2));
+ELSE
+SET uname = concat(nama, RIGHT(norek,2));
+END IF;
+
+/*Membuat entry nasabah baru*/
+INSERT INTO nasabah 
+SET
+email=email, username=uname, nama_lengkap=nama, password=pwd, no_ktp=no_ktp, tgl_lahir=tgl_lahir, alamat=alamat, kode_rahasia=kode_rahasia, no_rek=norek, kode_cabang=kc;
+
+SET out_code = "Berhasil";
+SET out_msg = "Penambahan nasabah berhasil";
+SELECT uname,out_code,out_msg;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiPulsa` (IN `id_nsb` INT(10), IN `no_hp_tujuan` VARCHAR(20), IN `nmnl` INT(50), IN `prvdr` VARCHAR(10), IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+BEGIN
+DECLARE jml_saldo_out int;
+DECLARE kr_temp varchar(6);
+DECLARE kodeT varchar(12) DEFAULT "2";
+DECLARE jml int;
+
+/*generate kode trans*/
+SELECT 
+    count(kode_transaksi) into jml
+FROM 
+   transaksi;
+
+SET jml = jml +1;
+if jml > 9 THEN
+SET kodeT = concat(kodeT,"00");
+ELSEIF jml > 99 THEN
+SET kodeT = concat(kodeT,"0");
+ELSEIF jml <9 THEN
+SET kodeT = concat(kodeT,"000");
+ELSE
+SET kodeT = kodeT;
+END IF;
+
+SET jml = CAST(jml as char(6));
+SET kodeT = concat(kodeT,jml);
+
+/*get jml saldo pembeli*/
+SELECT jml_saldo into jml_saldo_out
+from nasabah where id_nasabah = id_nsb;
+
+/*get kode rahasia*/
+SELECT kode_rahasia into kr_temp
+from nasabah where kode_rahasia = kode_rhs and username = uname;
+    
+/*cek kode rahasia*/
+if kode_rhs != kr_temp THEN
+    
+    SET stts = "Gagal";
+    SET ket_stts = "Kode rahasia salah";
+    
+ELSEIF (jml_saldo_out - nmnl) < 50000 THEN
+    
+    SET stts = "Gagal";
+    SET ket_stts = "Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda";
+    
+ELSE
+    
+    SET stts = "Berhasil";
+    SET ket_stts = "Berhasil Membeli Pulsa";
+    SET jml_saldo_out = jml_saldo_out - nmnl;
+    
+    UPDATE nasabah 
+    SET jml_saldo = jml_saldo_out
+    WHERE id_nasabah = id_nsb;
+    
+END IF;
+
+INSERT INTO transaksi 
+SET kode_transaksi=kodeT, id_nasabah=id_nsb, status=stts, ket_status=ket_stts;
+
+IF stts = "Berhasil" THEN
+INSERT INTO pulsa
+SET kode_pembelian=kodeT, no_hp=no_hp_tujuan, provider=prvdr, nominal=nmnl;
+END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `id_nsb` INT(10), IN `no_rek_tujuan` VARCHAR(40), IN `nmnl` INT(50), IN `ket` TEXT, IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+BEGIN
+DECLARE jml_saldo_out, jml_saldo_in int;
+DECLARE kr_temp varchar(6);
+DECLARE kodeT varchar(12) DEFAULT "1";
+DECLARE jml int;
+
+/*generate kode trans*/
+SELECT 
+    count(kode_transaksi) into jml
+FROM 
+   transaksi;
+
+SET jml = jml +1;
+if jml > 9 THEN
+SET kodeT = concat(kodeT,"00");
+ELSEIF jml > 99 THEN
+SET kodeT = concat(kodeT,"0");
+ELSEIF jml <9 THEN
+SET kodeT = concat(kodeT,"000");
+ELSE
+SET kodeT = kodeT;
+END IF;
+
+SET jml = CAST(jml as char(6));
+SET kodeT = concat(kodeT,jml);
+
+
+/*get jml saldo pengirim*/
+SELECT jml_saldo into jml_saldo_out
+from nasabah where id_nasabah = id_nsb;
+
+/*get jml saldo penerima*/
+SELECT jml_saldo into jml_saldo_in
+from nasabah where no_rek = no_rek_tujuan;
+
+/*get kode rahasia*/
+SELECT kode_rahasia into kr_temp
+from nasabah where kode_rahasia = kode_rhs and username = uname;
+    
+/*cek kode rahasia*/
+if kode_rhs != kr_temp THEN
+    
+    SET stts = "Gagal";
+    SET ket_stts = "Kode rahasia salah";
+/*cek nominal*/
+ELSEIF nmnl < 10000 THEN
+    
+    SET stts = "Gagal";
+    SET ket_stts = "Jumlah yang ditransfer terlalu kecil";
+/*cek sisa saldo*/
+ELSEIF (jml_saldo_out - nmnl) < 50000 THEN
+    
+    SET stts = "Gagal";
+    SET ket_stts = "Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda";
+    
+ELSE
+    
+    SET stts = "Berhasil";
+    SET ket_stts = "Berhasil Transfer";
+    SET jml_saldo_out = jml_saldo_out - nmnl;
+    SET jml_saldo_in = jml_saldo_in + nmnl;
+    
+    UPDATE nasabah 
+    SET jml_saldo = jml_saldo_out
+    WHERE id_nasabah = id_nsb;
+    
+    UPDATE nasabah
+    SET jml_saldo = jml_saldo_in
+    where no_rek = no_rek_tujuan;
+    
+    END IF;
+
+INSERT INTO transaksi 
+SET kode_transaksi=kodeT, id_nasabah=id_nsb, status=stts, ket_status=ket_stts;
+
+
+IF stts = "Berhasil" THEN
+INSERT INTO transfer
+SET kode_transfer=kodeT, rek_transfer=no_rek_tujuan, nominal=nmnl, keterangan=ket;
+END IF;    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahKodeRahasia` (IN `id_nsb` INT(10), IN `krhLama` VARCHAR(6), IN `krhBaru1` VARCHAR(6), IN `krhBaru2` VARCHAR(6), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
+BEGIN
+DECLARE krh_temp varchar(20);
+SELECT kode_rahasia INTO krh_temp
+from nasabah 
+where id_nasabah = id_nsb;
+
+IF krh_temp != krhLama
+THEN
+SET stts = "Gagal";
+SET msg = "Kode rahasia lama tidak sama";
+ELSEIF krhBaru1 != krhBaru2
+THEN
+SET stts = "Gagal";
+SET msg = "Kode rahasia baru tidak sama";
+ELSEIF char_length(krhBaru1) != 6
+THEN
+SET stts = "Gagal";
+SET msg = "Panjang kode rahasia tidak sesuai";
+ELSEIF krhBaru1 NOT REGEXP '^[A-Za-z0-9 ]+$' THEN
+SET stts = "Gagal";
+SET msg = "Kode rahasia mengandung karakter non alphanumeric";
+ELSE
+update nasabah 
+set kode_rahasia = krhBaru1
+where id_nasabah = id_nsb;
+SET stts = "Berhasil";
+SET msg = "Berhasil update Kode rahasia";
+END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahPassword` (IN `id_nsb` INT(10), IN `pwdLama` VARCHAR(20), IN `pwdBaru1` VARCHAR(20), IN `pwdBaru2` VARCHAR(20), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
+BEGIN
+DECLARE pwd_temp varchar(20);
+SELECT password INTO pwd_temp
+from nasabah 
+where id_nasabah = id_nsb;
+
+IF pwd_temp != pwdLama
+THEN
+SET stts = "Gagal";
+SET msg = "Password lama tidak sama";
+ELSEIF pwdBaru1 != pwdBaru2
+THEN
+SET stts = "Gagal";
+SET msg = "Password baru tidak sama";
+ELSEIF char_length(pwdBaru1) < 8
+THEN
+SET stts = "Gagal";
+SET msg = "Password terlalu pendek";
+ELSEIF pwdBaru1 NOT REGEXP '^[A-Za-z0-9 ]+$' THEN
+SET stts = "Gagal";
+SET msg = "Password mengandung karakter non alphanumeric";
+ELSE
+update nasabah 
+set password = pwdBaru1
+where id_nasabah = id_nsb;
+SET stts = "Berhasil";
+SET msg = "Berhasil update password";
+END IF;
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -141,7 +483,7 @@ CREATE TABLE `nasabah` (
   `no_ktp` varchar(20) NOT NULL,
   `tgl_lahir` date NOT NULL,
   `alamat` varchar(100) NOT NULL,
-  `kode_rahasia` varchar(100) NOT NULL,
+  `kode_rahasia` varchar(6) NOT NULL,
   `no_rek` varchar(16) NOT NULL,
   `jml_saldo` int(11) NOT NULL DEFAULT '450000',
   `kode_cabang` varchar(10) NOT NULL,
@@ -153,20 +495,30 @@ CREATE TABLE `nasabah` (
 --
 
 INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `no_rek`, `jml_saldo`, `kode_cabang`, `created`) VALUES
-(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', '123456', '3323031211960005', '2018-08-06', 'temanggung', '654321', '2141516', 2000000, 'asd1', '2018-08-15 03:04:48'),
-(2, 'boni@gmail.com', 'bonii', 'bonifasius', '812018', '123513163', '2018-02-05', 'magelang', '123', '2491204', 2800000, 'asd1', '2018-08-20 10:25:46'),
+(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', 'reireinald123', '3323031211960005', '2018-08-06', 'temanggung', '222222', '2141516', 2000000, 'asd1', '2018-09-10 07:08:15'),
+(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boniboni123', '123513163', '2018-02-05', 'magelang', '555555', '2491204', 2650000, 'asd1', '2018-09-12 08:50:08'),
 (3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
 (4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
-(6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4650000, 'asd1', '2018-08-21 04:17:37'),
-(7, 'sam@gmail.com', 'sam', 'sam w', 'qwe', '123', '2018-08-02', 'kudus', '123', '037000', 300000, 'asd1', '2018-08-21 04:17:37'),
-(8, 'billy@gmail.com', 'bil', 'billy b', 'qwe', '12312', '2018-08-02', 'taman siswa', '123', '037002', 450000, 'asd1', '2018-08-15 05:07:06'),
+(6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4800000, 'asd1', '2018-09-12 08:50:08'),
+(7, 'sam@gmail.com', 'sam', 'sam w', 'qwe', '123', '2018-08-02', 'kudus', '123', '037000', 150000, 'asd1', '2018-09-10 08:38:56'),
+(8, 'billy@gmail.com', 'bil', 'billy b', 'qwe', '12312', '2018-08-02', 'taman siswa', '123', '037002', 230000, 'asd1', '2018-09-06 08:16:21'),
 (9, 'argo@gmail.com', 'argo', 'argo uchiha', 'qwe', '123', '2018-08-01', 'godean', '123', '037008', 450000, 'asd1', '2018-08-15 05:25:15'),
 (10, 'kadinugraha@gmail.com', '', 'kristian adi', 'qwe', '123', '2018-08-05', 'godean', '123', '037009', 450000, 'asd1', '2018-08-15 05:47:30'),
 (11, 'kw@gmail.com', 'katon10', 'katon wijana', '123', '123', '2018-08-08', 'godean', '123', '037010', 400000, 'asd1', '2018-08-21 09:33:24'),
-(12, 'hb@gmail.com', 'halim12', 'halim budi', 'qwe', '123', '2018-08-09', 'maguwo', 'qwe', '037011', 600000, 'asd1', '2018-09-05 08:37:23'),
+(12, 'hb@gmail.com', 'halim12', 'halim budi', 'qwe', '123', '2018-08-09', 'maguwo', 'qwe', '037011', 500000, 'asd1', '2018-08-21 09:33:25'),
 (13, 'ivan@gmail.com', 'ivan12', 'ivan', 'qwe', '123', '2018-08-03', 'klitren', 'qwe', '037012', 450000, 'asd1', '2018-08-15 05:52:22'),
-(14, 'kf@gmail.com', 'Kornelius13', 'Kornelius Fredy', 'qwerty123', '3323051232960007', '1996-07-20', 'bonbin sana lagi', '123456', '037013', 450000, 'asd1', '2018-09-04 09:32:20'),
-(16, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin14', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037014', 850000, 'asd1', '2018-09-05 08:37:23');
+(14, 'kf@gmail.com', 'Kornelius13', 'Kornelius Fredy', 'qwerty123', '3323051232960007', '1996-07-20', 'bonbin sana lagi', '123456', '037013', 350000, 'asd1', '2018-09-06 04:55:56'),
+(15, 'asdasd@gmail.com', 'vincent14', 'vincent fernando', '123321', '123333333', '1996-05-05', 'nologaten', '654321', '037014', 550000, 'asd1', '2018-09-06 04:55:56'),
+(16, 'mega@gmail.com', 'Mega15', 'Mega Insan', '123321', '1233332343', '1997-06-07', 'jakal', '111111', '037015', 450000, 'asd1', '2018-09-07 10:03:01'),
+(18, 'deni@gmail.com', 'Deni16', 'Deni Wijaya', '1233231sad1', '1232226', '1998-06-07', 'jakal', '111111', '037016', 450000, 'asd1', '2018-09-07 10:09:41'),
+(19, 'rafi@gmail.com', 'Rafi17', 'Rafi Dwi', '123asad1', '123222926', '1999-06-07', 'jakal', '111111', '037017', 450000, 'asd1', '2018-09-07 10:12:40'),
+(20, '', '18', '', '', '', '1970-01-01', '', '', '037018', 450000, 'asd1', '2018-09-07 10:15:55'),
+(21, 'fitra@gmail.com', 'Fitra19', 'Fitra Rio', '11923asad1', '1232225926', '1994-06-07', 'jakal', '111111', '037019', 450000, 'asd1', '2018-09-07 10:16:29'),
+(22, 'orz@gmail.com', 'Risaldi20', 'Risaldi Hartono', '17923asad1', '123145926', '1990-06-07', 'godean', '121321', '037020', 450000, 'asd1', '2018-09-07 10:33:53'),
+(23, 'dim@gmail.com', 'Adimas21', 'Adimas Firman', '19993asad1', '12399926', '1992-06-07', 'umy sana', '999999', '037021', 450000, 'asd1', '2018-09-07 10:35:05'),
+(24, 'iam@gmail.com', 'Priambodo22', 'Priambodo Pangarsa', '29993asad1', '1239776', '1993-08-10', 'Gejayan', '999999', '037022', 450000, 'asd1', '2018-09-07 10:37:13'),
+(25, 'uzan@gmail.com', 'Fauzan23', 'Fauzan Set', '2999311dac1', '15151', '1994-08-10', 'Kronggahan', '999999', '037023', 450000, 'asd1', '2018-09-07 10:40:11'),
+(26, 'eddy@gmail.com', 'Eddy24', 'Eddy villager', '2992141', '15124551', '1995-09-10', 'Jombor', '999999', '037024', 450000, 'asd1', '2018-09-10 07:22:47');
 
 -- --------------------------------------------------------
 
@@ -189,7 +541,12 @@ INSERT INTO `pulsa` (`kode_pembelian`, `no_hp`, `provider`, `nominal`) VALUES
 ('20004', '08978902350', 'Telkomsel', 50000),
 ('20015', '081212515', 'Telkomsel', 50000),
 ('20016', '081212515', 'Telkomsel', 50000),
-('20024', '085201258593', 'Telkomsel', 50000);
+('20025', '082221110041', 'Indosat', 100000),
+('20026', '082221110041', 'Indosat', 50000),
+('20027', '082221110041', 'Indosat', 20000),
+('20028', '081212515', 'Indosat', 50000),
+('20029', '081212515', 'Indosat', 50000),
+('20031', '0821314251', 'Indosat', 50000);
 
 -- --------------------------------------------------------
 
@@ -229,12 +586,22 @@ INSERT INTO `transaksi` (`kode_transaksi`, `id_nasabah`, `tgl_trans`, `status`, 
 ('10021', 7, '2018-08-21 04:17:01', 'Berhasil', 'Berhasil transfer'),
 ('10022', 7, '2018-08-21 04:17:37', 'Berhasil', 'Berhasil transfer'),
 ('10023', 11, '2018-08-21 09:33:25', 'Berhasil', 'Berhasil transfer'),
-('10025', 16, '2018-09-05 08:37:23', 'Berhasil', 'Berhasil transfer'),
+('10024', 14, '2018-09-06 04:55:56', 'Berhasil', 'Berhasil Transfer'),
+('10032', 2, '2018-09-12 07:52:27', 'Gagal', 'Nomor rekening tujuan tidak ditemukan'),
+('10033', 2, '2018-09-12 07:53:39', 'Gagal', 'Nomor rekening tujuan tidak ditemukan'),
+('10034', 2, '2018-09-12 08:46:04', 'Berhasil', 'Berhasil Transfer'),
+('10035', 2, '2018-09-12 08:50:08', 'Berhasil', 'Berhasil Transfer'),
 ('15', 2, '2018-08-20 08:23:15', 'Berhasil', 'Berhasil transfer'),
 ('20004', 1, '2018-08-20 04:19:59', 'Berhasil', ''),
 ('20015', 2, '2018-08-20 09:20:35', 'Berhasil', 'Pembelian pulsa berhasil'),
 ('20016', 2, '2018-08-20 10:25:46', 'Berhasil', 'Pembelian pulsa berhasil'),
-('20024', 16, '2018-09-05 08:34:04', 'Berhasil', 'Pembelian pulsa berhasil');
+('20025', 8, '2018-09-06 07:58:40', 'Berhasil', 'Berhasil Membeli Pulsa'),
+('20026', 8, '2018-09-06 08:15:50', 'Berhasil', 'Berhasil Membeli Pulsa'),
+('20027', 8, '2018-09-06 08:16:21', 'Berhasil', 'Berhasil Membeli Pulsa'),
+('20028', 7, '2018-09-10 08:24:24', 'Berhasil', 'Berhasil Membeli Pulsa'),
+('20029', 7, '2018-09-10 08:28:24', 'Berhasil', 'Berhasil Membeli Pulsa'),
+('20030', 7, '2018-09-10 08:28:50', 'Gagal', 'Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda'),
+('20031', 7, '2018-09-10 08:38:56', 'Berhasil', 'Berhasil Membeli Pulsa');
 
 -- --------------------------------------------------------
 
@@ -273,7 +640,9 @@ INSERT INTO `transfer` (`kode_transfer`, `rek_transfer`, `nominal`, `keterangan`
 ('10021', '037001', 50000, 'cek lagi'),
 ('10022', '037001', 50000, 'cek lagi'),
 ('10023', '037011', 50000, 'coba sore'),
-('10025', '037011', 100000, ''),
+('10024', '037014', 100000, 'buat nando'),
+('10034', '037001', 50000, 'coba'),
+('10035', '037001', 50000, 'testing api'),
 ('15', '2141516', 50000, '');
 
 --
@@ -327,8 +696,7 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- Constraints for dumped tables
 --
@@ -356,7 +724,6 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `transfer`
   ADD CONSTRAINT `transfer_ibfk_1` FOREIGN KEY (`kode_transfer`) REFERENCES `transaksi` (`kode_transaksi`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
