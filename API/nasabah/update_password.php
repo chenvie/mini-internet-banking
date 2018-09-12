@@ -28,7 +28,8 @@ $nasabah->baru2 = $data->krb2;
 $nasabah->update_password($data->id_nasabah,$data->passwordl,$data->passwordb1,$data->passwordb2);
 //$nasabah->update_password();
 echo json_encode(
-    array("message" => $nasabah->message));
+    array("status" => $nasabah->status,
+        "message" => $nasabah->message));
 
 //comment dibawah adalah perubahan dari langsung query ke store proc
 //$nasabah->readOnePwd($data->id_nasabah);

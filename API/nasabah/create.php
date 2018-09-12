@@ -32,7 +32,8 @@ $nasabah->create($data->nama_lengkap,$data->email,$data->password,$data->no_ktp,
 //$nasabah->create();
 if($nasabah->status == "Berhasil"){
     echo json_encode(
-        array("message" => $nasabah->message,
+        array("status" => $nasabah->status,
+            "message" => $nasabah->message,
             "username" => $nasabah->username)
     );
 }
@@ -40,7 +41,8 @@ if($nasabah->status == "Berhasil"){
 // if unable to create the nasabah, tell the user
 else{
     echo json_encode(
-        array("message" => $nasabah->message)
+        array("status" => $nasabah->status,
+            "message" => $nasabah->message)
     );
 }
 

@@ -24,7 +24,8 @@ $data = json_decode(file_get_contents("php://input"));
 // set data
 $nasabah->update_kode_rahasia($data->id_nasabah,$data->kode_rahasiaL,$data->krb1,$data->krb2);
 echo json_encode(
-    array("message" => $nasabah->message));
+    array("status" => $nasabah->status,
+        "message" => $nasabah->message));
 //
 //// set ID property of nasabah to be edited
 //$nasabah->id_nasabah = $data->id_nasabah;
