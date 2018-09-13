@@ -40,4 +40,37 @@
 [2018-08-27 09:33:28] files.INFO: User login {"username":"bonii"} []
 [2018-08-27 09:48:50] files.ERROR: User failed login {"username":"bonii"} 
 [2018-08-30 13:24:03] files.INFO: User login {"username":"bonii"} 
-[2018-08-30 13:35:18] files.INFO: User failed login {"username":"bonii"} 
+[2018-08-30 13:35:18] files.INFO: User failed login {"username":"bonii"}
+[2018-09-13 09:07:26] files.INFO: username :thor14
+[2018-09-13 09:07:26] files.INFO: password :tetew
+[2018-09-13 09:07:26] files.INFO: User failed login {"username":"thor14"}
+[2018-09-13 09:08:31] files.INFO: username :bonii
+[2018-09-13 09:08:31] files.INFO: password :boniboni123
+[2018-09-13 09:08:31] files.INFO: User failed login {"username":"bonii"}
+[2018-09-13 09:09:29] files.INFO: username :cipe
+[2018-09-13 09:09:29] files.INFO: password :123
+[2018-09-13 09:09:29] files.INFO: User failed login {"username":"cipe"}
+[2018-09-13 09:22:32] files.INFO: username :cipe
+[2018-09-13 09:22:32] files.INFO: password :123
+[2018-09-13 09:22:32] files.INFO: User login {"username":"cipe"}
+[2018-09-13 09:33:45] files.INFO: username :
+[2018-09-13 09:33:45] files.INFO: password :
+[2018-09-13 09:33:45] files.INFO: User failed login {"username":null}
+[2018-09-13 09:35:10] files.INFO: Update Kode Rahasia berhasil {"username":null}
+[2018-09-13 09:35:43] files.ERROR: Update Kode Rahasia gagal {"username":null}
+[2018-09-13 09:39:17] files.ERROR: Update Kode Rahasia gagal {"username":"2"}
+[2018-09-13 09:43:21] files.INFO: Update Kode Rahasia berhasil {"id":"2"}
+[2018-09-13 09:56:44] files.ERROR: Update password gagal {"id":"2"}
+[2018-09-13 09:57:32] files.INFO: Update password berhasil {"id":"2"}
+[2018-09-13 10:27:30] files.INFO: nama lengkap :Gatot is gagal total
+[2018-09-13 10:27:30] files.INFO: email :ga@gmail.com
+[2018-09-13 10:27:30] files.INFO: password :gatot
+[2018-09-13 10:27:30] files.INFO: nomer ktp :02132423456
+[2018-09-13 10:27:30] files.INFO: tanggal lahir :1997-08-16
+[2018-09-13 10:27:30] files.INFO: alamat :Jalan sasame
+[2018-09-13 10:27:30] files.INFO: kode rahasia :462347
+[2018-09-13 10:27:30] files.INFO: created :2018-09-13 10:27:30
+[2018-09-13 10:27:30] files.INFO: User registered {"username":"Gatot25"}
+
+[2018-09-13 13:28:52] files.INFO: Update password berhasil {"id":2} 
+[2018-09-13 13:29:24] files.INFO: Update Kode Rahasia berhasil {"id":2} 

@@ -6,6 +6,7 @@ header("Content-Type: application/json; charset=UTF-8");
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/transaksi.php';
+include_once '../monolog.php';
 
 // instantiate database and products object
 $database = new Database();
@@ -60,12 +61,14 @@ if($num>0){
     }
 
     echo json_encode($mutasi_arr);
+    $log->info('Mutasi rekening', ['id_nasabah' => $transaksi->id_nasabah]);
 }
 
 else{
     echo json_encode(
         array("message" => "Belum ada mutasi dalam 7 hari terakhir.")
     );
+    $log->info('Belum ada mutasi', ['id_nasabah' => $transaksi->id_nasabah]);
 }
 //echo json_encode(
 //  array("tgl" => $transaksi->tgl,

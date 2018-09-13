@@ -9,6 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/nasabah.php';
+include_once '../monolog.php';
 
 // get database connection
 $database = new Database();
@@ -27,9 +28,17 @@ $data = json_decode(file_get_contents("php://input"));
 // set data
 $nasabah->update_password($data->id_nasabah,$data->passwordl,$data->passwordb1,$data->passwordb2);
 //$nasabah->update_password();
-echo json_encode(
-    array("status" => $nasabah->status,
-        "message" => $nasabah->message));
+if ($nasabah->status == "Berhasil") {
+    echo json_encode(
+        array("status" => $nasabah->status,
+            "message" => $nasabah->message));
+    $log->info('Update password berhasil', ['id' => $data->id_nasabah]);
+} else{
+    echo json_encode(
+        array("status" => $nasabah->status,
+            "message" => $nasabah->message));
+    $log->error('Update password gagal', ['id' => $data->id_nasabah]);
+}
 
 //comment dibawah adalah perubahan dari langsung query ke store proc
 //$nasabah->readOnePwd($data->id_nasabah);

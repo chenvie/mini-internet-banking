@@ -9,6 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/nasabah.php';
+include_once '../monolog.php';
 
 // get database connection
 $database = new Database();
@@ -23,9 +24,17 @@ $data = json_decode(file_get_contents("php://input"));
 
 // set data
 $nasabah->update_kode_rahasia($data->id_nasabah,$data->kode_rahasiaL,$data->krb1,$data->krb2);
-echo json_encode(
-    array("status" => $nasabah->status,
-        "message" => $nasabah->message));
+if ($nasabah->status == "Berhasil") {
+    echo json_encode(
+        array("status" => $nasabah->status,
+            "message" => $nasabah->message));
+    $log->info('Update Kode Rahasia berhasil', ['id' => $data->id_nasabah]);
+} else{
+    echo json_encode(
+        array("status" => $nasabah->status,
+            "message" => $nasabah->message));
+    $log->error('Update Kode Rahasia gagal', ['id' => $data->id_nasabah]);
+}
 //
 //// set ID property of nasabah to be edited
 //$nasabah->id_nasabah = $data->id_nasabah;

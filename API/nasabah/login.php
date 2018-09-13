@@ -11,6 +11,7 @@ include_once '../config/database.php';
 
 // instantiate products object
 include_once '../objects/nasabah.php';
+include_once '../monolog.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -28,6 +29,9 @@ $data = json_decode(file_get_contents("php://input"));
 //$nasabah->username = $data->uname;
 //$nasabah->password = $data->pwd;
 $nasabah->login($data->username,$data->password);
+
+$log->info("username: ".$data->username);
+$log->info("password: ".$data->password);
 // login
 if($nasabah->username != ""){
     echo json_encode(
@@ -35,6 +39,7 @@ if($nasabah->username != ""){
             "login" => true
         )
     );
+    $log->info('User login', ['username' => $data.username]);
 }
 
 // if unable to login
@@ -43,5 +48,6 @@ else{
         array("login" => false
         )
     );
+    $log->info('User failed login', ['username' => $data.username]);
 }
 ?>
