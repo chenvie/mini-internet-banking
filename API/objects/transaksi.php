@@ -3,10 +3,10 @@ class Transaksi
 {
     // database connection and table name
     private $conn;
-    private $table_name = "transfer";
+//    private $table_name = "transfer";
     private $table_name2 = "nasabah";
-    private $table_name3 = "transaksi";
-    private $table_name4 = "pulsa";
+//    private $table_name3 = "transaksi";
+//    private $table_name4 = "pulsa";
     // object properties
     public $id_nasabah;
     public $tgl;
@@ -82,8 +82,8 @@ class Transaksi
 
     //cek history yang sudah terjadi
     function readHistory()
-{
-    // select all mutasi untuk nasabah tertentu query
+    {
+        // select all mutasi untuk nasabah tertentu query
 //    $query = "select DISTINCT t.kode_transaksi,t.tgl_trans,
 //                IF (substr(t.kode_transaksi,1,1) = '1',CONCAT('Transfer ke ',r.rek_transfer),'Pembelian Pulsa') as tujuan,
 //                IF (substr(t.kode_transaksi,1,1) = '1', r.keterangan,p.no_hp) as keterangan,
@@ -97,19 +97,19 @@ class Transaksi
         $query = "CALL getHistory(:id_nasabah,:tgl_awal,:tgl_akhir)";
 
 
-    // prepare query statement
-    $stmt = $this->conn->prepare($query);
-    $this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
-    $this->tgl_awal = htmlspecialchars(strip_tags($this->tgl_awal));
-    $this->tgl_akhir = htmlspecialchars(strip_tags($this->tgl_akhir));
-    $this->tgl_awal = date('Y-m-d', strtotime($this->tgl_awal));
-    $this->tgl_akhir = date('Y-m-d', strtotime('+1 days', strtotime($this->tgl_akhir)));
-    $stmt->bindParam(":id_nasabah", $this->id_nasabah);
-    $stmt->bindParam(":tgl_awal", $this->tgl_awal);
-    $stmt->bindParam(":tgl_akhir", $this->tgl_akhir);
-    // execute query
-    $stmt->execute();
-    $this->tgl_akhir = date('Y-m-d', strtotime('-1 days', strtotime($this->tgl_akhir)));
-    return $stmt;
-}
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        $this->id_nasabah = htmlspecialchars(strip_tags($this->id_nasabah));
+        $this->tgl_awal = htmlspecialchars(strip_tags($this->tgl_awal));
+        $this->tgl_akhir = htmlspecialchars(strip_tags($this->tgl_akhir));
+        $this->tgl_awal = date('Y-m-d', strtotime($this->tgl_awal));
+        $this->tgl_akhir = date('Y-m-d', strtotime('+1 days', strtotime($this->tgl_akhir)));
+        $stmt->bindParam(":id_nasabah", $this->id_nasabah);
+        $stmt->bindParam(":tgl_awal", $this->tgl_awal);
+        $stmt->bindParam(":tgl_akhir", $this->tgl_akhir);
+        // execute query
+        $stmt->execute();
+        $this->tgl_akhir = date('Y-m-d', strtotime('-1 days', strtotime($this->tgl_akhir)));
+        return $stmt;
+    }
 }

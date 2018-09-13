@@ -12,6 +12,8 @@ include_once '../config/database.php';
 // instantiate products object
 include_once '../objects/transfer.php';
 
+include_once '../monolog.php';
+
 $database = new Database();
 $db = $database->getConnection();
 
@@ -27,18 +29,22 @@ $transfer->id_nasabah = $data->id_nasabah;
 $transfer->kode_rahasia = $data->kode_rahasia;
 $transfer->nominal = $data->nominal;
 $transfer->keterangan = $data->keterangan;
+$transfer->create();
 
 // create new transaksi transfer
-if($transfer->create()){
+if($transfer->status == "Berhasil"){
     echo json_encode(
         array("transfer" => true,
-        "message" => $transfer->message)
+            "message" => $transfer->message)
     );
+
+    $log->info('Transfer berhasil', ['username' => $transfer->username]);
 }
 else{
     echo json_encode(
         array("transfer" => false,
             "message" => $transfer->message)
     );
+    $log->error('Transfer gagal', ['username' => $transfer->username]);
 }
 ?>

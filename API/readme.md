@@ -5,12 +5,14 @@
         - menambah/insert nasabah
         - in lewat json : 
             nama_lengkap, email, password, no_ktp, tgl_lahir, alamat, kode_rahasia
-        - in lewat API :
-            created, no_rek, username, kode_cabang, jml_saldo (defalut 450000)
+        - in lewat Stored Procedure :
+            no_rek, username, kode_cabang, jml_saldo (defalut 450000)
         - in lewat query db :
-            id_nasabah (auto increment)
+            id_nasabah (auto increment), created
         - out :
-            true, false
+            -status : Berhasil, Gagal (keluaran berupa string, dengan huruf depan besar)
+            -message : pesan2 kondisi penambahan
+            -username : username yang terbuat, tidak ditampilkan jika gagal membuat nasabah
     - login (post)
         - in lewat json : 
             username, password
@@ -32,20 +34,20 @@
         - in lewat json :
             id_nasabah,kode_rahasiaL (kode rahasia lama), krb1,krb2 (kode rahasia baru 1 dan 2)
         - out lewat json array :
-            - update : true, false
+            - status : Berhasil, Gagal (keluaran berupa string, dengan huruf depan besar)
             - message : pesan2 kondisi update
     - update_password (post)
         - in lewat json :
             id_nasabah,passwordl (password lama), passwordb1,passwordb2 (pwd baru 1 dan 2)
         - out lewat json array :
-            - update : true, false
+            - update : Berhasil, Gagal (keluaran berupa string, dengan huruf depan besar)
             - message : pesan2 kondisi update
 
 - Pulsa :
     - create (post)
         - beli pulsa
         - in lewat json : 
-            username, no_hp_tujuan, id_nasabah, provider, kode_rahasia, nominal
+            username, no_hp_tujuan, id_nasabah, provider, nominal, kode_rahasia
         - json out :
              - pulsa : true, false
              - message : pesan2 kondisi pembelian pulsa

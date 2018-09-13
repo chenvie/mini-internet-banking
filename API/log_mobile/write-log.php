@@ -17,7 +17,9 @@ $data = json_decode(file_get_contents("php://input"));
 
 $logs = $data->logs;
 
-$logFile = fopen("mobile_app_log.txt", "a") or die("Unable to Open File!");
+$date = date('Ymd', time());
+
+$logFile = fopen("Log_" . $date .".txt", "a") or die("Unable to Open File!");
 foreach($logs as $eachLog) {
     fwrite($logFile, PHP_EOL . $eachLog);
 }
