@@ -10,8 +10,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
 include_once '../objects/nasabah.php';
 
-include_once '../monolog.php';
-
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -21,31 +19,17 @@ $nasabah = new Nasabah($db);
 
 // get id of product to be edited
 $data = json_decode(file_get_contents("php://input"));
-$nasabah->id_nasabah = $data->id_nasabah;
-$nasabah->kode_rahasia = $data->kode_rahasiaL;
-$nasabah->baru1 = $data->krb1;
-$nasabah->baru2 = $data->krb2;
+//$nasabah->id_nasabah = $data->id_nasabah;
+//$nasabah->kode_rahasia = $data->kode_rahasiaL;
+//$nasabah->baru1 = $data->krb1;
+//$nasabah->baru2 = $data->krb2;
 
 // set data
 $nasabah->update_password($data->id_nasabah,$data->passwordl,$data->passwordb1,$data->passwordb2);
 //$nasabah->update_password();
-
-
-        if($nasabah->status == "Berhasil"){
-            echo json_encode(
-                array("status" => $nasabah->status,
-                    "message" => $nasabah->message)
-            );
-            $log->info('Update password berhasil',['id' => $data->id_nasabah]);
-        }
-        
-        else{
-            echo json_encode(
-                array("status" => $nasabah->status,
-                    "message" => $nasabah->message)
-            );
-            $log->error('Update password gagal',['id' => $data->id_nasabah]);
-        }
+echo json_encode(
+    array("status" => $nasabah->status,
+        "message" => $nasabah->message));
 
 //comment dibawah adalah perubahan dari langsung query ke store proc
 //$nasabah->readOnePwd($data->id_nasabah);

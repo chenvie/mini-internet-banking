@@ -19,3 +19,15 @@
 13-09-2018 08:56:12 | HistoryDetailActivity | [INFO] : Date to = Thu, 13 Sep 2018
 13-09-2018 08:56:27 | SettingActivity | [ERROR] : Json parsing error
 13-09-2018 08:58:05 | SettingActivity | [ERROR] : Update ocde failed with message: null
+13-09-2018 10:22:00 | MainActivity | [ERROR] : Get Nasabah data from session
+2018-09-13 | MutationActivity | [INFO] : Getting Mutation Data Success, sending nasabag id as parameter
+2018-09-13 | MutationActivity | [INFO] : Nasabah id = 16
+13-09-2018 10:25:35 | BuyingCodeActivity | [INFO] : Buying Success, sending uname, noHp, nominal, provider, nasabah id, and secret code as parameter
+13-09-2018 10:25:35 | BuyingCodeActivity | [INFO] : Uname = Vievin14
+13-09-2018 10:25:35 | BuyingCodeActivity | [INFO] : NoHp = 085229175677
+13-09-2018 10:25:35 | BuyingCodeActivity | [INFO] : Nominal = 100000
+13-09-2018 10:25:35 | BuyingCodeActivity | [INFO] : Provider = Telkomsel
+13-09-2018 10:25:35 | BuyingCodeActivity | [INFO] : Nasabah id = 16
+13-09-2018 10:25:35 | BuyingCodeActivity | [INFO] : Secret code = 1c88b390f7a3d49edfbeff983c85c2f4
+2018-09-13 | MutationActivity | [INFO] : Getting Mutation Data Success, sending nasabag id as parameter
+2018-09-13 | MutationActivity | [INFO] : Nasabah id = 16

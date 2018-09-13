@@ -12,8 +12,6 @@ include_once '../config/database.php';
 // instantiate products object
 include_once '../objects/pulsa.php';
 
-include_once '../monolog.php';
-
 $database = new Database();
 $db = $database->getConnection();
 
@@ -35,14 +33,12 @@ if($pulsa->status == "Berhasil"){
         array("pulsa" => true,
             "message" => $pulsa->message)
     );
-    $log->info('Pembelian pulsa berhasil',['username' => $data->username]);
 }
 else{
     echo json_encode(
         array("pulsa" => false,
             "message" => $pulsa->message)
     );
-    $log->error('Pembelian pulsa gagal',['username' => $data->username]);
 }
 // create new transaksi transfer
 //if($pulsa->create()){
