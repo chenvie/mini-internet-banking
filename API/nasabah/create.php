@@ -20,6 +20,32 @@ $nasabah = new Nasabah($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
+//$nasabah->nama_lengkap = $data->nama_lengkap;
+//$nasabah->email = $data->email;
+//$nasabah->password = $data->password;
+//$nasabah->no_ktp = $data->no_ktp;
+//$nasabah->tgl_lahir = date('Y-m-d',strtotime($data->tgl_lahir));
+//$nasabah->alamat = $data->alamat;
+//$nasabah->kode_rahasia = $data->kode_rahasia;
+
+$nasabah->create($data->nama_lengkap,$data->email,$data->password,$data->no_ktp,$nasabah->tgl_lahir,$data->alamat,$data->kode_rahasia);
+//$nasabah->create();
+if($nasabah->status == "Berhasil"){
+    echo json_encode(
+        array("status" => $nasabah->status,
+            "message" => $nasabah->message,
+            "username" => $nasabah->username)
+    );
+}
+
+// if unable to create the nasabah, tell the user
+else{
+    echo json_encode(
+        array("status" => $nasabah->status,
+            "message" => $nasabah->message)
+    );
+}
+
 //if($nasabah->contains(date('Y-m-d',strtotime($data->tgl_lahir)),$data->password) or
 //    $nasabah->contains(date('Ymd',strtotime($data->tgl_lahir)),$data->password) or
 //    $nasabah->contains(date('Ydm',strtotime($data->tgl_lahir)),$data->password) or
@@ -46,31 +72,31 @@ $data = json_decode(file_get_contents("php://input"));
 //    if (ctype_alnum($data->password) and strlen($data->password)>=8){
 //    if (ctype_alnum($data->kode_rahasia) and strlen($data->kode_rahasia)==6){
 
-        // set products property values
-                //$nasabah->id_nasabah = $data->id_nasabah;
-                $nasabah->nama_lengkap = $data->nama_lengkap;
-                $nasabah->email = $data->email;
-                $nasabah->password = $data->password;
-                $nasabah->no_ktp = $data->no_ktp;
-                $nasabah->tgl_lahir = date('Y-m-d',strtotime($data->tgl_lahir));
-                $nasabah->alamat = $data->alamat;
-                $nasabah->kode_rahasia = $data->kode_rahasia;
-                $nasabah->created = date('Y-m-d H:i:s');
+// set products property values
+//$nasabah->id_nasabah = $data->id_nasabah;
+//                $nasabah->nama_lengkap = $data->nama_lengkap;
+//                $nasabah->email = $data->email;
+//                $nasabah->password = $data->password;
+//                $nasabah->no_ktp = $data->no_ktp;
+//                $nasabah->tgl_lahir = date('Y-m-d',strtotime($data->tgl_lahir));
+//                $nasabah->alamat = $data->alamat;
+//                $nasabah->kode_rahasia = $data->kode_rahasia;
+//                $nasabah->created = date('Y-m-d H:i:s');
 
-        // create new nasabah
-                if($nasabah->create()){
-                    echo json_encode(
-                        array("message" => "Pendaftaran berhasil",
-                            "username" => $nasabah->username)
-                    );
-                }
-
-        // if unable to create the nasabah, tell the user
-                else{
-                    echo json_encode(
-                        array("message" => "Pendaftaran gagal")
-                    );
-                }
+//        // create new nasabah
+//                if($nasabah->create()){
+//                    echo json_encode(
+//                        array("message" => "Pendaftaran berhasil",
+//                            "username" => $nasabah->username)
+//                    );
+//                }
+//
+//        // if unable to create the nasabah, tell the user
+//                else{
+//                    echo json_encode(
+//                        array("message" => "Pendaftaran gagal")
+//                    );
+//                }
 //            }
 //    else{
 //        echo json_encode(

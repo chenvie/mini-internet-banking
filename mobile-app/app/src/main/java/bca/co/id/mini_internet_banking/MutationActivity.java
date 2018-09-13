@@ -61,8 +61,11 @@ public class MutationActivity extends AppCompatActivity {
 
         final OkHttpClient client = new OkHttpClient();
 
+        final SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+
         HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadMutation).newBuilder();
         urlBuilder.addQueryParameter("id", Nasabah.id);
+        urlBuilder.addQueryParameter("tgl", s.format(new Date()));
 
         String url = urlBuilder.build().toString();
 
@@ -70,6 +73,7 @@ public class MutationActivity extends AppCompatActivity {
                 .url(url)
                 .build();
 
+        //get mutation data to server using http GET, sending nasabah id as parameter
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -122,6 +126,7 @@ public class MutationActivity extends AppCompatActivity {
             }
         });
 
+        //setting toolbar and navigation drawer
         Toolbar toolbar = findViewById(R.id.mutation_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -232,6 +237,7 @@ public class MutationActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

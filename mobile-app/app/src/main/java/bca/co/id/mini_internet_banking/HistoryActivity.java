@@ -63,6 +63,7 @@ public class HistoryActivity extends AppCompatActivity {
         txtHistDateTo = findViewById(R.id.txtHistDateTo);
         btnShowHistory = findViewById(R.id.btnShowHistory);
 
+        //setting toolbar & navigation drawer
         Toolbar toolbar = findViewById(R.id.history_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -98,6 +99,7 @@ public class HistoryActivity extends AppCompatActivity {
                     }
                 });
 
+        //set listener for date picker dialog
         final DatePickerDialog.OnDateSetListener date1 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -109,6 +111,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
         };
 
+        //show date picker dialog if EditText is tapped
         txtHistDateFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +122,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
+        //set listener for date picker dialog
         final DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -130,6 +134,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
         };
 
+        //show date picker dialog if EditText is tapped
         txtHistDateTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +153,7 @@ public class HistoryActivity extends AppCompatActivity {
         });
     }
 
+    //set string date to EditText from date picker dialog
     private void updateLabelHistFrom() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -156,6 +162,7 @@ public class HistoryActivity extends AppCompatActivity {
         txtHistDateFrom.setText(histDateFrom);
     }
 
+    //set string date to EditText from date picker dialog
     private void updateLabelHistTo() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -164,6 +171,7 @@ public class HistoryActivity extends AppCompatActivity {
         txtHistDateTo.setText(histDateTo);
     }
 
+    //checking if range date exceed 30 days, intent to activity_history_detail
     private void showHistory() {
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         SimpleDateFormat outputFormat = new SimpleDateFormat("EE, dd MMM yyyy", Locale.US);

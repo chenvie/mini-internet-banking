@@ -57,3 +57,94 @@
 29-08-2018 03:57:45 | SettingActivity | [INFO] : New Secret Code (nCode) = 1c88b390f7a3d49edfbeff983c85c2f4
 29-08-2018 03:57:45 | SettingActivity | [INFO] : Retype Secret Code (rCode) = 1c88b390f7a3d49edfbeff983c85c2f4
 29-08-2018 03:58:32 | MainActivity | [ERROR] : Get Nasabah data from session
+05-09-2018 01:29:45 | MainActivity | [ERROR] : Get Nasabah data from session
+05-09-2018 01:31:12 | HomeActivity | [INFO] :  Logout, remove session from app
+05-09-2018 01:56:17 | MainActivity | [ERROR] : Get Nasabah data from session
+05-09-2018 01:56:53 | HomeActivity | [INFO] :  Logout, remove session from app
+05-09-2018 01:57:02 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 01:57:02 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 01:57:02 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 01:57:02 | MainActivity | [INFO] : Get Nasabah Data Success
+05-09-2018 01:58:20 | MainActivity | [ERROR] : Get Nasabah data from session
+05-09-2018 01:59:14 | BuyingCodeActivity | [ERROR] : Secret code wrong
+05-09-2018 01:59:56 | BuyingCodeActivity | [INFO] : Logout, remove session from app
+05-09-2018 02:00:04 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 02:00:04 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 02:00:04 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 02:00:04 | MainActivity | [INFO] : Get Nasabah Data Success
+05-09-2018 02:04:12 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 02:04:12 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 02:04:12 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 02:04:12 | MainActivity | [INFO] : Get Nasabah Data Success
+05-09-2018 02:04:21 | HomeActivity | [INFO] :  Logout, remove session from app
+05-09-2018 02:04:34 | MainActivity | [ERROR] : Username or password wrong
+05-09-2018 02:04:38 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 02:04:38 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 02:04:38 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 02:04:38 | MainActivity | [INFO] : Get Nasabah Data Success
+05-09-2018 02:05:11 | HomeActivity | [INFO] :  Logout, remove session from app
+05-09-2018 02:05:44 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 02:05:44 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 02:05:44 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 02:05:44 | MainActivity | [INFO] : Get Nasabah Data Success
+05-09-2018 02:07:41 | HomeActivity | [INFO] :  Logout, remove session from app
+05-09-2018 02:08:04 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 02:08:04 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 02:08:04 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 02:08:04 | MainActivity | [INFO] : Get Nasabah Data Success
+05-09-2018 02:19:28 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 02:19:28 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 02:19:28 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 02:19:28 | MainActivity | [INFO] : Get nasabah data on progress, sending username as parameter
+05-09-2018 02:19:28 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 02:19:35 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 02:19:35 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 02:19:35 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 02:19:35 | MainActivity | [INFO] : Get Nasabah Data Success
+05-09-2018 02:24:31 | MainActivity | [ERROR] : Get Nasabah data from session
+05-09-2018 02:34:42 | HomeActivity | [INFO] :  Logout, remove session from app
+05-09-2018 02:36:25 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 02:36:25 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 02:36:25 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 02:36:25 | MainActivity | [INFO] : Get Nasabah Data Success
+05-09-2018 02:45:18 | TransferActivity | [ERROR] : Secret code wrong
+05-09-2018 02:55:12 | MutationActivity | [ERROR] : Json parsing error: End of input at character 0 of 
+05-09-2018 02:55:36 | HistoryActivity | [ERROR] : Date from and to exceed 30 days
+05-09-2018 02:55:36 | HistoryActivity | [ERROR] : Date from = Thu Sep 06 00:00:00 GMT+07:00 2018
+05-09-2018 02:55:36 | HistoryActivity | [ERROR] : Date to = Thu Oct 11 00:00:00 GMT+07:00 2018
+05-09-2018 02:56:24 | HistoryDetailActivity | [ERROR] : Json parsing error: No value for records
+05-09-2018 03:28:48 | MainActivity | [ERROR] : Get Nasabah data from session
+2018-09-05 | MutationActivity | [ERROR] : Json parsing error: No value for tanggal
+05-09-2018 03:34:03 | BuyingCodeActivity | [INFO] : Buying Success, sending uname, noHp, nominal, provider, nasabah id, and secret code as parameter
+05-09-2018 03:34:03 | BuyingCodeActivity | [INFO] : Uname = Vievin14
+05-09-2018 03:34:03 | BuyingCodeActivity | [INFO] : NoHp = 085201258593
+05-09-2018 03:34:03 | BuyingCodeActivity | [INFO] : Nominal = 50000
+05-09-2018 03:34:03 | BuyingCodeActivity | [INFO] : Provider = Telkomsel
+05-09-2018 03:34:03 | BuyingCodeActivity | [INFO] : Nasabah id = 16
+05-09-2018 03:34:03 | BuyingCodeActivity | [INFO] : Secret code = 1c88b390f7a3d49edfbeff983c85c2f4
+05-09-2018 03:36:16 | MainActivity | [ERROR] : Get Nasabah data from session
+2018-09-05 | MutationActivity | [INFO] : Getting Mutation Data Success, sending nasabag id as parameter
+2018-09-05 | MutationActivity | [INFO] : Nasabah id = 16
+05-09-2018 03:37:14 | TransferActivity | [INFO] : Checking receiver rekening num success, sending receiver rekNum, nominal, info, and nasabah id as parameter
+05-09-2018 03:37:14 | TransferActivity | [INFO] : Receiver RekNum = 037011
+05-09-2018 03:37:14 | TransferActivity | [INFO] : Nominal = 100000
+05-09-2018 03:37:14 | TransferActivity | [INFO] : Info = 
+05-09-2018 03:37:14 | TransferActivity | [INFO] : Nasabah id = 16
+05-09-2018 03:37:23 | TransferCodeActivity | [INFO] : Transfer success, sending receiver rekeningNum, uname, nasabah id, nominal, secret code and info as parameter
+05-09-2018 03:37:23 | TransferCodeActivity | [INFO] : Nasabah username = Vievin14
+05-09-2018 03:37:23 | TransferCodeActivity | [INFO] : Nasabah id = 16
+05-09-2018 03:37:23 | TransferCodeActivity | [INFO] : Receiver RekNum = 037011
+05-09-2018 03:37:23 | TransferCodeActivity | [INFO] : Nominal = 100000
+05-09-2018 03:37:23 | TransferCodeActivity | [INFO] : Info = 
+05-09-2018 03:37:23 | TransferCodeActivity | [INFO] : Secret Code = 1c88b390f7a3d49edfbeff983c85c2f4
+2018-09-05 | MutationActivity | [ERROR] : Json parsing error: No value for tanggal
+05-09-2018 03:39:51 | MutationActivity | [INFO] : Logout, remove session from app
+05-09-2018 03:39:58 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 03:39:58 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 03:39:58 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 03:39:58 | MainActivity | [INFO] : Get nasabah data on progress, sending username as parameter
+05-09-2018 03:39:58 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 03:40:01 | MainActivity | [INFO] : Login success, sending username and password as parameter
+05-09-2018 03:40:01 | MainActivity | [INFO] : Username = Vievin14
+05-09-2018 03:40:01 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+05-09-2018 03:40:01 | MainActivity | [INFO] : Get Nasabah Data Success

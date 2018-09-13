@@ -20,6 +20,7 @@ public class MutationAdapter extends RecyclerView.Adapter<MutationAdapter.Mutati
         this.mContext = mContext;
     }
 
+    //parse xml layout to java format
     @Override
     public MutationHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -27,6 +28,7 @@ public class MutationAdapter extends RecyclerView.Adapter<MutationAdapter.Mutati
         return new MutationHolder(itemView);
     }
 
+    //binding data to attribute in layout item_mutation
     @Override
     public void onBindViewHolder(MutationHolder holder, int position) {
         NumberFormat formatter = new DecimalFormat("#,###");
@@ -38,6 +40,7 @@ public class MutationAdapter extends RecyclerView.Adapter<MutationAdapter.Mutati
         holder.mutation_info.setText(trans.getInfo());
     }
 
+    //holder for layout item_mutation
     @Override
     public int getItemCount() {
         return listTrans.size();

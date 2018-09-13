@@ -55,12 +55,14 @@ public class BalanceActivity extends AppCompatActivity {
         txtSaldoNasabah = findViewById(R.id.txtSaldoNasabah);
         txtNameNasabah = findViewById(R.id.txtNameNasabah);
 
+        //set text nasabah name & rekeningNum if is local data is not null
         if (Nasabah.name != null && Nasabah.rekeningNum != null) {
             txtNameNasabah.setText(Nasabah.name);
             txtNorekNasabah.setText(Nasabah.rekeningNum.toString());
             txtSaldoNasabah.setText("Rp " + String.valueOf(formatter.format(Nasabah.saldo)) + ",-");
         }
 
+        //setting toolbar & navigation drawer
         Toolbar toolbar = findViewById(R.id.balance_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -171,6 +173,7 @@ public class BalanceActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
+        //get session data from SharedPreferences
         if (sp.getBoolean("isLogin", false)){
             Nasabah.id = sp.getString("id", "");
             Nasabah.name = sp.getString("name", "");
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         final String username = txtUname_login.getText().toString();
         final String password = txtPwd_login.getText().toString();
 
+        //encrypt password using MD5 algorithm
         String hashPassword = "";
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
@@ -121,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to hashing password: " + e.getMessage());
         }
 
+        //send username and password to server using http POST for login
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
         final OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlLogin;
 
@@ -168,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Username = " + username);
                         listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Password = " + finalHashPassword);
 
+                        //call function get nasabah data
                         try {
                             if (getNasabahData()){
                                 Log.i(TAG, "Get Nasabah Data Success");
@@ -207,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //request data to server using http GET for nasabah's data
     private boolean getNasabahData() throws JSONException {
         final OkHttpClient client = new OkHttpClient();
 
@@ -273,9 +277,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        return true;
+
+        if (Nasabah.id != null && Nasabah.id != "") {
+            return true;
+        }
+        return false;
     }
 
+    //send data to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

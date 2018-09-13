@@ -57,6 +57,7 @@ public class TransferStatusActivity extends AppCompatActivity {
         txtTransStatus = findViewById(R.id.txtTransStatus);
         txtFailedTrans = findViewById(R.id.txtTransFailed);
 
+        //get data from previous page (intent) and set data value to layout attribute
         Intent intent = getIntent();
 
         if (intent.getBooleanExtra("status", true)){
@@ -185,6 +186,7 @@ public class TransferStatusActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

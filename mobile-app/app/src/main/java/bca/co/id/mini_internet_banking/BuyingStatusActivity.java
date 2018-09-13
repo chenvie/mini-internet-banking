@@ -56,6 +56,7 @@ public class BuyingStatusActivity extends AppCompatActivity {
         txtBuyingStatus = findViewById(R.id.txtBuyingStatus);
         txtFailedBuying= findViewById(R.id.txtBuyingFailed);
 
+        //get data from intent and bind to layout attribute
         Intent intent = getIntent();
 
         if (intent.getBooleanExtra("status", true)){
@@ -72,6 +73,7 @@ public class BuyingStatusActivity extends AppCompatActivity {
         txtPulsaStatus.setText("Rp " + (formatter.format(Float.parseFloat(intent.getStringExtra("nominal")))) + ",-");
         txtProviderStatus.setText(intent.getStringExtra("provider"));
 
+        //setting toolbar & navigation drawer
         Toolbar toolbar = findViewById(R.id.buying_status_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -182,6 +184,7 @@ public class BuyingStatusActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

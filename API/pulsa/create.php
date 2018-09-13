@@ -21,15 +21,14 @@ $pulsa = new Pulsa($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // set products property values
-$pulsa->username = $data->username;
-$pulsa->no_hp_tujuan = $data->no_hp_tujuan;
-$pulsa->id_nasabah = $data->id_nasabah;
-$pulsa->provider = $data->provider;
-$pulsa->kode_rahasia = $data->kode_rahasia;
-$pulsa->nominal = $data->nominal;
-
-// create new transaksi transfer
-if($pulsa->create()){
+//$pulsa->username = $data->username;
+//$pulsa->no_hp_tujuan = $data->no_hp_tujuan;
+//$pulsa->id_nasabah = $data->id_nasabah;
+//$pulsa->provider = $data->provider;
+//$pulsa->kode_rahasia = $data->kode_rahasia;
+//$pulsa->nominal = $data->nominal;
+$pulsa->create($data->username,$data->no_hp_tujuan,$data->id_nasabah,$data->provider,$data->nominal,$data->kode_rahasia);
+if($pulsa->status == "Berhasil"){
     echo json_encode(
         array("pulsa" => true,
             "message" => $pulsa->message)
@@ -41,4 +40,17 @@ else{
             "message" => $pulsa->message)
     );
 }
+// create new transaksi transfer
+//if($pulsa->create()){
+//    echo json_encode(
+//        array("pulsa" => true,
+//            "message" => $pulsa->message)
+//    );
+//}
+//else{
+//    echo json_encode(
+//        array("pulsa" => false,
+//            "message" => $pulsa->message)
+//    );
+//}
 ?>

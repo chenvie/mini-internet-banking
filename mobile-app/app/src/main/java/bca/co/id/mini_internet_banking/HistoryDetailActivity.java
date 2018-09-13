@@ -81,6 +81,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
                 .url(url)
                 .build();
 
+        //send http GET data to server, and binding data to adapter
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -126,6 +127,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
             }
         });
 
+        //setting toolbar and navigation drawer
         Toolbar toolbar = findViewById(R.id.history_detail_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -236,6 +238,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

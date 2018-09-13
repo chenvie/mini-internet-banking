@@ -1,0 +1,5 @@
+
+07-09-2018 08:57:58 | MainActivity | [INFO] : Login success, sending username and password as parameter
+07-09-2018 08:57:58 | MainActivity | [INFO] : Username = Vievin14
+07-09-2018 08:57:58 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+07-09-2018 08:57:58 | MainActivity | [INFO] : Get Nasabah Data Success

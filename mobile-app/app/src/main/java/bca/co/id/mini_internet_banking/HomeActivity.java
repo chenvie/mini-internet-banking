@@ -98,6 +98,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //setting toolbar and navigation drawer
         Toolbar toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -208,6 +209,7 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
+    //send log to server
     private void writeLogs(){
         OkHttpClient client = new OkHttpClient();
         String url = HttpClientURL.urlWriteLog;

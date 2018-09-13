@@ -11,6 +11,11 @@ export class InfoRekService {
     private http: HttpClient,
     private login: LoginService) {}
 
+  /**
+   * Ambil mutasi dari API
+   *
+   * @returns {Promise} Hasil request dari API dalam bentuk Promise
+   */
   async getMutasi() {
     const url = 'http://localhost/api/transaksi/read-mutasi.php';
     const id = this.login.userData.id_nasabah;
@@ -19,7 +24,21 @@ export class InfoRekService {
     return <any>res;
   }
 
-  async getHistori(historiData: any) {
+  /**
+   * Ambil histori dari API
+   *
+   * @param {Object} historiData - Kumpulan data untuk mengambil histori
+   * @param {string} historiData.id - ID nasabah
+   * @param {string} historiData.dariTanggal - Tanggal awal
+   * @param {string} historiData.hinggaTanggal - Tanggal akhir
+   *
+   * @returns {Promise} Hasil request dari API dalam bentuk Promise
+   */
+  async getHistori(historiData: {
+    id: string,
+    dariTanggal: string,
+    hinggaTanggal: string
+  }) {
     const url = 'http://localhost/api/transaksi/read-history.php';
     const param1 = '?id=' + historiData.id;
     const param2 = '&tgl_awal=' + historiData.dariTanggal;

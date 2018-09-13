@@ -19,16 +19,20 @@ $nasabah = new Nasabah($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
+//
+//$nasabah->login($data->username,$data->password);
+//echo json_encode(
+//    array("login" => $nasabah->status));
 
 // set products property values
-$nasabah->username = $data->username;
-$nasabah->password = $data->password;
-
-
+//$nasabah->username = $data->uname;
+//$nasabah->password = $data->pwd;
+$nasabah->login($data->username,$data->password);
 // login
-if($nasabah->login()){
+if($nasabah->username != ""){
     echo json_encode(
-        array("login" => true
+        array("username" => $nasabah->username,
+            "login" => true
         )
     );
 }
@@ -37,7 +41,7 @@ if($nasabah->login()){
 else{
     echo json_encode(
         array("login" => false
-            )
+        )
     );
 }
 ?>

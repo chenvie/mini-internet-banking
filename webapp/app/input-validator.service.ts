@@ -23,6 +23,13 @@ export class InputValidatorService {
     private login: LoginService
   ) { }
 
+  /**
+   * Validasi input untuk password
+   *
+   * @param {string} pass - password
+   *
+   * @returns {boolean} Jika password valid return true, jika tidak false
+   */
   validatePassword(pass: string): boolean {
     if (this.isNull(pass)) {
       const log = 'input: username ' + this.login.userData.username + ' password null value';
@@ -49,6 +56,13 @@ export class InputValidatorService {
     return true;
   }
 
+  /**
+   * Validasi input untuk kode rahasia
+   *
+   * @param {string} kode - kode rahasia
+   *
+   * @returns {boolean} Jika kode rahasia valid return true, jika tidak false
+   */
   validateKode(kode: string): boolean {
     if (this.isNull(kode)) {
       const log = 'input: username ' + this.login.userData.username + ' secret code null value';
@@ -75,6 +89,13 @@ export class InputValidatorService {
     return true;
   }
 
+  /**
+   * Validasi input untuk umur registrasi
+   *
+   * @param {string} tanggal - tanggal
+   *
+   * @returns {boolean} Jika umur > 17 tahun return true, jika tidak false
+   */
   validateTanggal(tanggal: string): boolean {
     this.tanggal = tanggal;
     if (this.isNull(tanggal)) {
@@ -90,6 +111,14 @@ export class InputValidatorService {
     return true;
   }
 
+  /**
+   * Validasi input untuk range tanggal histori
+   *
+   * @param {string} dariTanggal - tanggal awal
+   * @param {string} hinggaTanggal - tanggal akhir
+   *
+   * @returns {boolean} Jika range tanggal valid return true, jika tidak false
+   */
   validateRangeTanggal(dariTanggal: string, hinggaTanggal: string): boolean {
     if (this.isNull(dariTanggal)) {
       const log = 'histori: username ' + this.login.userData.username + ' initial date null value';
@@ -119,6 +148,14 @@ export class InputValidatorService {
     return true;
   }
 
+  /**
+   * Validasi input login box
+   *
+   * @param {string} username - username
+   * @param {string} password - password
+   *
+   * @returns {boolean} Jika input valid return true, jika tidak false
+   */
   validateLogin(username: string, password: string): boolean {
     if (this.isNull(username)) {
       const log = 'login: username null value';
@@ -133,6 +170,14 @@ export class InputValidatorService {
     return true;
   }
 
+  /**
+   * Mendeteksi kombinasi tanggal lahir pada input
+   *
+   * @param {string} sequence - input yang akan dilihat
+   * @param {string} tanggal - tanggal yang akan dicocokkan
+   *
+   * @returns {boolean} Jika tidak terdapat kombinasi tanggal pada input return true, selain itu false
+   */
   validateTanggalPermutation(sequence: string, tanggal: string): boolean {
     if (sequence === moment(tanggal).format('DDMMYY')) { return false; }
     if (sequence === moment(tanggal).format('MMDDYY')) { return false; }
@@ -149,7 +194,27 @@ export class InputValidatorService {
     return true;
   }
 
-  validatePembelian(dataBeli: any): boolean {
+  /**
+   * Validasi input untuk data pembelian
+   *
+   * @param {Object} dataBeli - data pembelian
+   * @param {string} dataBeli.username
+   * @param {string} dataBeli.no_hp_tujuan
+   * @param {string} dataBeli.id_nasabah
+   * @param {string} dataBeli.provider
+   * @param {string} dataBeli.kode_rahasia
+   * @param {string} dataBeli.nominal
+   *
+   * @returns {boolean} Jika data valid return true, jika tidak false
+   */
+  validatePembelian(dataBeli: {
+    username: string,
+    no_hp_tujuan: string,
+    id_nasabah: string,
+    provider: string,
+    kode_rahasia: string,
+    nominal: string
+  }): boolean {
     if (this.isNull(dataBeli.no_hp_tujuan)) {
       const log = 'transaction: username ' + this.login.userData.username + ' target phone number null value';
       this.logger.error(log);
@@ -168,12 +233,39 @@ export class InputValidatorService {
     return true;
   }
 
-  async validateNorek(dataTrf: any) {
+  /**
+   * Validasi nomor rekening
+   *
+   * @param {Object} dataTrf - data transfer
+   * @param {string} dataTrf.username
+   * @param {string} dataTrf.kode_rahasia
+   * @param {string} dataTrf.no_rek_tujuan
+   * @param {string} dataTrf.id_nasabah
+   * @param {string} dataTrf.nominal
+   * @param {string} dataTrf.keterangan
+   *
+   * @returns {Promise} Hasil request dari API dalam bentuk Promise
+   */
+  async validateNorek(dataTrf: {
+    username: string,
+    kode_rahasia: string,
+    no_rek_tujuan: string,
+    id_nasabah: string,
+    nominal: string,
+    keterangan: string
+  }) {
     const url = 'http://localhost/api/transfer/cek-no-rek.php';
     const res = await this.http.post(url, dataTrf, httpOptions).toPromise();
     return <any>res;
   }
 
+  /**
+   * Validasi input kosong
+   *
+   * @param val input yang akan divalidasi
+   *
+   * @returns {boolean} Jika null/undefined/' ' return true, jika tidak false
+   */
   isNull(val: string): boolean {
     if (val === null) { return true; }
     if (val === undefined) { return true; }
