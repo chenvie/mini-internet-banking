@@ -130,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
         JSONObject json = new JSONObject();
         try {
-            json.put("username", username);
-            json.put("password", hashPassword);
+            json.put("uname", username);
+            json.put("pwd", hashPassword);
         } catch(JSONException e){
             // TODO Auto-generated catch block
             Log.e(TAG, "Failed to create JSONObject for post param: " + e.getMessage());

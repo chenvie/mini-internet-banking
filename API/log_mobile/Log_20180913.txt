@@ -1,0 +1,21 @@
+
+13-09-2018 08:40:56 | MainActivity | [ERROR] : Get Nasabah data from session
+13-09-2018 08:41:06 | HomeActivity | [INFO] :  Logout, remove session from app
+13-09-2018 08:41:14 | MainActivity | [ERROR] : Json parsing error: Value <br of type java.lang.String cannot be converted to JSONObject
+13-09-2018 08:51:51 | MainActivity | [INFO] : Login success, sending username and password as parameter
+13-09-2018 08:51:51 | MainActivity | [INFO] : Username = Vievin14
+13-09-2018 08:51:51 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+13-09-2018 08:51:51 | MainActivity | [INFO] : Get nasabah data on progress, sending username as parameter
+13-09-2018 08:51:51 | MainActivity | [INFO] : Username = Vievin14
+13-09-2018 08:52:42 | MainActivity | [INFO] : Login success, sending username and password as parameter
+13-09-2018 08:52:42 | MainActivity | [INFO] : Username = Vievin14
+13-09-2018 08:52:42 | MainActivity | [INFO] : Password = ff68179dddd38692293d04c091d017ff
+13-09-2018 08:52:42 | MainActivity | [INFO] : Get Nasabah Data Success
+2018-09-13 | MutationActivity | [ERROR] : Json parsing error: No value for tanggal
+2018-09-13 | MutationActivity | [ERROR] : Json parsing error: No value for tanggal
+13-09-2018 08:56:12 | HistoryDetailActivity | [INFO] : Getting history data success, sending nasabah id, date from and date to as parameter
+13-09-2018 08:56:12 | HistoryDetailActivity | [INFO] : Nasabah id = 16
+13-09-2018 08:56:12 | HistoryDetailActivity | [INFO] : Date from = Thu, 16 Aug 2018
+13-09-2018 08:56:12 | HistoryDetailActivity | [INFO] : Date to = Thu, 13 Sep 2018
+13-09-2018 08:56:27 | SettingActivity | [ERROR] : Json parsing error
+13-09-2018 08:58:05 | SettingActivity | [ERROR] : Update ocde failed with message: null
