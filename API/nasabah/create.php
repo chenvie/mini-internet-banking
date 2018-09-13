@@ -11,6 +11,7 @@ include_once '../config/database.php';
 
 // instantiate products object
 include_once '../objects/nasabah.php';
+include_once '../monolog.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -30,12 +31,23 @@ $data = json_decode(file_get_contents("php://input"));
 
 $nasabah->create($data->nama_lengkap,$data->email,$data->password,$data->no_ktp,$nasabah->tgl_lahir,$data->alamat,$data->kode_rahasia);
 //$nasabah->create();
+
+        $log->info("nama lengkap :" . $data->nama_lengkap);
+        $log->info("email :" . $data->email);
+        $log->info("password :" . $data->password);
+        $log->info("nomer ktp :" . $data->no_ktp);
+        $log->info("tanggal lahir :" . date('Y-m-d',strtotime($data->tgl_lahir)));
+        $log->info("alamat :" . $data->alamat);
+        $log->info("kode rahasia :" . $data->kode_rahasia);
+        $log->info("created :" . date('Y-m-d H:i:s'));
+
 if($nasabah->status == "Berhasil"){
     echo json_encode(
         array("status" => $nasabah->status,
             "message" => $nasabah->message,
             "username" => $nasabah->username)
     );
+    $log->info('User registered',['username' => $nasabah->username]);
 }
 
 // if unable to create the nasabah, tell the user
@@ -44,6 +56,7 @@ else{
         array("status" => $nasabah->status,
             "message" => $nasabah->message)
     );
+    $log->error('User failed registered', ['username' => $nasabah->username]);
 }
 
 //if($nasabah->contains(date('Y-m-d',strtotime($data->tgl_lahir)),$data->password) or
