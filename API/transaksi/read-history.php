@@ -7,6 +7,8 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once '../config/database.php';
 include_once '../objects/transaksi.php';
 
+include_once '../monolog.php';
+
 // instantiate database and products object
 $database = new Database();
 $db = $database->getConnection();
@@ -58,12 +60,14 @@ if($num>0){
     }
 
     echo json_encode($history_arr);
+    $log->info('Cek History Transaksi',['id nasabah' => $transaksi->id_nasabah]);
 }
 
 else{
     echo json_encode(
-        array("message" => "Belum ada mutasi dalam 7 hari terakhir.")
+        array("message" => "Belum ada history transaksi pada tanggal yang dipilih.")
     );
+    $log->info('Tidak ada history transaksi',['id nasabah' => $transaksi->id_nasabah]);
 }
 //echo json_encode(
 //  array("tgl1" => $transaksi->tgl_awal,
