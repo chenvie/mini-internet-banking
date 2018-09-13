@@ -17,14 +17,14 @@ $db = $database->getConnection();
 $nasabah = new Nasabah($db);
 
 // set ID property of product to be edited
-$nasabah->id = isset($_GET['unm']) ? $_GET['unm'] : die();
+$nasabah->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // read the details of product to be edited
 $nasabah->readOne();
 
 // create array
 $nasabah_arr = array(
-    "id_nasabah" => $nasabah->id_nasabah,
+    "id" => $nasabah->id_nasabah,
     "username" => $nasabah->username,
     "password" => $nasabah->password,
     "nama_lengkap" => $nasabah->nama_lengkap,

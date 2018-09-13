@@ -25,9 +25,9 @@ $transfer->no_rek_tujuan = $data->no_rek_tujuan;
 $transfer->id_nasabah = $data->id_nasabah;
 $transfer->nominal = $data->nominal;
 $transfer->keterangan = $data->keterangan;
-$transfer->cekNoRek();
+
 // Cek nomor rekening
-if($transfer->status == "Berhasil"){
+if($transfer->cekNoRek()){
     echo json_encode(
         array("check" => "True",
             "message" => $transfer->no_rek_tujuan

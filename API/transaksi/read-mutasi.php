@@ -7,8 +7,6 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once '../config/database.php';
 include_once '../objects/transaksi.php';
 
-include_once '../monolog.php';
-
 // instantiate database and products object
 $database = new Database();
 $db = $database->getConnection();
@@ -18,8 +16,7 @@ $transaksi = new Transaksi($db);
 
 //mendapat
 $transaksi->id_nasabah = isset($_GET['id']) ? $_GET['id'] : die();
-//$transaksi->tgl = isset($_GET['tgl']) ? $_GET['tgl'] : die();
-$transaksi->tgl = date('Y-m-d');
+$transaksi->tgl = isset($_GET['tgl']) ? $_GET['tgl'] : die();
 
 // query products
 $stmt = $transaksi->readMutasi();
@@ -62,14 +59,12 @@ if($num>0){
     }
 
     echo json_encode($mutasi_arr);
-    $log->info('Mutasi rekening', ['id nasabah' => $transaksi->id_nasabah]);
 }
 
 else{
     echo json_encode(
         array("message" => "Belum ada mutasi dalam 7 hari terakhir.")
     );
-    $log->info('Belum ada mutasi', ['id nasabah' => $transaksi->id_nasabah]);
 }
 //echo json_encode(
 //  array("tgl" => $transaksi->tgl,
