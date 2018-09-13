@@ -489,8 +489,8 @@ CREATE TABLE `nasabah` (
 --
 
 INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `no_rek`, `jml_saldo`, `kode_cabang`, `created`) VALUES
-(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', 'reireinald123', '3323031211960005', '2018-08-06', 'temanggung', '222222', '2141516', 2000000, 'asd1', '2018-09-10 07:08:15'),
-(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boni123456', '123513163', '2018-02-05', 'magelang', '123456', '2491204', 2650000, 'asd1', '2018-09-13 03:02:27'),
+(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', 'reinaldariel123', '3323031211960005', '2018-08-06', 'temanggung', '123124', '2141516', 2000000, 'asd1', '2018-09-13 02:29:47'),
+(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boniboni123', '123513163', '2018-02-05', 'magelang', '123124', '2491204', 2650000, 'asd1', '2018-09-13 02:37:22'),
 (3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
 (4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
 (6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4800000, 'asd1', '2018-09-12 08:50:08'),
