@@ -27,7 +27,7 @@ $data = json_decode(file_get_contents("php://input"));
 // set products property values
 //$nasabah->username = $data->uname;
 //$nasabah->password = $data->pwd;
-$nasabah->login($data->uname,$data->pwd);
+$nasabah->login($data->username,$data->password);
 // login
 if($nasabah->username != ""){
     echo json_encode(

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2018 at 11:56 AM
+-- Generation Time: Sep 13, 2018 at 04:41 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -384,7 +384,7 @@ SET kode_transfer=kodeT, rek_transfer=no_rek_tujuan, nominal=nmnl, keterangan=ke
 END IF;    
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahKodeRahasia` (IN `id_nsb` INT(10), IN `krhLama` VARCHAR(6), IN `krhBaru1` VARCHAR(6), IN `krhBaru2` VARCHAR(6), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahKodeRahasia` (IN `id_nsb` INT(10), IN `krhLama` VARCHAR(6), IN `krhBaru1` VARCHAR(7), IN `krhBaru2` VARCHAR(7), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
 BEGIN
 DECLARE krh_temp varchar(20);
 SELECT kode_rahasia INTO krh_temp
@@ -483,7 +483,7 @@ CREATE TABLE `nasabah` (
   `no_ktp` varchar(20) NOT NULL,
   `tgl_lahir` date NOT NULL,
   `alamat` varchar(100) NOT NULL,
-  `kode_rahasia` varchar(6) NOT NULL,
+  `kode_rahasia` varchar(100) NOT NULL,
   `no_rek` varchar(16) NOT NULL,
   `jml_saldo` int(11) NOT NULL DEFAULT '450000',
   `kode_cabang` varchar(10) NOT NULL,
@@ -495,8 +495,8 @@ CREATE TABLE `nasabah` (
 --
 
 INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `no_rek`, `jml_saldo`, `kode_cabang`, `created`) VALUES
-(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', 'reireinald123', '3323031211960005', '2018-08-06', 'temanggung', '222222', '2141516', 2000000, 'asd1', '2018-09-10 07:08:15'),
-(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boniboni123', '123513163', '2018-02-05', 'magelang', '555555', '2491204', 2650000, 'asd1', '2018-09-12 08:50:08'),
+(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', 'reinaldariel123', '3323031211960005', '2018-08-06', 'temanggung', '123124', '2141516', 2000000, 'asd1', '2018-09-13 02:29:47'),
+(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boniboni123', '123513163', '2018-02-05', 'magelang', '123124', '2491204', 2650000, 'asd1', '2018-09-13 02:37:22'),
 (3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
 (4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
 (6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4800000, 'asd1', '2018-09-12 08:50:08'),
@@ -518,7 +518,8 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (23, 'dim@gmail.com', 'Adimas21', 'Adimas Firman', '19993asad1', '12399926', '1992-06-07', 'umy sana', '999999', '037021', 450000, 'asd1', '2018-09-07 10:35:05'),
 (24, 'iam@gmail.com', 'Priambodo22', 'Priambodo Pangarsa', '29993asad1', '1239776', '1993-08-10', 'Gejayan', '999999', '037022', 450000, 'asd1', '2018-09-07 10:37:13'),
 (25, 'uzan@gmail.com', 'Fauzan23', 'Fauzan Set', '2999311dac1', '15151', '1994-08-10', 'Kronggahan', '999999', '037023', 450000, 'asd1', '2018-09-07 10:40:11'),
-(26, 'eddy@gmail.com', 'Eddy24', 'Eddy villager', '2992141', '15124551', '1995-09-10', 'Jombor', '999999', '037024', 450000, 'asd1', '2018-09-10 07:22:47');
+(26, 'eddy@gmail.com', 'Eddy24', 'Eddy villager', '2992141', '15124551', '1995-09-10', 'Jombor', '999999', '037024', 450000, 'asd1', '2018-09-10 07:22:47'),
+(27, 'aloy@gmail.com', 'Aloy25', 'Aloy Gombong', '12345678', '15124551', '0000-00-00', 'Jakal', '999999', '037025', 450000, 'asd1', '2018-09-13 02:36:22');
 
 -- --------------------------------------------------------
 
@@ -696,7 +697,7 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- Constraints for dumped tables
 --
