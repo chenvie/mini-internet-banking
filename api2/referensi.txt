@@ -21,3 +21,7 @@ http://stevenhorvatin.com/2016/09/30/how-to-call-a-stored-procedure-with-spring-
 
 
 Yang aku belum cari, get data dari json input
+udh ada di referensi atas ternyata di bikin api, di create blog post itu
+
+multiple path, yg punyaku udh kusesuain bisa dicek di history controller
+https://stackoverflow.com/questions/19803731/spring-mvc-pathvariable 

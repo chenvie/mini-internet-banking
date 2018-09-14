@@ -1,18 +1,18 @@
 Nasabah :
-- create (post)
-- login (post)
-- read (get) (v)
-- read-one (get) (v)
-- update_kode_rahasia (put)
-- update_password (put)
+- create (post) (reinald)
+- login (post) (boni)
+- read (get) (v) (reinald)
+- read-one (get) (v) (reinald)
+- update_kode_rahasia (put) (vievin)
+- update_password (put) (vievin)
 
 Pulsa :
-- create (post)
+- create (post) (dariel)
 
 Transfer :
-- cek-no-rek (post)
-- create (Post)
+- cek-no-rek (post) (yosef)
+- create (Post) (yosef)
 
 Transaksi :
-- read-history (get) (otw)
-- read-mutasi (get) (v)
+- read-history (get) (v) (reinald)
+- read-mutasi (get) (v) (reinald)

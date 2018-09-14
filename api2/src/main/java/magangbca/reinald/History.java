@@ -8,30 +8,25 @@ public class History {
     @Id
     private String kode_transaksi;
 
-    private String no_rek;
     private String tgl_trans;
     private String tujuan;
-    private String jenis;
     private String keterangan;
     private BigInteger nominal;
 
+    private String status;
+
     public History() {  }
-    public History(String kd, String nr, String tj, String ttr, String jns, String ket, BigInteger nom) {
+    public History(String kd, String tj, String ttr, String ket, BigInteger nom, String stts) {
         this.setKode_transaksi(kd);
-        this.setNo_rek(nr);
         this.setTujuan(tj);
         this.setTgl_trans(ttr);
-        this.setJenis(jns);
         this.setKeterangan(ket);
         this.setNominal(nom);
+        this.setStatus(stts);
     }
 
     public String getKode_transaksi() {
         return kode_transaksi;
-    }
-
-    public String getNo_rek() {
-        return no_rek;
     }
 
     public String getTujuan() {
@@ -42,10 +37,6 @@ public class History {
         return tgl_trans;
     }
 
-    public String getJenis() {
-        return jenis;
-    }
-
     public String getKeterangan() {
         return keterangan;
     }
@@ -54,12 +45,12 @@ public class History {
         return nominal;
     }
 
-    public void setKode_transaksi(String kode_transaksi) {
-        this.kode_transaksi = kode_transaksi;
+    public String getStatus() {
+        return status;
     }
 
-    public void setNo_rek(String no_rek) {
-        this.no_rek = no_rek;
+    public void setKode_transaksi(String kode_transaksi) {
+        this.kode_transaksi = kode_transaksi;
     }
 
     public void setTgl_trans(String tgl_trans) {
@@ -70,10 +61,6 @@ public class History {
         this.tujuan = tujuan;
     }
 
-    public void setJenis(String jenis) {
-        this.jenis = jenis;
-    }
-
     public void setKeterangan(String keterangan) {
         this.keterangan = keterangan;
     }
@@ -82,17 +69,19 @@ public class History {
         this.nominal = nominal;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
         return "History{" +
                 "kode_transaksi=" + kode_transaksi +
-                ", no_rek='" + no_rek + '\'' +
                 ", tgl_trans='" + tgl_trans + '\'' +
                 ", tujuan='" + tujuan + '\'' +
-                ", jenis='" + jenis + '\'' +
                 ", keterangan='" + keterangan + '\'' +
                 ", nominal='" + nominal + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
