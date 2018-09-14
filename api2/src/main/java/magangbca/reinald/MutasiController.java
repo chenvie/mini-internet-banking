@@ -2,8 +2,12 @@ package magangbca.reinald;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+//import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -12,22 +16,12 @@ public class MutasiController {
     @Autowired
     MutasiRepository mutasiRespository;
 
-    @GetMapping("/mutasi")
-    public List<Mutasi> index(){
-
-      //  Date date1 = new Date(2016,8,13);
-       // Date date2 = new Date(2019,8,20);
-
-//        String tgl1 = "2018-08-13";
-//        Date asd = "2018-08-13";
-//        String tgl2 = "2018-08-20";
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//        Date de1 = formatter.format(tgl1);
-//        tgl2 = formatter.format(tgl2);
-
-//        return mutasiRespository.findAllByTujuanEqualsAndTgl_transIsBeforeAndTgl_transIsAfter(2, date1,date2);
-//        return mutasiRespository.getSomeMutasi(2, date1,date2);
-        return mutasiRespository.getSomeMutasi();
+    @GetMapping("/mutasi/{id}")
+    public List<Mutasi> show(@PathVariable Integer id){
+        ZoneId z = ZoneId.of("Asia/Jakarta");
+        LocalDate dt1 = LocalDate.now(z).plusDays(1);
+        LocalDate dt2 = LocalDate.now(z).minusDays(7);
+        return mutasiRespository.getSomeMutasi(id,dt1,dt2);
     }
 
 }

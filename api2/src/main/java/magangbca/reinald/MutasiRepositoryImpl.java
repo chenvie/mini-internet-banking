@@ -3,30 +3,32 @@ package magangbca.reinald;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 import java.math.BigInteger;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Repository
 public class MutasiRepositoryImpl implements MutasiRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public List<Mutasi> getSomeMutasi(){
-//        public List<Mutasi> getSomeMutasi(Integer firstParameter, Date secondParameter, Date thirdParameter){
+        public List<Mutasi> getSomeMutasi(Integer firstParameter, LocalDate secondParameter, LocalDate thirdParameter){
 
-            StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("getMutasi2");
-//                    .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN).
-//                    registerStoredProcedureParameter(2, Date.class, ParameterMode.IN).
-//                    registerStoredProcedureParameter(3, Date.class, ParameterMode.IN);
+        Date date1 = Date.valueOf(secondParameter);
+        Date date2 = Date.valueOf(thirdParameter);
+           StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("getMutasi")
+                    .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN).
+                    registerStoredProcedureParameter(2, String.class, ParameterMode.IN).
+                    registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
 
-
-//        storedProcedure.setParameter(1, firstParameter)
-//                    .setParameter(2, secondParameter)
-//                    .setParameter(3, thirdParameter);
+        storedProcedure.setParameter(1, firstParameter)
+                    .setParameter(2, date2.toString())
+                    .setParameter(3, date1.toString());
 
             storedProcedure.execute();
             // Call the stored procedure.
