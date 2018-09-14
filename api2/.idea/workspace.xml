@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87f7be2e-c5cc-4f3e-aea0-e820fcfa1c9e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/progress.txt" beforeDir="false" afterPath="$PROJECT_DIR$/progress.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/History.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/History.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/magangbca/reinald/History.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/MutasiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/magangbca/reinald/MutasiController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/MutasiRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/magangbca/reinald/MutasiRepositoryImpl.class" afterDir="false" />
-    </list>
+    <list default="true" id="87f7be2e-c5cc-4f3e-aea0-e820fcfa1c9e" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,7 +14,7 @@
     <session id="-1460048767">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.43" value="1" />
           <entry key="project.open.time.71" value="1" />
@@ -206,7 +196,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536921663966" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536921885313" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Facets" />
@@ -278,12 +268,12 @@
       <workItem from="1536821819171" duration="6947000" />
       <workItem from="1536830866311" duration="3063000" />
       <workItem from="1536892155708" duration="9165000" />
-      <workItem from="1536910978137" duration="7750000" />
+      <workItem from="1536910978137" duration="8300000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26925000" />
+    <option name="totallyTimeSpent" value="27475000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -298,7 +288,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32459018" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32459018" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
