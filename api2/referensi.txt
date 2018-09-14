@@ -1,0 +1,6 @@
+Part 1
+https://medium.com/@salisuwy/building-a-spring-boot-rest-api-a-php-developers-view-part-i-6add2e794646
+Part 2
+https://medium.com/@salisuwy/building-a-spring-boot-rest-api-part-ii-7ff1e4384b0b
+Part 3
+https://medium.com/@salisuwy/building-a-spring-boot-rest-api-part-iii-integrating-mysql-database-and-jpa-81391404046a
