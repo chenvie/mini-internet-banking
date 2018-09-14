@@ -115,11 +115,14 @@ public class HistoryDetailActivity extends AppCompatActivity {
                         listTrans.add(new Transaction(tgl_trans, tujuan, ket, Float.parseFloat(nominal), status));
                     }
                     historyAdapter.notifyDataSetChanged();
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting history data success, sending nasabah id, date from and date to as parameter");
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Date from = " + from);
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Date to = " + to);
-                    Log.i(TAG, "Getting history data success, sending nasabah id, date from and date to as parameter");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting history data success, [" +
+                                "Nasabah id = " + Nasabah.id +
+                                ", Date from = " + from +
+                                ", Date to = " + to + "]");
+                    Log.i(TAG, "Getting history data success, [" +
+                                "Nasabah id = " + Nasabah.id +
+                                ", Date from = " + from +
+                                ", Date to = " + to + "]");
                 } catch (JSONException e) {
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                     Log.e(TAG, "Json parsing error: " + e.getMessage());

@@ -226,12 +226,16 @@ public class SettingActivity extends AppCompatActivity {
                                     final String result = jsonObject.getString("message");
 
                                     if (result.equalsIgnoreCase("update password berhasil")) {
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Update password success, sending oPass, nPass, rPass, and nasabah id as parameter");
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Old Password (oPass) = " + finalHashOPassword);
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "New Password (nPass) = " + finalHashNPassword);
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Retype Password (rPass = " + finalHashRPassword);
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
-                                        Log.i(TAG, "Update password success, sending oPass, nPass, rPass, and nasabah id as parameter");
+                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Update password success, [" +
+                                                "Password Lama = " + finalHashOPassword +
+                                                ", Password Baru = " + finalHashNPassword +
+                                                ", Retype Password = " + finalHashRPassword +
+                                                ", Nasabah id = " + Nasabah.id + "]");
+                                       Log.i(TAG, "Update password success, [" +
+                                               "Password Lama = " + finalHashOPassword +
+                                               ", Password Baru = " + finalHashNPassword +
+                                               ", Retype Password = " + finalHashRPassword +
+                                               ", Nasabah id = " + Nasabah.id + "]");
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -401,12 +405,18 @@ public class SettingActivity extends AppCompatActivity {
                                     final String result = jsonObject.getString("message");
 
                                     if (result.equalsIgnoreCase("update kode rahasia berhasil")) {
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Update secret code sucess, sending oCode, nCode, rCode, and nasabah id as parameter");
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Old Secret Code (oCode) = " + finalHashOCode);
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "New Secret Code (nCode) = " + finalHashNCode);
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Retype Secret Code (rCode) = " + finalHashRCode);
+                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Update secret code success, [" +
+                                                "Kode Rahasia Lama = " + finalHashOCode +
+                                                ", Kode Rahasia Baru = " + finalHashNCode +
+                                                ", Retype Kode Rahasia = " + finalHashRCode +
+                                                ", Nasabah id = " + Nasabah.id);
 
-                                        Log.i(TAG, "Update secret code success, sending oCode, nCode, rCode, and nasabah id as parameter");
+                                        Log.i(TAG, "Update secret code success, [" +
+                                                "Kode Rahasia Lama = " + finalHashOCode +
+                                                ", Kode Rahasia Baru = " + finalHashNCode +
+                                                ", Retype Kode Rahasia = " + finalHashRCode +
+                                                ", Nasabah id = " + Nasabah.id);
+
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {

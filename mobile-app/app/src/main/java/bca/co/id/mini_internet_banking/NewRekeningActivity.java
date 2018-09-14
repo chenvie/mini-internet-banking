@@ -219,15 +219,22 @@ public class NewRekeningActivity extends AppCompatActivity {
                                 //Nasabah.birthday = birthday;
                                 //Nasabah.address = address;
                                 //Nasabah.code = finalHashCode;
-                                Log.i(TAG, "Registering nasabah suceess, sending name, email, password, ktpNum, birthday, address, secret code as parameter");
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Registering nasabah sucess, sending name, email, password, ktpNum, birthday, address, secret code as parameter");
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Name = " + name);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Email = " + email);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Password = " + finalHashPassword);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "KtpNum = " + ktp);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Birthday = " + birthday);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Address = " + address);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Secret Code = " + finalHashCode);
+                                Log.i(TAG, "Registering nasabah suceess, [" +
+                                        "Name = " + name +
+                                        ", Email = " + email +
+                                        ", Password = " + finalHashPassword +
+                                        ", No KTP = " + ktp +
+                                        ", Tangggal Lahir = " + birthday +
+                                        ", Alamat = " + address +
+                                        ", Kode Rahasia = " + finalHashCode + "]");
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Registering nasabah success, [" +
+                                        "Name = " + name +
+                                        ", Email = " + email +
+                                        ", Password = " + finalHashPassword +
+                                        ", No KTP = " + ktp +
+                                        ", Tangggal Lahir = " + birthday +
+                                        ", Alamat = " + address +
+                                        ", Kode Rahasia = " + finalHashCode + "]");
 
                                 //call get nasabah data
                                 if (getNasabahData()){

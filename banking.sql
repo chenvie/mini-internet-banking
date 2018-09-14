@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 13, 2018 at 05:08 AM
+-- Generation Time: Sep 14, 2018 at 05:13 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -144,7 +144,7 @@ select DISTINCT t.kode_transaksi,n.no_rek,t.tgl_trans,
                     ORDER BY `t`.`tgl_trans`  ASC;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (INOUT `uname` VARCHAR(20), IN `pwd` VARCHAR(20), OUT `stts` BOOLEAN)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (INOUT `uname` VARCHAR(20), IN `pwd` VARCHAR(100), OUT `stts` BOOLEAN)  NO SQL
 BEGIN
 DECLARE jml int;
 /*DECLARE uname_temp,pwd_temp varchar(20);
@@ -236,10 +236,10 @@ SET out_msg = "Penambahan nasabah berhasil";
 SELECT uname,out_code,out_msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiPulsa` (IN `id_nsb` INT(10), IN `no_hp_tujuan` VARCHAR(20), IN `nmnl` INT(50), IN `prvdr` VARCHAR(10), IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiPulsa` (IN `id_nsb` INT(10), IN `no_hp_tujuan` VARCHAR(20), IN `nmnl` INT(50), IN `prvdr` VARCHAR(10), IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(100), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
 BEGIN
 DECLARE jml_saldo_out int;
-DECLARE kr_temp varchar(6);
+DECLARE kr_temp varchar(100);
 DECLARE kodeT varchar(12) DEFAULT "2";
 DECLARE jml int;
 
@@ -303,10 +303,10 @@ SET kode_pembelian=kodeT, no_hp=no_hp_tujuan, provider=prvdr, nominal=nmnl;
 END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `id_nsb` INT(10), IN `no_rek_tujuan` VARCHAR(40), IN `nmnl` INT(50), IN `ket` TEXT, IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `id_nsb` INT(10), IN `no_rek_tujuan` VARCHAR(40), IN `nmnl` INT(50), IN `ket` TEXT, IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(100), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
 BEGIN
 DECLARE jml_saldo_out, jml_saldo_in int;
-DECLARE kr_temp varchar(6);
+DECLARE kr_temp varchar(100);
 DECLARE kodeT varchar(12) DEFAULT "1";
 DECLARE jml int;
 
@@ -489,8 +489,8 @@ CREATE TABLE `nasabah` (
 --
 
 INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `no_rek`, `jml_saldo`, `kode_cabang`, `created`) VALUES
-(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', 'reinaldariel123', '3323031211960005', '2018-08-06', 'temanggung', '123124', '2141516', 2000000, 'asd1', '2018-09-13 02:29:47'),
-(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boniboni123', '123513163', '2018-02-05', 'magelang', '123124', '2491204', 2650000, 'asd1', '2018-09-13 02:37:22'),
+(1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', 'reireinald123', '3323031211960005', '2018-08-06', 'temanggung', '222222', '2141516', 2000000, 'asd1', '2018-09-10 07:08:15'),
+(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boniboni123', '123513163', '2018-02-05', 'magelang', 'boni123', '2491204', 2650000, 'asd1', '2018-09-13 06:29:24'),
 (3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
 (4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
 (6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4800000, 'asd1', '2018-09-12 08:50:08'),
@@ -503,7 +503,7 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (13, 'ivan@gmail.com', 'ivan12', 'ivan', 'qwe', '123', '2018-08-03', 'klitren', 'qwe', '037012', 450000, 'asd1', '2018-08-15 05:52:22'),
 (14, 'kf@gmail.com', 'Kornelius13', 'Kornelius Fredy', 'qwerty123', '3323051232960007', '1996-07-20', 'bonbin sana lagi', '123456', '037013', 350000, 'asd1', '2018-09-06 04:55:56'),
 (15, 'asdasd@gmail.com', 'vincent14', 'vincent fernando', '123321', '123333333', '1996-05-05', 'nologaten', '654321', '037014', 550000, 'asd1', '2018-09-06 04:55:56'),
-(16, 'mega@gmail.com', 'Mega15', 'Mega Insan', '123321', '1233332343', '1997-06-07', 'jakal', '111111', '037015', 300000, 'asd1', '2018-09-13 03:04:03'),
+(16, 'mega@gmail.com', 'Mega15', 'Mega Insan', '123321', '1233332343', '1997-06-07', 'jakal', '111111', '037015', 200000, 'asd1', '2018-09-13 03:25:35'),
 (18, 'deni@gmail.com', 'Deni16', 'Deni Wijaya', '1233231sad1', '1232226', '1998-06-07', 'jakal', '111111', '037016', 450000, 'asd1', '2018-09-07 10:09:41'),
 (19, 'rafi@gmail.com', 'Rafi17', 'Rafi Dwi', '123asad1', '123222926', '1999-06-07', 'jakal', '111111', '037017', 450000, 'asd1', '2018-09-07 10:12:40'),
 (20, '', '18', '', '', '', '1970-01-01', '', '', '037018', 450000, 'asd1', '2018-09-07 10:15:55'),
@@ -513,7 +513,7 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (24, 'iam@gmail.com', 'Priambodo22', 'Priambodo Pangarsa', '29993asad1', '1239776', '1993-08-10', 'Gejayan', '999999', '037022', 450000, 'asd1', '2018-09-07 10:37:13'),
 (25, 'uzan@gmail.com', 'Fauzan23', 'Fauzan Set', '2999311dac1', '15151', '1994-08-10', 'Kronggahan', '999999', '037023', 450000, 'asd1', '2018-09-07 10:40:11'),
 (26, 'eddy@gmail.com', 'Eddy24', 'Eddy villager', '2992141', '15124551', '1995-09-10', 'Jombor', '999999', '037024', 450000, 'asd1', '2018-09-10 07:22:47'),
-(27, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin26', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037026', 400000, 'asd1', '2018-09-13 03:05:25'),
+(27, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin26', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037026', 350000, 'asd1', '2018-09-14 03:12:52'),
 (28, 'tifanny@gmail.com', 'Tifanny27', 'Tifanny', 'tifanny01', '3372024181010004', '0000-00-00', 'Surakarta', 'chen01', '037027', 450000, 'asd1', '2018-09-13 03:05:42');
 
 -- --------------------------------------------------------
@@ -543,7 +543,9 @@ INSERT INTO `pulsa` (`kode_pembelian`, `no_hp`, `provider`, `nominal`) VALUES
 ('20028', '081212515', 'Indosat', 50000),
 ('20029', '081212515', 'Indosat', 50000),
 ('20031', '0821314251', 'Indosat', 50000),
-('20037', '085201258593', 'Telkomsel', 50000);
+('20037', '085201258593', 'Telkomsel', 50000),
+('20040', '085229175677', 'Telkomsel', 100000),
+('20041', '087835283217', 'XL', 50000);
 
 -- --------------------------------------------------------
 
@@ -602,7 +604,9 @@ INSERT INTO `transaksi` (`kode_transaksi`, `id_nasabah`, `tgl_trans`, `status`, 
 ('20029', 7, '2018-09-10 08:28:24', 'Berhasil', 'Berhasil Membeli Pulsa'),
 ('20030', 7, '2018-09-10 08:28:50', 'Gagal', 'Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda'),
 ('20031', 7, '2018-09-10 08:38:56', 'Berhasil', 'Berhasil Membeli Pulsa'),
-('20037', 16, '2018-09-13 03:03:26', 'Berhasil', 'Berhasil Membeli Pulsa');
+('20037', 16, '2018-09-13 03:03:26', 'Berhasil', 'Berhasil Membeli Pulsa'),
+('20040', 16, '2018-09-13 03:25:35', 'Berhasil', 'Berhasil Membeli Pulsa'),
+('20041', 27, '2018-09-14 03:12:52', 'Berhasil', 'Berhasil Membeli Pulsa');
 
 -- --------------------------------------------------------
 
@@ -700,7 +704,7 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables

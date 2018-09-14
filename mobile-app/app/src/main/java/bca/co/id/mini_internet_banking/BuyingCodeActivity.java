@@ -36,6 +36,7 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -53,6 +54,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
     private String TAG = BuyingCodeActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    private String id, username, name, password, code, birthday, rekeningNum, saldo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,7 +128,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
     //send data to server using http POST and checking if saldo is enough
     private void submitBuying(){
         String code = txtCodeBuying.getText().toString();
-        final float temp = Nasabah.saldo - Float.parseFloat(nominal);
+        //final float temp = Nasabah.saldo - Float.parseFloat(nominal);
         final Intent intent = new Intent(this, BuyingStatusActivity.class);
 
         String hashCode = "";
@@ -149,7 +151,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
 
         if(hashCode.equals(Nasabah.code)) {
             if (!noHp.equals("")) {
-                if (temp > 0) {
+                //if (temp > 0) {
                     OkHttpClient client = new OkHttpClient();
                     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                     String url = HttpClientURL.urlBuying;
@@ -199,33 +201,40 @@ public class BuyingCodeActivity extends AppCompatActivity {
                                 final String message = jsonObject.getString("message");
 
                                 if (status.equalsIgnoreCase("true")){
-                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Buying Success, sending uname, noHp, nominal, provider, nasabah id, and secret code as parameter");
-                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Uname = " + Nasabah.username);
-                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "NoHp = " + noHp);
-                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nominal = " + nominal);
-                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Provider = " + provider);
-                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
-                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Secret code = " + finalHashCode);
-                                    Log.i(TAG, "Buying Success, sending uname, noHp, nominal, provider, nasabah id, and secret code as parameter");
+                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Buying Success, " +
+                                            "[Username = " + Nasabah.username +
+                                            ", NoHp = " + noHp +
+                                            ", Nominal = " + nominal +
+                                            ", Provider =  " + provider +
+                                            ", Nasabah id = " + Nasabah.id +
+                                            ", Kode Rahasia = " + finalHashCode + "]");
+                                    Log.i(TAG, "Buying Success, " +
+                                           "[Username = " + Nasabah.username +
+                                           ", NoHp = " + noHp + ", " +
+                                           "Nominal = " + nominal +
+                                           ", Provider =  " + provider +
+                                           ", Nasabah id = " + Nasabah.id +
+                                           ", Kode Rahasia = " + finalHashCode + "]");
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-                                        }
+                                       }
                                     });
                                     intent.putExtra("noHp", noHp);
                                     intent.putExtra("nominal", nominal);
                                     intent.putExtra("provider", provider);
                                     intent.putExtra("status", true);
 
-                                    Nasabah.saldo = temp;
+                                    /*Nasabah.saldo = temp;
                                     SharedPreferences.Editor spEdit = sp.edit();
                                     spEdit.putFloat("saldo", Nasabah.saldo);
-                                    spEdit.commit();
-
-                                    writeLogs();
-                                    startActivity(intent);
-                                    finish();
+                                    spEdit.commit();*/
+                                    if (getNasabahData()){
+                                        writeLogs();
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 } else{
                                     Log.e(TAG, "Buying Failed with message: " + message);
                                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Buying Failed with message: " + message);
@@ -242,7 +251,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                             }
                         }
                     });
-                } else {
+                /*} else {
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Balance not enough");
                     Log.e(TAG, "Balance not enough");
                     intent.putExtra("noHp", noHp);
@@ -251,7 +260,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                     intent.putExtra("status", false);
                     writeLogs();
                     startActivity(intent);
-                }
+                }*/
             } else {
                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Handphone number empty");
                 Log.e(TAG, "Handphone number empty");
@@ -336,6 +345,99 @@ public class BuyingCodeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    //request data to server using http GET for nasabah's data
+    private boolean getNasabahData() throws JSONException {
+        final OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
+        urlBuilder.addQueryParameter("unm", Nasabah.username);
+
+        String url = urlBuilder.build().toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "error in getting response from async okhttp call");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body().string().toString();
+                try {
+                    Log.i(TAG, "Get Nasabah data on progrees, [Username = " + Nasabah.username + "]");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get nasabah data on progress, [Username = " + Nasabah.username + "]");
+                    JSONObject jsonObject = new JSONObject(responseBody);
+                    id = jsonObject.getString("id_nasabah");
+                    username = jsonObject.getString("username");
+                    password = jsonObject.getString("password");
+                    name = jsonObject.getString("nama_lengkap");
+                    code = jsonObject.getString("kode_rahasia");
+                    birthday = jsonObject.getString("tgl_lahir");
+                    rekeningNum = jsonObject.getString("no_rek");
+                    saldo = jsonObject.getString("jml_saldo");
+
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get Nasabah data success, data = [" +
+                            "Nasabah id = " + id +
+                            ", Username = " + username +
+                            ", Password = " + password +
+                            ", Name = " + name +
+                            ", Kode Rahasia = " + code +
+                            ", Tanggal lahir = " + birthday +
+                            ", No Rekening = " + rekeningNum +
+                            ", Saldo = " + saldo + "]");
+
+                    Log.i(TAG, "Get Nasabah data success, data = [" +
+                            "Nasabah id = " + id +
+                            ", Username = " + username +
+                            ", Password = " + password +
+                            ", Name = " + name +
+                            ", Kode Rahasia = " + code +
+                            ", Tanggal lahir = " + birthday +
+                            ", No Rekening = " + rekeningNum +
+                            ", Saldo = " + saldo + "]");
+
+                    Nasabah.id = id;
+                    Nasabah.name = name;
+                    Nasabah.username = username;
+                    Nasabah.password = password;
+                    Nasabah.code = code;
+                    Nasabah.birthday = birthday;
+                    Nasabah.rekeningNum = rekeningNum;
+                    if (saldo != null && saldo != "") {
+                        Nasabah.saldo = Float.parseFloat(saldo);
+                    }else{
+                        Nasabah.saldo = 0;
+                    }
+
+                    SharedPreferences.Editor spEdit = sp.edit();
+                    spEdit.putBoolean("isLogin", true);
+                    spEdit.putString("id", Nasabah.id);
+                    spEdit.putString("name", Nasabah.name);
+                    spEdit.putString("username", Nasabah.username);
+                    spEdit.putString("password", Nasabah.password);
+                    spEdit.putString("code", Nasabah.code);
+                    spEdit.putString("birthday", Nasabah.birthday);
+                    spEdit.putString("rekeningNum", Nasabah.rekeningNum);
+                    spEdit.putFloat("saldo", Nasabah.saldo);
+                    spEdit.commit();
+                } catch (JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
+                }
+            }
+        });
+
+        if (Nasabah.id != null && Nasabah.id != "") {
+            return true;
+        }
+        return false;
     }
 
     //send log to server

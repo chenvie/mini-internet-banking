@@ -162,12 +162,16 @@ public class TransferActivity extends AppCompatActivity {
                         final String message = jsonObject.getString("message");
 
                         if (check.equalsIgnoreCase("true")){
-                            Log.i(TAG, "checking receiver rekening num success, sending receiver rekNum, nominal, info, and nasabah id as parameter");
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Checking receiver rekening num success, sending receiver rekNum, nominal, info, and nasabah id as parameter");
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Receiver RekNum = " + noRek);
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nominal = " + nominal);
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Info = " + ket);
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
+                            Log.i(TAG, "Checking receiver rekening num success, [" +
+                                    "No Rekening Tujuan = " + noRek +
+                                    ", Nominal = " + nominal +
+                                    ", Keterangan = " + ket +
+                                    ", Nasabah id = " + Nasabah.id);
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Checking receiver rekening num success, [" +
+                                    "No Rekening Tujuan = " + noRek +
+                                    ", Nominal = " + nominal +
+                                    ", Keterangan = " + ket +
+                                    ", Nasabah id = " + Nasabah.id);
                             intent.putExtra("noRek", message);
                             intent.putExtra("nominal", nominal);
                             intent.putExtra("ket", ket);

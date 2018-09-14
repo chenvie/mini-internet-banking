@@ -115,9 +115,8 @@ public class MutationActivity extends AppCompatActivity {
                     }
 
                     mutationAdapter.notifyDataSetChanged();
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting Mutation Data Success, sending nasabag id as parameter");
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
-                    Log.i(TAG, "Getting Mutation Data Success, sending nasabah id as parameter");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting Mutation Data Success, [Nasabah id = " + Nasabah.id + "]");
+                    Log.i(TAG, "Getting Mutation Data Success, [Nasabah id = " + Nasabah.id + "]");
                 } catch (JSONException e) {
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
                     Log.e(TAG, "Json parsing error: " + e.getMessage());

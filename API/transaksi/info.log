@@ -5,4 +5,4 @@
 [2018-08-28 04:38:06] files.ERROR: Tidak ada history diantara hari yang dipilih {"id_nasabah":"2"} 
 [2018-08-28 04:38:28] files.INFO: Cek History Transaksi {"id_nasabah":"2"} 
 [2018-09-13 10:38:51] files.INFO: Cek History Transaksi {"id nasabah":"27"}
-[2018-09-13 10:41:10] files.INFO: Mutasi rekening {"id nasabah":"27"}
+[2018-09-13 10:41:10] files.INFO: Mutasi rekening {"id nasabah":"27"}[2018-09-14 10:12:58] files.INFO: Mutasi rekening {"id_nasabah":"27"} 

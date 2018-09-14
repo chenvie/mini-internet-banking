@@ -56,21 +56,27 @@ public class MainActivity extends AppCompatActivity {
 
         //get session data from SharedPreferences
         if (sp.getBoolean("isLogin", false)){
-            Nasabah.id = sp.getString("id", "");
-            Nasabah.name = sp.getString("name", "");
-            Nasabah.username = sp.getString("username", "");
-            Nasabah.password = sp.getString("password", "");
-            Nasabah.code = sp.getString("code", "");
-            Nasabah.birthday = sp.getString("birthday", "");
-            Nasabah.rekeningNum = sp.getString("rekeningNum", "");
-            Nasabah.saldo = sp.getFloat("saldo", 0);
-            Log.i(TAG, "Get Nasabah data from session");
-            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Get Nasabah data from session");
+            try {
+                if (getNasabahData()){
+                    Nasabah.id = sp.getString("id", "");
+                    Nasabah.name = sp.getString("name", "");
+                    Nasabah.username = sp.getString("username", "");
+                    Nasabah.password = sp.getString("password", "");
+                    Nasabah.code = sp.getString("code", "");
+                    Nasabah.birthday = sp.getString("birthday", "");
+                    Nasabah.rekeningNum = sp.getString("rekeningNum", "");
+                    Nasabah.saldo = sp.getFloat("saldo", 0);
+                    Log.i(TAG, "Get Nasabah data from session");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Get Nasabah data from session");
 
-            writeLogs();
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
-            finish();
+                    writeLogs();
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         } else{
             setContentView(R.layout.activity_main);
 
@@ -130,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
 
         JSONObject json = new JSONObject();
         try {
-            json.put("uname", username);
-            json.put("pwd", hashPassword);
+            json.put("username", username);
+            json.put("password", hashPassword);
         } catch(JSONException e){
             // TODO Auto-generated catch block
             Log.e(TAG, "Failed to create JSONObject for post param: " + e.getMessage());
@@ -165,10 +171,8 @@ public class MainActivity extends AppCompatActivity {
                     String login = jsonObject.getString("login");
                     if (login.equalsIgnoreCase("true")){
                         Nasabah.username = username;
-                        Log.i(TAG, "Login Success, sending username and password as parameter");
-                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Login success, sending username and password as parameter");
-                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Username = " + username);
-                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Password = " + finalHashPassword);
+                        Log.i(TAG, "Login Success, [" + "Username = " + username + ", password = " + finalHashPassword + "]");
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Login success, [" + "Username = " + username + ", password = " + finalHashPassword + "]");
 
                         //call function get nasabah data
                         try {
@@ -234,9 +238,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String responseBody = response.body().string().toString();
                 try {
-                    Log.i(TAG, "Get Nasabah data on progrees, sending username as parameter");
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get nasabah data on progress, sending username as parameter");
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Username = " + Nasabah.username);
+                    Log.i(TAG, "Get Nasabah data on progrees, [Username = " + Nasabah.username + "]");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get nasabah data on progress, [Username = " + Nasabah.username + "]");
                     JSONObject jsonObject = new JSONObject(responseBody);
                     id = jsonObject.getString("id_nasabah");
                     username = jsonObject.getString("username");
@@ -246,6 +249,26 @@ public class MainActivity extends AppCompatActivity {
                     birthday = jsonObject.getString("tgl_lahir");
                     rekeningNum = jsonObject.getString("no_rek");
                     saldo = jsonObject.getString("jml_saldo");
+
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get Nasabah data success, data = [" +
+                            "Nasabah id = " + id +
+                            ", Username = " + username +
+                            ", Password = " + password +
+                            ", Name = " + name +
+                            ", Kode Rahasia = " + code +
+                            ", Tanggal lahir = " + birthday +
+                            ", No Rekening = " + rekeningNum +
+                            ", Saldo = " + saldo + "]");
+
+                    Log.i(TAG, "Get Nasabah data success, data = [" +
+                            "Nasabah id = " + id +
+                            ", Username = " + username +
+                            ", Password = " + password +
+                            ", Name = " + name +
+                            ", Kode Rahasia = " + code +
+                            ", Tanggal lahir = " + birthday +
+                            ", No Rekening = " + rekeningNum +
+                            ", Saldo = " + saldo + "]");
 
                     Nasabah.id = id;
                     Nasabah.name = name;

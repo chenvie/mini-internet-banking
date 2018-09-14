@@ -1,0 +1,8 @@
+
+14-09-2018 10:10:59 | MainActivity | [INFO] : Login success, [Username = Vievin26, password = ff68179dddd38692293d04c091d017ff]
+14-09-2018 10:10:59 | MainActivity | [INFO] : Get nasabah data on progress, [Username = Vievin26]
+14-09-2018 10:10:59 | MainActivity | [INFO] : Get Nasabah data success, data = [Nasabah id = 27, Username = Vievin26, Password = ff68179dddd38692293d04c091d017ff, Name = Vievin Efendy, Kode Rahasia = 1c88b390f7a3d49edfbeff983c85c2f4, Tanggal lahir = 1997-09-01, No Rekening = 037026, Saldo = 400000]
+14-09-2018 10:11:05 | MainActivity | [INFO] : Login success, [Username = Vievin26, password = ff68179dddd38692293d04c091d017ff]
+14-09-2018 10:11:05 | MainActivity | [INFO] : Get Nasabah Data Success
+14-09-2018 10:12:52 | BuyingCodeActivity | [INFO] : Buying Success, [Username = Vievin26, NoHp = 087835283217, Nominal = 50000, Provider =  XL, Nasabah id = 27, Kode Rahasia = 1c88b390f7a3d49edfbeff983c85c2f4]
+2018-09-14 | MutationActivity | [INFO] : Getting Mutation Data Success, [Nasabah id = 27]

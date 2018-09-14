@@ -208,9 +208,7 @@ public class HistoryActivity extends AppCompatActivity {
             startActivity(intent);
         } else{
             Log.e(TAG, "Date from and to exceed 30 days");
-            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Date from and to exceed 30 days");
-            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Date from = " + from);
-            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Date to = " + to);
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Date from and to exceed 30 days, " + "[Date from = " + from + ", Date to = " + to + "]");
             Toast.makeText(this, "Pemilihan tanggal from dan to harus dalam rentang 30 hari!", Toast.LENGTH_LONG).show();
         }
     }

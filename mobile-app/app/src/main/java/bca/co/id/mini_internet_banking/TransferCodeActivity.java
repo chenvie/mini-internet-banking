@@ -36,6 +36,7 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -53,6 +54,7 @@ public class TransferCodeActivity extends AppCompatActivity {
     private String TAG = TransferCodeActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    private String id, username, name, password, code, birthday, rekeningNum, saldo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -149,8 +151,8 @@ public class TransferCodeActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, TransferStatusActivity.class);
 
         if (hashCode.equals(Nasabah.code)) {
-            final float temp = Nasabah.saldo - Float.parseFloat(nominal);
-            if (temp > 0) {
+            //final float temp = Nasabah.saldo - Float.parseFloat(nominal);
+            //if (temp > 0) {
                 OkHttpClient client = new OkHttpClient();
                 MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                 String url = HttpClientURL.urlTransfer;
@@ -201,31 +203,39 @@ public class TransferCodeActivity extends AppCompatActivity {
                             final String message = jsonObject.getString("message");
 
                             if (status.equalsIgnoreCase("true")){
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Transfer success, sending receiver rekeningNum, uname, nasabah id, nominal, secret code and info as parameter");
-                                Log.i(TAG, "Transfer success, sending receiver rekeningNum, uname, nasabah id, nominal, secret code and info as parameter");
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah username = " + Nasabah.username);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nasabah id = " + Nasabah.id);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Receiver RekNum = " + noRek);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Nominal = " + nominal);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Info = " + ket);
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Secret Code = " + finalHashCode);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Transfer success, [" +
+                                        "Username = " + Nasabah.username +
+                                        ", Nasabah id = " + Nasabah.id +
+                                        ", Nomor Rekening Tujuan = " + noRek +
+                                        ", Nominal = " + nominal +
+                                        ", Keterangan = " + ket +
+                                        ", Kode Rahasia = " + finalHashCode);
+                                Log.i(TAG, "Transfer success, [" +
+                                        "Username = " + Nasabah.username +
+                                        ", Nasabah id = " + Nasabah.id +
+                                        ", Nomor Rekening Tujuan = " + noRek +
+                                        ", Nominal = " + nominal +
+                                        ", Keterangan = " + ket +
+                                        ", Kode Rahasia = " + finalHashCode);
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
                                     }
                                 });
-                                Nasabah.saldo = temp;
-                                SharedPreferences.Editor spEdit = sp.edit();
-                                spEdit.putFloat("saldo", Nasabah.saldo);
-                                spEdit.commit();
+                                //Nasabah.saldo = temp;
+                                //SharedPreferences.Editor spEdit = sp.edit();
+                                //spEdit.putFloat("saldo", Nasabah.saldo);
+                                //spEdit.commit();
 
-                                intent.putExtra("noRek", noRek);
-                                intent.putExtra("nominal", nominal);
-                                intent.putExtra("ket", ket);
-                                intent.putExtra("status", true);
-                                writeLogs();
-                                startActivity(intent);
+                                if (getNasabahData()){
+                                    intent.putExtra("noRek", noRek);
+                                    intent.putExtra("nominal", nominal);
+                                    intent.putExtra("ket", ket);
+                                    intent.putExtra("status", true);
+                                    writeLogs();
+                                    startActivity(intent);
+                                }
                             } else{
                                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Transfer failed with message: " + message);
                                 Log.e(TAG, "Tranfer failed with message: " + message);
@@ -237,7 +247,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                         }
                     }
                 });
-            } else {
+            /*} else {
                 Log.e(TAG, "Balance is not enough");
                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Balance is not enough");
                 intent.putExtra("noRek", noRek);
@@ -246,7 +256,7 @@ public class TransferCodeActivity extends AppCompatActivity {
                 intent.putExtra("status", false);
                 writeLogs();
                 startActivity(intent);
-            }
+            }*/
         } else{
             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Secret code wrong");
             Log.e(TAG, "Secret code wrong");
@@ -326,6 +336,99 @@ public class TransferCodeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    //request data to server using http GET for nasabah's data
+    private boolean getNasabahData() throws JSONException {
+        final OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
+        urlBuilder.addQueryParameter("unm", Nasabah.username);
+
+        String url = urlBuilder.build().toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "error in getting response from async okhttp call");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body().string().toString();
+                try {
+                    Log.i(TAG, "Get Nasabah data on progrees, [Username = " + Nasabah.username + "]");
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get nasabah data on progress, [Username = " + Nasabah.username + "]");
+                    JSONObject jsonObject = new JSONObject(responseBody);
+                    id = jsonObject.getString("id_nasabah");
+                    username = jsonObject.getString("username");
+                    password = jsonObject.getString("password");
+                    name = jsonObject.getString("nama_lengkap");
+                    code = jsonObject.getString("kode_rahasia");
+                    birthday = jsonObject.getString("tgl_lahir");
+                    rekeningNum = jsonObject.getString("no_rek");
+                    saldo = jsonObject.getString("jml_saldo");
+
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get Nasabah data success, data = [" +
+                            "Nasabah id = " + id +
+                            ", Username = " + username +
+                            ", Password = " + password +
+                            ", Name = " + name +
+                            ", Kode Rahasia = " + code +
+                            ", Tanggal lahir = " + birthday +
+                            ", No Rekening = " + rekeningNum +
+                            ", Saldo = " + saldo + "]");
+
+                    Log.i(TAG, "Get Nasabah data success, data = [" +
+                            "Nasabah id = " + id +
+                            ", Username = " + username +
+                            ", Password = " + password +
+                            ", Name = " + name +
+                            ", Kode Rahasia = " + code +
+                            ", Tanggal lahir = " + birthday +
+                            ", No Rekening = " + rekeningNum +
+                            ", Saldo = " + saldo + "]");
+
+                    Nasabah.id = id;
+                    Nasabah.name = name;
+                    Nasabah.username = username;
+                    Nasabah.password = password;
+                    Nasabah.code = code;
+                    Nasabah.birthday = birthday;
+                    Nasabah.rekeningNum = rekeningNum;
+                    if (saldo != null && saldo != "") {
+                        Nasabah.saldo = Float.parseFloat(saldo);
+                    }else{
+                        Nasabah.saldo = 0;
+                    }
+
+                    SharedPreferences.Editor spEdit = sp.edit();
+                    spEdit.putBoolean("isLogin", true);
+                    spEdit.putString("id", Nasabah.id);
+                    spEdit.putString("name", Nasabah.name);
+                    spEdit.putString("username", Nasabah.username);
+                    spEdit.putString("password", Nasabah.password);
+                    spEdit.putString("code", Nasabah.code);
+                    spEdit.putString("birthday", Nasabah.birthday);
+                    spEdit.putString("rekeningNum", Nasabah.rekeningNum);
+                    spEdit.putFloat("saldo", Nasabah.saldo);
+                    spEdit.commit();
+                } catch (JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
+                }
+            }
+        });
+
+        if (Nasabah.id != null && Nasabah.id != "") {
+            return true;
+        }
+        return false;
     }
 
     //send log to server

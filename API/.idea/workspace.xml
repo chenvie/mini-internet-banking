@@ -3,21 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="3c2f8c43-6104-4d3c-b121-66f4a0ebb89b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nasabah/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/nasabah/create.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nasabah/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/nasabah/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nasabah/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/nasabah/error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nasabah/info.log" beforeDir="false" afterPath="$PROJECT_DIR$/nasabah/info.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nasabah/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/nasabah/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nasabah/update_kode_rahasia.php" beforeDir="false" afterPath="$PROJECT_DIR$/nasabah/update_kode_rahasia.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nasabah/update_password.php" beforeDir="false" afterPath="$PROJECT_DIR$/nasabah/update_password.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pulsa/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/pulsa/create.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pulsa/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/pulsa/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pulsa/info.log" beforeDir="false" afterPath="$PROJECT_DIR$/pulsa/info.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/transaksi/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/transaksi/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/transaksi/info.log" beforeDir="false" afterPath="$PROJECT_DIR$/transaksi/info.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transaksi/read-history.php" beforeDir="false" afterPath="$PROJECT_DIR$/transaksi/read-history.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transaksi/read-mutasi.php" beforeDir="false" afterPath="$PROJECT_DIR$/transaksi/read-mutasi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transfer/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/transfer/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../banking.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../banking.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,29 +24,29 @@
     <session id="424858035">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
+          <entry key="project.closed" value="14" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="2" />
-          <entry key="project.open.time.11" value="2" />
+          <entry key="project.open.time.11" value="3" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.35" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="11" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="log" value="8" />
-          <entry key="php" value="37" />
+          <entry key="php" value="38" />
           <entry key="txt" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PHP" value="37" />
+          <entry key="PHP" value="38" />
           <entry key="PLAIN_TEXT" value="10" />
         </counts>
       </usages-collector>
@@ -74,11 +66,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/transfer/create.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="398">
               <caret line="45" column="69" selection-start-line="45" selection-start-column="69" selection-end-line="45" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/nasabah/login.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="520">
+              <caret line="50" column="68" selection-start-line="50" selection-start-column="68" selection-end-line="50" selection-end-column="68" />
             </state>
           </provider>
         </entry>
@@ -126,9 +127,9 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="width" value="980" />
-    <option name="height" value="1031" />
+    <option name="x" value="-12" />
+    <option name="width" value="981" />
+    <option name="height" value="1032" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -229,18 +230,18 @@
       <workItem from="1536286408169" duration="7000" />
       <workItem from="1536292466649" duration="12000" />
       <workItem from="1536803103673" duration="4825000" />
-      <workItem from="1536818869916" duration="1209000" />
+      <workItem from="1536818869916" duration="1379000" />
+      <workItem from="1536894570484" duration="285000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12585000" />
+    <option name="totallyTimeSpent" value="13040000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26963562" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27449393" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -355,13 +356,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nasabah/login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="50" column="68" selection-start-line="50" selection-start-column="68" selection-end-line="50" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Kerja Praktik (KP)/API/nasabah/update_kode_rahasia.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -432,6 +426,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="398">
           <caret line="45" column="69" selection-start-line="45" selection-start-column="69" selection-end-line="45" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nasabah/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="50" column="68" selection-start-line="50" selection-start-column="68" selection-end-line="50" selection-end-column="68" />
         </state>
       </provider>
     </entry>
