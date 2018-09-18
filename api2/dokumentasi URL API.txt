@@ -55,17 +55,17 @@ output	: message, status (JSON)
 
 
 TRANSFER (CREATE)
-url	: localhost:8080/...
+url	: localhost:8080/transfer
 method	: POST
-input	:
-output	:
+input	: norek, id_nsb, nominal, uname, ket, kode_rhs (JSON)
+output	: status, message (JSON)
 
 
 TRANSFER (CEK NO REK)
-url	: localhost:8080/...
+url	: localhost:8080/ceknorek
 method	: POST
-input	:
-output	:
+input	: norek, id_nsb (JSON)
+output	: status, message (JSON)
 
 
 PEMBELIAN PULSA (CREATE)
