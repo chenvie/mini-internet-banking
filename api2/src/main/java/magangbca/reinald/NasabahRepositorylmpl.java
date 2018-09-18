@@ -62,4 +62,40 @@ public class NasabahRepositorylmpl{
 
         return result;
     }
+
+    public Map<String, String> postNasabah(String nama, String email, String password, String no_ktp, String tgl_lhr, String alamat, String kode_rhs){
+        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("postNasabah2")
+                .registerStoredProcedureParameter(1, String.class, ParameterMode.IN).
+                        registerStoredProcedureParameter(2, String.class, ParameterMode.IN).
+                        registerStoredProcedureParameter(3, String.class, ParameterMode.IN).
+                        registerStoredProcedureParameter(4, String.class, ParameterMode.IN).
+                        registerStoredProcedureParameter(5, String.class, ParameterMode.IN).
+                        registerStoredProcedureParameter(6, String.class, ParameterMode.IN).
+                        registerStoredProcedureParameter(7, String.class, ParameterMode.IN).
+                        registerStoredProcedureParameter(8, String.class, ParameterMode.OUT).
+                        registerStoredProcedureParameter(9, String.class, ParameterMode.OUT).
+                        registerStoredProcedureParameter(10, String.class, ParameterMode.OUT);
+
+        storedProcedure.setParameter(1, nama)
+                .setParameter(2, email)
+                .setParameter(3, password)
+                .setParameter(4, no_ktp)
+                .setParameter(5, tgl_lhr)
+                .setParameter(6, alamat)
+                .setParameter(7, kode_rhs);
+
+        storedProcedure.execute();
+        // Call the stored procedure.
+
+        String username = (String) storedProcedure.getOutputParameterValue(8);
+        String status = (String) storedProcedure.getOutputParameterValue(9);
+        String message = (String) storedProcedure.getOutputParameterValue(10);
+
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("status", status);
+        result.put("message", message);
+        result.put("username", username);
+
+        return result;
+    }
 }
