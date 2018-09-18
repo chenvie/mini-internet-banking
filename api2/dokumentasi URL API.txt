@@ -14,29 +14,30 @@ output	: List<nasabah> : id_nasabah, email, username, nama_lengkap, password, no
 READ-ONE
 url	: localhost:8080/nasabah/{id}
 method	: GET
-input	: id lewat param
+input	: id (param)
 output	: nasabah : id_nasabah, email, username, nama_lengkap, password, no_ktp, tgl_lahir, alamat, kode_rahasia, no_rek, jml_saldo, kode_cabang, created(JSON)
 
 
 BUKA REKENING (CREATE NASABAH)
 url	: localhost:8080/nasabah
 method	: POST
-input	:nama_lengkap,email,password,no_ktp,tgl_lahir,alamat,kode_rahasia (JSON)
-output	:message, status, username(JSON)
+input	: nama_lengkap, email, password, no_ktp, tgl_lahir, alamat, kode_rahasia (JSON)
+output	: message, status, username(JSON)
 
 
 READ MUTASI
-url	: localhost:8080/...
+url	: localhost:8080/mutasi/{id}
 method	: GET
-input	:
-output	:
+input	: id (param)
+output	: mutasi : kode_transaksi, no_rek, tgl_trans, tujuan, jenis, keterangan, nominal (JSON)
 
 
 READ HISTORY
-url	: localhost:8080/...
+url	: localhost:8080/history/{id}/{tgl_awal}/{tgl_akhir}
+	contoh format tanggal : 		localhost:8080/history/2/2018-08-15/2018-09-13
 method	: GET
-input	:
-output	:
+input	: id, tgl_awal, tgl_akhir (param)
+output	: kode_transaksi, tgl_trans, tujuan, keterangan, nominal, status (JSON)
 
 
 UPDATE PASSWORD
