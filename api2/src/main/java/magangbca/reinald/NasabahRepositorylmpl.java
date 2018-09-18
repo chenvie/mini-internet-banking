@@ -38,9 +38,9 @@ public class NasabahRepositorylmpl{
         return result;
     }
 
-    public List<String> updateCode(int id_nasabah, String kode_rahasiaL, String krb1, String krb2){
+    public Map<String, String> updateCode(int id_nasabah, String kode_rahasiaL, String krb1, String krb2){
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("putNasabahKodeRahasia")
-                .registerStoredProcedureParameter(1, int.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
@@ -53,13 +53,13 @@ public class NasabahRepositorylmpl{
                 .setParameter(4, krb2);
 
         query.execute();
-        String status = query.getOutputParameterValue("stts").toString();
-        String message = query.getOutputParameterValue("msg").toString();
+        String status = query.getOutputParameterValue(5).toString();
+        String message = query.getOutputParameterValue(6).toString();
 
-        List<String> output = new ArrayList<String>();
-        output.add(status);
-        output.add(message);
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("status", status);
+        result.put("message", message);
 
-        return output;
+        return result;
     }
 }

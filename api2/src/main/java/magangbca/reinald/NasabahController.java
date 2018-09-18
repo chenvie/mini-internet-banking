@@ -35,29 +35,28 @@ public class NasabahController {
         return nasabahRepository.findOne(nasabahID);
     }
 
-    @PostMapping("/nasabah/update-password")
+    @PostMapping("/nasabah/update_password")
     public ResponseEntity<?> updatePass(@RequestBody Map<String, String> body){
         int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
         String passwordl = body.get("passwordl");
         String passwordb1 = body.get("passwordb1");
         String passwordb2 = body.get("passwordb2");
 
-        Map<String, String> result = new HashMap<String, String>();
-        result = nasabahRepositorylmpl.updatePassword(id_nasabah, passwordl, passwordb1, passwordb2);
+        Map<String, String> result = nasabahRepositorylmpl.updatePassword(id_nasabah, passwordl, passwordb1, passwordb2);
 
         return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
-
-        //return nasabahRepositorylmpl.updatePassword(id_nasabah, passwordl, passwordb1, passwordb2);
     }
 
-    @PostMapping("nasabah/update-kode-rahasia")
-    public List<String> updateCode(@RequestBody Map<String, String> body){
+    @PostMapping("nasabah/update_kode_rahasia")
+    public ResponseEntity<?> updateCode(@RequestBody Map<String, String> body){
         int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
         String kode_rahasiaL = body.get("kode_rahasiaL");
         String krb1 = body.get("krb1");
         String krb2 = body.get("krb2");
 
-        return nasabahRepositorylmpl.updateCode(id_nasabah, kode_rahasiaL, krb1, krb2);
+        Map<String, String> result = nasabahRepositorylmpl.updateCode(id_nasabah, kode_rahasiaL, krb1, krb2);
+
+        return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
     }
 
 //    @PostMapping("/nasabah/search")
