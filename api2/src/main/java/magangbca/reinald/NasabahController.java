@@ -1,8 +1,11 @@
 package magangbca.reinald;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,13 +30,18 @@ public class NasabahController {
     }
 
     @PostMapping("/nasabah/update-password")
-    public List<String> updatePass(@RequestBody Map<String, String> body){
+    public ResponseEntity<?> updatePass(@RequestBody Map<String, String> body){
         int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
         String passwordl = body.get("passwordl");
         String passwordb1 = body.get("passwordb1");
         String passwordb2 = body.get("passwordb2");
 
-        return nasabahRepositorylmpl.updatePassword(id_nasabah, passwordl, passwordb1, passwordb2);
+        Map<String, String> result = new HashMap<String, String>();
+        result = nasabahRepositorylmpl.updatePassword(id_nasabah, passwordl, passwordb1, passwordb2);
+
+        return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
+
+        //return nasabahRepositorylmpl.updatePassword(id_nasabah, passwordl, passwordb1, passwordb2);
     }
 
     @PostMapping("nasabah/update-kode-rahasia")
