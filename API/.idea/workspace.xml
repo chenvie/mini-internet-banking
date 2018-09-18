@@ -4,8 +4,6 @@
     <list default="true" id="3c2f8c43-6104-4d3c-b121-66f4a0ebb89b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../api2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../api2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api2/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../api2/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api2/target/classes/magangbca/reinald/NasabahController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../api2/target/classes/magangbca/reinald/NasabahController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api2/target/classes/magangbca/reinald/NasabahRepositorylmpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../api2/target/classes/magangbca/reinald/NasabahRepositorylmpl.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -254,12 +252,12 @@
       <workItem from="1536803103673" duration="4825000" />
       <workItem from="1536818869916" duration="1379000" />
       <workItem from="1536894570484" duration="285000" />
-      <workItem from="1537240929040" duration="3945000" />
+      <workItem from="1537240929040" duration="3328000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16985000" />
+    <option name="totallyTimeSpent" value="16368000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />

@@ -27,7 +27,7 @@ public class NasabahController {
     }
 
     @PostMapping("/nasabah/update-password")
-    public String updatePass(@RequestBody Map<String, String> body){
+    public List<String> updatePass(@RequestBody Map<String, String> body){
         int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
         String passwordl = body.get("passwordl");
         String passwordb1 = body.get("passwordb1");

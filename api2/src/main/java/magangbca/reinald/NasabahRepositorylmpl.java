@@ -11,7 +11,7 @@ public class NasabahRepositorylmpl{
     @PersistenceContext
     private EntityManager entityManager;
 
-    public String updatePassword(int id_nasabah, String passwordl, String passwordb1, String passwordb2) {
+    public List<String> updatePassword(int id_nasabah, String passwordl, String passwordb1, String passwordb2) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("putNasabahPassword")
                 .registerStoredProcedureParameter(1, int.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
@@ -26,15 +26,14 @@ public class NasabahRepositorylmpl{
                 .setParameter(4, passwordb2);
 
         query.execute();
-        String status = query.getOutputParameterValue("5").toString();
-        String message = query.getOutputParameterValue("6").toString();
+        String status = query.getOutputParameterValue("stts").toString();
+        String message = query.getOutputParameterValue("msg").toString();
 
-        /*List<String> output = new ArrayList<String>();
+        List<String> output = new ArrayList<String>();
         output.add(status);
         output.add(message);
 
-        return output;*/
-        return status;
+        return output;
     }
 
     public List<String> updateCode(int id_nasabah, String kode_rahasiaL, String krb1, String krb2){
