@@ -1,0 +1,71 @@
+-- DOKUMENTASI URL API --
+
+LOGIN
+url	: localhost:8080/...
+method	: POST
+input	:
+output	:
+
+
+READ-ONE
+url	: localhost:8080/...
+method	: GET
+input	:
+output	:
+
+
+BUKA REKENING (CREATE NASABAH)
+url	: localhost:8080/...
+method	: POST
+input	:
+output	:
+
+
+READ MUTASI
+url	: localhost:8080/...
+method	: GET
+input	:
+output	:
+
+
+READ HISTORY
+url	: localhost:8080/...
+method	: GET
+input	:
+output	:
+
+
+UPDATE PASSWORD
+url	: localhost:8080/nasabah/update_password
+method	: POST
+input	: id_nasabah, passwordl, passwordb1, passwordb2 (JSON)
+output	: message, status (JSON)
+
+
+UPDATE CODE
+url	: localhost:8080/nasabah/update_kode_rahasia
+method	: POST
+input	: id_nasabah, kode_rahasiaL, krb1, krb2 (JSON)
+output	: message, status (JSON)
+
+
+TRANSFER (CREATE)
+url	: localhost:8080/...
+method	: POST
+input	:
+output	:
+
+
+TRANSFER (CEK NO REK)
+url	: localhost:8080/...
+method	: POST
+input	:
+output	:
+
+
+PEMBELIAN PULSA (CREATE)
+url	: localhost:8080/...
+method	: POST
+input	:
+output	:
+
