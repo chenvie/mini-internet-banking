@@ -12,6 +12,9 @@ public class NasabahController {
     @Autowired
     NasabahRepository nasabahRepository;
 
+    @Autowired
+    NasabahRepositorylmpl nasabahRepositorylmpl;
+
     @GetMapping("/nasabah")
     public List<Nasabah> index(){
         return nasabahRepository.findAll();
@@ -24,14 +27,23 @@ public class NasabahController {
     }
 
     @PostMapping("/nasabah/update-password")
-    public String updatePass(@RequestBody Map<String, String> body){
-        String id_nasabah = body.get("id_nasabah");
+    public List<String> updatePass(@RequestBody Map<String, String> body){
+        int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
         String passwordl = body.get("passwordl");
         String passwordb1 = body.get("passwordb1");
         String passwordb2 = body.get("passwordb2");
 
+        return nasabahRepositorylmpl.updatePassword(id_nasabah, passwordl, passwordb1, passwordb2);
+    }
 
-        return "Update Password berhasil";
+    @PostMapping("nasabah/update-kode-rahasia")
+    public List<String> updateCode(@RequestBody Map<String, String> body){
+        int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
+        String kode_rahasiaL = body.get("kode_rahasiaL");
+        String krb1 = body.get("krb1");
+        String krb2 = body.get("krb2");
+
+        return nasabahRepositorylmpl.updateCode(id_nasabah, kode_rahasiaL, krb1, krb2);
     }
 
 //    @PostMapping("/nasabah/search")
