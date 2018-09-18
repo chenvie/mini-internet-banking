@@ -26,6 +26,8 @@ public class Nasabah {
     private String kode_cabang;
     private Timestamp created;
 
+    public Nasabah() {  }
+
     public int getId_nasabah() {
         return id_nasabah;
     }
@@ -129,8 +131,6 @@ public class Nasabah {
     public void setCreated(Timestamp created) {
         this.created = created;
     }
-
-    public Nasabah() {  }
 
     @Override
     public String toString() {
