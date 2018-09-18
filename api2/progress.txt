@@ -3,8 +3,8 @@ Nasabah :
 - login (post) (boni)
 - read (get) (v) (reinald)
 - read-one (get) (v) (reinald)
-- update_kode_rahasia (put) (vievin)
-- update_password (put) (vievin)
+- update_kode_rahasia (put) (v) (vievin)
+- update_password (put) (v) (vievin)
 
 Pulsa :
 - create (post) (dariel)
