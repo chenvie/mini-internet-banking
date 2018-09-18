@@ -8,17 +8,17 @@ output	:
 
 
 READ-ONE
-url	: localhost:8080/...
+url	: localhost:8080/nasabah/{id}
 method	: GET
-input	:
-output	:
+input	: id lewat param
+output	: 
 
 
 BUKA REKENING (CREATE NASABAH)
-url	: localhost:8080/...
+url	: localhost:8080/nasabah
 method	: POST
-input	:
-output	:
+input	:nama_lengkap,email,password,no_ktp,tgl_lahir,alamat,kode_rahasia (JSON)
+output	:message, status, username(JSON)
 
 
 READ MUTASI

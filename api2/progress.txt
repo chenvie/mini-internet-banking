@@ -1,5 +1,5 @@
 Nasabah :
-- create (post) (reinald)
+- create (post) (v) (reinald)
 - login (post) (boni)
 - read (get) (v) (reinald)
 - read-one (get) (v) (reinald)
