@@ -6,12 +6,16 @@ method	: POST
 input	:
 output	:
 
+READ
+url	: localhost:8080/nasabah
+method	: GET
+output	: List<nasabah> : id_nasabah, email, username, nama_lengkap, password, no_ktp, tgl_lahir, alamat, kode_rahasia, no_rek, jml_saldo, kode_cabang, created(JSON)
 
 READ-ONE
 url	: localhost:8080/nasabah/{id}
 method	: GET
 input	: id lewat param
-output	: 
+output	: nasabah : id_nasabah, email, username, nama_lengkap, password, no_ktp, tgl_lahir, alamat, kode_rahasia, no_rek, jml_saldo, kode_cabang, created(JSON)
 
 
 BUKA REKENING (CREATE NASABAH)
