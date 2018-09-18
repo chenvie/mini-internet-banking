@@ -7,6 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +20,9 @@ public class NasabahController {
 
     @Autowired
     NasabahRepository nasabahRepository;
+
+    @Autowired
+    NasabahRepositorylmpl nasabahRepositorylmpl;
 
     @GetMapping("/nasabah")
     public List<Nasabah> index(){
@@ -25,6 +33,31 @@ public class NasabahController {
     public Nasabah show(@PathVariable String id){
         int nasabahID = Integer.parseInt(id);
         return nasabahRepository.findOne(nasabahID);
+    }
+
+    @PostMapping("/nasabah/update-password")
+    public ResponseEntity<?> updatePass(@RequestBody Map<String, String> body){
+        int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
+        String passwordl = body.get("passwordl");
+        String passwordb1 = body.get("passwordb1");
+        String passwordb2 = body.get("passwordb2");
+
+        Map<String, String> result = new HashMap<String, String>();
+        result = nasabahRepositorylmpl.updatePassword(id_nasabah, passwordl, passwordb1, passwordb2);
+
+        return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
+
+        //return nasabahRepositorylmpl.updatePassword(id_nasabah, passwordl, passwordb1, passwordb2);
+    }
+
+    @PostMapping("nasabah/update-kode-rahasia")
+    public List<String> updateCode(@RequestBody Map<String, String> body){
+        int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
+        String kode_rahasiaL = body.get("kode_rahasiaL");
+        String krb1 = body.get("krb1");
+        String krb2 = body.get("krb2");
+
+        return nasabahRepositorylmpl.updateCode(id_nasabah, kode_rahasiaL, krb1, krb2);
     }
 
 //    @PostMapping("/nasabah/search")
