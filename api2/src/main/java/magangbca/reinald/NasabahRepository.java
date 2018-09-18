@@ -8,4 +8,6 @@ public interface NasabahRepository extends JpaRepository<Nasabah, Integer> {
 
 //    List<Nasabah> findByTitleContainingOrContentContaining(String text, String textAgain);
 
+    String updatePassword(String id_nasabah, String passwordl, String passwordb1, String passwordb2);
+
 }

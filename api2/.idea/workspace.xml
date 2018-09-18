@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87f7be2e-c5cc-4f3e-aea0-e820fcfa1c9e" name="Default Changelist" comment="" />
+    <list default="true" id="87f7be2e-c5cc-4f3e-aea0-e820fcfa1c9e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../API/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/History.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/MainAppClass.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/Mutasi.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/MutasiController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/MutasiRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/MutasiRepositoryImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/Nasabah.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/NasabahController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/NasabahRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/Transaksi.class" beforeDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,14 +67,51 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="1687817657">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="java" value="12" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="12" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="471" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="471" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="95" selection-start-line="18" selection-start-column="95" selection-end-line="18" selection-end-column="95" />
+            <state relative-caret-position="289">
+              <caret line="32" selection-start-line="32" selection-end-line="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Nasabah.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -67,19 +120,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepositoryImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+            <state relative-caret-position="41">
+              <caret line="16" column="40" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="16" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="28" column="44" lean-forward="true" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
+            <state relative-caret-position="85">
+              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="10" column="101" selection-start-line="10" selection-start-column="101" selection-end-line="10" selection-end-column="101" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -106,8 +183,6 @@
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/MainAppClass.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Nasabah.java" />
-        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Mutasi.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiController.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepository.java" />
@@ -116,6 +191,9 @@
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java" />
       </list>
     </option>
   </component>
@@ -133,9 +211,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1383" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -144,6 +222,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -188,15 +269,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536921885313" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537242715998" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Facets" />
@@ -269,16 +347,18 @@
       <workItem from="1536830866311" duration="3063000" />
       <workItem from="1536892155708" duration="9165000" />
       <workItem from="1536910978137" duration="8300000" />
+      <workItem from="1537235183962" duration="2902000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27475000" />
+    <option name="totallyTimeSpent" value="30377000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26096824" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26558703" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -323,13 +403,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/MainAppJava.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MainAppClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Transaksi.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -344,38 +417,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Nasabah.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Mutasi.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="307">
           <caret line="86" column="30" lean-forward="true" selection-start-line="86" selection-start-column="30" selection-end-line="86" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -393,10 +438,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepository.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="108" lean-forward="true" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="108" />
+        <state relative-caret-position="306">
+          <caret line="18" column="95" selection-start-line="18" selection-start-column="95" selection-end-line="18" selection-end-column="95" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MainAppClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="28" column="44" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Nasabah.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -405,41 +494,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepositoryImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="41" column="5" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="41" selection-end-column="5" />
+        <state relative-caret-position="41">
+          <caret line="16" column="40" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="16" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="20" selection-start-line="18" selection-start-column="3" selection-end-line="24" selection-end-column="5" />
+        <state relative-caret-position="255">
+          <caret line="15" column="14" lean-forward="true" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="28" column="44" lean-forward="true" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
+        <state relative-caret-position="85">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="95" selection-start-line="18" selection-start-column="95" selection-end-line="18" selection-end-column="95" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="153">
+          <caret line="10" column="101" selection-start-line="10" selection-start-column="101" selection-end-line="10" selection-end-column="101" />
         </state>
       </provider>
     </entry>

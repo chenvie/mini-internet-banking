@@ -1,12 +1,10 @@
 package magangbca.reinald;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class NasabahController {
@@ -23,6 +21,17 @@ public class NasabahController {
     public Nasabah show(@PathVariable String id){
         int nasabahID = Integer.parseInt(id);
         return nasabahRepository.findOne(nasabahID);
+    }
+
+    @PostMapping("/nasabah/update-password")
+    public String updatePass(@RequestBody Map<String, String> body){
+        String id_nasabah = body.get("id_nasabah");
+        String passwordl = body.get("passwordl");
+        String passwordb1 = body.get("passwordb1");
+        String passwordb2 = body.get("passwordb2");
+
+
+        return "Update Password berhasil";
     }
 
 //    @PostMapping("/nasabah/search")
