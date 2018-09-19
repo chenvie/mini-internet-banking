@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(){
+        Log.e(TAG, "Button Login Clicked");
         final String username = txtUname_login.getText().toString();
         final String password = txtPwd_login.getText().toString();
 
@@ -168,9 +169,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 try {
                     JSONObject jsonObject = new JSONObject(responseBody);
-                    String login = jsonObject.getString("login");
-                    if (login.equalsIgnoreCase("true")){
+                    String login = jsonObject.getString("status");
+                    Log.e(TAG, "status = " + login);
+                    if (login.equalsIgnoreCase("1")){
                         Nasabah.username = username;
+                        Nasabah.id = jsonObject.getString("id_nasabah");
+                        Log.e(TAG, "ID = " + Nasabah.id);
                         Log.i(TAG, "Login Success, [" + "Username = " + username + ", password = " + finalHashPassword + "]");
                         listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Login success, [" + "Username = " + username + ", password = " + finalHashPassword + "]");
 
@@ -219,9 +223,12 @@ public class MainActivity extends AppCompatActivity {
         final OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
-        urlBuilder.addQueryParameter("unm", Nasabah.username);
+        //urlBuilder.addQueryParameter("unm", Nasabah.username);
+        urlBuilder.addQueryParameter("id", Nasabah.id);
 
         String url = urlBuilder.build().toString();
+
+        Log.e(TAG, "URL = " + url);
 
         final Request request = new Request.Builder()
                 .url(url)

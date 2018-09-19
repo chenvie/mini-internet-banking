@@ -121,7 +121,7 @@ public class NasabahRepositorylmpl{
         result.put("status", status);
         result.put("username", uname);
         result.put("message", msg);
-        result.put("id nasabah", id_nsb);
+        result.put("id_nasabah", id_nsb);
 
         return result;
 
