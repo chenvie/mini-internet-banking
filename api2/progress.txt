@@ -10,8 +10,8 @@ Pulsa :
 - create (post) (dariel)
 
 Transfer :
-- cek-no-rek (post) (yosef)
-- create (Post) (yosef)
+- cek-no-rek (post) (v) (yosef)
+- create (Post) (v) (yosef)
 
 Transaksi :
 - read-history (get) (v) (reinald)
