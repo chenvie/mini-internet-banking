@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87f7be2e-c5cc-4f3e-aea0-e820fcfa1c9e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -133,8 +129,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1649">
-              <caret line="103" column="50" lean-forward="true" selection-start-line="103" selection-start-column="50" selection-end-line="103" selection-end-column="50" />
+            <state relative-caret-position="85">
+              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -192,9 +188,9 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" />
       </list>
     </option>
   </component>
@@ -375,7 +371,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67369000" />
+    <option name="totallyTimeSpent" value="68730000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
@@ -541,8 +537,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1649">
-          <caret line="103" column="50" lean-forward="true" selection-start-line="103" selection-start-column="50" selection-end-line="103" selection-end-column="50" />
+        <state relative-caret-position="85">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
         </state>
       </provider>
     </entry>
