@@ -41,14 +41,14 @@ output	: kode_transaksi, tgl_trans, tujuan, keterangan, nominal, status (JSON)
 
 
 UPDATE PASSWORD
-url	: localhost:8080/nasabah/update_password
+url	: localhost:8080/update_password
 method	: POST
 input	: id_nasabah, passwordl, passwordb1, passwordb2 (JSON)
 output	: message, status (JSON)
 
 
 UPDATE CODE
-url	: localhost:8080/nasabah/update_kode_rahasia
+url	: localhost:8080/update_kode_rahasia
 method	: POST
 input	: id_nasabah, kode_rahasiaL, krb1, krb2 (JSON)
 output	: message, status (JSON)
