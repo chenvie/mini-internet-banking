@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2018 at 06:14 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Generation Time: Sep 19, 2018 at 06:06 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -126,7 +124,7 @@ select DISTINCT t.kode_transaksi,n.no_rek,t.tgl_trans,
                     ORDER BY `t`.`tgl_trans`  ASC;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (INOUT `uname` VARCHAR(20), IN `pwd` VARCHAR(100), OUT `stts` BOOLEAN)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (INOUT `uname` VARCHAR(20), IN `pwd` VARCHAR(20), OUT `stts` BOOLEAN, OUT `msg` VARCHAR(50))  NO SQL
 BEGIN
 DECLARE jml int;
 /*DECLARE uname_temp,pwd_temp varchar(20);
@@ -137,9 +135,11 @@ where username = uname and password = pwd;
 
 IF jml = 1 THEN
 SET stts = True;
+SET msg = "Berhasil Login";
 ELSE
 SET uname = "";
 SET stts = False;
+SET msg = "Username atau password salah";
 END IF;
 END$$
 
@@ -180,12 +180,33 @@ email=email, username=uname, nama_lengkap=nama, password=pwd, no_ktp=no_ktp, tgl
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postNasabah2` (IN `nama` VARCHAR(100), IN `email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kode_rahasia` VARCHAR(6), OUT `uname` VARCHAR(20), OUT `out_code` VARCHAR(10), OUT `out_msg` VARCHAR(40))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postNasabah2` (IN `nama` VARCHAR(100), IN `email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kode_rahasia` VARCHAR(6), OUT `uname` VARCHAR(20), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(40))  NO SQL
 BEGIN
 
 DECLARE norek VARCHAR(6);
 DECLARE kc varchar(4) DEFAULT "asd1";
+DECLARE counter int;
+DECLARE diff int;
+SET stts = "Gagal";
 
+SELECT TIMESTAMPDIFF(YEAR, tgl_lahir, CURDATE()) into diff FROM nasabah;
+SELECT count(email) into counter FROM nasabah where email = email;
+
+IF counter = 1 THEN
+SET msg = "email sudah pernah didaftarkan";
+ELSEIF diff < 17 THEN
+SET msg = "Umur belum mencukupi (min. 17 tahun)";
+ELSEIF char_length(pwd) < 8
+THEN
+SET msg = "Password terlalu pendek";
+ELSEIF pwd NOT REGEXP '^[A-Za-z0-9 ]+$' THEN
+SET msg = "Password mengandung karakter non alphanumeric";
+ELSEIF char_length(kode_rahasia) != 6
+THEN
+SET msg = "Panjang kode rahasia tidak sesuai";
+ELSEIF kode_rahasia NOT REGEXP '^[A-Za-z0-9 ]+$' THEN
+SET msg = "Kode rahasia mengandung karakter non alphanumeric";
+ELSE
 /*Generate nomor rekening baru*/
 SELECT 
     no_rek into norek
@@ -199,7 +220,6 @@ SET norek = CAST(norek as char(6));
 SET norek = CONCAT(0,norek);
 
 /*Generate username baru*/
-
 SET uname = LEFT(nama,LOCATE(" ",nama) - 1);
 IF uname != ""
 THEN
@@ -213,15 +233,15 @@ INSERT INTO nasabah
 SET
 email=email, username=uname, nama_lengkap=nama, password=pwd, no_ktp=no_ktp, tgl_lahir=tgl_lahir, alamat=alamat, kode_rahasia=kode_rahasia, no_rek=norek, kode_cabang=kc;
 
-SET out_code = "Berhasil";
-SET out_msg = "Penambahan nasabah berhasil";
-SELECT uname,out_code,out_msg;
+SET stts = "Berhasil";
+SET msg = "Penambahan nasabah berhasil";
+END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiPulsa` (IN `id_nsb` INT(10), IN `no_hp_tujuan` VARCHAR(20), IN `nmnl` INT(50), IN `prvdr` VARCHAR(10), IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(100), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiPulsa` (IN `id_nsb` INT(10), IN `no_hp_tujuan` VARCHAR(20), IN `nmnl` INT(50), IN `prvdr` VARCHAR(10), IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
 BEGIN
 DECLARE jml_saldo_out int;
-DECLARE kr_temp varchar(100);
+DECLARE kr_temp varchar(6);
 DECLARE kodeT varchar(12) DEFAULT "2";
 DECLARE jml int;
 
@@ -285,10 +305,10 @@ SET kode_pembelian=kodeT, no_hp=no_hp_tujuan, provider=prvdr, nominal=nmnl;
 END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `id_nsb` INT(10), IN `no_rek_tujuan` VARCHAR(40), IN `nmnl` INT(50), IN `ket` TEXT, IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(100), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `id_nsb` INT(10), IN `no_rek_tujuan` VARCHAR(40), IN `nmnl` INT(50), IN `ket` TEXT, IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
 BEGIN
 DECLARE jml_saldo_out, jml_saldo_in int;
-DECLARE kr_temp varchar(100);
+DECLARE kr_temp varchar(6);
 DECLARE kodeT varchar(12) DEFAULT "1";
 DECLARE jml int;
 
@@ -368,9 +388,9 @@ SET kode_transfer=kodeT, rek_transfer=no_rek_tujuan, nominal=nmnl, keterangan=ke
 END IF;    
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahKodeRahasia` (IN `id_nsb` INT(10), IN `krhLama` VARCHAR(100), IN `krhBaru1` VARCHAR(100), IN `krhBaru2` VARCHAR(100), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahKodeRahasia` (IN `id_nsb` INT(10), IN `krhLama` VARCHAR(6), IN `krhBaru1` VARCHAR(7), IN `krhBaru2` VARCHAR(7), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
 BEGIN
-DECLARE krh_temp varchar(100);
+DECLARE krh_temp varchar(20);
 SELECT kode_rahasia INTO krh_temp
 from nasabah 
 where id_nasabah = id_nsb;
@@ -383,6 +403,10 @@ ELSEIF krhBaru1 != krhBaru2
 THEN
 SET stts = "Gagal";
 SET msg = "Kode rahasia baru tidak sama";
+ELSEIF char_length(krhBaru1) != 6
+THEN
+SET stts = "Gagal";
+SET msg = "Panjang kode rahasia tidak sesuai";
 ELSEIF krhBaru1 NOT REGEXP '^[A-Za-z0-9 ]+$' THEN
 SET stts = "Gagal";
 SET msg = "Kode rahasia mengandung karakter non alphanumeric";
@@ -395,9 +419,9 @@ SET msg = "Berhasil update Kode rahasia";
 END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahPassword` (IN `id_nsb` INT(10), IN `pwdLama` VARCHAR(100), IN `pwdBaru1` VARCHAR(100), IN `pwdBaru2` VARCHAR(100), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahPassword` (IN `id_nsb` INT(10), IN `pwdLama` VARCHAR(20), IN `pwdBaru1` VARCHAR(20), IN `pwdBaru2` VARCHAR(20), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
 BEGIN
-DECLARE pwd_temp varchar(100);
+DECLARE pwd_temp varchar(20);
 SELECT password INTO pwd_temp
 from nasabah 
 where id_nasabah = id_nsb;
@@ -410,6 +434,10 @@ ELSEIF pwdBaru1 != pwdBaru2
 THEN
 SET stts = "Gagal";
 SET msg = "Password baru tidak sama";
+ELSEIF char_length(pwdBaru1) < 8
+THEN
+SET stts = "Gagal";
+SET msg = "Password terlalu pendek";
 ELSEIF pwdBaru1 NOT REGEXP '^[A-Za-z0-9 ]+$' THEN
 SET stts = "Gagal";
 SET msg = "Password mengandung karakter non alphanumeric";
@@ -496,7 +524,20 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (25, 'uzan@gmail.com', 'Fauzan23', 'Fauzan Set', '2999311dac1', '15151', '1994-08-10', 'Kronggahan', '999999', '037023', 450000, 'asd1', '2018-09-07 10:40:11'),
 (26, 'eddy@gmail.com', 'Eddy24', 'Eddy villager', '2992141', '15124551', '1995-09-10', 'Jombor', '999999', '037024', 450000, 'asd1', '2018-09-10 07:22:47'),
 (27, 'aloy@gmail.com', 'Aloy25', 'Aloy Gombong', '12345678', '15124551', '2018-09-02', 'Jakal', '999999', '037025', 450000, 'asd1', '2018-09-13 07:51:08'),
-(28, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin27', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037027', 1000000, 'asd1', '2018-09-18 04:13:45');
+(28, 'nanz@gmail.com', 'Dwinanda26', 'Dwinanda Edo', '12345678', '15124551', '1992-09-10', 'binong', '999999', '037026', 450000, 'asd1', '2018-09-17 09:19:26'),
+(29, 'derynanz@gmail.com', 'Dery27', 'Dery Zulkarnaen', '12345678', '15124551', '1997-09-10', 'taiwan', '999999', '037027', 450000, 'asd1', '2018-09-17 09:38:45'),
+(30, 'adit@gmail.com', 'Aditya28', 'Aditya Putrau', '12345678', '15124551', '1997-09-10', 'gatau', '999999', '037028', 450000, 'asd1', '2018-09-17 09:58:38'),
+(31, 'kira@gmail.com', 'Ramzha29', 'Ramzha', '12345678', '15124551', '1997-09-10', 'minomartani', '999999', '037029', 450000, 'asd1', '2018-09-17 10:03:11'),
+(32, 'yudz@gmail.com', 'Yudz30', 'Yudz', '12345678', '15124551', '1990-09-10', 'Bandung', '999999', '037030', 450000, 'asd1', '2018-09-17 10:28:39'),
+(33, 'japz@gmail.com', 'japz31', 'japz fajar', '12345678', '15124551', '1990-09-10', 'Bandung', '999999', '037031', 450000, 'asd1', '2018-09-17 10:32:17'),
+(34, 'choe@gmail.com', 'choerul32', 'choerul', '12345678', '15124551', '1990-09-10', 'Cimahi', '999999', '037032', 450000, 'asd1', '2018-09-18 03:35:38'),
+(35, 'Ir@gmail.com', 'Irfany33', 'Irfany', '12345678', '15124551', '1990-09-10', 'Cimahi', '999999', '037033', 450000, 'asd1', '2018-09-18 03:48:19'),
+(36, 'Daniel@gmail.com', 'Daniel34', 'Daniel Hartono', '12345678', '15124551', '1996-09-10', 'Jember', '999999', '037034', 450000, 'asd1', '2018-09-18 04:23:19'),
+(37, 'krusvi@gmail.com', 'Hendri35', 'Hendri Krusvi', '12345678', '15124551', '1996-09-10', 'Jogja', '999999', '037035', 450000, 'asd1', '2018-09-18 04:35:54'),
+(38, 'vano@gmail.com', 'Vano36', 'Vano Gurhitno', '12345678', '15124551', '1990-09-10', 'Seturan', '999999', '037036', 450000, 'asd1', '2018-09-18 06:39:35'),
+(39, 'parkz@gmail.com', 'Daniel37', 'Daniel Ronald', '12345678', '15124551', '1986-09-10', 'Temanggung', '999999', '037037', 450000, 'asd1', '2018-09-18 06:57:32'),
+(40, 'theo@gmail.com', 'Theofilus38', 'Theofilus Sigit', '12345678', '15124551', '1986-09-10', 'Manding', '999999', '037038', 450000, 'asd1', '2018-09-18 07:00:18'),
+(41, 'adrian@gmail.com', 'Adrian39', 'Adrian Hardy', '12345678', '15124551', '1986-09-10', 'Semarang', '999999', '037039', 450000, 'asd1', '2018-09-18 07:09:54');
 
 -- --------------------------------------------------------
 
@@ -678,8 +719,7 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- Constraints for dumped tables
 --
@@ -707,7 +747,6 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `transfer`
   ADD CONSTRAINT `transfer_ibfk_1` FOREIGN KEY (`kode_transfer`) REFERENCES `transaksi` (`kode_transaksi`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
