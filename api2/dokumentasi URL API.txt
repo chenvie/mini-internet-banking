@@ -1,10 +1,10 @@
 -- DOKUMENTASI URL API --
 
 LOGIN
-url	: localhost:8080/...
+url	: localhost:8080/login
 method	: POST
-input	:
-output	:
+input	: username, password (JSON)
+output	: status, username, message (JSON)
 
 READ
 url	: localhost:8080/nasabah

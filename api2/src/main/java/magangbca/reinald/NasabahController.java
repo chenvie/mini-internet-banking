@@ -27,6 +27,16 @@ public class NasabahController {
         return nasabahRepository.findOne(nasabahID);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
+        String username = body.get("username");
+        String password = body.get("password");
+
+        Map<String, String> result = nasabahRepositorylmpl.login(username,password);
+
+        return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/nasabah/update_password")
     public ResponseEntity<?> updatePass(@RequestBody Map<String, String> body){
         int id_nasabah = Integer.parseInt(body.get("id_nasabah"));

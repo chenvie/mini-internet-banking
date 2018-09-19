@@ -1,6 +1,6 @@
 Nasabah :
 - create (post) (v) (reinald)
-- login (post) (boni)
+- login (post) (v) (boni)
 - read (get) (v) (reinald)
 - read-one (get) (v) (reinald)
 - update_kode_rahasia (put) (v) (vievin)

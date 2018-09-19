@@ -98,4 +98,29 @@ public class NasabahRepositorylmpl{
 
         return result;
     }
+
+    public Map<String, String> login(String username, String password){
+        StoredProcedureQuery storeProcedure = entityManager.createStoredProcedureQuery("login")
+                .registerStoredProcedureParameter(1, String.class,ParameterMode.INOUT).
+                        registerStoredProcedureParameter(2,String.class,ParameterMode.IN).
+                        registerStoredProcedureParameter(3,String.class,ParameterMode.OUT).
+                        registerStoredProcedureParameter(4,String.class,ParameterMode.OUT);
+
+
+        storeProcedure.setParameter(1, username)
+                .setParameter(2, password);
+        storeProcedure.execute();
+
+        String uname = (String) storeProcedure.getOutputParameterValue(1);
+        String status = (String) storeProcedure.getOutputParameterValue(3);
+        String msg = (String) storeProcedure.getOutputParameterValue(4);
+
+        Map<String, String> result = new HashMap<>();
+        result.put("status", status);
+        result.put("username", uname);
+        result.put("message", msg);
+
+        return result;
+
+    }
 }
