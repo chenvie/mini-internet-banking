@@ -65,7 +65,7 @@ public class MutationActivity extends AppCompatActivity {
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadMutation).newBuilder();
         urlBuilder.addQueryParameter("id", Nasabah.id);
-        urlBuilder.addQueryParameter("tgl", s.format(new Date()));
+        //urlBuilder.addQueryParameter("tgl", s.format(new Date()));
 
         String url = urlBuilder.build().toString();
 
