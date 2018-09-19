@@ -1,0 +1,18 @@
+Nasabah :
+- create (post)
+- login (post)
+- read (get) (v)
+- read-one (get) (v)
+- update_kode_rahasia (put)
+- update_password (put)
+
+Pulsa :
+- create (post)
+
+Transfer :
+- cek-no-rek (post)
+- create (Post)
+
+Transaksi :
+- read-history (get) (otw)
+- read-mutasi (get) (v)
