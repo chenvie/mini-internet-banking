@@ -37,7 +37,7 @@ public class NasabahController {
         return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/nasabah/update_password")
+    @PostMapping("/update_password")
     public ResponseEntity<?> updatePass(@RequestBody Map<String, String> body){
         int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
         String passwordl = body.get("passwordl");
@@ -49,7 +49,7 @@ public class NasabahController {
         return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
     }
 
-    @PostMapping("nasabah/update_kode_rahasia")
+    @PostMapping("/update_kode_rahasia")
     public ResponseEntity<?> updateCode(@RequestBody Map<String, String> body){
         int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
         String kode_rahasiaL = body.get("kode_rahasiaL");
