@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2018 at 10:23 AM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Sep 20, 2018 at 04:27 AM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -238,10 +240,10 @@ SET msg = "Penambahan nasabah berhasil";
 END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiPulsa` (IN `id_nsb` INT(10), IN `no_hp_tujuan` VARCHAR(20), IN `nmnl` INT(50), IN `prvdr` VARCHAR(10), IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiPulsa` (IN `id_nsb` INT(10), IN `no_hp_tujuan` VARCHAR(20), IN `nmnl` INT(50), IN `prvdr` VARCHAR(10), IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(100), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
 BEGIN
 DECLARE jml_saldo_out int;
-DECLARE kr_temp varchar(6);
+DECLARE kr_temp varchar(100);
 DECLARE kodeT varchar(12) DEFAULT "2";
 DECLARE jml int;
 
@@ -305,10 +307,10 @@ SET kode_pembelian=kodeT, no_hp=no_hp_tujuan, provider=prvdr, nominal=nmnl;
 END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `id_nsb` INT(10), IN `no_rek_tujuan` VARCHAR(40), IN `nmnl` INT(50), IN `ket` TEXT, IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `id_nsb` INT(10), IN `no_rek_tujuan` VARCHAR(40), IN `nmnl` INT(50), IN `ket` TEXT, IN `uname` VARCHAR(20), IN `kode_rhs` VARCHAR(100), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
 BEGIN
 DECLARE jml_saldo_out, jml_saldo_in int;
-DECLARE kr_temp varchar(6);
+DECLARE kr_temp varchar(100);
 DECLARE kodeT varchar(12) DEFAULT "1";
 DECLARE jml int;
 
@@ -390,7 +392,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahKodeRahasia` (IN `id_nsb` INT(10), IN `krhLama` VARCHAR(100), IN `krhBaru1` VARCHAR(100), IN `krhBaru2` VARCHAR(100), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
 BEGIN
-DECLARE krh_temp varchar(20);
+DECLARE krh_temp varchar(100);
 SELECT kode_rahasia INTO krh_temp
 from nasabah 
 where id_nasabah = id_nsb;
@@ -417,7 +419,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahPassword` (IN `id_nsb` INT(10), IN `pwdLama` VARCHAR(100), IN `pwdBaru1` VARCHAR(100), IN `pwdBaru2` VARCHAR(100), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
 BEGIN
-DECLARE pwd_temp varchar(20);
+DECLARE pwd_temp varchar(100);
 SELECT password INTO pwd_temp
 from nasabah 
 where id_nasabah = id_nsb;
@@ -495,7 +497,7 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boniboni123', '123513163', '2018-02-05', 'magelang', '123124', '2491204', 2600000, 'asd1', '2018-09-14 07:14:26'),
 (3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
 (4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
-(6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4800000, 'asd1', '2018-09-12 08:50:08'),
+(6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4850000, 'asd1', '2018-09-20 02:27:09'),
 (7, 'sam@gmail.com', 'sam', 'sam w', 'qwe', '123', '2018-08-02', 'kudus', '123', '037000', 150000, 'asd1', '2018-09-10 08:38:56'),
 (8, 'billy@gmail.com', 'bil', 'billy b', 'qwe', '12312', '2018-08-02', 'taman siswa', '123', '037002', 230000, 'asd1', '2018-09-06 08:16:21'),
 (9, 'argo@gmail.com', 'argo', 'argo uchiha', 'qwe', '123', '2018-08-01', 'godean', '123', '037008', 450000, 'asd1', '2018-08-15 05:25:15'),
@@ -533,7 +535,8 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (42, 'ib@gmail.com', 'Indrabayu40', 'Indrabayu', '123123indra', '3312414124', '1990-11-11', 'semarang', '234412', '037040', 450000, 'asd1', '2018-09-19 08:08:37'),
 (43, 'kagayaku@gmail.com', 'Gilang41', 'Gilang Kg', '12345gilang', '3312414124', '1990-11-11', 'jec', '234432', '037041', 450000, 'asd1', '2018-09-19 08:10:42'),
 (44, 'bayou@gmail.com', 'Bayu42', 'Bayu dbijak', '654321by12', '3312414124', '1990-11-11', 'magelang', '234432', '037042', 450000, 'asd1', '2018-09-19 08:12:01'),
-(45, 'ando@gmail.com', 'Armando43', 'Armando Firdaus', '65432arm12', '3312414124', '1990-11-11', 'magelang', '232323', '037043', 450000, 'asd1', '2018-09-19 08:19:54');
+(45, 'ando@gmail.com', 'Armando43', 'Armando Firdaus', '65432arm12', '3312414124', '1990-11-11', 'magelang', '232323', '037043', 450000, 'asd1', '2018-09-19 08:19:54'),
+(46, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin44', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037044', 400000, 'asd1', '2018-09-20 02:27:09');
 
 -- --------------------------------------------------------
 
@@ -608,6 +611,7 @@ INSERT INTO `transaksi` (`kode_transaksi`, `id_nasabah`, `tgl_trans`, `status`, 
 ('10033', 2, '2018-09-12 07:53:39', 'Gagal', 'Nomor rekening tujuan tidak ditemukan'),
 ('10034', 2, '2018-09-12 08:46:04', 'Berhasil', 'Berhasil Transfer'),
 ('10035', 2, '2018-09-12 08:50:08', 'Berhasil', 'Berhasil Transfer'),
+('10038', 46, '2018-09-20 02:27:09', 'Berhasil', 'Berhasil Transfer'),
 ('15', 2, '2018-08-20 08:23:15', 'Berhasil', 'Berhasil transfer'),
 ('20004', 1, '2018-08-20 04:19:59', 'Berhasil', ''),
 ('20015', 2, '2018-08-20 09:20:35', 'Berhasil', 'Pembelian pulsa berhasil'),
@@ -662,6 +666,7 @@ INSERT INTO `transfer` (`kode_transfer`, `rek_transfer`, `nominal`, `keterangan`
 ('10024', '037014', 100000, 'buat nando'),
 ('10034', '037001', 50000, 'coba'),
 ('10035', '037001', 50000, 'testing api'),
+('10038', '037001', 50000, 'transfer'),
 ('15', '2141516', 50000, '');
 
 --
@@ -715,7 +720,8 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+
 --
 -- Constraints for dumped tables
 --
@@ -743,6 +749,7 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `transfer`
   ADD CONSTRAINT `transfer_ibfk_1` FOREIGN KEY (`kode_transfer`) REFERENCES `transaksi` (`kode_transaksi`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
