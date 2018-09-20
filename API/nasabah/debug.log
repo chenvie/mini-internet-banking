@@ -99,3 +99,17 @@
 [2018-09-14 10:11:05] files.INFO: username: Vievin26  
 [2018-09-14 10:11:05] files.INFO: password: ff68179dddd38692293d04c091d017ff  
 [2018-09-18 14:30:28] files.INFO: Update password berhasil {"id":2} 
+[2018-09-20 10:49:52] files.INFO: username: Vievin26  
+[2018-09-20 10:49:52] files.INFO: password: ff68179dddd38692293d04c091d017ff  
+[2018-09-20 10:52:05] files.INFO: nama lengkap: Tifanny  
+[2018-09-20 10:52:05] files.INFO: email: tifanny@gmail.com  
+[2018-09-20 10:52:05] files.INFO: password: tifanny01  
+[2018-09-20 10:52:05] files.INFO: no_ktp: 3372024181010004  
+[2018-09-20 10:52:05] files.INFO: tgl_lahir: 2001-01-18  
+[2018-09-20 10:52:05] files.INFO: alamat: Surakarta  
+[2018-09-20 10:52:05] files.INFO: kode_rahasia: chen01  
+[2018-09-20 10:52:05] files.INFO: created: 2018-09-20 10:52:05  
+[2018-09-20 10:52:05] files.ERROR: User failed registered {"username":null} 
+[2018-09-20 10:59:41] files.ERROR: Update password gagal {"id":2} 
+[2018-09-20 10:59:53] files.INFO: Update password berhasil {"id":2} 
+[2018-09-20 11:00:56] files.ERROR: Update Kode Rahasia gagal {"id":2} 

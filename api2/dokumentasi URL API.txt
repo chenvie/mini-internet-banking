@@ -22,7 +22,7 @@ BUKA REKENING (CREATE NASABAH)
 url	: localhost:8080/nasabah
 method	: POST
 input	: nama_lengkap, email, password, no_ktp, tgl_lahir, alamat, kode_rahasia (JSON)
-output	: message, status, username(JSON)
+output	: message, status, username, id_nsb(JSON)
 
 
 READ MUTASI

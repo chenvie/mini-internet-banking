@@ -6,3 +6,9 @@
 [2018-08-28 04:38:28] files.INFO: Cek History Transaksi {"id_nasabah":"2"} 
 [2018-09-13 10:38:51] files.INFO: Cek History Transaksi {"id nasabah":"27"}
 [2018-09-13 10:41:10] files.INFO: Mutasi rekening {"id nasabah":"27"}[2018-09-14 10:12:58] files.INFO: Mutasi rekening {"id_nasabah":"27"} 
+[2018-09-20 10:18:29] files.INFO: Belum ada mutasi {"id_nasabah":"16"} 
+[2018-09-20 10:18:35] files.INFO: Mutasi rekening {"id_nasabah":"2"} 
+[2018-09-20 10:58:21] files.INFO: Tidak ada history transaksi {"id_nasabah":"16"} 
+[2018-09-20 10:58:30] files.INFO: Tidak ada history transaksi {"id_nasabah":"44"} 
+[2018-09-20 10:58:34] files.INFO: Tidak ada history transaksi {"id_nasabah":"46"} 
+[2018-09-20 10:58:40] files.INFO: Cek history transaksi {"id_nasabah":"2"} 

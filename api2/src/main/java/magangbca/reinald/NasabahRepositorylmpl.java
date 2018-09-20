@@ -72,7 +72,8 @@ public class NasabahRepositorylmpl{
                         registerStoredProcedureParameter(7, String.class, ParameterMode.IN).
                         registerStoredProcedureParameter(8, String.class, ParameterMode.OUT).
                         registerStoredProcedureParameter(9, String.class, ParameterMode.OUT).
-                        registerStoredProcedureParameter(10, String.class, ParameterMode.OUT);
+                        registerStoredProcedureParameter(10, String.class, ParameterMode.OUT).
+                        registerStoredProcedureParameter(11, String.class, ParameterMode.OUT);
 
         storedProcedure.setParameter(1, nama)
                 .setParameter(2, email)
@@ -88,11 +89,13 @@ public class NasabahRepositorylmpl{
         String username = (String) storedProcedure.getOutputParameterValue(8);
         String status = (String) storedProcedure.getOutputParameterValue(9);
         String message = (String) storedProcedure.getOutputParameterValue(10);
+        String id_nsb  = (String) storedProcedure.getOutputParameterValue(11);
 
         Map<String, String> result = new HashMap<String, String>();
         result.put("status", status);
         result.put("message", message);
         result.put("username", username);
+        result.put("id_nsb", id_nsb);
 
         return result;
     }
