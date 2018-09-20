@@ -159,12 +159,12 @@ public class TransferCodeActivity extends AppCompatActivity {
 
                 JSONObject jsonParams = new JSONObject();
                 try {
-                    jsonParams.put("username", Nasabah.username);
-                    jsonParams.put("no_rek_tujuan", noRek);
-                    jsonParams.put("id_nasabah", Nasabah.id);
-                    jsonParams.put("kode_rahasia", hashCode);
+                    jsonParams.put("uname", Nasabah.username);
+                    jsonParams.put("norek", noRek);
+                    jsonParams.put("id_nsb", Nasabah.id);
+                    jsonParams.put("kode_rhs", hashCode);
                     jsonParams.put("nominal", nominal);
-                    jsonParams.put("keterangan", ket);
+                    jsonParams.put("ket", ket);
                 } catch (JSONException e) {
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error create JSONObejct for post param");
                     Log.e(TAG, "Error create JSONObject for post param: " + e.getMessage());
@@ -199,10 +199,10 @@ public class TransferCodeActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(responseBody);
 
-                            String status = jsonObject.getString("transfer");
+                            String status = jsonObject.getString("status");
                             final String message = jsonObject.getString("message");
 
-                            if (status.equalsIgnoreCase("true")){
+                            if (status.equalsIgnoreCase("berhasil")){
                                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Transfer success, [" +
                                         "Username = " + Nasabah.username +
                                         ", Nasabah id = " + Nasabah.id +
@@ -343,7 +343,8 @@ public class TransferCodeActivity extends AppCompatActivity {
         final OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
-        urlBuilder.addQueryParameter("unm", Nasabah.username);
+        urlBuilder.addQueryParameter("id", Nasabah.id);
+        // urlBuilder.addQueryParameter("unm", Nasabah.username);
 
         String url = urlBuilder.build().toString();
 

@@ -202,23 +202,12 @@ public class NewRekeningActivity extends AppCompatActivity {
 
                         try {
                             JSONObject jsonObject = new JSONObject(responseBody);
-                            String result = jsonObject.getString("message");
+                            String result = jsonObject.getString("status");
 
+                            if (result.equalsIgnoreCase("berhasil")){
+                                Nasabah.id = jsonObject.getString("id_nsb");
+                                Nasabah.username = jsonObject.getString("username");
 
-                            if (!result.equalsIgnoreCase("pendaftaran gagal")) {
-                                String username = jsonObject.getString("username");
-                                Nasabah.username = username;
-                            }
-
-                            if (result.equalsIgnoreCase("pendaftaran berhasil")){
-                                //Nasabah.name = name;
-                                //Nasabah.username = username;
-                                //Nasabah.email = email;
-                                //Nasabah.password = finalHashPassword;
-                                //Nasabah.ktpNum = ktp;
-                                //Nasabah.birthday = birthday;
-                                //Nasabah.address = address;
-                                //Nasabah.code = finalHashCode;
                                 Log.i(TAG, "Registering nasabah suceess, [" +
                                         "Name = " + name +
                                         ", Email = " + email +
@@ -270,7 +259,8 @@ public class NewRekeningActivity extends AppCompatActivity {
         final OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
-        urlBuilder.addQueryParameter("unm", Nasabah.username);
+        //urlBuilder.addQueryParameter("unm", Nasabah.username);
+        urlBuilder.addQueryParameter("id", Nasabah.id);
 
         String url = urlBuilder.build().toString();
 
@@ -298,6 +288,26 @@ public class NewRekeningActivity extends AppCompatActivity {
                     birthday = jsonObject.getString("tgl_lahir");
                     rekeningNum = jsonObject.getString("no_rek");
                     saldo = jsonObject.getString("jml_saldo");
+
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get Nasabah data success, data = [" +
+                            "Nasabah id = " + id +
+                            ", Username = " + username +
+                            ", Password = " + password +
+                            ", Name = " + name +
+                            ", Kode Rahasia = " + code +
+                            ", Tanggal lahir = " + birthday +
+                            ", No Rekening = " + rekeningNum +
+                            ", Saldo = " + saldo + "]");
+
+                    Log.i(TAG, "Get Nasabah data success, data = [" +
+                            "Nasabah id = " + id +
+                            ", Username = " + username +
+                            ", Password = " + password +
+                            ", Name = " + name +
+                            ", Kode Rahasia = " + code +
+                            ", Tanggal lahir = " + birthday +
+                            ", No Rekening = " + rekeningNum +
+                            ", Saldo = " + saldo + "]");
 
                     Nasabah.id = id;
                     Nasabah.name = name;

@@ -86,8 +86,12 @@ public class MutationActivity extends AppCompatActivity {
                 String responseBody = response.body().string().toString();
                 try {
                     JSONObject jsonObject = new JSONObject(responseBody);
-                    JSONArray jsonTanggal = jsonObject.getJSONArray("tanggal");
-                    String no_rek_pengirim = jsonTanggal.getJSONObject(0).getString("no_rek_pengirim");
+                    JSONArray jsonTanggal = jsonObject.getJSONArray("resp");
+                    String id = jsonTanggal.getJSONObject(0).getString("id_nasabah");
+                    String no_rek_pengirim = "";
+                    if (id == Nasabah.id){
+                        no_rek_pengirim = Nasabah.rekeningNum;
+                    }
                     String tgl_awal = jsonTanggal.getJSONObject(0).getString("tgl_awal");
                     String tgl_akhir = jsonTanggal.getJSONObject(0).getString("tgl_akhir");
                     txtMutationDate.setText(tgl_awal + " - " + tgl_akhir);
