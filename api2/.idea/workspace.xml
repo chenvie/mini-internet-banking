@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d9a9029f-3e19-4231-95cc-dca88c5d6461" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/magangbca/reinald/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/magangbca/reinald/Response.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/NasabahRepositorylmpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/magangbca/reinald/NasabahRepositorylmpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/Response.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/magangbca/reinald/Response.class" afterDir="false" />
-    </list>
+    <list default="true" id="d9a9029f-3e19-4231-95cc-dca88c5d6461" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -400,12 +391,12 @@
       <workItem from="1537346992349" duration="149000" />
       <workItem from="1537347913652" duration="6519000" />
       <workItem from="1537408938925" duration="5110000" />
-      <workItem from="1537430891630" duration="1750000" />
+      <workItem from="1537430891630" duration="2346000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79265000" />
+    <option name="totallyTimeSpent" value="79861000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
