@@ -3,9 +3,7 @@ package magangbca.reinald;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -101,7 +99,7 @@ public class NasabahRepositorylmpl{
 
     public Map<String, String> login(String username, String password){
         StoredProcedureQuery storeProcedure = entityManager.createStoredProcedureQuery("login")
-                .registerStoredProcedureParameter(1, String.class,ParameterMode.INOUT).
+                .registerStoredProcedureParameter(1, String.class, ParameterMode.INOUT).
                         registerStoredProcedureParameter(2,String.class,ParameterMode.IN).
                         registerStoredProcedureParameter(3,String.class,ParameterMode.OUT).
                         registerStoredProcedureParameter(4,String.class,ParameterMode.OUT).

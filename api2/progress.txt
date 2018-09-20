@@ -7,7 +7,7 @@ Nasabah :
 - update_password (put) (v) (vievin)
 
 Pulsa :
-- create (post) (dariel)
+- create (post) (v) (dariel)
 
 Transfer :
 - cek-no-rek (post) (v) (yosef)

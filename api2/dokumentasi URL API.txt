@@ -69,8 +69,8 @@ output	: status, message (JSON)
 
 
 PEMBELIAN PULSA (CREATE)
-url	: localhost:8080/...
+url	: localhost:8080/pembelian
 method	: POST
-input	:
-output	:
+input	:nohp, id_nsb, provider, nominal, uname, kode_rhs (JSON)
+output	:status, message (JSON)
 
