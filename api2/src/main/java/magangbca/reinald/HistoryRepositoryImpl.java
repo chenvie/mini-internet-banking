@@ -1,5 +1,7 @@
 package magangbca.reinald;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -9,7 +11,9 @@ import javax.persistence.StoredProcedureQuery;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
@@ -18,7 +22,7 @@ public class HistoryRepositoryImpl implements HistoryRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<History> getSomeHistory(Integer firstParameter, String secondParameter, String thirdParameter){
+    public Response getSomeHistory(Integer firstParameter, String secondParameter, String thirdParameter){
 
 
         StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("getHistory")
@@ -35,8 +39,15 @@ public class HistoryRepositoryImpl implements HistoryRepository {
         List<Object[]> storedProcedureResults = storedProcedure.getResultList();
 
         // Use Java 8's cool new functional programming paradigm to map the objects from the stored procedure results
-        return storedProcedureResults.stream().map(result -> new History( result[0].toString(),result[1].toString(),result[2].toString(),result[3].toString(),(BigInteger)result[4], result[5].toString())).collect(Collectors.toList());
+        Map<String, String> tgl = new HashMap<String, String>();
+        tgl.put("id_nasabah", firstParameter.toString());
+        tgl.put("tgl_awal", secondParameter);
+        tgl.put("tgl_akhir", thirdParameter);
 
+        Response resp = new Response();
+        resp.setResp(new ResponseEntity<Map<String, String>>(tgl, HttpStatus.OK));
+        resp.setResult(storedProcedureResults.stream().map(result -> new History( result[0].toString(),result[1].toString(),result[2].toString(),result[3].toString(),(BigInteger)result[4], result[5].toString())).collect(Collectors.toList()));
+        return resp;
 
 
     }

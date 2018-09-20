@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Response {
     public void setResp(@RequestBody ResponseEntity resp) {
-        this.resp = resp.getBody();
+        this.respon = resp.getBody();
     }
 
-    public void setMutasi(List<Mutasi> mutasi) {
-        this.mutasi = mutasi;
+    public void setResult(List<Object> listt) {
+        this.result = listt;
     }
 
-    public Object resp;
-    public List<Mutasi> mutasi;
+    public Object respon;
+    public List<Object> result;
 }

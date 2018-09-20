@@ -46,7 +46,7 @@ public class MutasiRepositoryImpl implements MutasiRepository {
 
         Response resp = new Response();
         resp.setResp(new ResponseEntity<Map<String, String>>(tgl, HttpStatus.OK));
-        resp.setMutasi(storedProcedureResults.stream().map(result -> new Mutasi( result[0].toString(),result[1].toString(),result[2].toString(),result[3].toString(),result[4].toString(),result[5].toString(),(BigInteger) result[6])).collect(Collectors.toList()));
+        resp.setResult(storedProcedureResults.stream().map(result -> new Mutasi( result[0].toString(),result[1].toString(),result[2].toString(),result[3].toString(),result[4].toString(),result[5].toString(),(BigInteger) result[6])).collect(Collectors.toList()));
         return resp;
     }
 }
