@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2018 at 04:27 AM
+-- Generation Time: Sep 20, 2018 at 05:16 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -185,7 +185,7 @@ email=email, username=uname, nama_lengkap=nama, password=pwd, no_ktp=no_ktp, tgl
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postNasabah2` (IN `nama` VARCHAR(100), IN `_email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kr` VARCHAR(100), OUT `uname` VARCHAR(20), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(40))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postNasabah2` (IN `nama` VARCHAR(100), IN `_email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kr` VARCHAR(100), OUT `uname` VARCHAR(20), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(40), OUT `id_nsb` INT)  NO SQL
 BEGIN
 
 DECLARE norek VARCHAR(6);
@@ -237,6 +237,9 @@ email=_email, username=uname, nama_lengkap=nama, password=pwd, no_ktp=no_ktp, tg
 
 SET stts = "Berhasil";
 SET msg = "Penambahan nasabah berhasil";
+SELECT id_nasabah into id_nsb 
+FROM nasabah
+where username = uname;
 END IF;
 END$$
 
@@ -494,7 +497,7 @@ CREATE TABLE `nasabah` (
 
 INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `password`, `no_ktp`, `tgl_lahir`, `alamat`, `kode_rahasia`, `no_rek`, `jml_saldo`, `kode_cabang`, `created`) VALUES
 (1, 'reinald.a.k@gmail.com', 'reinaldd', 'reinalda ar', 'reinaldariel123', '3323031211960005', '2018-08-06', 'temanggung', '123124', '2141516', 1950000, 'asd1', '2018-09-14 07:16:41'),
-(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boniboni123', '123513163', '2018-02-05', 'magelang', '123124', '2491204', 2600000, 'asd1', '2018-09-14 07:14:26'),
+(2, 'boni@gmail.com', 'bonii', 'bonifasius', 'boni123123', '123513163', '2018-02-05', 'magelang', '123123', '2491204', 2600000, 'asd1', '2018-09-20 03:13:11'),
 (3, 'asd@gmail.com', 'coba', 'coba', 'qweqweqwe', '123', '2018-08-02', 'coba', '123', '1919191919', 1500000, 'asd2', '2018-08-16 03:26:59'),
 (4, 'dany@gmail.com', 'cocobaba', 'dany', '123', '123', '2018-08-02', 'yogya', '123', '123213213', 1000000, 'asd1', '2018-08-15 03:04:48'),
 (6, 'cipe@gmail.com', 'cipe', 'asd asd', '123', '123', '2018-01-01', 'disana', 'asda', '037001', 4850000, 'asd1', '2018-09-20 02:27:09'),
@@ -536,7 +539,10 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (43, 'kagayaku@gmail.com', 'Gilang41', 'Gilang Kg', '12345gilang', '3312414124', '1990-11-11', 'jec', '234432', '037041', 450000, 'asd1', '2018-09-19 08:10:42'),
 (44, 'bayou@gmail.com', 'Bayu42', 'Bayu dbijak', '654321by12', '3312414124', '1990-11-11', 'magelang', '234432', '037042', 450000, 'asd1', '2018-09-19 08:12:01'),
 (45, 'ando@gmail.com', 'Armando43', 'Armando Firdaus', '65432arm12', '3312414124', '1990-11-11', 'magelang', '232323', '037043', 450000, 'asd1', '2018-09-19 08:19:54'),
-(46, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin44', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037044', 400000, 'asd1', '2018-09-20 02:27:09');
+(46, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin44', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '1c88b390f7a3d49edfbeff983c85c2f4', '037044', 400000, 'asd1', '2018-09-20 02:27:09'),
+(47, 'daniel_kang@naver.com', 'Daniel45', 'Daniel Kang', 'b5ea8985533defbf1d08d5ed2ac8fe9b', '019784793849827', '1996-12-10', 'South Korea', '4c969d7049af7e978d8b617c5014d7f9', '037045', 450000, 'asd1', '2018-09-20 02:47:21'),
+(49, 'daehwi_lee@naver.com', 'Daehwi47', 'Daehwi Lee', '273d9bd3ef50d81d70fd9150c9404565', '392849840293', '2001-01-27', 'South Korea', 'f39c8f313f3449a39d36c761d028efc7', '037047', 450000, 'asd1', '2018-09-20 03:04:42'),
+(50, 'jaehwan_kim@naver.com', 'Jaehwan48', 'Jaehwan Kim', '5994b01d753d52410bd6f17a5da647f4', '02382783209832', '1996-05-27', 'South Korea', '98467a817e2ff8c8377c1bf085da7138', '037048', 450000, 'asd1', '2018-09-20 03:08:49');
 
 -- --------------------------------------------------------
 
@@ -720,7 +726,7 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Constraints for dumped tables
