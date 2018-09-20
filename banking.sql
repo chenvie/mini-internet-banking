@@ -68,6 +68,9 @@ SET kodeT = concat(kodeT,jml);
 
 insert into transaksi SET kode_transaksi = kodeT,id_nasabah = id_nsb,status = stts, ket_status = msg;
 END IF;
+
+SELECT stts as stts, msg as msg;
+
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `generateKodeTransaksi` (IN `jenis` VARCHAR(1))  NO SQL
@@ -390,7 +393,10 @@ SET kode_transaksi=kodeT, id_nasabah=id_nsb, status=stts, ket_status=ket_stts;
 IF stts = "Berhasil" THEN
 INSERT INTO transfer
 SET kode_transfer=kodeT, rek_transfer=no_rek_tujuan, nominal=nmnl, keterangan=ket;
-END IF;    
+END IF;
+
+SELECT stts as stts, ket_stts as ket_stts;
+
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahKodeRahasia` (IN `id_nsb` INT(10), IN `krhLama` VARCHAR(100), IN `krhBaru1` VARCHAR(100), IN `krhBaru2` VARCHAR(100), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
