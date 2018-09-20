@@ -29,7 +29,9 @@ READ MUTASI
 url	: localhost:8080/mutasi/{id}
 method	: GET
 input	: id (param)
-output	: mutasi : kode_transaksi, no_rek, tgl_trans, tujuan, jenis, keterangan, nominal (JSON)
+output	: JSON Array 
+	respon : id_nasabah, tgl_awal, tgl_akhir
+	result : List<mutasi> : kode_transaksi, no_rek, tgl_trans, tujuan, jenis, keterangan, nominal 
 
 
 READ HISTORY
@@ -37,7 +39,9 @@ url	: localhost:8080/history/{id}/{tgl_awal}/{tgl_akhir}
 	contoh format tanggal : 		localhost:8080/history/2/2018-08-15/2018-09-13
 method	: GET
 input	: id, tgl_awal, tgl_akhir (param)
-output	: kode_transaksi, tgl_trans, tujuan, keterangan, nominal, status (JSON)
+output	: JSON Array 
+	respon : id_nasabah, tgl_awal, tgl_akhir
+	result : List<history> : kode_transaksi, tgl_trans, tujuan, keterangan, nominal, status (JSON)
 
 
 UPDATE PASSWORD
