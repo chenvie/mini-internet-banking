@@ -223,9 +223,9 @@ public class SettingActivity extends AppCompatActivity {
 
                                 try {
                                     JSONObject jsonObject = new JSONObject(responseBody);
-                                    final String result = jsonObject.getString("message");
+                                    final String result = jsonObject.getString("status");
 
-                                    if (result.equalsIgnoreCase("update password berhasil")) {
+                                    if (result.equalsIgnoreCase("berhasil")) {
                                         listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Update password success, [" +
                                                 "Password Lama = " + finalHashOPassword +
                                                 ", Password Baru = " + finalHashNPassword +
@@ -402,9 +402,9 @@ public class SettingActivity extends AppCompatActivity {
                                 String responseBody = response.body().string().toString();
                                 try {
                                     JSONObject jsonObject = new JSONObject(responseBody);
-                                    final String result = jsonObject.getString("message");
+                                    final String result = jsonObject.getString("status");
 
-                                    if (result.equalsIgnoreCase("update kode rahasia berhasil")) {
+                                    if (result.equalsIgnoreCase("berhasil")) {
                                         listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Update secret code success, [" +
                                                 "Kode Rahasia Lama = " + finalHashOCode +
                                                 ", Kode Rahasia Baru = " + finalHashNCode +

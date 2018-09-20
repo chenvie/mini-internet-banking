@@ -121,10 +121,8 @@ public class TransferActivity extends AppCompatActivity {
 
             JSONObject jsonParams = new JSONObject();
             try {
-                jsonParams.put("no_rek_tujuan", noRek);
-                jsonParams.put("id_nasabah", Nasabah.id);
-                jsonParams.put("nominal", nominal);
-                jsonParams.put("keterangan", ket);
+                jsonParams.put("norek", noRek);
+                jsonParams.put("id_nsb", Nasabah.id);
             } catch (JSONException e) {
                 Log.e(TAG, "Error create JSONObject for post param: " + e.getMessage());
                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error create JSONObejct for post param: " + e.getMessage());
@@ -158,21 +156,17 @@ public class TransferActivity extends AppCompatActivity {
 
                     try {
                         JSONObject jsonObject = new JSONObject(responseBody);
-                        String check = jsonObject.getString("check");
+                        String check = jsonObject.getString("status");
                         final String message = jsonObject.getString("message");
 
-                        if (check.equalsIgnoreCase("true")){
+                        if (check.equalsIgnoreCase("berhasil")){
                             Log.i(TAG, "Checking receiver rekening num success, [" +
                                     "No Rekening Tujuan = " + noRek +
-                                    ", Nominal = " + nominal +
-                                    ", Keterangan = " + ket +
-                                    ", Nasabah id = " + Nasabah.id);
+                                    ", Id Nasabah = " + Nasabah.id);
                             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Checking receiver rekening num success, [" +
                                     "No Rekening Tujuan = " + noRek +
-                                    ", Nominal = " + nominal +
-                                    ", Keterangan = " + ket +
                                     ", Nasabah id = " + Nasabah.id);
-                            intent.putExtra("noRek", message);
+                            intent.putExtra("noRek", noRek);
                             intent.putExtra("nominal", nominal);
                             intent.putExtra("ket", ket);
                             writeLogs();

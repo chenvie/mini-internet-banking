@@ -94,8 +94,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
                 String responseBody = response.body().string().toString();
 
                 try {
-                    JSONObject jsonObject = new JSONObject(responseBody);
-                    JSONArray jsonRecords = jsonObject.getJSONArray("records");
+                    JSONArray jsonRecords = new JSONArray(responseBody);
 
                     List<Transaction> listTrans = new ArrayList<Transaction>();
                     historyAdapter = new HistoryAdapter(listTrans, mContext);
