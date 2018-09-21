@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+    <list default="true" id="d9a9029f-3e19-4231-95cc-dca88c5d6461" name="Default Changelist" comment="" />
     <list default="true" id="d9a9029f-3e19-4231-95cc-dca88c5d6461" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -399,13 +400,13 @@
       <workItem from="1537346992349" duration="149000" />
       <workItem from="1537347913652" duration="6519000" />
       <workItem from="1537408938925" duration="5110000" />
-      <workItem from="1537430891630" duration="1750000" />
-      <workItem from="1537494607626" duration="837000" />
+      <workItem from="1537430891630" duration="2346000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80761000" />
+    <option name="totallyTimeSpent" value="79861000" />
+    <option name="totallyTimeSpent" value="79380000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
