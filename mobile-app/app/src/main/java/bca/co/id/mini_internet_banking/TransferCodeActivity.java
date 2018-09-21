@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -53,7 +54,7 @@ public class TransferCodeActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private String TAG = TransferCodeActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
-    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
     private String id, username, name, password, code, birthday, rekeningNum, saldo;
 
     @Override
@@ -289,7 +290,7 @@ public class TransferCodeActivity extends AppCompatActivity {
 
     private void loadMutationView(){
         writeLogs();
-        Intent intent = new Intent(this, MutationActivity.class);
+        Intent intent = new Intent(this, MutationRekeningActivity.class);
         startActivity(intent);
     }
 
@@ -342,11 +343,15 @@ public class TransferCodeActivity extends AppCompatActivity {
     private boolean getNasabahData() throws JSONException {
         final OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
-        urlBuilder.addQueryParameter("id", Nasabah.id);
-        // urlBuilder.addQueryParameter("unm", Nasabah.username);
+        //HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
+        //urlBuilder.addQueryParameter("unm", Nasabah.username);
+        //urlBuilder.addQueryParameter("id", Nasabah.id);
 
-        String url = urlBuilder.build().toString();
+        //String url = urlBuilder.build().toString();
+
+        String url = HttpClientURL.urlReadOne + "/" + Nasabah.id;
+
+        Log.e(TAG, "URL = " + url);
 
         final Request request = new Request.Builder()
                 .url(url)

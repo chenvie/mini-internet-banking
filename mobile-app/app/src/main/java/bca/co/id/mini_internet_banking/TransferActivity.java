@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,7 +47,7 @@ public class TransferActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private String TAG = TransferActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
-    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -220,7 +221,7 @@ public class TransferActivity extends AppCompatActivity {
 
     private void loadMutationView(){
         writeLogs();
-        Intent intent = new Intent(this, MutationActivity.class);
+        Intent intent = new Intent(this, MutationRekeningActivity.class);
         startActivity(intent);
     }
 

@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 import okhttp3.Call;
@@ -51,7 +52,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private String TAG = HistoryDetailActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
-    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+    private String paramFrom, paramTo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,16 +68,21 @@ public class HistoryDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String from = intent.getStringExtra("dateFrom");
         final String to = intent.getStringExtra("dateTo");
+        paramFrom = intent.getStringExtra("paramFrom");
+        paramTo = intent.getStringExtra("paramTo");
 
         txtHistoryRange.setText(from + " - " + to);
 
         final OkHttpClient client = new OkHttpClient();
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadHistory).newBuilder();
+        /*HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadHistory).newBuilder();
         urlBuilder.addQueryParameter("id", Nasabah.id);
         urlBuilder.addQueryParameter("tgl_awal", from);
         urlBuilder.addQueryParameter("tgl_akhir", to);
 
-        String url = urlBuilder.build().toString();
+        String url = urlBuilder.build().toString();*/
+
+        String url = HttpClientURL.urlReadHistory + "/" + Nasabah.id + "/" + paramFrom + "/" + paramTo;
+        Log.e(TAG, "URL = " + url);
 
         final Request request = new Request.Builder()
                 .url(url)
@@ -94,7 +101,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
                 String responseBody = response.body().string().toString();
 
                 try {
-                    JSONArray jsonRecords = new JSONArray(responseBody);
+                    JSONObject jsonObject = new JSONObject(responseBody);
+                    JSONArray jsonRecords = jsonObject.getJSONArray("result");
 
                     List<Transaction> listTrans = new ArrayList<Transaction>();
                     historyAdapter = new HistoryAdapter(listTrans, mContext);
@@ -191,7 +199,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
     private void loadMutationView(){
         writeLogs();
-        Intent intent = new Intent(this, MutationActivity.class);
+        Intent intent = new Intent(this, MutationRekeningActivity.class);
         startActivity(intent);
     }
 

@@ -47,7 +47,7 @@ public class NewRekeningActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private String id, username, name, password, code, birthday, rekeningNum, saldo;
     private List<String> listLog = new ArrayList<String>();
-    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

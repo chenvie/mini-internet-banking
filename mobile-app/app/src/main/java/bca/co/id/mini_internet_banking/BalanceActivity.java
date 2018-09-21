@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -40,7 +41,7 @@ public class BalanceActivity extends AppCompatActivity {
     private String TAG = BalanceActivity.class.getSimpleName();
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
-    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,7 +125,7 @@ public class BalanceActivity extends AppCompatActivity {
 
     private void loadMutationView(){
         writeLogs();
-        Intent intent = new Intent(this, MutationActivity.class);
+        Intent intent = new Intent(this, MutationRekeningActivity.class);
         startActivity(intent);
     }
 
