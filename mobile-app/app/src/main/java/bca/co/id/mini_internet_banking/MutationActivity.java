@@ -23,10 +23,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,7 +48,7 @@ public class MutationActivity extends AppCompatActivity {
     private TextView txtMutationDate, txtNorekMutasi;
     private final String TAG = MutationActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
-    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,11 +65,12 @@ public class MutationActivity extends AppCompatActivity {
 
         final SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadMutation).newBuilder();
-        urlBuilder.addQueryParameter("id", Nasabah.id);
+        //HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadMutation).newBuilder();
+        //urlBuilder.addQueryParameter("id", Nasabah.id);
         //urlBuilder.addQueryParameter("tgl", s.format(new Date()));
 
-        String url = urlBuilder.build().toString();
+        //String url = urlBuilder.build().toString();
+        String url = HttpClientURL.urlReadMutation + "/" + Nasabah.id;
 
         final Request request = new Request.Builder()
                 .url(url)
@@ -86,18 +89,44 @@ public class MutationActivity extends AppCompatActivity {
                 String responseBody = response.body().string().toString();
                 try {
                     JSONObject jsonObject = new JSONObject(responseBody);
-                    JSONArray jsonTanggal = jsonObject.getJSONArray("resp");
-                    String id = jsonTanggal.getJSONObject(0).getString("id_nasabah");
+                    JSONObject jsonTanggal = jsonObject.getJSONObject("respon");
+                    String id = jsonTanggal.getString("id_nasabah");
                     String no_rek_pengirim = "";
                     if (id == Nasabah.id){
                         no_rek_pengirim = Nasabah.rekeningNum;
                     }
-                    String tgl_awal = jsonTanggal.getJSONObject(0).getString("tgl_awal");
-                    String tgl_akhir = jsonTanggal.getJSONObject(0).getString("tgl_akhir");
+                    String tgl_awal = jsonTanggal.getString("tgl_awal");
+                    String tgl_akhir = jsonTanggal.getString("tgl_akhir");
+
+                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("EE, dd MMM yyyy", Locale.US);
+
+                    Date from = null;
+                    try {
+                        from = inputFormat.parse(tgl_awal);
+                        tgl_awal = outputFormat.format(from);
+                    } catch (ParseException e) {
+                        Log.e(TAG, "Failed to parse date" + e.getMessage());
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to parse date");
+                        e.printStackTrace();
+
+                    }
+
+                    Date to = null;
+                    try {
+                        to = inputFormat.parse(tgl_akhir);
+                        tgl_akhir = outputFormat.format(from);
+                    } catch (ParseException e) {
+                        Log.e(TAG, "Failed to parse date" + e.getMessage());
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to parse date");
+                        e.printStackTrace();
+
+                    }
+
                     txtMutationDate.setText(tgl_awal + " - " + tgl_akhir);
                     txtNorekMutasi.setText(no_rek_pengirim);
 
-                    JSONArray jsonRecords = jsonObject.getJSONArray("records");
+                    JSONArray jsonRecords = jsonObject.getJSONArray("result");
 
                     List<Transaction> listTrans = new ArrayList<Transaction>();
                     mutationAdapter = new MutationAdapter(listTrans, mContext);
@@ -112,7 +141,7 @@ public class MutationActivity extends AppCompatActivity {
                     for (int i = 0; i < jsonRecords.length(); i++) {
                         String tgl_trans = jsonRecords.getJSONObject(i).getString("tgl_trans");
                         String tujuan = jsonRecords.getJSONObject(i).getString("tujuan");
-                        String info = jsonRecords.getJSONObject(i).getString("jenis") + jsonRecords.getJSONObject(i).getString("keterangan");
+                        String info = jsonRecords.getJSONObject(i).getString("jenis") + " " + jsonRecords.getJSONObject(i).getString("keterangan");
                         String nominal = jsonRecords.getJSONObject(i).getString("nominal");
 
                         listTrans.add(new Transaction(tgl_trans, tujuan, info, Float.parseFloat(nominal)));
@@ -191,7 +220,7 @@ public class MutationActivity extends AppCompatActivity {
 
     private void loadMutationView(){
         writeLogs();
-        Intent intent = new Intent(this, MutationActivity.class);
+        Intent intent = new Intent(this, MutationRekeningActivity.class);
         startActivity(intent);
     }
 

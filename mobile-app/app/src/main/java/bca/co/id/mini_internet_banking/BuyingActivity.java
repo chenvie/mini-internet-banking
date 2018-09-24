@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -44,12 +45,14 @@ public class BuyingActivity extends AppCompatActivity {
     private Spinner inputProviderBuying, inputNominalBuying;
     private Button btnSubmitBuying;
     private SharedPreferences sp;
-    private static final String[]provider = {"Telkomsel", "Indosat", "XL", "Smartfren"};
-    private static final String[]nominal = {"50000", "100000", "150000"};
+    private final List<String> provider = new ArrayList<String>();
+    private final List<String> nominal = new ArrayList<String>();
+    //private static final String[]provider = {"Telkomsel", "Indosat", "XL", "Smartfren"};
+    //private static final String[]nominal = {"25000", "50000", "100000", "150000"};
     private Context mContext;
     private String TAG = BuyingActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
-    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,14 +67,24 @@ public class BuyingActivity extends AppCompatActivity {
         inputNoHpBuying = findViewById(R.id.inputNoHpBuying);
         btnSubmitBuying = findViewById(R.id.btnSubmitBuying);
 
+        provider.add("Telkomsel");
+        provider.add("Indosat");
+        provider.add("XL");
+        provider.add("Smartfren");
+
+        nominal.add("25000");
+        nominal.add("50000");
+        nominal.add("100000");
+        nominal.add("150000");
+
         //setting for spinner
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(BuyingActivity.this,
-                android.R.layout.simple_spinner_item,provider);
+                android.R.layout.simple_spinner_item, provider);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inputProviderBuying.setAdapter(adapter1);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(BuyingActivity.this,
-                android.R.layout.simple_spinner_item,nominal);
+                android.R.layout.simple_spinner_item, nominal);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inputNominalBuying.setAdapter(adapter2);
 
@@ -165,7 +178,7 @@ public class BuyingActivity extends AppCompatActivity {
 
     private void loadMutationView(){
         writeLogs();
-        Intent intent = new Intent(this, MutationActivity.class);
+        Intent intent = new Intent(this, MutationRekeningActivity.class);
         startActivity(intent);
     }
 

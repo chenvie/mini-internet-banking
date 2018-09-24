@@ -46,12 +46,14 @@ public class HistoryActivity extends AppCompatActivity {
     private TextView txtHistDateFrom, txtHistDateTo;
     private Button btnShowHistory;
     private String dateTo, dateFrom;
+    private String paramTo, paramFrom;
     private String histDateFrom, histDateTo;
     private long checkDateFrom, checkDateTo;
     private String TAG = HistoryActivity.class.getSimpleName();
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
-    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+    private static final String[] noRek = {};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -164,7 +166,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     //set string date to EditText from date picker dialog
     private void updateLabelHistTo() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        String myFormat = "dd/MM/yyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         checkDateTo = myCalendar.getTime().getTime();
         histDateTo = sdf.format(myCalendar.getTime());
@@ -175,11 +177,13 @@ public class HistoryActivity extends AppCompatActivity {
     private void showHistory() {
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         SimpleDateFormat outputFormat = new SimpleDateFormat("EE, dd MMM yyyy", Locale.US);
+        SimpleDateFormat outputParam = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         Date from = null;
         try {
             from = inputFormat.parse(histDateFrom.toString());
             dateFrom = outputFormat.format(from);
+            paramFrom = outputParam.format(from);
         } catch (ParseException e) {
             Log.e(TAG, "Failed to parse date" + e.getMessage());
             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to parse date");
@@ -191,6 +195,7 @@ public class HistoryActivity extends AppCompatActivity {
         try {
             to = inputFormat.parse(histDateTo.toString());
             dateTo = outputFormat.format(to);
+            paramTo = outputParam.format(to);
         } catch (ParseException e) {
             Log.e(TAG, "Failed to parse date" + e.getMessage());
             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to parse date");
@@ -205,6 +210,8 @@ public class HistoryActivity extends AppCompatActivity {
             Intent intent = new Intent(this, HistoryDetailActivity.class);
             intent.putExtra("dateFrom", dateFrom);
             intent.putExtra("dateTo", dateTo);
+            intent.putExtra("paramFrom", paramFrom);
+            intent.putExtra("paramTo", paramTo);
             startActivity(intent);
         } else{
             Log.e(TAG, "Date from and to exceed 30 days");
@@ -238,7 +245,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void loadMutationView(){
         writeLogs();
-        Intent intent = new Intent(this, MutationActivity.class);
+        Intent intent = new Intent(this, MutationRekeningActivity.class);
         startActivity(intent);
     }
 

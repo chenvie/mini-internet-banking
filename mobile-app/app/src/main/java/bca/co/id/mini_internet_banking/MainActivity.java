@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -40,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtNewRekening;
     private Context mContext;
     private String TAG = MainActivity.class.getSimpleName();
-    private String id, username, name, password, code, birthday, rekeningNum, saldo;
+    private String id, username, name, password, code, birthday, saldo;
+    private List<String> rekeningNum = new ArrayList<String>();
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
-    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +59,18 @@ public class MainActivity extends AppCompatActivity {
         //get session data from SharedPreferences
         if (sp.getBoolean("isLogin", false)){
             try {
-                if (getNasabahData()){
-                    Nasabah.id = sp.getString("id", "");
-                    Nasabah.name = sp.getString("name", "");
-                    Nasabah.username = sp.getString("username", "");
-                    Nasabah.password = sp.getString("password", "");
-                    Nasabah.code = sp.getString("code", "");
-                    Nasabah.birthday = sp.getString("birthday", "");
-                    Nasabah.rekeningNum = sp.getString("rekeningNum", "");
-                    Nasabah.saldo = sp.getFloat("saldo", 0);
-                    Log.i(TAG, "Get Nasabah data from session");
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Get Nasabah data from session");
+                Nasabah.id = sp.getString("id", "");
+                Nasabah.name = sp.getString("name", "");
+                Nasabah.username = sp.getString("username", "");
+                Nasabah.password = sp.getString("password", "");
+                Nasabah.code = sp.getString("code", "");
+                Nasabah.birthday = sp.getString("birthday", "");
+                Nasabah.rekeningNum.add(sp.getString("rekeningNum", ""));
+                Nasabah.saldo = sp.getFloat("saldo", 0);
+                Log.i(TAG, "Get Nasabah data from session");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Get Nasabah data from session");
 
+                if (getNasabahData()){
                     writeLogs();
                     Intent intent = new Intent(this, HomeActivity.class);
                     startActivity(intent);
@@ -222,11 +224,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean getNasabahData() throws JSONException {
         final OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
+        //HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadOne).newBuilder();
         //urlBuilder.addQueryParameter("unm", Nasabah.username);
-        urlBuilder.addQueryParameter("id", Nasabah.id);
+        //urlBuilder.addQueryParameter("id", Nasabah.id);
 
-        String url = urlBuilder.build().toString();
+        //String url = urlBuilder.build().toString();
+
+        String url = HttpClientURL.urlReadOne + "/" + Nasabah.id;
 
         Log.e(TAG, "URL = " + url);
 
@@ -247,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log.i(TAG, "Get Nasabah data on progrees, [Username = " + Nasabah.username + "]");
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get nasabah data on progress, [Username = " + Nasabah.username + "]");
+
                     JSONObject jsonObject = new JSONObject(responseBody);
                     id = jsonObject.getString("id_nasabah");
                     username = jsonObject.getString("username");
@@ -254,7 +259,10 @@ public class MainActivity extends AppCompatActivity {
                     name = jsonObject.getString("nama_lengkap");
                     code = jsonObject.getString("kode_rahasia");
                     birthday = jsonObject.getString("tgl_lahir");
-                    rekeningNum = jsonObject.getString("no_rek");
+                    JSONArray rekening = jsonObject.getJSONArray("no_rek");
+                    for (int i = 0; i < rekening.length(); i++){
+                        rekeningNum.add(rekening.getString(i));
+                    }
                     saldo = jsonObject.getString("jml_saldo");
 
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get Nasabah data success, data = [" +
@@ -275,7 +283,8 @@ public class MainActivity extends AppCompatActivity {
                             ", Kode Rahasia = " + code +
                             ", Tanggal lahir = " + birthday +
                             ", No Rekening = " + rekeningNum +
-                            ", Saldo = " + saldo + "]");
+                            ", Saldo = " + saldo + "]"
+                    );
 
                     Nasabah.id = id;
                     Nasabah.name = name;

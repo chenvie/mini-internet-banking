@@ -30,6 +30,31 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Histori Rekening"
+                android:fontFamily="casual"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:layout_marginBottom="30dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pilih Rekening"
+                android:fontFamily="casual"
+                android:textSize="15sp"
+                android:layout_marginBottom="10dp"/>
+
+            <Spinner
+                android:id="@+id/txtHistNoRek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:spinnerMode="dropdown"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Masukkan tanggal transaksi: "
                 android:fontFamily="casual"
                 android:textSize="15sp"
