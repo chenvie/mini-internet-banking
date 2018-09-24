@@ -3,8 +3,12 @@ package magangbca.reinald;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class NasabahRepositorylmpl{
@@ -36,16 +40,16 @@ public class NasabahRepositorylmpl{
         return result;
     }
 
-    public Map<String, String> updateCode(int id_nasabah, String kode_rahasiaL, String krb1, String krb2){
+    public Map<String, String> updateCode(String no_rek, String kode_rahasiaL, String krb1, String krb2){
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("putNasabahKodeRahasia")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(5, String.class, ParameterMode.OUT)
                 .registerStoredProcedureParameter(6, String.class, ParameterMode.OUT);
 
-        query.setParameter(1, id_nasabah)
+        query.setParameter(1, no_rek)
                 .setParameter(2, kode_rahasiaL)
                 .setParameter(3, krb1)
                 .setParameter(4, krb2);
@@ -89,13 +93,13 @@ public class NasabahRepositorylmpl{
         String username = (String) storedProcedure.getOutputParameterValue(8);
         String status = (String) storedProcedure.getOutputParameterValue(9);
         String message = (String) storedProcedure.getOutputParameterValue(10);
-        String id_nsb  = (String) storedProcedure.getOutputParameterValue(11);
+        String no_rek  = (String) storedProcedure.getOutputParameterValue(11);
 
         Map<String, String> result = new HashMap<String, String>();
         result.put("status", status);
         result.put("message", message);
         result.put("username", username);
-        result.put("id_nsb", id_nsb);
+        result.put("no_rek", no_rek);
 
         return result;
     }
@@ -125,6 +129,46 @@ public class NasabahRepositorylmpl{
         result.put("id_nasabah", id_nsb);
 
         return result;
+
+    }
+
+    public Map<String, String> postRek(String id_nsb, String kr){
+        StoredProcedureQuery storeProcedure = entityManager.createStoredProcedureQuery("postRekening")
+                .registerStoredProcedureParameter(1, String.class, ParameterMode.IN).
+                        registerStoredProcedureParameter(2,String.class,ParameterMode.IN).
+                        registerStoredProcedureParameter(3,String.class,ParameterMode.OUT).
+                        registerStoredProcedureParameter(4,String.class,ParameterMode.OUT).
+                        registerStoredProcedureParameter(5,String.class, ParameterMode.OUT);
+
+
+        storeProcedure.setParameter(1, id_nsb)
+                .setParameter(2, kr);
+        storeProcedure.execute();
+
+        String norek = (String) storeProcedure.getOutputParameterValue(3);
+        String status = (String) storeProcedure.getOutputParameterValue(4);
+        String msg = (String) storeProcedure.getOutputParameterValue(5);
+
+        Map<String, String> result = new HashMap<>();
+        result.put("status", status);
+        result.put("message", msg);
+        result.put("no_rek", norek);
+
+        return result;
+
+    }
+
+    public List<Object> getRekList (Integer id_nsb){
+        StoredProcedureQuery storeProcedure = entityManager.createStoredProcedureQuery("getListNoRek")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
+
+
+        storeProcedure.setParameter(1, id_nsb);
+        storeProcedure.execute();
+
+        // Call the stored procedure.
+        List<Object[]> storedProcedureResults = storeProcedure.getResultList();
+        return storedProcedureResults.stream().map(result -> new Rekening( result[0].toString(),result[1].toString(),(Integer) result[2],result[3].toString(),result[4].toString())).collect(Collectors.toList());
 
     }
 }

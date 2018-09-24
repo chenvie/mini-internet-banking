@@ -16,12 +16,12 @@ public class MutasiController {
     @Autowired
     MutasiRepository mutasiRespository;
 
-    @GetMapping("/mutasi/{id}")
+    @GetMapping("/mutasi/{norek}")
 //    public List<Mutasi> show(@PathVariable Integer id){
-    public Response show(@PathVariable Integer id){
+    public Response show(@PathVariable String norek){
         ZoneId z = ZoneId.of("Asia/Jakarta");
         LocalDate dt1 = LocalDate.now(z).plusDays(1);
         LocalDate dt2 = LocalDate.now(z).minusDays(7);
-        return mutasiRespository.getSomeMutasi(id,dt1,dt2);
+        return mutasiRespository.getSomeMutasi(norek,dt1,dt2);
     }
 }

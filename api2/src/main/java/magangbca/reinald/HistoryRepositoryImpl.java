@@ -22,17 +22,17 @@ public class HistoryRepositoryImpl implements HistoryRepository {
     private EntityManager entityManager;
 
     @Override
-    public Response getSomeHistory(Integer firstParameter, String secondParameter, String thirdParameter){
+    public Response getSomeHistory(String norek, String tgl_awal, String tgl_akhir){
 
 
         StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("getHistory")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN).
+                .registerStoredProcedureParameter(1, String.class, ParameterMode.IN).
                         registerStoredProcedureParameter(2, String.class, ParameterMode.IN).
                         registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
 
-        storedProcedure.setParameter(1, firstParameter)
-                .setParameter(2, secondParameter)
-                .setParameter(3, thirdParameter);
+        storedProcedure.setParameter(1, norek)
+                .setParameter(2, tgl_awal)
+                .setParameter(3, tgl_akhir);
 
         storedProcedure.execute();
         // Call the stored procedure.
@@ -40,9 +40,9 @@ public class HistoryRepositoryImpl implements HistoryRepository {
 
         // Use Java 8's cool new functional programming paradigm to map the objects from the stored procedure results
         Map<String, String> tgl = new HashMap<String, String>();
-        tgl.put("id_nasabah", firstParameter.toString());
-        tgl.put("tgl_awal", secondParameter);
-        tgl.put("tgl_akhir", thirdParameter);
+        tgl.put("no_rek", norek);
+        tgl.put("tgl_awal", tgl_awal);
+        tgl.put("tgl_akhir", tgl_akhir);
 
         Response resp = new Response();
         resp.setResp(new ResponseEntity<Map<String, String>>(tgl, HttpStatus.OK));

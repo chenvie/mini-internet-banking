@@ -13,8 +13,8 @@ public class HistoryController {
     @Autowired
     HistoryRepository historyRepository;
 
-    @GetMapping("/history/{id}/{dt1}/{dt2}")
-    public Response show(@PathVariable("id") Integer id, @PathVariable("dt1") String dt1, @PathVariable("dt2")String dt2){
-        return historyRepository.getSomeHistory(id,dt1,dt2);
+    @GetMapping("/history/{norek}/{dt1}/{dt2}")
+    public Response show(@PathVariable("norek") String norek, @PathVariable("dt1") String dt1, @PathVariable("dt2")String dt2){
+        return historyRepository.getSomeHistory(norek,dt1,dt2);
     }
 }

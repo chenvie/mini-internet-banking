@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class NasabahController {
@@ -21,10 +24,20 @@ public class NasabahController {
         return nasabahRepository.findAll();
     }
 
+//    @GetMapping("/nasabah/{id}")
+//    public Nasabah show(@PathVariable String id){
+//        int nasabahID = Integer.parseInt(id);
+//        return nasabahRepository.findOne(nasabahID);
+//    }
+
     @GetMapping("/nasabah/{id}")
-    public Nasabah show(@PathVariable String id){
+    public Response show(@PathVariable String id){
         int nasabahID = Integer.parseInt(id);
-        return nasabahRepository.findOne(nasabahID);
+
+        Response resp = new Response();
+        resp.setRespon(nasabahRepository.findOne(nasabahID));
+        resp.setResult(nasabahRepositorylmpl.getRekList(nasabahID));
+        return  resp;
     }
 
     @PostMapping("/login")
@@ -51,18 +64,18 @@ public class NasabahController {
 
     @PostMapping("/update_kode_rahasia")
     public ResponseEntity<?> updateCode(@RequestBody Map<String, String> body){
-        int id_nasabah = Integer.parseInt(body.get("id_nasabah"));
+        String no_rek = body.get("no_rek");
         String kode_rahasiaL = body.get("kode_rahasiaL");
         String krb1 = body.get("krb1");
         String krb2 = body.get("krb2");
 
-        Map<String, String> result = nasabahRepositorylmpl.updateCode(id_nasabah, kode_rahasiaL, krb1, krb2);
+        Map<String, String> result = nasabahRepositorylmpl.updateCode(no_rek, kode_rahasiaL, krb1, krb2);
 
         return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
     }
 
     @PostMapping("/nasabah")
-    public ResponseEntity<?> create(@RequestBody Map<String, String> body){
+    public ResponseEntity<?> createNsb(@RequestBody Map<String, String> body){
         String nama = body.get("nama_lengkap");
         String email = body.get("email");
         String password  = body.get("password");
@@ -81,5 +94,15 @@ public class NasabahController {
         int nasabahId = Integer.parseInt(id);
         nasabahRepository.delete(nasabahId);
         return true;
+    }
+
+    @PostMapping("/rekening")
+    public ResponseEntity<?> createRek(@RequestBody Map<String, String> body){
+        String idnsb = body.get("id_nasabah");
+        String kr = body.get("kode_rahasia");
+
+        Map<String, String> result = nasabahRepositorylmpl.postRek(idnsb,kr);
+
+        return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
     }
 }

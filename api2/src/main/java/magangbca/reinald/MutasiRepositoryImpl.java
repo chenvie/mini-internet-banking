@@ -22,16 +22,16 @@ public class MutasiRepositoryImpl implements MutasiRepository {
     private EntityManager entityManager;
 
     @Override
-        public Response getSomeMutasi(Integer firstParameter, LocalDate secondParameter, LocalDate thirdParameter){
+        public Response getSomeMutasi(String norek, LocalDate tgl_awal, LocalDate tgl_akhir){
 
-        Date date1 = Date.valueOf(secondParameter);
-        Date date2 = Date.valueOf(thirdParameter);
+        Date date1 = Date.valueOf(tgl_awal);
+        Date date2 = Date.valueOf(tgl_akhir);
            StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("getMutasi")
-                    .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN).
+                    .registerStoredProcedureParameter(1, String.class, ParameterMode.IN).
                     registerStoredProcedureParameter(2, String.class, ParameterMode.IN).
                     registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
 
-        storedProcedure.setParameter(1, firstParameter)
+        storedProcedure.setParameter(1, norek)
                     .setParameter(2, date2.toString())
                     .setParameter(3, date1.toString());
 
@@ -40,13 +40,13 @@ public class MutasiRepositoryImpl implements MutasiRepository {
             List<Object[]> storedProcedureResults = storedProcedure.getResultList();
 
         Map<String, String> tgl = new HashMap<String, String>();
-        tgl.put("id_nasabah", firstParameter.toString());
-        tgl.put("tgl_awal", secondParameter.toString());
-        tgl.put("tgl_akhir", thirdParameter.toString());
+        tgl.put("no_rek", norek);
+        tgl.put("tgl_awal", tgl_awal.toString());
+        tgl.put("tgl_akhir", tgl_akhir.toString());
 
         Response resp = new Response();
         resp.setResp(new ResponseEntity<Map<String, String>>(tgl, HttpStatus.OK));
-        resp.setResult(storedProcedureResults.stream().map(result -> new Mutasi( result[0].toString(),result[1].toString(),result[3].toString(),result[2].toString(),result[4].toString(),result[5].toString(),(BigInteger) result[6])).collect(Collectors.toList()));
+        resp.setResult(storedProcedureResults.stream().map(result -> new Mutasi( result[0].toString(),result[1].toString(),result[3].toString(),result[2].toString(),result[4].toString(),(BigInteger) result[5])).collect(Collectors.toList()));
         return resp;
     }
 }

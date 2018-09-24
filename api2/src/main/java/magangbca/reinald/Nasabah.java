@@ -18,13 +18,9 @@ public class Nasabah {
     private String nama_lengkap;
     private String password;
     private String no_ktp;
-    private Date tgl_lahir;
+    private String tgl_lahir;
     private String alamat;
-    private String kode_rahasia;
-    private String no_rek;
-    private int jml_saldo;
-    private String kode_cabang;
-    private Timestamp created;
+    private String created;
 
     public Nasabah() {  }
 
@@ -76,11 +72,11 @@ public class Nasabah {
         this.no_ktp = no_ktp;
     }
 
-    public Date getTgl_lahir() {
+    public String getTgl_lahir() {
         return tgl_lahir;
     }
 
-    public void setTgl_lahir(Date tgl_lahir) {
+    public void setTgl_lahir(String tgl_lahir) {
         this.tgl_lahir = tgl_lahir;
     }
 
@@ -92,43 +88,11 @@ public class Nasabah {
         this.alamat = alamat;
     }
 
-    public String getKode_rahasia() {
-        return kode_rahasia;
-    }
-
-    public void setKode_rahasia(String kode_rahasia) {
-        this.kode_rahasia = kode_rahasia;
-    }
-
-    public String getNo_rek() {
-        return no_rek;
-    }
-
-    public void setNo_rek(String no_rek) {
-        this.no_rek = no_rek;
-    }
-
-    public int getJml_saldo() {
-        return jml_saldo;
-    }
-
-    public void setJml_saldo(int jml_saldo) {
-        this.jml_saldo = jml_saldo;
-    }
-
-    public String getKode_cabang() {
-        return kode_cabang;
-    }
-
-    public void setKode_cabang(String kode_cabang) {
-        this.kode_cabang = kode_cabang;
-    }
-
-    public Timestamp getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 
@@ -143,10 +107,6 @@ public class Nasabah {
                 ", no_ktp='" + no_ktp + '\'' +
                 ", tgl_lahir='" + tgl_lahir + '\'' +
                 ", alamat='" + alamat + '\'' +
-                ", kode_rahasia='" + kode_rahasia + '\'' +
-                ", no_rek='" + no_rek + '\'' +
-                ", jml_saldo='" + jml_saldo + '\'' +
-                ", kode_cabang='" + kode_cabang + '\'' +
                 ", created='" + created + '\'' +
                 '}';
     }

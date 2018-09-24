@@ -8,7 +8,6 @@ public class Mutasi {
     @Id
     private String kode_transaksi;
 
-    private String no_rek;
     private String tgl_trans;
     private String tujuan;
     private String jenis;
@@ -16,9 +15,8 @@ public class Mutasi {
     private BigInteger nominal;
 
     public Mutasi() {  }
-    public Mutasi(String kd, String nr, String tj, String ttr, String jns, String ket, BigInteger nom) {
+    public Mutasi(String kd, String tj, String ttr, String jns, String ket, BigInteger nom) {
       this.setKode_transaksi(kd);
-      this.setNo_rek(nr);
       this.setTujuan(tj);
       this.setTgl_trans(ttr);
       this.setJenis(jns);
@@ -28,10 +26,6 @@ public class Mutasi {
 
     public String getKode_transaksi() {
         return kode_transaksi;
-    }
-
-    public String getNo_rek() {
-        return no_rek;
     }
 
     public String getTujuan() {
@@ -56,10 +50,6 @@ public class Mutasi {
 
     public void setKode_transaksi(String kode_transaksi) {
         this.kode_transaksi = kode_transaksi;
-    }
-
-    public void setNo_rek(String no_rek) {
-        this.no_rek = no_rek;
     }
 
     public void setTgl_trans(String tgl_trans) {
@@ -87,7 +77,6 @@ public class Mutasi {
     public String toString() {
         return "Mutasi{" +
                 "kode_transaksi=" + kode_transaksi +
-                ", no_rek='" + no_rek + '\'' +
                 ", tgl_trans='" + tgl_trans + '\'' +
                 ", tujuan='" + tujuan + '\'' +
                 ", jenis='" + jenis + '\'' +
