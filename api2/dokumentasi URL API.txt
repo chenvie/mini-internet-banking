@@ -9,38 +9,44 @@ output	: status, username, message (JSON)
 READ
 url	: localhost:8080/nasabah
 method	: GET
-output	: List<nasabah> : id_nasabah, email, username, nama_lengkap, password, no_ktp, tgl_lahir, alamat, kode_rahasia, no_rek, jml_saldo, kode_cabang, created(JSON)
+output	: List<nasabah> : id_nasabah, email, username, nama_lengkap, password, no_ktp, tgl_lahir, alamat, created(JSON)
 
 READ-ONE
 url	: localhost:8080/nasabah/{id}
 method	: GET
 input	: id (param)
-output	: nasabah : id_nasabah, email, username, nama_lengkap, password, no_ktp, tgl_lahir, alamat, kode_rahasia, no_rek, jml_saldo, kode_cabang, created(JSON)
+output	: nasabah : id_nasabah, email, username, nama_lengkap, password, no_ktp, tgl_lahir, alamat, created
+	  List<Rekening> :  no_rek, kode_rahasia, jml_saldo, kode_cabang, created  
+	  (JSON)
 
 
 BUKA REKENING (CREATE NASABAH)
 url	: localhost:8080/nasabah
 method	: POST
 input	: nama_lengkap, email, password, no_ktp, tgl_lahir, alamat, kode_rahasia (JSON)
-output	: message, status, username, id_nsb(JSON)
+output	: no_rek, message, status, username(JSON)
 
+TAMBAH REKENING
+url	: localhost:8080/rekening
+method	: POST
+input	: id_nasabah,kode_rahasia (JSON)
+output	: no_rek, message, status (JSON)
 
 READ MUTASI
-url	: localhost:8080/mutasi/{id}
+url	: localhost:8080/mutasi/{no_rek}
 method	: GET
-input	: id (param)
+input	: no_rek (param)
 output	: JSON Array 
-	respon : id_nasabah, tgl_awal, tgl_akhir
-	result : List<mutasi> : kode_transaksi, no_rek, tgl_trans, tujuan, jenis, keterangan, nominal 
-
+	respon : no_rek,tgl_awal, tgl_akhir
+	result : List<mutasi> : kode_transaksi, tgl_trans, tujuan, jenis, keterangan, nominal 
 
 READ HISTORY
-url	: localhost:8080/history/{id}/{tgl_awal}/{tgl_akhir}
-	contoh format tanggal : 		localhost:8080/history/2/2018-08-15/2018-09-13
+url	: localhost:8080/history/{no_rek}/{tgl_awal}/{tgl_akhir}
+	contoh format tanggal : localhost:8080/history/037015/2018-08-15/2018-09-13
 method	: GET
-input	: id, tgl_awal, tgl_akhir (param)
+input	: no_rek, tgl_awal, tgl_akhir (param)
 output	: JSON Array 
-	respon : id_nasabah, tgl_awal, tgl_akhir
+	respon : no_rek, tgl_awal, tgl_akhir
 	result : List<history> : kode_transaksi, tgl_trans, tujuan, keterangan, nominal, status (JSON)
 
 
@@ -54,7 +60,7 @@ output	: message, status (JSON)
 UPDATE CODE
 url	: localhost:8080/update_kode_rahasia
 method	: POST
-input	: id_nasabah, kode_rahasiaL, krb1, krb2 (JSON)
+input	: no_rek, kode_rahasiaL, krb1, krb2 (JSON)
 output	: message, status (JSON)
 
 
