@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -41,29 +42,29 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingNewRekeningActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Context mContext;
-    private String TAG = SettingActivity.class.getSimpleName();
+    private String TAG = SettingNewRekeningActivity.class.getSimpleName();
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
-    private LinearLayout setting_password, setting_code, setting_new_rekening;
+    private EditText newRekeningCode;
+    private Button btnAddRekening;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_setting_new_rekening);
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
         mContext = this;
 
-        setting_new_rekening = findViewById(R.id.setting_new_rekening);
-        setting_password = findViewById(R.id.setting_password);
-        setting_code = findViewById(R.id.setting_code);
+        newRekeningCode = findViewById(R.id.newRekeningCode);
+        btnAddRekening = findViewById(R.id.btnAddRekening);
 
         //setting toolbar and navigation drawer
-        Toolbar toolbar = findViewById(R.id.setting_toolbar);
+        Toolbar toolbar = findViewById(R.id.setting_new_rekening_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -98,24 +99,88 @@ public class SettingActivity extends AppCompatActivity {
                     }
                 });
 
-        setting_new_rekening.setOnClickListener(new View.OnClickListener() {
+        btnAddRekening.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadSettingNewRekeningView();
+                addNewRekening();
             }
         });
+    }
 
-        setting_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadSettingPasswordView();
+    private void addNewRekening(){
+        String code = newRekeningCode.getText().toString();
+
+        String hashCode = "";
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(code.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            hashCode = bigInt.toString(16);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while(hashCode.length() < 32 ){
+                hashCode = "0" + hashCode;
             }
-        });
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "Hashing retype password failed: " + e.getMessage());
+            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing retype password failed: " + e.getMessage());
+            e.printStackTrace();
+        }
 
-        setting_code.setOnClickListener(new View.OnClickListener() {
+        OkHttpClient client = new OkHttpClient();
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        String url = HttpClientURL.urlCreateRekening;
+
+        JSONObject jsonParam = new JSONObject();
+        try {
+            jsonParam.put("id_nasabah", Nasabah.id);
+            jsonParam.put("kode_rahasia", hashCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(JSON, jsonParam.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        final String finalHashCode = hashCode;
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onClick(View view) {
-                loadSettingCodeView();
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error in getting call from async okhttp call");
+                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = new String(response.body().string().toString());
+
+                try {
+                    JSONObject jsonObject = new JSONObject(responseBody);
+                    String status = jsonObject.getString("status");
+                    final String message = jsonObject.getString("message");
+
+                    if (status.equalsIgnoreCase("berhasil")){
+                        final String rekNum = jsonObject.getString("no_rek");
+                        Nasabah.rekenings.add(new Rekening(rekNum, finalHashCode, 450000, ""));
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Add New Rekening [Nasabah id = " + Nasabah.id + "New Secret Code = " + finalHashCode + "]");
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                Log.i(TAG, message);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + message + "[No Rek = " + rekNum + "]");
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -173,20 +238,6 @@ public class SettingActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void loadSettingPasswordView(){
-        Intent intent = new Intent(this, SettingPasswordActivity.class);
-        startActivity(intent);
-    }
-
-    private void loadSettingCodeView(){
-        Intent intent = new Intent(this, SettingSecretCodeActivity.class);
-        startActivity(intent);
-    }
-
-    private void loadSettingNewRekeningView(){
-        Intent intent = new Intent(this, SettingNewRekeningActivity.class);
-        startActivity(intent);
-    }
 
     private void loadLoginView(){
         listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + " Logout, remove session from app");
