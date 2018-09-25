@@ -14,8 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +55,8 @@ public class HistoryActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
-    private static final String[] noRek = {};
+    private static final List<String> listRekeningNum = new ArrayList<String>();
+    private Spinner txtHistNoRek;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +67,16 @@ public class HistoryActivity extends AppCompatActivity {
         txtHistDateFrom = findViewById(R.id.txtHistDateFrom);
         txtHistDateTo = findViewById(R.id.txtHistDateTo);
         btnShowHistory = findViewById(R.id.btnShowHistory);
+        txtHistNoRek = findViewById(R.id.txtHistNoRek);
+
+        for (Rekening rek: Nasabah.rekenings){
+            listRekeningNum.add(rek.getRekeningNum());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(HistoryActivity.this,
+                android.R.layout.simple_spinner_item, listRekeningNum);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        txtHistNoRek.setAdapter(adapter);
 
         //setting toolbar & navigation drawer
         Toolbar toolbar = findViewById(R.id.history_toolbar);
@@ -175,6 +188,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     //checking if range date exceed 30 days, intent to activity_history_detail
     private void showHistory() {
+        String noRek = txtHistNoRek.getSelectedItem().toString();
+
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         SimpleDateFormat outputFormat = new SimpleDateFormat("EE, dd MMM yyyy", Locale.US);
         SimpleDateFormat outputParam = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -212,6 +227,7 @@ public class HistoryActivity extends AppCompatActivity {
             intent.putExtra("dateTo", dateTo);
             intent.putExtra("paramFrom", paramFrom);
             intent.putExtra("paramTo", paramTo);
+            intent.putExtra("histRekening", noRek);
             startActivity(intent);
         } else{
             Log.e(TAG, "Date from and to exceed 30 days");
@@ -274,18 +290,19 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + " Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
-        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Logout remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
-        spEdit.putString("name", "");
+        spEdit.putString("email", "");
         spEdit.putString("username", "");
+        spEdit.putString("name", "");
         spEdit.putString("password", "");
-        spEdit.putString("code", "");
+        spEdit.putString("ktpNum", "");
         spEdit.putString("birthday", "");
-        spEdit.putString("rekeningNum", "");
-        spEdit.putFloat("saldo", 0);
+        spEdit.putString("address", "");
+        spEdit.putString("rekenings", "");
         spEdit.commit();
 
         writeLogs();

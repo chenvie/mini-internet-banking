@@ -47,7 +47,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private HistoryAdapter historyAdapter;
     private RecyclerView rcyHistory;
-    private TextView txtHistoryRange;
+    private TextView txtHistoryRange, txtHistoryNoRek;
     private Context mContext;
     private SharedPreferences sp;
     private String TAG = HistoryDetailActivity.class.getSimpleName();
@@ -61,6 +61,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history_detail);
         txtHistoryRange = findViewById(R.id.txtHistoryRange);
         rcyHistory = findViewById(R.id.rcyHistory);
+        txtHistoryNoRek = findViewById(R.id.txtHistoryNoRek);
 
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
         mContext = this;
@@ -72,16 +73,12 @@ public class HistoryDetailActivity extends AppCompatActivity {
         paramTo = intent.getStringExtra("paramTo");
 
         txtHistoryRange.setText(from + " - " + to);
+        final String noRek = intent.getStringExtra("histRekening");
+        txtHistoryNoRek.setText(noRek);
 
         final OkHttpClient client = new OkHttpClient();
-        /*HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadHistory).newBuilder();
-        urlBuilder.addQueryParameter("id", Nasabah.id);
-        urlBuilder.addQueryParameter("tgl_awal", from);
-        urlBuilder.addQueryParameter("tgl_akhir", to);
 
-        String url = urlBuilder.build().toString();*/
-
-        String url = HttpClientURL.urlReadHistory + "/" + Nasabah.id + "/" + paramFrom + "/" + paramTo;
+        String url = HttpClientURL.urlReadHistory + "/" + noRek + "/" + paramFrom + "/" + paramTo;
         Log.e(TAG, "URL = " + url);
 
         final Request request = new Request.Builder()
@@ -123,11 +120,11 @@ public class HistoryDetailActivity extends AppCompatActivity {
                     }
                     historyAdapter.notifyDataSetChanged();
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting history data success, [" +
-                                "Nasabah id = " + Nasabah.id +
+                                "NoRek = " + noRek +
                                 ", Date from = " + from +
                                 ", Date to = " + to + "]");
                     Log.i(TAG, "Getting history data success, [" +
-                                "Nasabah id = " + Nasabah.id +
+                                "NoRek = " + noRek +
                                 ", Date from = " + from +
                                 ", Date to = " + to + "]");
                 } catch (JSONException e) {
@@ -228,18 +225,19 @@ public class HistoryDetailActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
-        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, remove session from app");
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + " Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
-        spEdit.putString("name", "");
+        spEdit.putString("email", "");
         spEdit.putString("username", "");
+        spEdit.putString("name", "");
         spEdit.putString("password", "");
-        spEdit.putString("code", "");
+        spEdit.putString("ktpNum", "");
         spEdit.putString("birthday", "");
-        spEdit.putString("rekeningNum", "");
-        spEdit.putFloat("saldo", 0);
+        spEdit.putString("address", "");
+        spEdit.putString("rekenings", "");
         spEdit.commit();
 
         writeLogs();
