@@ -21,14 +21,9 @@ public class NewUsernameActivity extends AppCompatActivity {
         txtNewRekening = findViewById(R.id.txtNewRekening);
         btnOk = findViewById(R.id.btnOk);
 
-//        String[] names = Nasabah.name.split(" ");
-//        String[] birthday = Nasabah.birthday.split("/");
-//        String username = names[0] + birthday[0].substring(2, 3);
-//        String rekening = "0000";
-
-        //set nasabah username
+        Intent intent = getIntent();
         txtNewUsername.setText(Nasabah.username);
-        txtNewRekening.setText(Nasabah.rekeningNum);
+        txtNewRekening.setText(intent.getStringExtra("newNoRek"));
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
