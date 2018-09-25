@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,16 +48,17 @@ import okhttp3.Response;
 
 public class BuyingCodeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private TextView txtNoHpBuying, txtProviderBuying, txtNominalBuying;
+    private TextView txtNoHpBuying, txtProviderBuying, txtNominalBuying, txtNoRekBuying;
     private EditText txtCodeBuying;
     private Button btnBuyingWithCode;
     private SharedPreferences sp;
-    private String noHp, provider, nominal;
+    private String noHp, provider, nominal, noRek;
     private Context mContext;
     private String TAG = BuyingCodeActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
     private String id, username, name, password, code, birthday, rekeningNum, saldo;
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
         txtNominalBuying = findViewById(R.id.txtNominalBuying);
         txtNoHpBuying = findViewById(R.id.txtNoHpBuying);
         txtCodeBuying = findViewById(R.id.txtCodeBuying);
+        txtNoRekBuying = findViewById(R.id.txtNoRekBuying);
         btnBuyingWithCode = findViewById(R.id.btnBuyingWithCode);
 
         NumberFormat formatter = new DecimalFormat("#,###");
@@ -77,10 +81,12 @@ public class BuyingCodeActivity extends AppCompatActivity {
         noHp = intent.getStringExtra("noHp");
         nominal = intent.getStringExtra("nominal");
         provider = intent.getStringExtra("provider");
+        noRek = intent.getStringExtra("buyingRek");
 
         txtNoHpBuying.setText(noHp);
         txtNominalBuying.setText("Rp " + (formatter.format(Float.parseFloat(nominal))).toString() + ",-");
         txtProviderBuying.setText(provider);
+        txtNoRekBuying.setText(noRek);
 
         //setting toolbar & navigation drawer
         Toolbar toolbar = findViewById(R.id.buying_code_toolbar);
@@ -150,7 +156,15 @@ public class BuyingCodeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if(hashCode.equals(Nasabah.code)) {
+        String checkCode = "";
+        for (Rekening rek:Nasabah.rekenings){
+            if (noRek.equals(rek.getRekeningNum())){
+                checkCode = rek.getSecretCode();
+                break;
+            }
+        }
+
+        if(hashCode.equals(checkCode)) {
             if (!noHp.equals("")) {
                 //if (temp > 0) {
                     OkHttpClient client = new OkHttpClient();
@@ -159,12 +173,11 @@ public class BuyingCodeActivity extends AppCompatActivity {
 
                     JSONObject jsonParams = new JSONObject();
                     try {
-                        jsonParams.put("username", Nasabah.username);
+                        jsonParams.put("norek", noRek);
                         jsonParams.put("no_hp_tujuan", noHp);
-                        jsonParams.put("id_nasabah", Nasabah.id);
                         jsonParams.put("provider", provider);
-                        jsonParams.put("kode_rahasia", hashCode);
                         jsonParams.put("nominal", nominal);
+                        jsonParams.put("kode_rhs", hashCode);
                     } catch (JSONException e) {
                         listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to create JSONObject for post param: " + e.getMessage());
                         Log.e(TAG, "Failed to create JSONObject for post param: " + e.getMessage());
@@ -198,23 +211,21 @@ public class BuyingCodeActivity extends AppCompatActivity {
                             }
                             try {
                                 JSONObject jsonObject = new JSONObject(responseBody);
-                                String status = jsonObject.getString("pulsa");
+                                String status = jsonObject.getString("status");
                                 final String message = jsonObject.getString("message");
 
                                 if (status.equalsIgnoreCase("true")){
                                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Buying Success, " +
-                                            "[Username = " + Nasabah.username +
+                                            "[NoRek = " + noRek +
                                             ", NoHp = " + noHp +
                                             ", Nominal = " + nominal +
                                             ", Provider =  " + provider +
-                                            ", Nasabah id = " + Nasabah.id +
                                             ", Kode Rahasia = " + finalHashCode + "]");
                                     Log.i(TAG, "Buying Success, " +
-                                           "[Username = " + Nasabah.username +
+                                           "[NoRek = " + noRek +
                                            ", NoHp = " + noHp + ", " +
-                                           "Nominal = " + nominal +
+                                           ", Nominal = " + nominal +
                                            ", Provider =  " + provider +
-                                           ", Nasabah id = " + Nasabah.id +
                                            ", Kode Rahasia = " + finalHashCode + "]");
                                     runOnUiThread(new Runnable() {
                                         @Override
@@ -226,6 +237,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
                                     intent.putExtra("nominal", nominal);
                                     intent.putExtra("provider", provider);
                                     intent.putExtra("status", true);
+                                    intent.putExtra("rekening", noRek);
 
                                     /*Nasabah.saldo = temp;
                                     SharedPreferences.Editor spEdit = sp.edit();
@@ -269,7 +281,7 @@ public class BuyingCodeActivity extends AppCompatActivity {
             }
         } else{
             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Secret code wrong");
-            Log.e(TAG, "Secret code wrong, hashcode = " + hashCode + ", Nasabah.code = " + Nasabah.code);
+            Log.e(TAG, "Secret code wrong");
             Toast.makeText(this, "Kode Rahasia salah!", Toast.LENGTH_LONG).show();
         }
     }
@@ -328,18 +340,19 @@ public class BuyingCodeActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
-        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, remove session from app");
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + " Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
-        spEdit.putString("name", "");
+        spEdit.putString("email", "");
         spEdit.putString("username", "");
+        spEdit.putString("name", "");
         spEdit.putString("password", "");
-        spEdit.putString("code", "");
+        spEdit.putString("ktpNum", "");
         spEdit.putString("birthday", "");
-        spEdit.putString("rekeningNum", "");
-        spEdit.putFloat("saldo", 0);
+        spEdit.putString("address", "");
+        spEdit.putString("rekenings", "");
         spEdit.commit();
 
         writeLogs();
@@ -379,59 +392,74 @@ public class BuyingCodeActivity extends AppCompatActivity {
                 try {
                     Log.i(TAG, "Get Nasabah data on progrees, [Username = " + Nasabah.username + "]");
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get nasabah data on progress, [Username = " + Nasabah.username + "]");
+
                     JSONObject jsonObject = new JSONObject(responseBody);
-                    id = jsonObject.getString("id_nasabah");
-                    username = jsonObject.getString("username");
-                    password = jsonObject.getString("password");
-                    name = jsonObject.getString("nama_lengkap");
-                    code = jsonObject.getString("kode_rahasia");
-                    birthday = jsonObject.getString("tgl_lahir");
-                    rekeningNum = jsonObject.getString("no_rek");
-                    saldo = jsonObject.getString("jml_saldo");
+                    JSONObject jsonRespon = jsonObject.getJSONObject("respon");
+                    Nasabah.id = jsonRespon.getString("id_nasabah");
+                    Nasabah.email = jsonRespon.getString("email");
+                    Nasabah.username = jsonRespon.getString("username");
+                    Nasabah.name = jsonRespon.getString("nama_lengkap");
+                    Nasabah.password = jsonRespon.getString("password");
+                    Nasabah.ktpNum = jsonRespon.getString("no_ktp");
+                    Nasabah.birthday = jsonObject.getString("tgl_lahir");
+                    Nasabah.address = jsonObject.getString("alamat");
+
+                    String tempRekening = "";
+
+                    JSONArray jsonRekening = jsonObject.getJSONArray("result");
+                    for (int i = 0; i < jsonRekening.length(); i++){
+                        String rekNum = jsonRekening.getJSONObject(i).getString("no_rek");
+                        String code = jsonRekening.getJSONObject(i).getString("kode_rahasia");
+                        String saldo = jsonRekening.getJSONObject(i).getString("jml_saldo");
+                        String cabang = jsonRekening.getJSONObject(i).getString("kode_cabang");
+
+                        float n_saldo = 0;
+                        if (saldo != null && saldo != ""){
+                            n_saldo = Float.parseFloat(saldo);
+                        }
+
+                        Nasabah.rekenings.add(new Rekening(rekNum, code, n_saldo, cabang));
+
+                        tempRekening += "[rekNum = " + rekNum + ", code = " + code + ", saldo = " + n_saldo + ", cabang = " + cabang + "]";
+                    }
 
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get Nasabah data success, data = [" +
-                            "Nasabah id = " + id +
-                            ", Username = " + username +
-                            ", Password = " + password +
-                            ", Name = " + name +
-                            ", Kode Rahasia = " + code +
-                            ", Tanggal lahir = " + birthday +
-                            ", No Rekening = " + rekeningNum +
-                            ", Saldo = " + saldo + "]");
+                            "Nasabah id = " + Nasabah.id +
+                            ", Email =  " + Nasabah.email +
+                            ", Username = " + Nasabah.username +
+                            ", Name = " + Nasabah.name +
+                            ", Password = " + Nasabah.password +
+                            ", KTP Num = " + Nasabah.ktpNum +
+                            ", Birthday = " + Nasabah.birthday +
+                            ", Address = " + Nasabah.address +
+                            ", Rekenings = " + tempRekening +
+                            "]"
+                    );
 
                     Log.i(TAG, "Get Nasabah data success, data = [" +
-                            "Nasabah id = " + id +
-                            ", Username = " + username +
-                            ", Password = " + password +
-                            ", Name = " + name +
-                            ", Kode Rahasia = " + code +
-                            ", Tanggal lahir = " + birthday +
-                            ", No Rekening = " + rekeningNum +
-                            ", Saldo = " + saldo + "]");
-
-                    Nasabah.id = id;
-                    Nasabah.name = name;
-                    Nasabah.username = username;
-                    Nasabah.password = password;
-                    Nasabah.code = code;
-                    Nasabah.birthday = birthday;
-                    //Nasabah.rekeningNum = rekeningNum;
-                    if (saldo != null && saldo != "") {
-                        Nasabah.saldo = Float.parseFloat(saldo);
-                    }else{
-                        Nasabah.saldo = 0;
-                    }
+                            "Nasabah id = " + Nasabah.id +
+                            ", Email =  " + Nasabah.email +
+                            ", Username = " + Nasabah.username +
+                            ", Name = " + Nasabah.name +
+                            ", Password = " + Nasabah.password +
+                            ", KTP Num = " + Nasabah.ktpNum +
+                            ", Birthday = " + Nasabah.birthday +
+                            ", Address = " + Nasabah.address +
+                            ", Rekenings = " + tempRekening +
+                            "]"
+                    );
 
                     SharedPreferences.Editor spEdit = sp.edit();
                     spEdit.putBoolean("isLogin", true);
                     spEdit.putString("id", Nasabah.id);
-                    spEdit.putString("name", Nasabah.name);
+                    spEdit.putString("email", Nasabah.email);
                     spEdit.putString("username", Nasabah.username);
+                    spEdit.putString("name", Nasabah.name);
                     spEdit.putString("password", Nasabah.password);
-                    spEdit.putString("code", Nasabah.code);
+                    spEdit.putString("ktpNum", Nasabah.ktpNum);
                     spEdit.putString("birthday", Nasabah.birthday);
-                    spEdit.putString("rekeningNum", Nasabah.rekeningNum);
-                    spEdit.putFloat("saldo", Nasabah.saldo);
+                    spEdit.putString("address", Nasabah.address);
+                    spEdit.putString("rekenings", gson.toJson(Nasabah.rekenings));
                     spEdit.commit();
                 } catch (JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());

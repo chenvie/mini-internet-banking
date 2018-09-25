@@ -38,7 +38,7 @@ import okhttp3.Response;
 
 public class BuyingStatusActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private TextView txtNoHpStatus, txtPulsaStatus, txtProviderStatus, txtBuyingStatus, txtFailedBuying;
+    private TextView txtNoHpStatus, txtPulsaStatus, txtProviderStatus, txtBuyingStatus, txtFailedBuying, txtNoRekStatus;
     private String TAG = BuyingStatusActivity.class.getSimpleName();
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
@@ -52,6 +52,7 @@ public class BuyingStatusActivity extends AppCompatActivity {
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
 
         txtNoHpStatus = findViewById(R.id.txtNoHpStatus);
+        txtNoRekStatus = findViewById(R.id.txtNoRekStatus);
         txtPulsaStatus = findViewById(R.id.txtPulsaStatus);
         txtProviderStatus = findViewById(R.id.txtProviderStatus);
         txtBuyingStatus = findViewById(R.id.txtBuyingStatus);
@@ -70,6 +71,7 @@ public class BuyingStatusActivity extends AppCompatActivity {
 
         NumberFormat formatter = new DecimalFormat("#,###");
 
+        txtNoRekStatus.setText(intent.getStringExtra("buyingRek"));
         txtNoHpStatus.setText(intent.getStringExtra("noHp"));
         txtPulsaStatus.setText("Rp " + (formatter.format(Float.parseFloat(intent.getStringExtra("nominal")))) + ",-");
         txtProviderStatus.setText(intent.getStringExtra("provider"));
@@ -165,18 +167,19 @@ public class BuyingStatusActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + " Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
-        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
-        spEdit.putString("name", "");
+        spEdit.putString("email", "");
         spEdit.putString("username", "");
+        spEdit.putString("name", "");
         spEdit.putString("password", "");
-        spEdit.putString("code", "");
+        spEdit.putString("ktpNum", "");
         spEdit.putString("birthday", "");
-        spEdit.putString("rekeningNum", "");
-        spEdit.putFloat("saldo", 0);
+        spEdit.putString("address", "");
+        spEdit.putString("rekenings", "");
         spEdit.commit();
 
         writeLogs();
