@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2018 at 05:50 AM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Sep 25, 2018 at 12:59 PM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -193,7 +195,7 @@ email=email, username=uname, nama_lengkap=nama, password=pwd, no_ktp=no_ktp, tgl
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postNasabah2` (IN `nama` VARCHAR(100), IN `_email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kr` VARCHAR(100), OUT `uname` VARCHAR(20), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(40), OUT `norek` VARCHAR(16))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postNasabah2` (IN `nama` VARCHAR(100), IN `_email` VARCHAR(40), IN `pwd` VARCHAR(100), IN `no_ktp` VARCHAR(20), IN `tgl_lahir` DATE, IN `alamat` VARCHAR(100), IN `kr` VARCHAR(100), OUT `uname` VARCHAR(20), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(40), OUT `norek` VARCHAR(16), OUT `id` INT)  NO SQL
 BEGIN
 
 DECLARE kc varchar(4) DEFAULT "asd1";
@@ -251,7 +253,7 @@ INSERT INTO rekening
 SET
 no_rek = norek, id_nasabah = idnsb, kode_rahasia = kr, kode_cabang = kc;
 
-
+SET id = idnsb;
 SET stts = "Berhasil";
 SET msg = "Penambahan nasabah berhasil";
 END IF;
@@ -284,10 +286,10 @@ SET msg = "Berhasil membuat rekening baru";
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiPulsa` (IN `norek` VARCHAR(16), IN `no_hp_tujuan` VARCHAR(20), IN `nmnl` INT(50), IN `prvdr` VARCHAR(10), IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiPulsa` (IN `norek` VARCHAR(16), IN `no_hp_tujuan` VARCHAR(20), IN `nmnl` INT(50), IN `prvdr` VARCHAR(10), IN `kode_rhs` VARCHAR(100), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
 BEGIN
 DECLARE jml_saldo_out int;
-DECLARE kr_temp varchar(6);
+DECLARE kr_temp varchar(100);
 DECLARE kodeT varchar(12) DEFAULT "2";
 DECLARE jml int;
 
@@ -352,10 +354,10 @@ END IF;
 SELECT stts,ket_stts;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `norek_kirim` VARCHAR(16), IN `norek_terima` VARCHAR(16), IN `nmnl` INT(50), IN `ket` TEXT, IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `norek_kirim` VARCHAR(16), IN `norek_terima` VARCHAR(16), IN `nmnl` INT(50), IN `ket` TEXT, IN `kode_rhs` VARCHAR(100), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
 BEGIN
 DECLARE jml_saldo_out, jml_saldo_in int;
-DECLARE kr_temp varchar(6);
+DECLARE kr_temp varchar(100);
 DECLARE kodeT varchar(12) DEFAULT "1";
 DECLARE jml int;
 
@@ -438,7 +440,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahKodeRahasia` (IN `norek` VARCHAR(16), IN `krhLama` VARCHAR(100), IN `krhBaru1` VARCHAR(100), IN `krhBaru2` VARCHAR(100), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
 BEGIN
-DECLARE krh_temp varchar(20);
+DECLARE krh_temp varchar(100);
 SELECT kode_rahasia INTO krh_temp
 from rekening
 where no_rek = norek;
@@ -465,7 +467,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahPassword` (IN `id_nsb` INT(10), IN `pwdLama` VARCHAR(100), IN `pwdBaru1` VARCHAR(100), IN `pwdBaru2` VARCHAR(100), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
 BEGIN
-DECLARE pwd_temp varchar(20);
+DECLARE pwd_temp varchar(100);
 SELECT password INTO pwd_temp
 from nasabah 
 where id_nasabah = id_nsb;
@@ -579,7 +581,11 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (44, 'bayou@gmail.com', 'Bayu42', 'Bayu dbijak', '654321by12', '3312414124', '1990-11-11', 'magelang', '2018-09-19 08:12:01'),
 (45, 'ando@gmail.com', 'Armando43', 'Armando Firdaus', '65432arm12', '3312414124', '1990-11-11', 'magelang', '2018-09-19 08:19:54'),
 (46, 'hadi@gmail.com', 'Hadi44', 'Hadi wijaya', '12345678', '15124551', '1986-09-10', 'Yogyakarta', '2018-09-24 07:43:33'),
-(47, 'aji@gmail.com', 'Imanuel46', 'Imanuel Aji', '12345678', '15124551', '1990-09-10', 'Yogyakarta', '2018-09-24 07:49:38');
+(47, 'aji@gmail.com', 'Imanuel46', 'Imanuel Aji', '12345678', '15124551', '1990-09-10', 'Yogyakarta', '2018-09-24 07:49:38'),
+(48, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin47', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '2018-09-25 06:11:19'),
+(49, 'jaehwan_kim@naver.com', 'Jaehwan48', 'Jaehwan Kim', '5994b01d753d52410bd6f17a5da647f4', '02382783209832', '1996-05-27', 'South Korea', '2018-09-25 09:41:21'),
+(50, 'daehwi_lee@naver.com', 'Daehwi49', 'Daehwi Lee', '273d9bd3ef50d81d70fd9150c9404565', '283702489403', '2001-01-29', 'South Korea', '2018-09-25 09:46:19'),
+(54, 'daniel_kang@naver.com', 'Daniel50', 'Daniel Kang', 'b5ea8985533defbf1d08d5ed2ac8fe9b', '01084793403', '1996-12-10', 'South Korea', '2018-09-25 09:58:54');
 
 -- --------------------------------------------------------
 
@@ -611,7 +617,8 @@ INSERT INTO `pulsa` (`kode_pembelian`, `no_hp`, `provider`, `nominal`) VALUES
 ('20036', '081225515', 'Indosat', 50000),
 ('20037', '081225515', 'Indosat', 50000),
 ('20038', '098765568', 'Telkomsel', 50000),
-('20042', '081234567', 'Indosat', 50000);
+('20042', '081234567', 'Indosat', 50000),
+('20043', '085201258593', 'Telkomsel', 25000);
 
 -- --------------------------------------------------------
 
@@ -675,6 +682,11 @@ INSERT INTO `rekening` (`no_rek`, `id_nasabah`, `kode_rahasia`, `jml_saldo`, `ko
 ('037044', 2, '111222', 550000, 'asd1', '2018-09-21 10:54:17'),
 ('037045', 46, '999999', 450000, 'asd1', '2018-09-24 07:49:00'),
 ('037046', 47, '999999', 450000, 'asd1', '2018-09-24 07:49:38'),
+('037047', 48, '1c88b390f7a3d49edfbeff983c85c2f4', 425000, 'asd1', '2018-09-25 06:11:19'),
+('037048', 49, '98467a817e2ff8c8377c1bf085da7138', 450000, 'asd1', '2018-09-25 09:41:21'),
+('037049', 50, 'f39c8f313f3449a39d36c761d028efc7', 450000, 'asd1', '2018-09-25 09:46:19'),
+('037050', 54, '4c969d7049af7e978d8b617c5014d7f9', 450000, 'asd1', '2018-09-25 09:58:54'),
+('037051', 48, 'vievin01', 450000, 'asd1', '2018-09-25 10:47:36'),
 ('123213213', 4, '123', 1000000, 'asd1', '2018-08-15 03:04:48'),
 ('1919191919', 3, '123', 1500000, 'asd2', '2018-08-16 03:26:59'),
 ('2141516', 1, '123124', 1950000, 'asd1', '2018-09-14 07:16:41'),
@@ -740,7 +752,8 @@ INSERT INTO `transaksi` (`kode_transaksi`, `no_rek`, `tgl_trans`, `status`, `ket
 ('20036', '2491204', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Membeli Pulsa'),
 ('20037', '2141516', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Membeli Pulsa'),
 ('20038', '2491204', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Membeli Pulsa'),
-('20042', '2491204', '2018-09-24 10:58:01', 'Berhasil', 'Berhasil Membeli Pulsa');
+('20042', '2491204', '2018-09-24 10:58:01', 'Berhasil', 'Berhasil Membeli Pulsa'),
+('20043', '037047', '2018-09-25 09:07:27', 'Berhasil', 'Berhasil Membeli Pulsa');
 
 -- --------------------------------------------------------
 
@@ -844,7 +857,8 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
 --
 -- Constraints for dumped tables
 --
@@ -873,6 +887,7 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `transfer`
   ADD CONSTRAINT `transfer_ibfk_1` FOREIGN KEY (`kode_transfer`) REFERENCES `transaksi` (`kode_transaksi`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
