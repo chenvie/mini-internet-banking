@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @NamedStoredProcedureQueries({
         /*store-proc di-list disini*/
         @NamedStoredProcedureQuery(name = "transfer", procedureName = "postTransaksiTransfer", parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id_nsb", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "no_rek_tujuan", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "nmnl", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "norek_kirim", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "norek_terima", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "nmnl", type = Integer.class),
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "ket", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "uname", type = String.class),
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "kode_rhs", type = String.class),
                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "stts", type = String.class),
                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "ket_stts", type = String.class)
@@ -40,15 +39,14 @@ class TransferRepo {
     @Autowired
     private EntityManager em;
 
-    public Object[] doTransfer(String norek, String id, String nominal, String ket, String uname, String kode_rhs) {
+    public Object[] doTransfer(String norek, String norek_kirim, Integer nominal, String ket, String kode_rhs) {
         /*ini typenya Object, keluar di JSON jadi array [], bukan object {}*/
         /*casting ke Object[] biar bisa diambil satu2*/
         return (Object[]) em.createNamedStoredProcedureQuery("transfer")
-                .setParameter("id_nsb", id)
-                .setParameter("no_rek_tujuan", norek)
+                .setParameter("norek_kirim", norek_kirim)
+                .setParameter("norek_terima", norek)
                 .setParameter("nmnl", nominal)
                 .setParameter("ket", ket)
-                .setParameter("uname", uname)
                 .setParameter("kode_rhs", kode_rhs)
                 .getSingleResult();
     }
@@ -65,8 +63,8 @@ class TransferController {
     @PostMapping(value = "/transfer", consumes = "application/json")
     /*Request dalam bentuk JSON akan masuk sebagai object TransferData*/
     public TransferResponse doTransfer(@RequestBody TransferData trfData) {
-        Object[] res = repo.doTransfer(trfData.getNorek(), trfData.getId_nsb(), trfData.getNominal(), trfData.getKet(),
-                trfData.getUname(), trfData.getKode_rhs());
+        Object[] res = repo.doTransfer(trfData.getNorek_terima(), trfData.getNorek_kirim(), trfData.getNominal(), trfData.getKet(),
+                trfData.getKode_rhs());
         /*Response dalam bentuk object TransferResponse akan keluar sebagai JSON */
         return new TransferResponse(res[0].toString(), res[1].toString());
     }
@@ -76,27 +74,21 @@ class TransferController {
 /*nama atribut HARUS sama dengan inputan JSON*/
 /*pake getter aja tanpa setter gpp*/
 class TransferData {
-    private String norek;
-    private String id_nsb;
-    private String nominal;
-    private String uname;
+    private String norek_kirim;
+    private String norek_terima;
+    private Integer nominal;
     private String ket;
     private String kode_rhs;
 
-    public String getNorek() {
-        return norek;
+    public String getNorek_kirim() {
+        return norek_kirim;
     }
 
-    public String getId_nsb() {
-        return id_nsb;
+    public String getNorek_terima() {
+        return norek_terima;
     }
-
-    public String getNominal() {
+    public Integer getNominal() {
         return nominal;
-    }
-
-    public String getUname() {
-        return uname;
     }
 
     public String getKet() {

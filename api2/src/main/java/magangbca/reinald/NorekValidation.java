@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 @Entity
 @NamedStoredProcedureQueries({
-        @NamedStoredProcedureQuery(name = "cek_norek", procedureName = "cekNoRek", parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "norek", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id_nsb", type = String.class),
+        @NamedStoredProcedureQuery(name = "cekNoRek", procedureName = "cekNoRek", parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "norek_kirim", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "norek_terima", type = String.class),
                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "stts", type = String.class),
                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "msg", type = String.class)
         })
@@ -31,10 +31,10 @@ class NorekValidationDAO {
     @Autowired
     private EntityManager em;
 
-    public Object[] cekNorek(String norek, String id) {
-        return (Object[]) em.createNamedStoredProcedureQuery("cek_norek")
-                .setParameter("norek", norek)
-                .setParameter("id_nsb", id)
+    public Object[] cekNorek(String norek_kirim, String norek_terima ) {
+        return (Object[]) em.createNamedStoredProcedureQuery("cekNoRek")
+                .setParameter("norek_kirim", norek_kirim)
+                .setParameter("norek_terima", norek_terima)
                 .getSingleResult();
     }
 }
@@ -46,22 +46,26 @@ class NorekValidationController {
 
     @PostMapping(value = "/ceknorek", consumes = "application/json")
     public NorekResponse postNorekJSON(@RequestBody Norek norek) {
-        Object[] res = dao.cekNorek(norek.getNorek(), norek.getId_nsb());
+        Object[] res = dao.cekNorek(norek.getNorek_kirim(),norek.getNorek_terima());
         return new NorekResponse(res[0].toString(), res[1].toString());
     }
 }
 
 class Norek {
-    private String norek;
-    private String id_nsb;
+    private String norek_kirim;
+    private String norek_terima;
 
-    public String getNorek() {
-        return norek;
+    public String getNorek_kirim() {
+        return norek_kirim;
     }
 
-    public String getId_nsb() {
-        return id_nsb;
+    public String getNorek_terima() {
+        return norek_terima;
     }
+
+
+
+
 }
 
 class NorekResponse {

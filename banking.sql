@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2018 at 10:30 AM
+-- Generation Time: Sep 25, 2018 at 05:50 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -68,6 +68,7 @@ SET kodeT = concat(kodeT,jml);
 
 insert into transaksi SET kode_transaksi = kodeT,no_rek = norek_kirim,status = stts, ket_status = msg;
 END IF;
+SELECT stts, msg;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `generateKodeTransaksi` (IN `jenis` VARCHAR(1))  NO SQL
@@ -117,7 +118,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getMutasi` (IN `norek` VARCHAR(16), IN `tgl_awal` DATE, IN `tgl_akhir` DATE)  NO SQL
 BEGIN
-select DISTINCT t.kode_transaksi,g.no_rek,t.tgl_trans,
+select DISTINCT t.kode_transaksi,t.tgl_trans,
                     IF (substr(t.kode_transaksi,1,1) = '1', 
                     (if (g.no_rek = r.rek_transfer,
                     CONCAT('Transfer dari ',(SELECT no_rek from rekening where no_rek = t.no_rek)),CONCAT('Transfer ke ',r.rek_transfer))),
@@ -348,6 +349,7 @@ IF stts = "Berhasil" THEN
 INSERT INTO pulsa
 SET kode_pembelian=kodeT, no_hp=no_hp_tujuan, provider=prvdr, nominal=nmnl;
 END IF;
+SELECT stts,ket_stts;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `postTransaksiTransfer` (IN `norek_kirim` VARCHAR(16), IN `norek_terima` VARCHAR(16), IN `nmnl` INT(50), IN `ket` TEXT, IN `kode_rhs` VARCHAR(6), OUT `stts` VARCHAR(8), OUT `ket_stts` VARCHAR(70))  NO SQL
@@ -430,7 +432,8 @@ SET kode_transaksi=kodeT, no_rek = norek_kirim, status=stts, ket_status=ket_stts
 IF stts = "Berhasil" THEN
 INSERT INTO transfer
 SET kode_transfer=kodeT, rek_transfer=norek_terima, nominal=nmnl, keterangan=ket;
-END IF;    
+END IF;
+SELECT stts,ket_stts;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `putNasabahKodeRahasia` (IN `norek` VARCHAR(16), IN `krhLama` VARCHAR(100), IN `krhBaru1` VARCHAR(100), IN `krhBaru2` VARCHAR(100), OUT `stts` VARCHAR(10), OUT `msg` VARCHAR(60))  NO SQL
@@ -607,7 +610,8 @@ INSERT INTO `pulsa` (`kode_pembelian`, `no_hp`, `provider`, `nominal`) VALUES
 ('20031', '0821314251', 'Indosat', 50000),
 ('20036', '081225515', 'Indosat', 50000),
 ('20037', '081225515', 'Indosat', 50000),
-('20038', '098765568', 'Telkomsel', 50000);
+('20038', '098765568', 'Telkomsel', 50000),
+('20042', '081234567', 'Indosat', 50000);
 
 -- --------------------------------------------------------
 
@@ -668,13 +672,13 @@ INSERT INTO `rekening` (`no_rek`, `id_nasabah`, `kode_rahasia`, `jml_saldo`, `ko
 ('037041', 43, '234432', 450000, 'asd1', '2018-09-19 08:10:42'),
 ('037042', 44, '234432', 450000, 'asd1', '2018-09-19 08:12:01'),
 ('037043', 45, '232323', 450000, 'asd1', '2018-09-19 08:19:54'),
-('037044', 2, '111222', 450000, 'asd1', '2018-09-21 10:54:17'),
+('037044', 2, '111222', 550000, 'asd1', '2018-09-21 10:54:17'),
 ('037045', 46, '999999', 450000, 'asd1', '2018-09-24 07:49:00'),
 ('037046', 47, '999999', 450000, 'asd1', '2018-09-24 07:49:38'),
 ('123213213', 4, '123', 1000000, 'asd1', '2018-08-15 03:04:48'),
 ('1919191919', 3, '123', 1500000, 'asd2', '2018-08-16 03:26:59'),
 ('2141516', 1, '123124', 1950000, 'asd1', '2018-09-14 07:16:41'),
-('2491204', 2, '123124', 2750000, 'asd1', '2018-09-20 04:58:53');
+('2491204', 2, '123124', 2600000, 'asd1', '2018-09-20 04:58:53');
 
 -- --------------------------------------------------------
 
@@ -720,6 +724,8 @@ INSERT INTO `transaksi` (`kode_transaksi`, `no_rek`, `tgl_trans`, `status`, `ket
 ('10034', '2491204', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Transfer'),
 ('10035', '2491204', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Transfer'),
 ('10039', '037015', '2018-09-21 10:28:33', 'Berhasil', 'Berhasil Transfer'),
+('10040', '2491204', '2018-09-24 09:50:31', 'Berhasil', 'Berhasil Transfer'),
+('10041', '2491204', '2018-09-24 10:00:03', 'Berhasil', 'Berhasil Transfer'),
 ('15', '2491204', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil transfer'),
 ('20004', '2141516', '2018-09-21 06:45:54', 'Berhasil', ''),
 ('20015', '2491204', '2018-09-21 06:45:54', 'Berhasil', 'Pembelian pulsa berhasil'),
@@ -733,7 +739,8 @@ INSERT INTO `transaksi` (`kode_transaksi`, `no_rek`, `tgl_trans`, `status`, `ket
 ('20031', '037000', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Membeli Pulsa'),
 ('20036', '2491204', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Membeli Pulsa'),
 ('20037', '2141516', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Membeli Pulsa'),
-('20038', '2491204', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Membeli Pulsa');
+('20038', '2491204', '2018-09-21 06:45:54', 'Berhasil', 'Berhasil Membeli Pulsa'),
+('20042', '2491204', '2018-09-24 10:58:01', 'Berhasil', 'Berhasil Membeli Pulsa');
 
 -- --------------------------------------------------------
 
@@ -776,6 +783,8 @@ INSERT INTO `transfer` (`kode_transfer`, `rek_transfer`, `nominal`, `keterangan`
 ('10034', '037001', 50000, 'coba'),
 ('10035', '037001', 50000, 'testing api'),
 ('10039', '2491204', 50000, 'test terima'),
+('10040', '037044', 50000, 'coba API'),
+('10041', '037044', 50000, 'coba API'),
 ('15', '2141516', 50000, '');
 
 --
