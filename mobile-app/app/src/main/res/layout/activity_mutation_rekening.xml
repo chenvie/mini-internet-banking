@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/history_detail_toolbar"
+            android:id="@+id/mutation_rekening_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#1d6ef7"
@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/history"
+                android:text="@string/mutation"
                 android:fontFamily="casual"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -38,45 +38,29 @@
                 android:layout_marginBottom="20dp"/>
 
             <TextView
-                android:id="@+id/txtHistoryRange"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="00 Jan 0000 - 00 Dec 0000"
+                android:text="@string/chooseRek"
                 android:fontFamily="casual"
                 android:textSize="15sp"
-                android:textColor="#ff0000"
                 android:layout_marginBottom="20dp"/>
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/txtMutationNoRek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:spinnerMode="dropdown"
+                android:layout_marginBottom="40dp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/noRek"
-                    android:fontFamily="casual"
-                    android:textSize="15sp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"/>
-
-                <TextView
-                    android:id="@+id/txtHistoryNoRek"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:fontFamily="casual"
-                    android:layout_weight="1"/>
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcyHistory"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
-
+            <Button
+                android:id="@+id/btnShowMutation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show"
+                android:fontFamily="casual"
+                android:textStyle="bold"
+                android:background="@drawable/background_button"
+                android:layout_gravity="center" />
         </LinearLayout>
     </LinearLayout>
 

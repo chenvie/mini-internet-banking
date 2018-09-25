@@ -46,6 +46,29 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/chooseRek"
+                    android:fontFamily="casual"
+                    android:textSize="15sp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"/>
+
+                <Spinner
+                    android:id="@+id/inputRekeningNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/noHp"
                     android:fontFamily="casual"
                     android:textSize="15sp"

@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/history_detail_toolbar"
+            android:id="@+id/setting_new_rekening_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#1d6ef7"
@@ -30,53 +30,54 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/history"
+                android:text="@string/setting"
                 android:fontFamily="casual"
-                android:textSize="20sp"
                 android:textStyle="bold"
+                android:textSize="20sp"
                 android:textAlignment="center"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="10dp"/>
 
             <TextView
-                android:id="@+id/txtHistoryRange"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="00 Jan 0000 - 00 Dec 0000"
+                android:text="@string/addRek"
+                android:textSize="18sp"
+                android:textColor="#0000ff"
                 android:fontFamily="casual"
-                android:textSize="15sp"
-                android:textColor="#ff0000"
+                android:textStyle="bold"
                 android:layout_marginBottom="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/noRek"
+                    android:text="@string/code"
                     android:fontFamily="casual"
-                    android:textSize="15sp"
-                    android:layout_marginRight="20dp"
                     android:layout_weight="1"/>
 
-                <TextView
-                    android:id="@+id/txtHistoryNoRek"
+                <EditText
+                    android:id="@+id/newRekeningCode"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:fontFamily="casual"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:inputType="textPassword"/>
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcyHistory"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
-
+            <Button
+                android:id="@+id/btnAddRekening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_button"
+                android:text="@string/submit"
+                android:textStyle="bold"
+                android:layout_gravity="right"
+                android:fontFamily="casual"
+                android:layout_marginTop="30dp"/>
         </LinearLayout>
     </LinearLayout>
 

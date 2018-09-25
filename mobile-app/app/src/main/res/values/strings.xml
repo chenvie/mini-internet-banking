@@ -40,4 +40,8 @@
     <string name="ok">OK</string>
     <string name="infoName">Nama Nasabah</string>
     <string name="uRekening">Nomor Rekening Anda</string>
+    <string name="infoRek">Rekening</string>
+    <string name="chooseRek">Pilih Rekening</string>
+    <string name="noRek">Nomor Rekening: </string>
+    <string name="addRek">Tambah Rekening</string>
 </resources>
