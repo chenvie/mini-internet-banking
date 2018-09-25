@@ -12,11 +12,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -28,7 +32,6 @@ import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +64,16 @@ public class MainActivity extends AppCompatActivity {
         if (sp.getBoolean("isLogin", false)){
             try {
                 Nasabah.id = sp.getString("id", "");
-                Nasabah.name = sp.getString("name", "");
+                Nasabah.email = sp.getString("email", "");
                 Nasabah.username = sp.getString("username", "");
+                Nasabah.name = sp.getString("name", "");
                 Nasabah.password = sp.getString("password", "");
-                Nasabah.code = sp.getString("code", "");
+                Nasabah.ktpNum = sp.getString("ktpNum", "");
                 Nasabah.birthday = sp.getString("birthday", "");
-                Nasabah.rekeningNum.add(sp.getString("rekeningNum", ""));
-                Nasabah.saldo = sp.getFloat("saldo", 0);
+                Nasabah.address = sp.getString("address", "");
+
+                Type type = new TypeToken<List<Rekening>>(){}.getType();
+                Nasabah.rekenings = gson.fromJson(sp.getString("rekenings", ""), type);
                 Log.i(TAG, "Get Nasabah data from session");
                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Get Nasabah data from session");
 
@@ -216,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadNewRekeningView(){
         writeLogs();
-        Intent intent = new Intent(this, NewRekeningActivity.class);
+        Intent intent = new Intent(this, NewNasabahActivity.class);
         startActivity(intent);
     }
 
@@ -253,62 +260,72 @@ public class MainActivity extends AppCompatActivity {
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get nasabah data on progress, [Username = " + Nasabah.username + "]");
 
                     JSONObject jsonObject = new JSONObject(responseBody);
-                    id = jsonObject.getString("id_nasabah");
-                    username = jsonObject.getString("username");
-                    password = jsonObject.getString("password");
-                    name = jsonObject.getString("nama_lengkap");
-                    code = jsonObject.getString("kode_rahasia");
-                    birthday = jsonObject.getString("tgl_lahir");
-                    JSONArray rekening = jsonObject.getJSONArray("no_rek");
-                    for (int i = 0; i < rekening.length(); i++){
-                        rekeningNum.add(rekening.getString(i));
+                    JSONObject jsonRespon = jsonObject.getJSONObject("respon");
+                    Nasabah.id = jsonRespon.getString("id_nasabah");
+                    Nasabah.email = jsonRespon.getString("email");
+                    Nasabah.username = jsonRespon.getString("username");
+                    Nasabah.name = jsonRespon.getString("nama_lengkap");
+                    Nasabah.password = jsonRespon.getString("password");
+                    Nasabah.ktpNum = jsonRespon.getString("no_ktp");
+                    Nasabah.birthday = jsonObject.getString("tgl_lahir");
+                    Nasabah.address = jsonObject.getString("alamat");
+
+                    String tempRekening = "";
+
+                    JSONArray jsonRekening = jsonObject.getJSONArray("result");
+                    for (int i = 0; i < jsonRekening.length(); i++){
+                        String rekNum = jsonRekening.getJSONObject(i).getString("no_rek");
+                        String code = jsonRekening.getJSONObject(i).getString("kode_rahasia");
+                        String saldo = jsonRekening.getJSONObject(i).getString("jml_saldo");
+                        String cabang = jsonRekening.getJSONObject(i).getString("kode_cabang");
+
+                        float n_saldo = 0;
+                        if (saldo != null && saldo != ""){
+                            n_saldo = Float.parseFloat(saldo);
+                        }
+
+                        Nasabah.rekenings.add(new Rekening(rekNum, code, n_saldo, cabang));
+
+                        tempRekening += "[rekNum = " + rekNum + ", code = " + code + ", saldo = " + n_saldo + ", cabang = " + cabang + "]";
                     }
-                    saldo = jsonObject.getString("jml_saldo");
 
                     listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Get Nasabah data success, data = [" +
-                            "Nasabah id = " + id +
-                            ", Username = " + username +
-                            ", Password = " + password +
-                            ", Name = " + name +
-                            ", Kode Rahasia = " + code +
-                            ", Tanggal lahir = " + birthday +
-                            ", No Rekening = " + rekeningNum +
-                            ", Saldo = " + saldo + "]");
-
-                    Log.i(TAG, "Get Nasabah data success, data = [" +
-                            "Nasabah id = " + id +
-                            ", Username = " + username +
-                            ", Password = " + password +
-                            ", Name = " + name +
-                            ", Kode Rahasia = " + code +
-                            ", Tanggal lahir = " + birthday +
-                            ", No Rekening = " + rekeningNum +
-                            ", Saldo = " + saldo + "]"
+                            "Nasabah id = " + Nasabah.id +
+                            ", Email =  " + Nasabah.email +
+                            ", Username = " + Nasabah.username +
+                            ", Name = " + Nasabah.name +
+                            ", Password = " + Nasabah.password +
+                            ", KTP Num = " + Nasabah.ktpNum +
+                            ", Birthday = " + Nasabah.birthday +
+                            ", Address = " + Nasabah.address +
+                            ", Rekenings = " + tempRekening +
+                            "]"
                     );
 
-                    Nasabah.id = id;
-                    Nasabah.name = name;
-                    Nasabah.username = username;
-                    Nasabah.password = password;
-                    Nasabah.code = code;
-                    Nasabah.birthday = birthday;
-                    Nasabah.rekeningNum = rekeningNum;
-                    if (saldo != null && saldo != "") {
-                        Nasabah.saldo = Float.parseFloat(saldo);
-                    }else{
-                        Nasabah.saldo = 0;
-                    }
+                    Log.i(TAG, "Get Nasabah data success, data = [" +
+                            "Nasabah id = " + Nasabah.id +
+                            ", Email =  " + Nasabah.email +
+                            ", Username = " + Nasabah.username +
+                            ", Name = " + Nasabah.name +
+                            ", Password = " + Nasabah.password +
+                            ", KTP Num = " + Nasabah.ktpNum +
+                            ", Birthday = " + Nasabah.birthday +
+                            ", Address = " + Nasabah.address +
+                            ", Rekenings = " + tempRekening +
+                            "]"
+                    );
 
                     SharedPreferences.Editor spEdit = sp.edit();
                     spEdit.putBoolean("isLogin", true);
                     spEdit.putString("id", Nasabah.id);
-                    spEdit.putString("name", Nasabah.name);
+                    spEdit.putString("email", Nasabah.email);
                     spEdit.putString("username", Nasabah.username);
+                    spEdit.putString("name", Nasabah.name);
                     spEdit.putString("password", Nasabah.password);
-                    spEdit.putString("code", Nasabah.code);
+                    spEdit.putString("ktpNum", Nasabah.ktpNum);
                     spEdit.putString("birthday", Nasabah.birthday);
-                    spEdit.putString("rekeningNum", Nasabah.rekeningNum);
-                    spEdit.putFloat("saldo", Nasabah.saldo);
+                    spEdit.putString("address", Nasabah.address);
+                    spEdit.putString("rekenings", gson.toJson(Nasabah.rekenings));
                     spEdit.commit();
                 } catch (JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
