@@ -27,9 +27,12 @@
         <activity android:name=".HomeActivity"/>
         <activity android:name=".MutationActivity"/>
         <activity android:name=".MutationRekeningActivity"/>
-        <activity android:name=".NewRekeningActivity"/>
+        <activity android:name=".NewNasabahActivity"/>
         <activity android:name=".NewUsernameActivity"/>
         <activity android:name=".SettingActivity"/>
+        <activity android:name=".SettingNewRekeningActivity"/>
+        <activity android:name=".SettingPasswordActivity"/>
+        <activity android:name=".SettingSecretCodeActivity"/>
         <activity android:name=".TransferActivity"/>
         <activity android:name=".TransferCodeActivity"/>
         <activity android:name=".TransferStatusActivity"/>
