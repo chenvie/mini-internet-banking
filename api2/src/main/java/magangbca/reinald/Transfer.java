@@ -39,12 +39,12 @@ class TransferRepo {
     @Autowired
     private EntityManager em;
 
-    public Object[] doTransfer(String norek, String norek_kirim, Integer nominal, String ket, String kode_rhs) {
+    public Object[] doTransfer(String norek_kirim, String norek_terima, Integer nominal, String ket, String kode_rhs) {
         /*ini typenya Object, keluar di JSON jadi array [], bukan object {}*/
         /*casting ke Object[] biar bisa diambil satu2*/
         return (Object[]) em.createNamedStoredProcedureQuery("transfer")
                 .setParameter("norek_kirim", norek_kirim)
-                .setParameter("norek_terima", norek)
+                .setParameter("norek_terima", norek_terima)
                 .setParameter("nmnl", nominal)
                 .setParameter("ket", ket)
                 .setParameter("kode_rhs", kode_rhs)
@@ -63,7 +63,7 @@ class TransferController {
     @PostMapping(value = "/transfer", consumes = "application/json")
     /*Request dalam bentuk JSON akan masuk sebagai object TransferData*/
     public TransferResponse doTransfer(@RequestBody TransferData trfData) {
-        Object[] res = repo.doTransfer(trfData.getNorek_terima(), trfData.getNorek_kirim(), trfData.getNominal(), trfData.getKet(),
+        Object[] res = repo.doTransfer(trfData.getNorek_kirim(), trfData.getNorek_terima(), trfData.getNominal(), trfData.getKet(),
                 trfData.getKode_rhs());
         /*Response dalam bentuk object TransferResponse akan keluar sebagai JSON */
         return new TransferResponse(res[0].toString(), res[1].toString());
