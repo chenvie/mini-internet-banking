@@ -1,6 +1,5 @@
 package bca.co.id.mini_internet_banking;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,20 +9,19 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,133 +30,48 @@ import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MutationActivity extends AppCompatActivity {
+public class MutationRekeningActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private MutationAdapter mutationAdapter;
-    private RecyclerView rcyMutation;
-    private Context mContext;
     private SharedPreferences sp;
-    private TextView txtMutationDate, txtNorekMutasi;
-    private final String TAG = MutationActivity.class.getSimpleName();
+    private String TAG = MutationRekeningActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+    private final List<String> listRekeningNum = new ArrayList<String>();
+    private Spinner txtMutationNoRek;
+    private Button btnShowMutation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mutation);
-        rcyMutation = findViewById(R.id.rcyMutation);
-        txtMutationDate = findViewById(R.id.txtMutationDate);
-        txtNorekMutasi = findViewById(R.id.txtNorekMutasi);
-
-        sp = getSharedPreferences("ibank", MODE_PRIVATE);
-        mContext = this;
-
-        Intent intent = getIntent();
-        String rekNum = intent.getStringExtra("mutationRek");
-
-        final OkHttpClient client = new OkHttpClient();
-        final SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
-
-        String url = HttpClientURL.urlReadMutation + "/" + rekNum;
-
-        final Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        //get mutation data to server using http GET, sending nasabah id as parameter
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
-                Log.e(TAG, "Error in getting response from async okhttp call");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseBody = response.body().string().toString();
-                try {
-                    JSONObject jsonObject = new JSONObject(responseBody);
-                    JSONObject jsonTanggal = jsonObject.getJSONObject("respon");
-                    String noRek = jsonTanggal.getString("no_rek");
-                    String tgl_awal = jsonTanggal.getString("tgl_awal");
-                    String tgl_akhir = jsonTanggal.getString("tgl_akhir");
-
-                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                    SimpleDateFormat outputFormat = new SimpleDateFormat("EE, dd MMM yyyy", Locale.US);
-
-                    Date from = null;
-                    try {
-                        from = inputFormat.parse(tgl_awal);
-                        tgl_awal = outputFormat.format(from);
-                    } catch (ParseException e) {
-                        Log.e(TAG, "Failed to parse date" + e.getMessage());
-                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to parse date");
-                        e.printStackTrace();
-
-                    }
-
-                    Date to = null;
-                    try {
-                        to = inputFormat.parse(tgl_akhir);
-                        tgl_akhir = outputFormat.format(from);
-                    } catch (ParseException e) {
-                        Log.e(TAG, "Failed to parse date" + e.getMessage());
-                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to parse date");
-                        e.printStackTrace();
-
-                    }
-
-                    txtMutationDate.setText(tgl_awal + " - " + tgl_akhir);
-                    txtNorekMutasi.setText(noRek);
-
-                    JSONArray jsonRecords = jsonObject.getJSONArray("result");
-
-                    List<Transaction> listTrans = new ArrayList<Transaction>();
-                    mutationAdapter = new MutationAdapter(listTrans, mContext);
-
-                    RecyclerView.LayoutManager lm = new LinearLayoutManager(mContext);
-                    rcyMutation.setLayoutManager(lm);
-                    rcyMutation.setItemAnimator(new DefaultItemAnimator());
-                    rcyMutation.setAdapter(mutationAdapter);
-
-                    mutationAdapter.notifyDataSetChanged();
-
-                    for (int i = 0; i < jsonRecords.length(); i++) {
-                        String tgl_trans = jsonRecords.getJSONObject(i).getString("tgl_trans");
-                        String tujuan = jsonRecords.getJSONObject(i).getString("tujuan");
-                        String info = jsonRecords.getJSONObject(i).getString("jenis") + " " + jsonRecords.getJSONObject(i).getString("keterangan");
-                        String nominal = jsonRecords.getJSONObject(i).getString("nominal");
-
-                        listTrans.add(new Transaction(tgl_trans, tujuan, info, Float.parseFloat(nominal)));
-                    }
-
-                    mutationAdapter.notifyDataSetChanged();
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Getting Mutation Data Success, [Nasabah id = " + Nasabah.id + "]");
-                    Log.i(TAG, "Getting Mutation Data Success, [Nasabah id = " + Nasabah.id + "]");
-                } catch (JSONException e) {
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        });
+        setContentView(R.layout.activity_mutation_rekening);
 
         //setting toolbar and navigation drawer
-        Toolbar toolbar = findViewById(R.id.mutation_toolbar);
+        Toolbar toolbar = findViewById(R.id.mutation_rekening_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        txtMutationNoRek = findViewById(R.id.txtMutationNoRek);
+        btnShowMutation = findViewById(R.id.btnShowMutation);
+
+        for (Rekening rek: Nasabah.rekenings){
+            listRekeningNum.add(rek.getRekeningNum());
+        }
+
+        //setting for spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MutationRekeningActivity.this,
+                android.R.layout.simple_spinner_item, listRekeningNum);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        txtMutationNoRek.setAdapter(adapter);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
@@ -186,6 +99,13 @@ public class MutationActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
+        btnShowMutation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMutation();
+            }
+        });
     }
 
     @Override
@@ -196,6 +116,14 @@ public class MutationActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showMutation(){
+        String rekNum = txtMutationNoRek.getSelectedItem().toString();
+
+        Intent intent = new Intent(this, MutationActivity.class);
+        intent.putExtra("mutationRek", rekNum);
+        startActivity(intent);
     }
 
     private void loadHomeView() {
