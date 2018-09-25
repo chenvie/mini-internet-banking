@@ -46,7 +46,7 @@ public class HistoryRepositoryImpl implements HistoryRepository {
 
         Response resp = new Response();
         resp.setResp(new ResponseEntity<Map<String, String>>(tgl, HttpStatus.OK));
-        resp.setResult(storedProcedureResults.stream().map(result -> new History( result[0].toString(),result[1].toString(),result[2].toString(),result[3].toString(),(BigInteger)result[4], result[5].toString())).collect(Collectors.toList()));
+        resp.setResult(storedProcedureResults.stream().map(result -> new History( result[0].toString(),result[2].toString(),result[1].toString(),result[3].toString(),(BigInteger)result[4], result[5].toString())).collect(Collectors.toList()));
         return resp;
 
 

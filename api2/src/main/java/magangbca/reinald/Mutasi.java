@@ -77,8 +77,8 @@ public class Mutasi {
     public String toString() {
         return "Mutasi{" +
                 "kode_transaksi=" + kode_transaksi +
-                ", tgl_trans='" + tgl_trans + '\'' +
                 ", tujuan='" + tujuan + '\'' +
+                ", tgl_trans='" + tgl_trans + '\'' +
                 ", jenis='" + jenis + '\'' +
                 ", keterangan='" + keterangan + '\'' +
                 ", nominal='" + nominal + '\'' +
