@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d9a9029f-3e19-4231-95cc-dca88c5d6461" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../mobile-app/.idea/assetWizardSettings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile-app/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/AndroidManifest.xml" afterDir="false" />
@@ -17,12 +17,18 @@
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/DBHelper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HistoryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HistoryActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HistoryDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HistoryDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HomeActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HttpClientURL.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HttpClientURL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HttpUtils.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/MutationActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/MutationActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/Nasabah.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/Nasabah.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/NewRekeningActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/NewUsernameActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/NewUsernameActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/SettingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/SettingActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferCodeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferCodeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferStatusActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferStatusActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/assets/logback.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_balance.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_balance.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying.xml" afterDir="false" />
@@ -30,6 +36,7 @@
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying_status.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying_status.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_history_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_history_detail.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_new_rekening.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_setting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_setting.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -188,7 +195,7 @@
     <session id="835335007">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.5" value="1" />
@@ -305,7 +312,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
     <option name="width" value="1383" />
@@ -479,16 +486,15 @@
       <workItem from="1537754594352" duration="1313000" />
       <workItem from="1537759092293" duration="19701000" />
       <workItem from="1537840817870" duration="5798000" />
-      <workItem from="1537855686933" duration="4539000" />
+      <workItem from="1537855686933" duration="4907000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113261000" />
+    <option name="totallyTimeSpent" value="113629000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49836066" visible="true" weight="0.22024292" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -500,7 +506,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" visible="true" weight="0.31850535" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.31850535" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
