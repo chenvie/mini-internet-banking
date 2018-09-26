@@ -1,44 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d9a9029f-3e19-4231-95cc-dca88c5d6461" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/assets/logback.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/BalanceActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/BalanceActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/BuyingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/BuyingActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/BuyingCodeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/BuyingCodeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/BuyingStatusActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/BuyingStatusActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/DBExecQuery.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/DBHelper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HistoryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HistoryActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HistoryDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HistoryDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HomeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HttpClientURL.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HttpClientURL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/HttpUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/MutationActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/MutationActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/Nasabah.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/Nasabah.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/NewRekeningActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/NewUsernameActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/NewUsernameActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/SettingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/SettingActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferCodeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferCodeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferStatusActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/java/bca/co/id/mini_internet_banking/TransferStatusActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/assets/logback.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_balance.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_balance.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying_code.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying_code.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying_status.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_buying_status.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_history_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_history_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_new_rekening.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_setting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/layout/activity_setting.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/src/main/res/values/strings.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d9a9029f-3e19-4231-95cc-dca88c5d6461" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -195,31 +158,51 @@
     <session id="835335007">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.5" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="1281702946">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.2" value="3" />
           <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="16" />
+          <entry key="java" value="7" />
+          <entry key="log" value="2" />
+          <entry key="properties" value="1" />
+          <entry key="txt" value="2" />
+          <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="16" />
+          <entry key="JAVA" value="7" />
+          <entry key="Log" value="2" />
+          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="Properties" value="1" />
+          <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="257" />
+          <entry key="java" value="1854" />
+          <entry key="properties" value="4" />
+          <entry key="xml" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="257" />
+          <entry key="JAVA" value="1854" />
+          <entry key="Properties" value="4" />
+          <entry key="XML" value="3" />
         </counts>
       </usages-collector>
     </session>
@@ -230,19 +213,63 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="101" column="33" selection-start-line="101" selection-start-column="33" selection-end-line="101" selection-end-column="33" />
+            <state relative-caret-position="629">
+              <caret line="53" column="25" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Transfer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1054">
+              <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dokumentasi URL API.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1105">
+              <caret line="83" column="68" selection-start-line="83" selection-start-column="10" selection-end-line="83" selection-end-column="68" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/log/file.log">
+          <provider selected="true" editor-type-id="LogFileEditorProvider" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Pembelian.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="901">
+              <caret line="66" column="117" selection-start-line="66" selection-start-column="117" selection-end-line="66" selection-end-column="117" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-654">
-              <caret line="97" column="47" selection-start-line="97" selection-start-column="47" selection-end-line="97" selection-end-column="47" />
+            <state relative-caret-position="946">
+              <caret line="183" column="46" selection-start-line="183" selection-start-column="46" selection-end-line="183" selection-end-column="46" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -275,8 +302,6 @@
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Response.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Rekening.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Nasabah.java" />
@@ -288,14 +313,17 @@
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Transfer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Pembelian.java" />
+        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Mutasi.java" />
+        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Mutasi.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NorekValidation.java" />
-        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Mutasi.java" />
-        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Mutasi.java" />
+        <option value="$PROJECT_DIR$/log4j.properties" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepositoryImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Transfer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/magangbca/reinald/Pembelian.java" />
       </list>
     </option>
   </component>
@@ -324,7 +352,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -335,6 +364,11 @@
             <path>
               <item name="api2" type="b2602c69:ProjectViewProjectNode" />
               <item name="api2" type="462c0819:PsiDirectoryNode" />
+              <item name="log" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="api2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="api2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -357,31 +391,12 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="reinald" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="api2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="api2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="reinald" type="462c0819:PsiDirectoryNode" />
-              <item name="NorekValidation.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </path>
-            <path>
-              <item name="api2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="api2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="reinald" type="462c0819:PsiDirectoryNode" />
-              <item name="Transfer.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -393,14 +408,14 @@
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537786842171" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537851472615" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -486,17 +501,20 @@
       <workItem from="1537754594352" duration="1313000" />
       <workItem from="1537759092293" duration="19701000" />
       <workItem from="1537840817870" duration="5798000" />
-      <workItem from="1537855686933" duration="4907000" />
+      <workItem from="1537848705503" duration="2760000" />
+      <workItem from="1537866126205" duration="4803000" />
+      <workItem from="1537925778745" duration="1184000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113629000" />
+    <option name="totallyTimeSpent" value="117469000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49836066" visible="true" weight="0.22024292" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49836066" visible="true" weight="0.22541603" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -506,7 +524,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.31850535" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.31935483" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -517,7 +535,7 @@
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32786885" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="13" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -535,6 +553,11 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/api2.iml" />
@@ -555,9 +578,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositoryImpl.java" />
-    <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/vcs.xml" />
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9690">
@@ -566,10 +587,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/RekeningRepository.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Response.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="13" column="41" lean-forward="true" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
+        <state relative-caret-position="153">
+          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -587,10 +608,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Nasabah.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/History.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-17">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Mutasi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="78" column="52" selection-start-line="78" selection-start-column="52" selection-end-line="78" selection-end-column="52" />
         </state>
       </provider>
     </entry>
@@ -601,59 +643,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-85">
-          <caret line="1" column="50" lean-forward="true" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Transfer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="28" column="6" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Pembelian.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="40" column="67" lean-forward="true" selection-start-line="40" selection-start-column="67" selection-end-line="40" selection-end-column="67" />
+        <state relative-caret-position="1037">
+          <caret line="71" column="76" selection-start-line="71" selection-start-column="76" selection-end-line="71" selection-end-column="76" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NorekValidation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
+        <state relative-caret-position="646">
           <caret line="48" column="73" selection-start-line="48" selection-start-column="73" selection-end-line="48" selection-end-column="73" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryController.java">
+    <entry file="file://$PROJECT_DIR$/log4j.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+        <state relative-caret-position="51">
+          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Mutasi.java">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="80" column="43" selection-start-line="80" selection-start-column="43" selection-end-line="80" selection-end-column="43" />
+        <state relative-caret-position="221">
+          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepositoryImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="48" column="111" selection-start-line="48" selection-start-column="111" selection-end-line="48" selection-end-column="111" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
+        <state relative-caret-position="156">
+          <caret line="53" column="117" selection-start-line="53" selection-start-column="117" selection-end-line="53" selection-end-column="117" />
         </state>
       </provider>
     </entry>
@@ -664,33 +685,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Nasabah.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Response.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-374">
-          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+        <state relative-caret-position="136">
+          <caret line="13" column="41" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/MutasiRepositoryImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/HistoryRepositoryImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="48" column="131" selection-start-line="48" selection-start-column="131" selection-end-line="48" selection-end-column="131" />
+        <state relative-caret-position="629">
+          <caret line="53" column="25" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Transfer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="101" column="33" selection-start-line="101" selection-start-column="33" selection-end-line="101" selection-end-column="33" />
+        <state relative-caret-position="1054">
+          <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/Pembelian.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="66" column="117" selection-start-line="66" selection-start-column="117" selection-end-line="66" selection-end-column="117" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/magangbca/reinald/NasabahRepositorylmpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-654">
-          <caret line="97" column="47" selection-start-line="97" selection-start-column="47" selection-end-line="97" selection-end-column="47" />
+        <state relative-caret-position="946">
+          <caret line="183" column="46" selection-start-line="183" selection-start-column="46" selection-end-line="183" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dokumentasi URL API.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1105">
+          <caret line="83" column="68" selection-start-line="83" selection-start-column="10" selection-end-line="83" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log/file.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider" />
     </entry>
   </component>
   <component name="masterDetails">
@@ -769,7 +819,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Maven: antlr:antlr:2.7.7</last-edited>
+          <last-edited>log4j-1.2.17</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

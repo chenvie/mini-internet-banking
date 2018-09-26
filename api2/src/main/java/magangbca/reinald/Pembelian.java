@@ -9,6 +9,8 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
 import javax.persistence.criteria.CriteriaBuilder;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +52,7 @@ class PembelianRepo{
 
 @RestController
 class PembelianController{
+    private static Logger logger = Logger.getRootLogger();
 
     @Autowired
     private PembelianRepo repo;
@@ -57,8 +60,11 @@ class PembelianController{
     @PostMapping(value = "/pembelian", consumes = "application/json")
 
     public PembelianResponse doPembelian(@RequestBody PembelianData pblData ) {
+        PropertyConfigurator.configure("log4j.properties");
         Object[] res = repo.doPembelian(pblData.getNorek(), pblData.getNo_hp_tujuan(), pblData.getNominal(), pblData.getProvider(),
                  pblData.getKode_rhs());
+        logger.info("Beli Pulsa nasabah No Rekening : " + pblData.getNorek() + " Nomer Tujuan : " + pblData.getNo_hp_tujuan() +
+                " Nominal : " + pblData.getNominal() + " Provider : " + pblData.getProvider() + " Message : " + res[1].toString());
         return new PembelianResponse(res[0].toString(), res[1].toString());
     }
 }
