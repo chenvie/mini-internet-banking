@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -51,6 +52,7 @@ public class SettingSecretCodeActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+    private final List<String> listRekeningNum = new ArrayList<String>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +67,15 @@ public class SettingSecretCodeActivity extends AppCompatActivity {
         txtNewCode = findViewById(R.id.txtNewCode);
         txtReCode = findViewById(R.id.txtReCode);
         btnChangeCode = findViewById(R.id.btnChangeCode);
+
+        for (Rekening rek: Nasabah.rekenings){
+            listRekeningNum.add(rek.getRekeningNum());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(SettingSecretCodeActivity.this,
+                android.R.layout.simple_spinner_item, listRekeningNum);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        txtSettingNoRek.setAdapter(adapter);
 
         //setting toolbar and navigation drawer
         Toolbar toolbar = findViewById(R.id.setting_code_toolbar);
@@ -140,8 +151,9 @@ public class SettingSecretCodeActivity extends AppCompatActivity {
         final String rekNum = txtSettingNoRek.getSelectedItem().toString();
 
         for (Rekening rek: Nasabah.rekenings){
-            if (rek.equals(rekNum)){
+            if (rek.getRekeningNum().equals(rekNum)){
                 checkCode = rek.getSecretCode();
+                break;
             }
         }
 

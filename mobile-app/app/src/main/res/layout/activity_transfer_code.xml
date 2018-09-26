@@ -68,6 +68,29 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/noRekTujuan"
+                    android:fontFamily="casual"
+                    android:textSize="13sp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/txtTujuanTransfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:fontFamily="casual"
+                    android:layout_weight="1"
+                    android:text="TextView"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/jumlah"
                     android:fontFamily="casual"
                     android:textSize="15sp"

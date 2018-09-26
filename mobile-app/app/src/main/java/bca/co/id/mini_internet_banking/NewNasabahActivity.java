@@ -298,10 +298,11 @@ public class NewNasabahActivity extends AppCompatActivity {
                     Nasabah.name = jsonRespon.getString("nama_lengkap");
                     Nasabah.password = jsonRespon.getString("password");
                     Nasabah.ktpNum = jsonRespon.getString("no_ktp");
-                    Nasabah.birthday = jsonObject.getString("tgl_lahir");
-                    Nasabah.address = jsonObject.getString("alamat");
+                    Nasabah.birthday = jsonRespon.getString("tgl_lahir");
+                    Nasabah.address = jsonRespon.getString("alamat");
 
                     String tempRekening = "";
+                    Nasabah.rekenings = new ArrayList<Rekening>();
 
                     JSONArray jsonRekening = jsonObject.getJSONArray("result");
                     for (int i = 0; i < jsonRekening.length(); i++){

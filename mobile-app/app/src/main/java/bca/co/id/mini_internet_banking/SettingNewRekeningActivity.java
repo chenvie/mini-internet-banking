@@ -177,6 +177,10 @@ public class SettingNewRekeningActivity extends AppCompatActivity {
                                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + message + "[No Rek = " + rekNum + "]");
                             }
                         });
+
+                        Intent intent = new Intent(mContext, SettingActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

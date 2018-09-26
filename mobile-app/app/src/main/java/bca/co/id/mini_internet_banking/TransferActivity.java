@@ -14,9 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -48,6 +50,8 @@ public class TransferActivity extends AppCompatActivity {
     private String TAG = TransferActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+    private Spinner inputRekKirimNum;
+    private final List<String> listRekeningNum = new ArrayList<String>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +66,16 @@ public class TransferActivity extends AppCompatActivity {
         inputNorekTransfer = findViewById(R.id.inputNoRekTransfer);
         inputNominalTransfer = findViewById(R.id.inputNominalTransfer);
         inputKetTransfer = findViewById(R.id.inputKetTransfer);
+        inputRekKirimNum = findViewById(R.id.inputRekKirimNum);
+
+        for (Rekening rek: Nasabah.rekenings){
+            listRekeningNum.add(rek.getRekeningNum());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(TransferActivity.this,
+                android.R.layout.simple_spinner_item, listRekeningNum);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        inputRekKirimNum.setAdapter(adapter);
 
         //setting toolbar and navigation drawer
         Toolbar toolbar = findViewById(R.id.transfer_toolbar);
@@ -109,6 +123,7 @@ public class TransferActivity extends AppCompatActivity {
 
     //checking if receiver rekening number is exist to server using http POST, if exist intent to activity_transfer_code
     private void submitTransfer(){
+        final String rekKirim = inputRekKirimNum.getSelectedItem().toString();
         final String noRek = inputNorekTransfer.getText().toString();
         final String nominal = inputNominalTransfer.getText().toString();
         final String ket = inputKetTransfer.getText().toString();
@@ -122,8 +137,8 @@ public class TransferActivity extends AppCompatActivity {
 
             JSONObject jsonParams = new JSONObject();
             try {
-                jsonParams.put("norek", noRek);
-                jsonParams.put("id_nsb", Nasabah.id);
+                jsonParams.put("norek_kirim", rekKirim);
+                jsonParams.put("norek_terima", noRek);
             } catch (JSONException e) {
                 Log.e(TAG, "Error create JSONObject for post param: " + e.getMessage());
                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error create JSONObejct for post param: " + e.getMessage());
@@ -167,6 +182,7 @@ public class TransferActivity extends AppCompatActivity {
                             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Checking receiver rekening num success, [" +
                                     "No Rekening Tujuan = " + noRek +
                                     ", Nasabah id = " + Nasabah.id);
+                            intent.putExtra("rekKirim", rekKirim);
                             intent.putExtra("noRek", noRek);
                             intent.putExtra("nominal", nominal);
                             intent.putExtra("ket", ket);

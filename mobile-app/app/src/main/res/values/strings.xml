@@ -11,12 +11,13 @@
     <string name="logout">Logout</string>
     <string name="submit">Submit</string>
     <string name="noRekening">Nomor Rekening: </string>
+    <string name="noRekTujuan">Nomor Rekening Tujuan: </string>
     <string name="noHp">Nomor HP: </string>
     <string name="nominal">Nominal: </string>
     <string name="jumlah">Jumlah: </string>
     <string name="provider">Provider</string>
-    <string name="changePwd"><u>Ubah Password</u></string>
-    <string name="changeCode"><u>Ubah Kode Rahasia</u></string>
+    <string name="changePwd">Ubah Password</string>
+    <string name="changeCode">Ubah Kode Rahasia</string>
     <string name="username">Username: </string>
     <string name="password">Password: </string>
     <string name="ket">Keterangan: </string>
