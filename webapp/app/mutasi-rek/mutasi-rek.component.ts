@@ -14,7 +14,6 @@ export class MutasiRekComponent implements OnInit {
 
   curDate: any;
   fromDate: any;
-  norek: string;
   trx: {
     kode_transaksi: string,
     no_rek: string,
@@ -24,6 +23,8 @@ export class MutasiRekComponent implements OnInit {
     keterangan: string,
     nominal: string
   }[];
+  rekening = [];
+  norek: string;
 
   constructor(
     private info: InfoRekService,
@@ -39,13 +40,14 @@ export class MutasiRekComponent implements OnInit {
       moment.locale('id');
       this.curDate = moment().format('LL');
       this.fromDate = moment().subtract(7, 'd').format('LL');
-      // this.rekening = this.login.userData.no_rek;
-      this.getMutasi();
+      this.rekening = this.login.userData.rekening;
+      this.norek = this.rekening[0].no_rek;
+      this.getMutasi(this.norek);
     }
   }
 
-  async getMutasi() {
-    const res = await this.info.getMutasi();
+  async getMutasi(norek) {
+    const res = await this.info.getMutasi(norek);
     try {
       this.trx = res.records;
       const l = this.trx.length;
@@ -55,9 +57,13 @@ export class MutasiRekComponent implements OnInit {
         t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
       });
     } catch (error) {
-      const log = 'mutation: username ' + this.login.userData.username + ' no record(s) fetched';
-      this.logger.info(log);
+      // const log = 'mutation: username ' + this.login.userData.username + ' no record(s) fetched';
+      // this.logger.info(log);
     }
+  }
+
+  onChangedSelect(norek): void {
+    this.getMutasi(norek);
   }
 
 }

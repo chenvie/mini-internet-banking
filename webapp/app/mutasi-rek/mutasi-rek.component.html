@@ -1,11 +1,8 @@
 <div>
   Mutasi Rekening:
   <!--BARU-->
-  <select name="norek-mutasi">
-    <option value="#">Pilih nomor rekening</option>
-    <option value="{{norek}}">norek 1</option>
-    <option value="{{norek}}">norek 2</option>
-    <option value="{{norek}}">...</option>
+  <select (change)="onChangedSelect($event.target.value)">
+    <option *ngFor="let n of rekening" value="{{n.no_rek}}">{{n.no_rek}}</option>
   </select><br>
   <!--BARU-->
   <span style="color: red"> {{fromDate}} </span> - <span style="color: red"> {{curDate}} </span><br><br>

@@ -18,13 +18,14 @@ export class InfoRekService {
    *
    * @returns {Promise} Hasil request dari API dalam bentuk Promise
    */
-  async getMutasi() {
-    const url = 'http://localhost/api/transaksi/read-mutasi.php';
+  async getMutasi(norek) {
+    const url = 'http://localhost:8080/mutasi/' + norek;
     const id = this.login.userData.id_nasabah;
-    const param = '?id=' + id;
-    const log = 'send GET to /api/transaksi/read-mutasi.php';
+    let log = 'id ' + id + ' send GET to ' + url;
     this.logger.info(log);
-    const res = await this.http.get(url + param).toPromise();
+    const res = await this.http.get(url).toPromise();
+    log = 'id ' + id + ' receive from ' + url + ', content: ' + JSON.stringify(res);
+    this.logger.info(log);
     return <any>res;
   }
 
