@@ -15,8 +15,8 @@ export class TambahRekServiceService {
     private http: HttpClient
   ) {}
 
-  async tambahRek(dataTbhRek: {id: string, kode: string}) {
-    dataTbhRek.kode = md5(dataTbhRek.kode);
+  async tambahRek(dataTbhRek: { id_nasabah: string; kode_rahasia: string }) {
+    dataTbhRek.kode_rahasia = md5(dataTbhRek.kode_rahasia);
     const url = 'http://localhost:8080/rekening';
     const res = await this.http.post(url, dataTbhRek, httpOptions).toPromise();
     return <any>res;

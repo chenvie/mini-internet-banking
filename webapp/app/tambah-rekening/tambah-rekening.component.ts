@@ -12,8 +12,8 @@ import { InputValidatorService } from '../input-validator.service';
 export class TambahRekeningComponent implements OnInit {
 
   dataTbhRek = {
-    kode: null,
-    id: null,
+    kode_rahasia: null,
+    id_nasabah: null,
   };
 
   norekBaru: string;
@@ -32,19 +32,19 @@ export class TambahRekeningComponent implements OnInit {
       this.route.navigate(['login']);
     }
 
-    this.dataTbhRek.id = this.login.userData.id_nasabah;
+    this.dataTbhRek.id_nasabah = this.login.userData.id_nasabah;
   }
 
   async tambahRek() {
-    if (this.validator.isNull(this.dataTbhRek.kode)) {
-      this.err_msg = 'Kode rahasia harus diisi'
+    if (this.validator.isNull(this.dataTbhRek.kode_rahasia)) {
+      this.err_msg = 'Kode rahasia harus diisi';
       return;
     }
     this.err_msg = '';
     const res = await this.trs.tambahRek(this.dataTbhRek);
     this.status = res.status;
-    this.message = res. message;
-    if (status === 'Berhasil') {
+    this.message = res.message;
+    if (this.status === 'Berhasil') {
       this.norekBaru = res.no_rek;
     }
   }
