@@ -36,7 +36,7 @@ export class TambahRekeningComponent implements OnInit {
   }
 
   async tambahRek() {
-    if (this.validator.isNull(this.dataTbhRek.kode_rahasia)) {
+    if (InputValidatorService.isNull(this.dataTbhRek.kode_rahasia)) {
       this.err_msg = 'Kode rahasia harus diisi';
       return;
     }

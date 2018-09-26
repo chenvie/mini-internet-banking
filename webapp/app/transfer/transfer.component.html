@@ -2,15 +2,13 @@
   <form [formGroup]="angForm" novalidate>
     <!--BARU-->
     <label>Dari nomor rekening: </label><br>
-    <select name="norek-trf">
-      <option value="#">Pilih nomor rekening</option>
-      <option value="#">norek 1</option>
-      <option value="#">...</option>
+    <select (change)="onChangedSelect($event.target.value)">
+      <option *ngFor="let n of rekening" value="{{n.no_rek}}">{{n.no_rek}}</option>
     </select><br>
     <!--BARU-->
     <div class="form-group">
       <label>Nomor&nbsp;rekening tujuan</label>
-      <input type="text" class="form-control" [(ngModel)]="dataTrf.no_rek_tujuan" formControlName="no_rek_tujuan" #no_rek_tujuan />
+      <input type="text" class="form-control" [(ngModel)]="dataTrf.norek_terima" formControlName="no_rek_tujuan" #no_rek_tujuan />
     </div>
     <div *ngIf="angForm.controls['no_rek_tujuan'].invalid && (angForm.controls['no_rek_tujuan'].dirty || angForm.controls['no_rek_tujuan'].touched)" class="alert alert-danger">
       <div *ngIf="angForm.controls['no_rek_tujuan'].errors.required">
@@ -28,7 +26,7 @@
     </div>
     <div class="form-group">
       <label>Keterangan</label>
-      <input type="text" class="form-control" [(ngModel)]="dataTrf.keterangan" formControlName="keterangan" #keterangan/>
+      <input type="text" class="form-control" [(ngModel)]="dataTrf.ket" formControlName="keterangan" #keterangan/>
     </div>
     <div *ngIf="angForm.controls['keterangan'].invalid && (angForm.controls['keterangan'].dirty || angForm.controls['keterangan'].touched)" class="alert alert-danger">
       <div *ngIf="angForm.controls['keterangan'].errors.required">
@@ -43,16 +41,16 @@
 </div>
 
 <div *ngIf="page === 2">
-  No rekening <span style="float: right;"> {{dataTrf.no_rek_tujuan}} </span><br>
+  No rekening <span style="float: right;"> {{dataTrf.norek_terima}} </span><br>
   Jumlah <span style="float: right;"> {{dataTrf.nominal}} </span><br>
-  Keterangan <span style="float: right;"> {{dataTrf.keterangan}} </span><br>
-  Kode Rahasia <input type="password" [(ngModel)]="dataTrf.kode_rahasia"><br>
+  Keterangan <span style="float: right;"> {{dataTrf.ket}} </span><br>
+  Kode Rahasia <input type="password" [(ngModel)]="dataTrf.kode_rhs"><br>
   <input type="button" value="submit" style="float: right;" (click)="doTransfer()"><br> <!-- pindah ke hasil -->
 </div>
 <div *ngIf="page === 3">
 Transfer <span> {{status}} </span><br>
 <span *ngIf="!isSuccess"> {{message}} </span><br><br>
-No rekening <span style="float: right;"> {{dataTrf.no_rek_tujuan}} </span><br>
+No rekening <span style="float: right;"> {{dataTrf.norek_terima}} </span><br>
 Jumlah <span style="float: right;"> Rp. {{dataTrf.nominal}} </span><br>
-Keterangan <span style="float: right;"> {{dataTrf.keterangan}} </span><br>  
+Keterangan <span style="float: right;"> {{dataTrf.ket}} </span><br>
 </div>
