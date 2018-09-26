@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './login.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ export class InfoRekService {
 
   constructor(
     private http: HttpClient,
-    private login: LoginService) {}
+    private login: LoginService,
+    private logger: NGXLogger) {}
 
   /**
    * Ambil mutasi dari API
@@ -20,6 +22,8 @@ export class InfoRekService {
     const url = 'http://localhost/api/transaksi/read-mutasi.php';
     const id = this.login.userData.id_nasabah;
     const param = '?id=' + id;
+    const log = 'send GET to /api/transaksi/read-mutasi.php';
+    this.logger.info(log);
     const res = await this.http.get(url + param).toPromise();
     return <any>res;
   }
@@ -43,6 +47,8 @@ export class InfoRekService {
     const param1 = '?id=' + historiData.id;
     const param2 = '&tgl_awal=' + historiData.dariTanggal;
     const param3 = '&tgl_akhir=' + historiData.hinggaTanggal;
+    const log = 'send GET to /api/transaksi/read-history.php';
+    this.logger.info(log);
     const res = await this.http.get(url + param1 + param2 + param3).toPromise();
     return <any>res;
   }

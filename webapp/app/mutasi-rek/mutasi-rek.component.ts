@@ -33,19 +33,21 @@ export class MutasiRekComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.login.isLoginValid) { this.route.navigate(['login']); }
-
-    moment.locale('id');
-    this.curDate = moment().format('LL');
-    this.fromDate = moment().subtract(7, 'd').format('LL');
-    this.norek = this.login.userData.no_rek;
-    this.getMutasi();
+    if (!this.login.isLoginValid) {
+      this.route.navigate(['login']);
+    } else {
+      moment.locale('id');
+      this.curDate = moment().format('LL');
+      this.fromDate = moment().subtract(7, 'd').format('LL');
+      // this.rekening = this.login.userData.no_rek;
+      this.getMutasi();
+    }
   }
 
   async getMutasi() {
     const res = await this.info.getMutasi();
-    this.trx = res.records;
     try {
+      this.trx = res.records;
       const l = this.trx.length;
       const log = 'mutation: username ' + this.login.userData.username + ' fetched ' + l + ' record(s)';
       this.logger.info(log);

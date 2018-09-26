@@ -1,7 +1,15 @@
 <div class="card-body" *ngIf= "page === 1">
   <form [formGroup]="angForm" novalidate>
+    <!--BARU-->
+    <label>Dari nomor rekening: </label><br>
+    <select name="norek-trf">
+      <option value="#">Pilih nomor rekening</option>
+      <option value="#">norek 1</option>
+      <option value="#">...</option>
+    </select><br>
+    <!--BARU-->
     <div class="form-group">
-      <label>No&nbsp;Rekening</label>
+      <label>Nomor&nbsp;rekening tujuan</label>
       <input type="text" class="form-control" [(ngModel)]="dataTrf.no_rek_tujuan" formControlName="no_rek_tujuan" #no_rek_tujuan />
     </div>
     <div *ngIf="angForm.controls['no_rek_tujuan'].invalid && (angForm.controls['no_rek_tujuan'].dirty || angForm.controls['no_rek_tujuan'].touched)" class="alert alert-danger">

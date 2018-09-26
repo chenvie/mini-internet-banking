@@ -2,8 +2,14 @@
   <table>
     <tbody>
       <tr>
-        <th> No Rekening&nbsp;&nbsp;:&nbsp;&nbsp; {{norek}}</th>
-        <th class="saldo">Rp. {{saldo}}</th>
+        <th> No Rekening
+          <!--BARU-->
+          <select (change)="onChangedSelect($event.target.value)">
+            <option *ngFor="let n of rekening" value="{{n.jml_saldo}}">{{n.no_rek}}</option>
+          </select>
+        </th>
+        <!--BARU-->
+        <th class="saldo">Rp. {{selectedRekSaldo}}</th>
       </tr>
     </tbody>
   </table>

@@ -1,5 +1,13 @@
 <div class="card-body" *ngIf= "page === 1">
   <form [formGroup]="angForm" novalidate>
+    <label>Dari nomor rekening</label><br>
+    <!--BARU-->
+    <select name="norek-pulsa">
+      <option value="#">Pilih nomor rekening</option>
+      <option value="#">Norek 1</option>
+      <option value="#">...</option>
+    </select>
+    <!--BARU-->
     <div class="form-group">
       <label>No&nbsp;HP</label>
       <input type="text" class="form-control" [(ngModel)]="dataBeli.no_hp_tujuan" formControlName="no_hp_tujuan" #no_hp_tujuan />

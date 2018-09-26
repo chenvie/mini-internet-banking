@@ -87,18 +87,16 @@ export class RegisterComponent implements OnInit {
     return this.isPassValid && this.isKodeValid && this.isTanggalValid;
   }
 
-  submitForm() {
-
+  async submitForm() {
     if (this.validateForm()) {
-      this.register.register(this.userData).subscribe((data: any) => {
-        alert(data['message']);
-        if (data['message'] === 'Pendaftaran gagal') {
-          const log = 'registration: create new account failed';
-          this.logger.warn(log);
-        } else {
-          const log = 'registration: create new account success';
-          this.logger.info(log); }
-      });
+      const res = await this.register.register(this.userData);
+      alert(res.message + '\n username anda ' + res.username);
+      if (res.status !== 'Berhasil') {
+        const log = 'registration: create new account failed';
+        this.logger.warn(log);
+      } else {
+        const log = 'registration: create new account success';
+        this.logger.info(log); }
       this.resetForm();
       this.toggleRegForm();
     } else {

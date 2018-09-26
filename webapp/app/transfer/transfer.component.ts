@@ -55,7 +55,7 @@ export class TransferComponent implements OnInit {
 
   async validateNorek() {
     if (this.dataTrf.no_rek_tujuan === null || this.dataTrf.no_rek_tujuan === '') {
-      const log = 'transfer: username ' + this.login.userData.username + ' norek value null';
+      const log = 'transfer: username ' + this.login.userData.username + ' rekening value null';
       this.logger.error(log);
       return;
     }
@@ -68,10 +68,10 @@ export class TransferComponent implements OnInit {
     this.isNorekValid = res.check === 'True' ? true : false;
     if (this.isNorekValid) {
       this.page = 2;
-      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' norek valid';
+      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' rekening valid';
       this.logger.info(log);
     } else {
-      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' norek invalid';
+      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' rekening invalid';
       this.logger.error(log);
     }
   }
