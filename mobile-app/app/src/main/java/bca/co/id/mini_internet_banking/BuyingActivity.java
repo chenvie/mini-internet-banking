@@ -47,12 +47,12 @@ public class BuyingActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private final List<String> provider = new ArrayList<String>();
     private final List<String> nominal = new ArrayList<String>();
-    //private static final String[]provider = {"Telkomsel", "Indosat", "XL", "Smartfren"};
-    //private static final String[]nominal = {"25000", "50000", "100000", "150000"};
+    private final List<String> listRekeningNum = new ArrayList<String>();
     private Context mContext;
     private String TAG = BuyingActivity.class.getSimpleName();
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+    private Spinner inputRekeningNum;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class BuyingActivity extends AppCompatActivity {
         inputNominalBuying = findViewById(R.id.inputNominalBuying);
         inputNoHpBuying = findViewById(R.id.inputNoHpBuying);
         btnSubmitBuying = findViewById(R.id.btnSubmitBuying);
+        inputRekeningNum = findViewById(R.id.inputRekeningNum);
 
         provider.add("Telkomsel");
         provider.add("Indosat");
@@ -87,6 +88,15 @@ public class BuyingActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, nominal);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inputNominalBuying.setAdapter(adapter2);
+
+        for (Rekening rek: Nasabah.rekenings){
+            listRekeningNum.add(rek.getRekeningNum());
+        }
+
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(BuyingActivity.this,
+                android.R.layout.simple_spinner_item, listRekeningNum);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        inputRekeningNum.setAdapter(adapter3);
 
         //setting toolbar & navigation drawer
         Toolbar toolbar = findViewById(R.id.buying_toolbar);
@@ -137,6 +147,7 @@ public class BuyingActivity extends AppCompatActivity {
         String noHp = inputNoHpBuying.getText().toString();
         String provider = inputProviderBuying.getSelectedItem().toString();
         String nominal = inputNominalBuying.getSelectedItem().toString();
+        String noRek = inputRekeningNum.getSelectedItem().toString();
 
         Intent intent = new Intent(this, BuyingCodeActivity.class);
 
@@ -145,6 +156,7 @@ public class BuyingActivity extends AppCompatActivity {
             intent.putExtra("noHp", noHp);
             intent.putExtra("nominal", nominal);
             intent.putExtra("provider", provider);
+            intent.putExtra("buyingRek", noRek);
             startActivity(intent);
         } else{
             Log.e(TAG, "Handphone number is empty");
@@ -207,18 +219,19 @@ public class BuyingActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
-        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, ,remove session from app");
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + " Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
-        spEdit.putString("name", "");
+        spEdit.putString("email", "");
         spEdit.putString("username", "");
+        spEdit.putString("name", "");
         spEdit.putString("password", "");
-        spEdit.putString("code", "");
+        spEdit.putString("ktpNum", "");
         spEdit.putString("birthday", "");
-        spEdit.putString("rekeningNum", "");
-        spEdit.putFloat("saldo", 0);
+        spEdit.putString("address", "");
+        spEdit.putString("rekenings", "");
         spEdit.commit();
 
         writeLogs();

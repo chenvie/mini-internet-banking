@@ -1,6 +1,8 @@
 package magangbca.reinald;
 
 import org.springframework.stereotype.Repository;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -12,10 +14,12 @@ import java.util.stream.Collectors;
 
 @Repository
 public class NasabahRepositorylmpl{
+    private static Logger logger = Logger.getRootLogger();
     @PersistenceContext
     private EntityManager entityManager;
 
     public Map<String, String> updatePassword(int id_nasabah, String passwordl, String passwordb1, String passwordb2) {
+        PropertyConfigurator.configure("log4j.properties");
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("putNasabahPassword")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
@@ -36,11 +40,13 @@ public class NasabahRepositorylmpl{
         Map<String, String> result = new HashMap<String, String>();
         result.put("status", status);
         result.put("message", message);
-
+        logger.info("Update Password Id nasabah : " + id_nasabah + " Password lama : " + passwordl +
+                " Password baru : " + passwordb1 + " Message " + message);
         return result;
     }
 
     public Map<String, String> updateCode(String no_rek, String kode_rahasiaL, String krb1, String krb2){
+        PropertyConfigurator.configure("log4j.properties");
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("putNasabahKodeRahasia")
                 .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
@@ -61,11 +67,13 @@ public class NasabahRepositorylmpl{
         Map<String, String> result = new HashMap<String, String>();
         result.put("status", status);
         result.put("message", message);
-
+        logger.info("Update Kode Rahasia No Rekening : " + no_rek + " Kode lama : " + kode_rahasiaL + " Kode baru : " +
+                krb1 + " Message : " + message);
         return result;
     }
 
     public Map<String, String> postNasabah(String nama, String email, String password, String no_ktp, String tgl_lhr, String alamat, String kode_rhs){
+        PropertyConfigurator.configure("log4j.properties");
         StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("postNasabah2")
                 .registerStoredProcedureParameter(1, String.class, ParameterMode.IN).
                         registerStoredProcedureParameter(2, String.class, ParameterMode.IN).
@@ -100,11 +108,14 @@ public class NasabahRepositorylmpl{
         result.put("message", message);
         result.put("username", username);
         result.put("no_rek", no_rek);
-
+        logger.info("User register No rekening : " + no_rek + " Nama : " + nama + " Email : " + email + " Username : " +
+                username + " Password : " + password + " No KTP : " + no_ktp + " Tanggal lahir : " + tgl_lhr + " Alamat : " +
+                alamat + " Kode rahasia : " + kode_rhs + " Message : " + message);
         return result;
     }
 
     public Map<String, String> login(String username, String password){
+        PropertyConfigurator.configure("log4j.properties");
         StoredProcedureQuery storeProcedure = entityManager.createStoredProcedureQuery("login")
                 .registerStoredProcedureParameter(1, String.class, ParameterMode.INOUT).
                         registerStoredProcedureParameter(2,String.class,ParameterMode.IN).
@@ -127,12 +138,13 @@ public class NasabahRepositorylmpl{
         result.put("username", uname);
         result.put("message", msg);
         result.put("id_nasabah", id_nsb);
-
+        logger.info("User login Username : " + username + " Password : " + password + " Message : " + msg);
         return result;
 
     }
 
     public Map<String, String> postRek(String id_nsb, String kr){
+        PropertyConfigurator.configure("log4j.properties");
         StoredProcedureQuery storeProcedure = entityManager.createStoredProcedureQuery("postRekening")
                 .registerStoredProcedureParameter(1, String.class, ParameterMode.IN).
                         registerStoredProcedureParameter(2,String.class,ParameterMode.IN).
@@ -153,12 +165,13 @@ public class NasabahRepositorylmpl{
         result.put("status", status);
         result.put("message", msg);
         result.put("no_rek", norek);
-
+        logger.info("Tambah rekening : " + norek + " Id nasabah : " + id_nsb + " Kode rahasia : " + kr + " Message : " + msg);
         return result;
 
     }
 
     public List<Object> getRekList (Integer id_nsb){
+        PropertyConfigurator.configure("log4j.properties");
         StoredProcedureQuery storeProcedure = entityManager.createStoredProcedureQuery("getListNoRek")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
 
@@ -168,6 +181,7 @@ public class NasabahRepositorylmpl{
 
         // Call the stored procedure.
         List<Object[]> storedProcedureResults = storeProcedure.getResultList();
+        logger.info("Id nasabah : " + id_nsb);
         return storedProcedureResults.stream().map(result -> new Rekening( result[0].toString(),result[1].toString(),(Integer) result[2],result[3].toString(),result[4].toString())).collect(Collectors.toList());
 
     }

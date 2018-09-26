@@ -1,0 +1,8 @@
+2018-09-25 11:27:27:414 magangbca.reinald.MutasiRepositoryImpl:54 INFO  - Mutasi No Rekening : 2491204 Tanggal awal : 2018-09-26 Tanggal akhir : 2018-09-18
+2018-09-25 16:33:34:750 magangbca.reinald.NasabahRepositorylmpl:111 INFO  - User register No rekening : 037047 Nama : Asgard Email : as@gmail.com Username : Asgard47 Password : 92345678 No KTP : 190809789 Tanggal lahir : 1997/10/18 Alamat : Jalan sans Kode rahasia : 234565 Message : Penambahan nasabah berhasil
+2018-09-25 16:37:12:341 magangbca.reinald.TransferController:73 INFO  - Nasabah Transfer No rekening : 037047 Tujuan : 2491204 Nominal : 50000 Keterangan : buat jalan Message : magangbca.reinald.TransferResponse@1d21c33
+2018-09-25 16:43:56:846 magangbca.reinald.NasabahRepositorylmpl:141 INFO  - User login Username : bonii Password : boniboni123 Message : Berhasil Login
+2018-09-25 16:46:48:611 magangbca.reinald.NasabahRepositorylmpl:43 INFO  - Update Password Id nasabah : 2 Password lama : boniboni123 Password baru : bonsai123 Message Berhasil update password
+2018-09-25 16:51:56:574 magangbca.reinald.NasabahRepositorylmpl:70 INFO  - Update Kode Rahasia No Rekening : 037001 Kode lama : asda Kode baru : cipe46 Message : Berhasil update Kode rahasia
+2018-09-25 17:26:42:583 magangbca.reinald.TransferController:73 INFO  - Nasabah Transfer No rekening : 037047 Tujuan : 2491204 Nominal : 50000 Keterangan : buat beli sepatu Message : Berhasil
+2018-09-25 17:30:25:120 magangbca.reinald.PembelianController:66 INFO  - Beli Pulsa nasabah No Rekening : 037001 Nomer Tujuan : 0821345767 Nominal : 50000 Provider : Telkomsel Message : Berhasil Membeli Pulsa

@@ -43,9 +43,32 @@
                 android:layout_height="wrap_content"
                 android:text="00 Jan 0000 - 00 Dec 0000"
                 android:fontFamily="casual"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textColor="#ff0000"
                 android:layout_marginBottom="20dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/noRek"
+                    android:fontFamily="casual"
+                    android:textSize="15sp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/txtHistoryNoRek"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:fontFamily="casual"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rcyHistory"

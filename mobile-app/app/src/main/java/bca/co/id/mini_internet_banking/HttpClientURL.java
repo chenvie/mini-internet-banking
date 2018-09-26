@@ -25,10 +25,11 @@ public class HttpClientURL {
     public static final String urlLogin = BASE_URL + "login";
     public static final String urlReadOne = BASE_URL + "nasabah";
     public static final String urlCreateNasabah = BASE_URL + "nasabah";
+    public static final String urlCreateRekening = BASE_URL + "rekening";
     public static final String urlUpdateCode = BASE_URL + "update_kode_rahasia";
     public static final String urlUpdatePassword = BASE_URL + "update_password";
 
-    public static final String urlBuying = BASE_URL + "pulsa/create.php";
+    public static final String urlBuying = BASE_URL + "pembelian";
 
     public static final String urlReadHistory = BASE_URL + "history";
     public static final String urlReadMutation = BASE_URL + "mutasi";

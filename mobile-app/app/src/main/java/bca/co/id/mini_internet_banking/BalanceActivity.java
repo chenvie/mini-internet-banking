@@ -9,9 +9,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -37,11 +41,12 @@ import okhttp3.Response;
 
 public class BalanceActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private TextView txtNorekNasabah, txtSaldoNasabah, txtNameNasabah;
+    private TextView txtNameNasabah;
     private String TAG = BalanceActivity.class.getSimpleName();
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+    private RecyclerView rcyRekenings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,15 +57,20 @@ public class BalanceActivity extends AppCompatActivity {
 
         NumberFormat formatter = new DecimalFormat("#,###");
 
-        txtNorekNasabah = findViewById(R.id.txtNorekNasabah);
-        txtSaldoNasabah = findViewById(R.id.txtSaldoNasabah);
         txtNameNasabah = findViewById(R.id.txtNameNasabah);
+        rcyRekenings = findViewById(R.id.rcyRekenings);
 
-        //set text nasabah name & rekeningNum if is local data is not null
-        if (Nasabah.name != null && Nasabah.rekeningNum != null) {
+                //set text nasabah name & rekeningNum if is local data is not null
+        if (Nasabah.name != null) {
             txtNameNasabah.setText(Nasabah.name);
-            txtNorekNasabah.setText(Nasabah.rekeningNum.toString());
-            txtSaldoNasabah.setText("Rp " + String.valueOf(formatter.format(Nasabah.saldo)) + ",-");
+
+            BalanceAdapter balanceAdapter = new BalanceAdapter(Nasabah.rekenings, this);
+            RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
+            rcyRekenings.setLayoutManager(lm);
+            rcyRekenings.setItemAnimator(new DefaultItemAnimator());
+            rcyRekenings.setAdapter(balanceAdapter);
+
+            balanceAdapter.notifyDataSetChanged();
         }
 
         //setting toolbar & navigation drawer
@@ -154,18 +164,19 @@ public class BalanceActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + " Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
-        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, ,remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
-        spEdit.putString("name", "");
+        spEdit.putString("email", "");
         spEdit.putString("username", "");
+        spEdit.putString("name", "");
         spEdit.putString("password", "");
-        spEdit.putString("code", "");
+        spEdit.putString("ktpNum", "");
         spEdit.putString("birthday", "");
-        spEdit.putString("rekeningNum", "");
-        spEdit.putFloat("saldo", 0);
+        spEdit.putString("address", "");
+        spEdit.putString("rekenings", "");
         spEdit.commit();
 
         writeLogs();

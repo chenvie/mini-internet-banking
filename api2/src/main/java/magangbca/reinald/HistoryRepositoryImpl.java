@@ -3,6 +3,8 @@ package magangbca.reinald;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -18,11 +20,13 @@ import java.util.stream.Collectors;
 
 @Repository
 public class HistoryRepositoryImpl implements HistoryRepository {
+    private static Logger logger = Logger.getRootLogger();
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public Response getSomeHistory(String norek, String tgl_awal, String tgl_akhir){
+        PropertyConfigurator.configure("log4j.properties");
 
 
         StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("getHistory")
@@ -47,6 +51,7 @@ public class HistoryRepositoryImpl implements HistoryRepository {
         Response resp = new Response();
         resp.setResp(new ResponseEntity<Map<String, String>>(tgl, HttpStatus.OK));
         resp.setResult(storedProcedureResults.stream().map(result -> new History( result[0].toString(),result[1].toString(),result[2].toString(),result[3].toString(),(BigInteger)result[4], result[5].toString())).collect(Collectors.toList()));
+        logger.info("Cek History Transaksi No Rekening : " + norek + " Tanggal awal : " + tgl_awal + " Tanggal akhir : " + tgl_akhir);
         return resp;
 
 

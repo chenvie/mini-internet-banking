@@ -13,9 +13,5 @@ public class Nasabah {
     protected static String ktpNum;
     protected static String birthday;
     protected static String address;
-    protected static List<String> rekeningNum = new ArrayList<String>();
-    protected static float saldo;
-    protected static String code;
-    protected static String created;
-    protected static String kode_cabang;
+    protected static List<Rekening> rekenings = new ArrayList<Rekening>();
 }

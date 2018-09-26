@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/background_rekening">
+
+    <TextView
+        android:id="@+id/info_rekNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:text="Nomor Rekening"
+        android:textStyle="bold"
+        android:textColor="#0000FF"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/info_saldo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rp 000"
+        android:fontFamily="casual"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/info_cabang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:text="kode_cabang"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"/>
+</LinearLayout>

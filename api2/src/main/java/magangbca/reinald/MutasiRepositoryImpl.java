@@ -3,6 +3,8 @@ package magangbca.reinald;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -18,11 +20,13 @@ import java.util.stream.Collectors;
 
 @Repository
 public class MutasiRepositoryImpl implements MutasiRepository {
+    private static Logger logger = Logger.getRootLogger();
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
         public Response getSomeMutasi(String norek, LocalDate tgl_awal, LocalDate tgl_akhir){
+        PropertyConfigurator.configure("log4j.properties");
 
         Date date1 = Date.valueOf(tgl_awal);
         Date date2 = Date.valueOf(tgl_akhir);
@@ -47,6 +51,7 @@ public class MutasiRepositoryImpl implements MutasiRepository {
         Response resp = new Response();
         resp.setResp(new ResponseEntity<Map<String, String>>(tgl, HttpStatus.OK));
         resp.setResult(storedProcedureResults.stream().map(result -> new Mutasi( result[0].toString(),result[1].toString(),result[3].toString(),result[2].toString(),result[4].toString(),(BigInteger) result[5])).collect(Collectors.toList()));
+        logger.info("Mutasi No Rekening : " + norek + " Tanggal awal : " + tgl_awal + " Tanggal akhir : " + tgl_akhir);
         return resp;
     }
 }

@@ -8,6 +8,8 @@ import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +57,7 @@ class TransferRepo {
 /*class dgn annotation @RestController, buat mapping URI dgn store-proc yg dipanggil*/
 @RestController
 class TransferController {
+    private static Logger logger = Logger.getRootLogger();
     /*annotation ini biar gk usah buat new instance TransferRepo*/
     @Autowired
     private TransferRepo repo;
@@ -63,9 +66,13 @@ class TransferController {
     @PostMapping(value = "/transfer", consumes = "application/json")
     /*Request dalam bentuk JSON akan masuk sebagai object TransferData*/
     public TransferResponse doTransfer(@RequestBody TransferData trfData) {
+        PropertyConfigurator.configure("log4j.properties");
         Object[] res = repo.doTransfer(trfData.getNorek_kirim(), trfData.getNorek_terima(), trfData.getNominal(), trfData.getKet(),
                 trfData.getKode_rhs());
         /*Response dalam bentuk object TransferResponse akan keluar sebagai JSON */
+        logger.info("Nasabah Transfer No rekening : " + trfData.getNorek_kirim() + " Tujuan : " + trfData.getNorek_terima() +
+                " Nominal : " + trfData.getNominal() + " Keterangan : " + trfData.getKet() + " Message : " +
+                res[1].toString());
         return new TransferResponse(res[0].toString(), res[1].toString());
     }
 }

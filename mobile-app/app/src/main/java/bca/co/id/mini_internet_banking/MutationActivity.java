@@ -61,16 +61,13 @@ public class MutationActivity extends AppCompatActivity {
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
         mContext = this;
 
-        final OkHttpClient client = new OkHttpClient();
+        Intent intent = getIntent();
+        String rekNum = intent.getStringExtra("mutationRek");
 
+        final OkHttpClient client = new OkHttpClient();
         final SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
 
-        //HttpUrl.Builder urlBuilder = HttpUrl.parse(HttpClientURL.urlReadMutation).newBuilder();
-        //urlBuilder.addQueryParameter("id", Nasabah.id);
-        //urlBuilder.addQueryParameter("tgl", s.format(new Date()));
-
-        //String url = urlBuilder.build().toString();
-        String url = HttpClientURL.urlReadMutation + "/" + Nasabah.id;
+        String url = HttpClientURL.urlReadMutation + "/" + rekNum;
 
         final Request request = new Request.Builder()
                 .url(url)
@@ -90,11 +87,7 @@ public class MutationActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(responseBody);
                     JSONObject jsonTanggal = jsonObject.getJSONObject("respon");
-                    String id = jsonTanggal.getString("id_nasabah");
-                    String no_rek_pengirim = "";
-                    if (id == Nasabah.id){
-                        no_rek_pengirim = Nasabah.rekeningNum;
-                    }
+                    String noRek = jsonTanggal.getString("no_rek");
                     String tgl_awal = jsonTanggal.getString("tgl_awal");
                     String tgl_akhir = jsonTanggal.getString("tgl_akhir");
 
@@ -124,7 +117,7 @@ public class MutationActivity extends AppCompatActivity {
                     }
 
                     txtMutationDate.setText(tgl_awal + " - " + tgl_akhir);
-                    txtNorekMutasi.setText(no_rek_pengirim);
+                    txtNorekMutasi.setText(noRek);
 
                     JSONArray jsonRecords = jsonObject.getJSONArray("result");
 
@@ -249,18 +242,19 @@ public class MutationActivity extends AppCompatActivity {
     }
 
     private void loadLoginView(){
-        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Logout, remove session from app");
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + " Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
-        spEdit.putString("name", "");
+        spEdit.putString("email", "");
         spEdit.putString("username", "");
+        spEdit.putString("name", "");
         spEdit.putString("password", "");
-        spEdit.putString("code", "");
+        spEdit.putString("ktpNum", "");
         spEdit.putString("birthday", "");
-        spEdit.putString("rekeningNum", "");
-        spEdit.putFloat("saldo", 0);
+        spEdit.putString("address", "");
+        spEdit.putString("rekenings", "");
         spEdit.commit();
 
         writeLogs();

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -42,13 +43,12 @@ import okhttp3.Response;
 
 public class SettingActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    private EditText txtOldPass, txtNewPass, txtRePass, txtOldCode, txtNewCode, txtReCode;
-    private Button btnChangePass, btnChangeCode;
     private Context mContext;
     private String TAG = SettingActivity.class.getSimpleName();
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
+    private LinearLayout setting_password, setting_code, setting_new_rekening;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,14 +58,9 @@ public class SettingActivity extends AppCompatActivity {
         sp = getSharedPreferences("ibank", MODE_PRIVATE);
         mContext = this;
 
-        txtOldPass = findViewById(R.id.txtOldPass);
-        txtNewPass = findViewById(R.id.txtNewPass);
-        txtRePass = findViewById(R.id.txtRePass);
-        txtOldCode = findViewById(R.id.txtOldCode);
-        txtNewCode = findViewById(R.id.txtNewCode);
-        txtReCode = findViewById(R.id.txtReCode);
-        btnChangePass = findViewById(R.id.btnChangePass);
-        btnChangeCode = findViewById(R.id.btnChangeCode);
+        setting_new_rekening = findViewById(R.id.setting_new_rekening);
+        setting_password = findViewById(R.id.setting_password);
+        setting_code = findViewById(R.id.setting_code);
 
         //setting toolbar and navigation drawer
         Toolbar toolbar = findViewById(R.id.setting_toolbar);
@@ -103,380 +98,26 @@ public class SettingActivity extends AppCompatActivity {
                     }
                 });
 
-        btnChangePass.setOnClickListener(new View.OnClickListener() {
+        setting_new_rekening.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changePassword();
+            public void onClick(View view) {
+                loadSettingNewRekeningView();
             }
         });
 
-        btnChangeCode.setOnClickListener(new View.OnClickListener() {
+        setting_password.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeCode();
+            public void onClick(View view) {
+                loadSettingPasswordView();
             }
         });
-    }
 
-    //encrypt old, new and retype password, checking password strength, field empty, nPass = rPass, and send data to server
-    private void changePassword(){
-        final String oPass = txtOldPass.getText().toString();
-        final String nPass = txtNewPass.getText().toString();
-        final String rPass = txtRePass.getText().toString();
-
-        final Intent intent = new Intent(this, HomeActivity.class);
-
-        String hashOPassword = "";
-        try {
-            MessageDigest m = MessageDigest.getInstance("MD5");
-            m.reset();
-            m.update(oPass.getBytes());
-            byte[] digest = m.digest();
-            BigInteger bigInt = new BigInteger(1,digest);
-            hashOPassword = bigInt.toString(16);
-            // Now we need to zero pad it if you actually want the full 32 chars.
-            while(hashOPassword.length() < 32 ){
-                hashOPassword = "0" + hashOPassword;
+        setting_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadSettingCodeView();
             }
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "Hashing old password failed: " + e.getMessage());
-            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing old password failed: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        if (!oPass.equals("") && !nPass.equals("") && !rPass.equals("")){
-            if (hashOPassword.equals(Nasabah.password)){
-                if (nPass.equals(rPass)){
-                    if(PasswordStrength.calculateStrength(nPass).getValue() > PasswordStrength.MEDIUM.getValue()){
-                        String hashNPassword = "";
-                        try {
-                            MessageDigest m = MessageDigest.getInstance("MD5");
-                            m.reset();
-                            m.update(nPass.getBytes());
-                            byte[] digest = m.digest();
-                            BigInteger bigInt = new BigInteger(1,digest);
-                            hashNPassword = bigInt.toString(16);
-                            // Now we need to zero pad it if you actually want the full 32 chars.
-                            while(hashNPassword.length() < 32 ){
-                                hashNPassword = "0" + hashNPassword;
-                            }
-                        } catch (NoSuchAlgorithmException e) {
-                            Log.e(TAG, "Hashing new password failed: " + e.getMessage());
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing new password error: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-
-                        String hashRPassword = "";
-                        try {
-                            MessageDigest m = MessageDigest.getInstance("MD5");
-                            m.reset();
-                            m.update(rPass.getBytes());
-                            byte[] digest = m.digest();
-                            BigInteger bigInt = new BigInteger(1,digest);
-                            hashRPassword = bigInt.toString(16);
-                            // Now we need to zero pad it if you actually want the full 32 chars.
-                            while(hashRPassword.length() < 32 ){
-                                hashRPassword = "0" + hashRPassword;
-                            }
-                        } catch (NoSuchAlgorithmException e) {
-                            Log.e(TAG, "Hashing retype password failed: " + e.getMessage());
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing retype password failed: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-
-                        OkHttpClient client = new OkHttpClient();
-
-                        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-                        String url = HttpClientURL.urlUpdatePassword;
-
-                        JSONObject jsonParams = new JSONObject();
-                        try {
-                            jsonParams.put("id_nasabah", Nasabah.id);
-                            jsonParams.put("passwordl", hashOPassword);
-                            jsonParams.put("passwordb1", hashNPassword);
-                            jsonParams.put("passwordb2", hashRPassword);
-                        } catch (JSONException e) {
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to create JSONObject for post setting password param: " + e.getMessage());
-                            Log.e(TAG, "Failed to create JSONOBject for post setting password param: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-
-                        RequestBody body = RequestBody.create(JSON, jsonParams.toString());
-
-                        Request request = new Request.Builder()
-                                .url(url)
-                                .post(body)
-                                .build();
-
-                        final String finalHashOPassword = hashOPassword;
-                        final String finalHashNPassword = hashNPassword;
-                        final String finalHashRPassword = hashRPassword;
-                        client.newCall(request).enqueue(new Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
-                                Log.e(TAG, "error getting response from async okhttp call");
-                            }
-
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                String responseBody = response.body().string().toString();
-
-                                try {
-                                    JSONObject jsonObject = new JSONObject(responseBody);
-                                    final String result = jsonObject.getString("status");
-
-                                    if (result.equalsIgnoreCase("berhasil")) {
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Update password success, [" +
-                                                "Password Lama = " + finalHashOPassword +
-                                                ", Password Baru = " + finalHashNPassword +
-                                                ", Retype Password = " + finalHashRPassword +
-                                                ", Nasabah id = " + Nasabah.id + "]");
-                                       Log.i(TAG, "Update password success, [" +
-                                               "Password Lama = " + finalHashOPassword +
-                                               ", Password Baru = " + finalHashNPassword +
-                                               ", Retype Password = " + finalHashRPassword +
-                                               ", Nasabah id = " + Nasabah.id + "]");
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(mContext, "Ubah Password Berhasil!", Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                        SharedPreferences.Editor spEdit = sp.edit();
-                                        spEdit.putString("password", finalHashNPassword);
-                                        spEdit.commit();
-                                        Nasabah.password = finalHashNPassword;
-                                        writeLogs();
-                                        startActivity(intent);
-                                    } else {
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Update password failed: " + result);
-                                        Log.e(TAG, "Update password failed: " + result);
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(mContext, "Ubah Password Gagal: " + result, Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                        writeLogs();
-                                        startActivity(intent);
-                                    }
-                                } catch (final JSONException e) {
-                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error");
-                                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                }
-                            }
-                        });
-                    } else{
-                        Log.e(TAG, "Password didn't fulfill minimum requirement");
-                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Password didn;t fulfill minimum requirement");
-                        Toast.makeText(
-                                this,
-                                "Password harus terdiri min 8 karakter, alfanumerik dan tidak terdiri dari tanggal lahir!",
-                                Toast.LENGTH_LONG).show();
-                    }
-                } else{
-                    Log.e(TAG, "New Password and Retype Password not same");
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "New password dan retype password not same");
-                    Toast.makeText(this, "Password baru dan Re-type password tidak sama!", Toast.LENGTH_LONG).show();
-                }
-            } else{
-                Log.e(TAG, "Old Password wrong");
-                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Old password wrong");
-                Toast.makeText(this, "Password sekarang salah!", Toast.LENGTH_LONG).show();
-            }
-        } else{
-            Log.e(TAG, "There is an empty field");
-            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "There is an empty field");
-            Toast.makeText(this, "Semua kolom harus terisi!", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    //encrypt old, new and retype secret code, checking secret code strength, field empty, nCode = rCode, and send data to server
-    private void changeCode(){
-        String oCode = txtOldCode.getText().toString();
-        final String nCode = txtNewCode.getText().toString();
-        final String rCode = txtReCode.getText().toString();
-
-        final Intent intent = new Intent(this, HomeActivity.class);
-
-        String hashOCode = "";
-        try {
-            MessageDigest m = MessageDigest.getInstance("MD5");
-            m.reset();
-            m.update(oCode.getBytes());
-            byte[] digest = m.digest();
-            BigInteger bigInt = new BigInteger(1,digest);
-            hashOCode = bigInt.toString(16);
-            // Now we need to zero pad it if you actually want the full 32 chars.
-            while(hashOCode.length() < 32 ){
-                hashOCode = "0" + hashOCode;
-            }
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "Hashing Old Code failed: " + e.getMessage());
-            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing Old code failed: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        if (!oCode.equals("") && !nCode.equals("") && !rCode.equals("")){
-            if (hashOCode.equals(Nasabah.code)){
-                if (nCode.equals(rCode)){
-                    if(CodeStrength.calculateStrength(nCode).getValue() > CodeStrength.MEDIUM.getValue()) {
-                        String hashNCode = "";
-                        try {
-                            MessageDigest m = MessageDigest.getInstance("MD5");
-                            m.reset();
-                            m.update(nCode.getBytes());
-                            byte[] digest = m.digest();
-                            BigInteger bigInt = new BigInteger(1,digest);
-                            hashNCode = bigInt.toString(16);
-                            // Now we need to zero pad it if you actually want the full 32 chars.
-                            while(hashNCode.length() < 32 ){
-                                hashNCode = "0" + hashNCode;
-                            }
-                        } catch (NoSuchAlgorithmException e) {
-                            Log.e(TAG, "Hashing new Code Failed: " + e.getMessage());
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing new code failed: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-
-                        String hashRCode = "";
-                        try {
-                            MessageDigest m = MessageDigest.getInstance("MD5");
-                            m.reset();
-                            m.update(rCode.getBytes());
-                            byte[] digest = m.digest();
-                            BigInteger bigInt = new BigInteger(1,digest);
-                            hashRCode = bigInt.toString(16);
-                            // Now we need to zero pad it if you actually want the full 32 chars.
-                            while(hashRCode.length() < 32 ){
-                                hashRCode = "0" + hashRCode;
-                            }
-                        } catch (NoSuchAlgorithmException e) {
-                            Log.e(TAG, "Hahing retype code failed: " + e.getMessage());
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Hashing retype code failed: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-
-                        OkHttpClient client = new OkHttpClient();
-
-                        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-                        String url = HttpClientURL.urlUpdateCode;
-
-                        JSONObject jsonParams = new JSONObject();
-                        try {
-                            jsonParams.put("id_nasabah", Nasabah.id);
-                            jsonParams.put("kode_rahasiaL", hashOCode);
-                            jsonParams.put("krb1", hashNCode);
-                            jsonParams.put("krb2", hashRCode);
-                        } catch (JSONException e) {
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Failed to create JSONObject for post setting code param: " + e.getMessage());
-                            Log.e(TAG, "Failed to create JSONObject for post setting code param: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-
-                        RequestBody body = RequestBody.create(JSON, jsonParams.toString());
-
-                        Request request = new Request.Builder()
-                                .url(url)
-                                .post(body)
-                                .build();
-
-                        final String finalHashNCode = hashNCode;
-                        final String finalHashOCode = hashOCode;
-                        final String finalHashRCode = hashRCode;
-                        client.newCall(request).enqueue(new Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
-                                Log.e(TAG, "error getting response from async okhttp call");
-                            }
-
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                String responseBody = response.body().string().toString();
-                                try {
-                                    JSONObject jsonObject = new JSONObject(responseBody);
-                                    final String result = jsonObject.getString("status");
-
-                                    if (result.equalsIgnoreCase("berhasil")) {
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Update secret code success, [" +
-                                                "Kode Rahasia Lama = " + finalHashOCode +
-                                                ", Kode Rahasia Baru = " + finalHashNCode +
-                                                ", Retype Kode Rahasia = " + finalHashRCode +
-                                                ", Nasabah id = " + Nasabah.id);
-
-                                        Log.i(TAG, "Update secret code success, [" +
-                                                "Kode Rahasia Lama = " + finalHashOCode +
-                                                ", Kode Rahasia Baru = " + finalHashNCode +
-                                                ", Retype Kode Rahasia = " + finalHashRCode +
-                                                ", Nasabah id = " + Nasabah.id);
-
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(mContext, "Ubah Kode Rahasia Berhasil!", Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                        SharedPreferences.Editor spEdit = sp.edit();
-                                        spEdit.putString("code", finalHashNCode);
-                                        spEdit.commit();
-                                        Nasabah.code = finalHashNCode;
-                                        writeLogs();
-                                        startActivity(intent);
-                                    } else{
-                                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Update ocde failed with message: " + result);
-                                        Log.e(TAG, "Update code failed with message: " + result);
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(mContext, "Ubah Kode Rahasia Gagal: " + result, Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                        writeLogs();
-                                        startActivity(intent);
-                                    }
-                                } catch (final JSONException e) {
-                                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
-                                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(getApplicationContext(),"Json parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                }
-                            }
-                        });
-                    } else{
-                        Log.e(TAG, "Secret code didn't fulfill minimum requirement");
-                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Secret code didn't fulfill minimum requirement");
-                        Toast.makeText(
-                                this,
-                                "Kode Rahasia harus terdiri 6 karakter, alfanumerik dan tidak terdiri dari tanggal lahir!",
-                                Toast.LENGTH_LONG).show();
-                    }
-                } else{
-                    Log.e(TAG, "New Code and Retype Code not same");
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "New Code and Retype Code not same");
-                    Toast.makeText(this, "Kode baru dan Re-type kode tidak sama!", Toast.LENGTH_LONG).show();
-                }
-            } else{
-                Log.e(TAG, "New secret code wrong");
-                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "New secret code wrong");
-                Toast.makeText(this, "Kode sekarang salah!", Toast.LENGTH_LONG).show();
-            }
-        } else{
-            Log.e(TAG, "There is an empty field");
-            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "There is an empty field");
-            Toast.makeText(this, "Semua kolom harus terisi!", Toast.LENGTH_LONG).show();
-        }
+        });
     }
 
     @Override
@@ -532,19 +173,35 @@ public class SettingActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void loadSettingPasswordView(){
+        Intent intent = new Intent(this, SettingPasswordActivity.class);
+        startActivity(intent);
+    }
+
+    private void loadSettingCodeView(){
+        Intent intent = new Intent(this, SettingSecretCodeActivity.class);
+        startActivity(intent);
+    }
+
+    private void loadSettingNewRekeningView(){
+        Intent intent = new Intent(this, SettingNewRekeningActivity.class);
+        startActivity(intent);
+    }
+
     private void loadLoginView(){
-        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Logout, remove session from app");
+        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + " Logout, remove session from app");
         Log.i(TAG, "Logout, remove session from app");
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putBoolean("isLogin", false);
         spEdit.putString("id", "");
-        spEdit.putString("name", "");
+        spEdit.putString("email", "");
         spEdit.putString("username", "");
+        spEdit.putString("name", "");
         spEdit.putString("password", "");
-        spEdit.putString("code", "");
+        spEdit.putString("ktpNum", "");
         spEdit.putString("birthday", "");
-        spEdit.putString("rekeningNum", "");
-        spEdit.putFloat("saldo", 0);
+        spEdit.putString("address", "");
+        spEdit.putString("rekenings", "");
         spEdit.commit();
 
         writeLogs();
@@ -590,9 +247,6 @@ public class SettingActivity extends AppCompatActivity {
                 } else{
                     Log.i(TAG, "Write log failed");
                 }
-
-                //String responseBody = response.body().string().toString();
-                //Log.e(TAG, responseBody);
             }
         });
     }
