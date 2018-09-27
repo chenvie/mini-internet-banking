@@ -50,7 +50,7 @@ public class MutasiRepositoryImpl implements MutasiRepository {
 
         Response resp = new Response();
         resp.setResp(new ResponseEntity<Map<String, String>>(tgl, HttpStatus.OK));
-        resp.setResult(storedProcedureResults.stream().map(result -> new Mutasi( result[0].toString(),result[1].toString(),result[3].toString(),result[2].toString(),result[4].toString(),result[5].toString())).collect(Collectors.toList()));
+        resp.setResult(storedProcedureResults.stream().map(result -> new Mutasi( result[0].toString(),result[2].toString(),result[1].toString(),result[3].toString(),result[4].toString(),result[5].toString())).collect(Collectors.toList()));
         logger.info("Mutasi No Rekening : " + norek + " Tanggal awal : " + tgl_awal + " Tanggal akhir : " + tgl_akhir);
         return resp;
     }
