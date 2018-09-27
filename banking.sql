@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2018 at 12:59 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Generation Time: Sep 27, 2018 at 09:07 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -224,7 +224,7 @@ SELECT
     no_rek into norek
 FROM 
    rekening
-   ORDER by id_nasabah DESC LIMIT 1;
+   ORDER by no_rek DESC LIMIT 1;
 
 SET norek = CAST(norek as int);
 SET norek = norek+1;
@@ -585,7 +585,9 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (48, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin47', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '2018-09-25 06:11:19'),
 (49, 'jaehwan_kim@naver.com', 'Jaehwan48', 'Jaehwan Kim', '5994b01d753d52410bd6f17a5da647f4', '02382783209832', '1996-05-27', 'South Korea', '2018-09-25 09:41:21'),
 (50, 'daehwi_lee@naver.com', 'Daehwi49', 'Daehwi Lee', '273d9bd3ef50d81d70fd9150c9404565', '283702489403', '2001-01-29', 'South Korea', '2018-09-25 09:46:19'),
-(54, 'daniel_kang@naver.com', 'Daniel50', 'Daniel Kang', 'b5ea8985533defbf1d08d5ed2ac8fe9b', '01084793403', '1996-12-10', 'South Korea', '2018-09-25 09:58:54');
+(54, 'daniel_kang@naver.com', 'Daniel50', 'Daniel Kang', 'b5ea8985533defbf1d08d5ed2ac8fe9b', '01084793403', '1996-12-10', 'South Korea', '2018-09-25 09:58:54'),
+(66, 'yosefresi@gmail.cm', 'Yosef52', 'Yosef Resi', '34b558355be3635700741e243a9d4c2a', '123', '1990-08-08', 'qweqwe', '2018-09-27 07:02:25'),
+(67, 'someuser@email.com', 'someuser53', 'someuser', 'b26986ceee60f744534aaab928cc12df', '123', '1990-09-09', 'qwe', '2018-09-27 07:04:38');
 
 -- --------------------------------------------------------
 
@@ -687,10 +689,8 @@ INSERT INTO `rekening` (`no_rek`, `id_nasabah`, `kode_rahasia`, `jml_saldo`, `ko
 ('037049', 50, 'f39c8f313f3449a39d36c761d028efc7', 450000, 'asd1', '2018-09-25 09:46:19'),
 ('037050', 54, '4c969d7049af7e978d8b617c5014d7f9', 450000, 'asd1', '2018-09-25 09:58:54'),
 ('037051', 48, 'vievin01', 450000, 'asd1', '2018-09-25 10:47:36'),
-('123213213', 4, '123', 1000000, 'asd1', '2018-08-15 03:04:48'),
-('1919191919', 3, '123', 1500000, 'asd2', '2018-08-16 03:26:59'),
-('2141516', 1, '123124', 1950000, 'asd1', '2018-09-14 07:16:41'),
-('2491204', 2, '123124', 2600000, 'asd1', '2018-09-20 04:58:53');
+('037052', 66, '4297f44b13955235245b2497399d7a93', 450000, 'asd1', '2018-09-27 07:02:25'),
+('037053', 67, 'efe6398127928f1b2e9ef3207fb82663', 450000, 'asd1', '2018-09-27 07:04:38');
 
 -- --------------------------------------------------------
 
@@ -857,7 +857,7 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- Constraints for dumped tables

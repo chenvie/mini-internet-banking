@@ -1,0 +1,4 @@
+
+27-09-2018 09:41:47 | MainActivity | [ERROR] : Get Nasabah data from session
+2018-09-27 | MutationActivity | [INFO] : Getting Mutation Data Success, [Nasabah id = 48]
+2018-09-27 | MutationActivity | [INFO] : Getting Mutation Data Success, [Nasabah id = 48]

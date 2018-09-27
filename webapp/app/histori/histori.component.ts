@@ -4,7 +4,6 @@ import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { InfoRekService } from '../info-rek.service';
 import * as moment from 'moment';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-histori',
@@ -15,9 +14,9 @@ export class HistoriComponent implements OnInit {
 
   page = 1;
   historiData = {
-    dariTanggal: null,
-    hinggaTanggal: null,
-    id: null
+    tgl_awal: null,
+    tgl_akhir: null,
+    no_rek: null
   };
   isRangeValid = false;
   trx: {
@@ -28,46 +27,44 @@ export class HistoriComponent implements OnInit {
     nominal: string,
     status: string
   }[];
+  rekening = [];
 
   constructor(
     private validator: InputValidatorService,
     private login: LoginService,
     private route: Router,
     private info: InfoRekService,
-    private logger: NGXLogger
   ) { }
 
   ngOnInit() {
     if (!this.login.isLoginValid) { this.route.navigate(['login']); }
     moment.locale('id');
 
-    this.historiData.id = this.login.userData.id_nasabah;
+    this.historiData.no_rek = this.login.userData.id_nasabah;
+    this.rekening = this.login.userData.rekening;
     this.page = 1;
   }
 
   validateRangeTanggal(): void {
-    this.isRangeValid = this.validator.validateRangeTanggal(this.historiData.dariTanggal, this.historiData.hinggaTanggal);
+    this.isRangeValid = this.validator.validateRangeTanggal(this.historiData.tgl_awal, this.historiData.tgl_akhir);
   }
 
   async getHistori() {
     this.validateRangeTanggal();
     if (!this.isRangeValid) { return; }
     const res = await this.info.getHistori(this.historiData);
-    this.historiData.dariTanggal = moment(this.historiData.dariTanggal).format('DD MMMM YYYY');
-    this.historiData.hinggaTanggal = moment(this.historiData.hinggaTanggal).format('DD MMMM YYYY');
-    this.trx = res.records;
+    this.historiData.tgl_awal = moment(this.historiData.tgl_awal).format('DD MMMM YYYY');
+    this.historiData.tgl_akhir = moment(this.historiData.tgl_akhir).format('DD MMMM YYYY');
+    this.trx = res.result;
     try {
-      const l = this.trx.length;
-      const log = 'histori: username ' + this.login.userData.username + ' fetched ' + l + ' record(s)';
-      this.logger.info(log);
       this.trx.forEach(t => {
         t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
       });
-    } catch (error) {
-      const log = 'histori: username ' + this.login.userData.username + ' fetched 0 record(s)';
-      this.logger.info(log);
-    }
+    } catch (error) {}
     this.page = 2;
   }
 
+  onChangedSelect(val): void {
+    this.historiData.no_rek = val;
+  }
 }

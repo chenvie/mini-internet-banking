@@ -224,26 +224,19 @@ export class InputValidatorService {
    * @returns {boolean} Jika data valid return true, jika tidak false
    */
   validatePembelian(dataBeli: {
-    username: string,
+    norek: string,
     no_hp_tujuan: string,
-    id_nasabah: string,
     provider: string,
-    kode_rahasia: string,
+    kode_rhs: string,
     nominal: string
   }): boolean {
     if (InputValidatorService.isNull(dataBeli.no_hp_tujuan)) {
-      const log = 'transaction: username ' + this.login.userData.username + ' target phone number null value';
-      this.logger.error(log);
       return false;
     }
     if (InputValidatorService.isNull(dataBeli.provider)) {
-      const log = 'transaction: username ' + this.login.userData.username + ' provider null value';
-      this.logger.error(log);
       return false;
     }
     if (InputValidatorService.isNull(dataBeli.nominal)) {
-      const log = 'transaction: username ' + this.login.userData.username + ' nominal null value';
-      this.logger.error(log);
       return false;
     }
     return true;

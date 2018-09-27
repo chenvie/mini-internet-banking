@@ -52,25 +52,11 @@ export class TransferComponent implements OnInit {
 
   async validateNorek() {
     if (InputValidatorService.isNull(this.dataTrf.norek_terima, this.dataTrf.nominal)) {
-      // const log = 'transfer: username ' + this.login.userData.username + ' rekening value null';
-      // this.logger.error(log);
       return;
     }
-    // if (this.dataTrf.nominal === null || this.dataTrf.nominal === '') {
-      // const log = 'transfer: username ' + this.login.userData.username + ' nominal value null';
-      // this.logger.error(log);
-    //   return;
-    // }
     const res = await this.validator.validateNorek(this.dataTrf);
     this.isNorekValid = res.status === 'Berhasil';
-    if (this.isNorekValid) {
-      this.page = 2;
-      // const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.norek_terima + ' rekening valid';
-      // this.logger.info(log);
-    } else {
-      // const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.norek_terima + ' rekening invalid';
-      // this.logger.error(log);
-    }
+    this.page = this.isNorekValid ? 2 : 1 ;
   }
 
   async doTransfer() {
@@ -78,15 +64,6 @@ export class TransferComponent implements OnInit {
     this.status = res.status;
     this.message = res.message;
     this.page = 3;
-    // if (this.isSuccess) {
-    //   this.status = 'Berhasil';
-    //   // const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.norek_terima + ' success';
-    //   // this.logger.info(log);
-    // } else {
-    //   // const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' +
-    //   //   this.dataTrf.norek_terima + ' failed. Message: ' + this.message;
-    //   // this.logger.error(log);
-    // }
   }
 
   onChangedSelect(val): void {

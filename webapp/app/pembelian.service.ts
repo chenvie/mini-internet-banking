@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import md5 from 'md5';
+import {LoginService} from './login.service';
+import {NGXLogger} from 'ngx-logger';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -11,7 +13,11 @@ const httpOptions = {
 })
 export class PembelianService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private logger: NGXLogger,
+    private login: LoginService,
+    ) { }
 
   /**
    * Call API untuk pembelian pulsa
@@ -27,16 +33,20 @@ export class PembelianService {
    * @returns {Promise<any>} Hasil request dari API dalam bentuk Promise
    */
   async buyPulsa(dataBeli: {
-    username: string,
+    norek: string,
     no_hp_tujuan: string,
-    id_nasabah: string,
     provider: string,
-    kode_rahasia: string,
+    kode_rhs: string,
     nominal: string
   }) {
-    dataBeli.kode_rahasia = md5(dataBeli.kode_rahasia);
-    const url = 'http://localhost/api/pulsa/create.php'; // kode null masih valid
+    dataBeli.kode_rhs = md5(dataBeli.kode_rhs);
+    const url = 'http://localhost:8080/pembelian/';
+    const id = this.login.userData.id_nasabah;
+    let log = 'id ' + id + ' send POST to ' + url + ', content: ' + JSON.stringify(dataBeli);
+    this.logger.info(log);
     const res = await this.http.post(url, dataBeli, httpOptions).toPromise();
+    log = 'id ' + id + ' receive from ' + url + ', content: ' + JSON.stringify(res);
+    this.logger.info(log);
     return <any>res;
   }
 }

@@ -44,15 +44,6 @@ export class LoginService {
     this.isLoginValid = res.status === '1';
     await this.getUserData();
     return this.isLoginValid;
-    // if (!this.isLoginValid) {
-    //   const log = 'login: username ' + userLogin.username + ' login credentials invalid';
-    //   this.logger.warn(log);
-    //   return false;
-    // } else {
-    //   const log = 'login: username ' + userLogin.username + ' login credentials verified';
-    //   this.logger.info(log);
-    // }
-    // return true;
   }
 
   /**

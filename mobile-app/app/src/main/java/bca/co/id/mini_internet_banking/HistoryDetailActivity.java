@@ -104,10 +104,15 @@ public class HistoryDetailActivity extends AppCompatActivity {
                     List<Transaction> listTrans = new ArrayList<Transaction>();
                     historyAdapter = new HistoryAdapter(listTrans, mContext);
 
-                    RecyclerView.LayoutManager lm = new LinearLayoutManager(mContext);
-                    rcyHistory.setLayoutManager(lm);
-                    rcyHistory.setItemAnimator(new DefaultItemAnimator());
-                    rcyHistory.setAdapter(historyAdapter);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RecyclerView.LayoutManager lm = new LinearLayoutManager(mContext);
+                            rcyHistory.setLayoutManager(lm);
+                            rcyHistory.setItemAnimator(new DefaultItemAnimator());
+                            rcyHistory.setAdapter(historyAdapter);
+                        }
+                    });
 
                     for (int i = 0; i < jsonRecords.length(); i++){
                         String tgl_trans = jsonRecords.getJSONObject(i).getString("tgl_trans");

@@ -28,7 +28,6 @@ export class RegisterComponent implements OnInit {
     alamat: null,
     kode_rahasia: null
   };
-  message: string;
   angForm: FormGroup;
 
   constructor(

@@ -87,7 +87,7 @@ public class MutationActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(responseBody);
                     JSONObject jsonTanggal = jsonObject.getJSONObject("respon");
-                    String noRek = jsonTanggal.getString("no_rek");
+                    final String noRek = jsonTanggal.getString("no_rek");
                     String tgl_awal = jsonTanggal.getString("tgl_awal");
                     String tgl_akhir = jsonTanggal.getString("tgl_akhir");
 
@@ -116,20 +116,30 @@ public class MutationActivity extends AppCompatActivity {
 
                     }
 
-                    txtMutationDate.setText(tgl_awal + " - " + tgl_akhir);
-                    txtNorekMutasi.setText(noRek);
+                    final String finalTgl_awal = tgl_awal;
+                    final String finalTgl_akhir = tgl_akhir;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtMutationDate.setText(finalTgl_awal + " - " + finalTgl_akhir);
+                            txtNorekMutasi.setText(noRek);
+                        }
+                    });
 
                     JSONArray jsonRecords = jsonObject.getJSONArray("result");
 
                     List<Transaction> listTrans = new ArrayList<Transaction>();
                     mutationAdapter = new MutationAdapter(listTrans, mContext);
 
-                    RecyclerView.LayoutManager lm = new LinearLayoutManager(mContext);
-                    rcyMutation.setLayoutManager(lm);
-                    rcyMutation.setItemAnimator(new DefaultItemAnimator());
-                    rcyMutation.setAdapter(mutationAdapter);
-
-                    mutationAdapter.notifyDataSetChanged();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RecyclerView.LayoutManager lm = new LinearLayoutManager(mContext);
+                            rcyMutation.setLayoutManager(lm);
+                            rcyMutation.setItemAnimator(new DefaultItemAnimator());
+                            rcyMutation.setAdapter(mutationAdapter);
+                        }
+                    });
 
                     for (int i = 0; i < jsonRecords.length(); i++) {
                         String tgl_trans = jsonRecords.getJSONObject(i).getString("tgl_trans");

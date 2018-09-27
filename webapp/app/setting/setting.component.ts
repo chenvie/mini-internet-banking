@@ -12,6 +12,8 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class SettingComponent implements OnInit {
 
+  rekening = [];
+  norek: string;
   kodeLama: string;
   passLama: string;
   passBaru: string;
@@ -32,39 +34,38 @@ export class SettingComponent implements OnInit {
 
   ngOnInit() {
     if (!this.login.isLoginValid) { this.route.navigate(['login']); }
+
+    this.rekening = this.login.userData.rekening;
+    this.norek = this.rekening[0].no_rek;
   }
 
   validatePassword(): boolean {
     this.isPassBaruValid = this.validator.validatePassword(this.passBaru);
     this.isPassSama = (this.passBaru === this.passRetype);
-    return this.isPassBaruValid && this.isPassSama && this.passLama !== '';
+    return this.isPassBaruValid
+        && this.isPassSama
+        && !InputValidatorService.isNull(this.passLama);
   }
 
   validateKode(): boolean {
     this.isKodeBaruValid = this.validator.validateKode(this.kodeBaru);
     this.isKodeSama = (this.kodeBaru === this.kodeRetype);
-    return this.isKodeBaruValid && this.isKodeSama && this.kodeLama !== '';
+    return this.isKodeBaruValid
+        && this.isKodeSama
+        && !InputValidatorService.isNull(this.kodeLama);
   }
 
-  submitKodeBaru(): void {
+  async submitKodeBaru() {
     const kodeUser = {
-      id_nasabah: this.login.userData.id_nasabah,
+      no_rek: this.norek,
       kode_rahasiaL: this.kodeLama,
       krb1: this.kodeBaru,
       krb2: this.kodeRetype
     };
 
     if (this.validateKode()) {
-      this.setting.changeKode(kodeUser).subscribe((data: any) => {
-        alert(data['message']);
-        if (data['status'] === 'Berhasil') {
-          const log = 'setting: username ' + this.login.userData.username + ' change kode success';
-          this.logger.info(log);
-        } else {
-          const log = 'setting: username ' + this.login.userData.username + ' change kode failed. Message: ' + data['message'];
-          this.logger.error(log);
-        }
-      });
+      const res = await this.setting.changeKode(kodeUser);
+      alert(res.message);
     } else {
       alert('gagal ubah kode rahasia');
       this.isKodeBaruValid = false;
@@ -74,7 +75,7 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  submitPassBaru(): void {
+  async submitPassBaru() {
     const passUser = {
       id_nasabah: this.login.userData.id_nasabah,
       passwordl: this.passLama,
@@ -83,16 +84,8 @@ export class SettingComponent implements OnInit {
     };
 
     if (this.validatePassword()) {
-      this.setting.changePassword(passUser).subscribe((data: any) => {
-        alert(data['message']);
-        if (data['status'] === 'Berhasil') {
-          const log = 'setting: username ' + this.login.userData.username + ' change password success';
-          this.logger.info(log);
-        } else {
-          const log = 'setting: username ' + this.login.userData.username + ' change password failed. Message: ' + data['message'];
-          this.logger.error(log);
-        }
-      });
+      const res = await this.setting.changePassword(passUser);
+      alert(res.message);
     } else {
       alert('gagal ubah password');
       this.isPassBaruValid = false;
@@ -109,5 +102,9 @@ export class SettingComponent implements OnInit {
     this.passLama = '';
     this.passBaru = '';
     this.passRetype = '';
+  }
+
+  onChangedSelect(val): void {
+    this.norek = val;
   }
 }
