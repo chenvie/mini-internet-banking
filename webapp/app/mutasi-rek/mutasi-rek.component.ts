@@ -49,7 +49,7 @@ export class MutasiRekComponent implements OnInit {
   async getMutasi(norek) {
     const res = await this.info.getMutasi(norek);
     try {
-      this.trx = res.records;
+      this.trx = res.result;
       const l = this.trx.length;
       const log = 'mutation: username ' + this.login.userData.username + ' fetched ' + l + ' record(s)';
       this.logger.info(log);
