@@ -5,7 +5,7 @@ public class HttpClientURL {
     //private static final String BASE_URL = "http://10.0.2.2/mini-internet-banking/API/";
     private static final String BASE_URL = "http://10.0.2.2:8080/";
 
-    public static final String urlWriteLog = BASE_URL + "log_mobile/write-log.php";
+    public static final String urlWriteLog = "http://10.0.2.2/mini-internet-banking/API/log_mobile/write-log.php";
 
 //    /* API dari server PHP */
 //    public static final String urlLogin = BASE_URL + "nasabah/login.php";
