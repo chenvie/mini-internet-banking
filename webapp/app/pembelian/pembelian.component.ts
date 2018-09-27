@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PembelianService } from '../pembelian.service';
-import { InputValidatorService } from '../input-validator.service';
-import { LoginService } from '../login.service';
-import { NGXLogger } from 'ngx-logger';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {PembelianService} from '../pembelian.service';
+import {InputValidatorService} from '../input-validator.service';
+import {LoginService} from '../login.service';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-pembelian',
@@ -36,18 +36,22 @@ export class PembelianComponent implements OnInit {
     private login: LoginService,
     private fb: FormBuilder,
     private logger: NGXLogger
-  ) { this.cekForm(); }
+  ) {
+    this.cekForm();
+  }
 
-    cekForm() {
-      this.angForm = this.fb.group({
-        no_hp_tujuan: ['', Validators.required],
-        provider: ['', Validators.required],
-        nominal: ['', Validators.required]
-      });
-    }
+  cekForm() {
+    this.angForm = this.fb.group({
+      no_hp_tujuan: ['', Validators.required],
+      provider: ['', Validators.required],
+      nominal: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
-    if (!this.login.isLoginValid) { this.route.navigate(['login']); }
+    if (!this.login.isLoginValid) {
+      this.route.navigate(['login']);
+    }
     this.dataBeli.username = this.login.userData.username;
     this.dataBeli.id_nasabah = this.login.userData.id_nasabah;
 

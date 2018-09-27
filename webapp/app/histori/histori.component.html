@@ -1,5 +1,13 @@
 <div *ngIf="page === 1">
   <h2>Histori Transaksi</h2>
+  <label>Dari nomor rekening</label><br>
+  <!--BARU-->
+  <select name="norek-pulsa">
+    <option value="#">Pilih nomor rekening</option>
+    <option value="#">Norek 1</option>
+    <option value="#">...</option>
+  </select><br><br>
+  <!--BARU-->
   <input type="date" [(ngModel)]="historiData.dariTanggal"> sampai <input type="date" [(ngModel)]="historiData.hinggaTanggal"><br>
   <span style="color: red" *ngIf="!isRangeValid">Pilih rentang tanggal maksimal 30 hari yang lalu</span><br>
   <input type="button" value="submit" style="float: right;" (click)="getHistori()"><br> <!-- ke hasil -->

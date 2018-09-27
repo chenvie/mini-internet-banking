@@ -57,7 +57,7 @@ export class SettingComponent implements OnInit {
     if (this.validateKode()) {
       this.setting.changeKode(kodeUser).subscribe((data: any) => {
         alert(data['message']);
-        if (data['update'] === true) {
+        if (data['status'] === 'Berhasil') {
           const log = 'setting: username ' + this.login.userData.username + ' change kode success';
           this.logger.info(log);
         } else {
@@ -85,7 +85,7 @@ export class SettingComponent implements OnInit {
     if (this.validatePassword()) {
       this.setting.changePassword(passUser).subscribe((data: any) => {
         alert(data['message']);
-        if (data['update'] === true) {
+        if (data['status'] === 'Berhasil') {
           const log = 'setting: username ' + this.login.userData.username + ' change password success';
           this.logger.info(log);
         } else {

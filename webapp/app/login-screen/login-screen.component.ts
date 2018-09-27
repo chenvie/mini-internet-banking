@@ -32,11 +32,11 @@ export class LoginScreenComponent implements OnInit {
       this.isLoginApproved = await this.loginService.login(this.userLogin);
       if (this.isLoginApproved) {
         this.route.navigate(['main']);
-        const log = 'login: username ' + this.loginService.userData.username + ' has logged in.';
-        this.logger.info(log);
+        // const log = 'login: username ' + this.loginService.userData.username + ' has logged in.';
+        // this.logger.info(log);
       } else {
-        const log = 'login: username'  + this.userLogin.username + ' failed to login.';
-        this.logger.warn(log);
+        // const log = 'login: username'  + this.userLogin.username + ' failed to login.';
+        // this.logger.warn(log);
       }
     }
   }

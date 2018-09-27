@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import md5 from 'md5';
+import {NGXLogger} from 'ngx-logger';
+import {LoginService} from './login.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,7 +14,9 @@ const httpOptions = {
 export class TransferService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private logger: NGXLogger,
+    private login: LoginService,
   ) { }
 
   /**
@@ -29,16 +33,20 @@ export class TransferService {
    * @returns {Promise} Hasil request dari API dalam bentuk Promise
    */
   async doTransfer(dataTrf: {
-    username: string,
-    kode_rahasia: string,
-    no_rek_tujuan: string,
-    id_nasabah: string,
+    norek_kirim: string,
+    norek_terima: string,
     nominal: string,
-    keterangan: string
+    ket: string,
+    kode_rhs: string,
   }) {
-    dataTrf.kode_rahasia = md5(dataTrf.kode_rahasia);
-    const url = 'http://localhost/api/transfer/create.php';
+    dataTrf.kode_rhs = md5(dataTrf.kode_rhs);
+    const url = 'http://localhost:8080/transfer/';
+    const id = this.login.userData.id_nasabah;
+    let log = 'id ' + id + ' send POST to ' + url + ', content: ' + JSON.stringify(dataTrf);
+    this.logger.info(log);
     const res = await this.http.post(url, dataTrf, httpOptions).toPromise();
+    log = 'id ' + id + ' receive from ' + url + ', content: ' + JSON.stringify(res);
+    this.logger.info(log);
     return <any>res;
   }
 }
