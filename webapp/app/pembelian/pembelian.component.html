@@ -2,11 +2,9 @@
   <form [formGroup]="angForm" novalidate>
     <label>Dari nomor rekening</label><br>
     <!--BARU-->
-    <select name="norek-pulsa">
-      <option value="#">Pilih nomor rekening</option>
-      <option value="#">Norek 1</option>
-      <option value="#">...</option>
-    </select>
+    <select (change)="onChangedSelect($event.target.value)">
+      <option *ngFor="let n of rekening" value="{{n.no_rek}}">{{n.no_rek}}</option>
+    </select><br>
     <!--BARU-->
     <div class="form-group">
       <label>No&nbsp;HP</label>
@@ -55,11 +53,11 @@
   No HP <span style="float: right;"> {{dataBeli.no_hp_tujuan}} </span><br>
   Provider <span style="float: right;"> {{dataBeli.provider}} </span><br>
   Nominal <span style="float: right;"> {{dataBeli.nominal}} </span><br>
-  Kode Rahasia <input type="password" maxlength="6" [(ngModel)]="dataBeli.kode_rahasia"><br>
+  Kode Rahasia <input type="password" maxlength="6" [(ngModel)]="dataBeli.kode_rhs"><br>
   <input type="button" value="submit" style="float: right;" (click)="submitPulsa()"><br> <!-- ke hasil -->
 </div>
 <div *ngIf="page === 3">
-  Pembelian pulsa <span> {{txtStatus}} </span><br>
+  Pembelian pulsa <span> {{status}} </span><br>
   <span *ngIf="!status"> {{keterangan}} </span><br><br>
   No HP <span style="float: right;"> {{dataBeli.no_hp_tujuan}} </span><br>
   Provider <span style="float: right;">  {{dataBeli.provider}} </span><br>

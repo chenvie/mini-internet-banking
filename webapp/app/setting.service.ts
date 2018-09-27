@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import md5 from 'md5';
+import {NGXLogger} from 'ngx-logger';
+import {LoginService} from './login.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,7 +15,9 @@ const httpOptions = {
 export class SettingService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private login: LoginService,
+    private logger: NGXLogger,
   ) { }
 
   /**
@@ -51,16 +55,22 @@ export class SettingService {
    *
    * @returns {Observable<any>} Hasil request dari API dalam bentuk Observable
    */
-  changeKode(kodeUser: {
-    id_nasabah: string,
+  async changeKode(kodeUser: {
+    no_rek: string,
     kode_rahasiaL: string,
     krb1: string,
     krb2: string
-  }): Observable<any> {
+  }) {
     kodeUser.kode_rahasiaL = md5(kodeUser.kode_rahasiaL);
     kodeUser.krb1 = md5(kodeUser.krb1);
     kodeUser.krb2 = md5(kodeUser.krb2);
-    const url = 'http://localhost/api/nasabah/update_kode_rahasia.php';
-    return this.http.post(url, kodeUser, httpOptions);
+    const url = 'http://localhost:8080/update_kode_rahasia';
+    const id = this.login.userData.id_nasabah;
+    let log = 'id ' + id + ' send POST to ' + url + ', content: ' + JSON.stringify(kodeUser);
+    this.logger.info(log);
+    const res = await this.http.post(url, kodeUser, httpOptions).toPromise();
+    log = 'id ' + id + ' received from ' + url + ', content: ' + JSON.stringify(res);
+    this.logger.info(log);
+    return <any>res;
   }
 }
