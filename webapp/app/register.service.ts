@@ -41,11 +41,11 @@ export class RegisterService {
   }) {
     userData.password = md5(userData.password);
     userData.kode_rahasia = md5(userData.kode_rahasia);
-    const url = 'http://localhost/api/nasabah/create.php';
-    let log = 'send POST to ' + url + ' content: ' + JSON.stringify(userData);
+    const url = 'http://localhost:8080/nasabah';
+    let log = 'NEW USER send POST to ' + url + ', content: ' + JSON.stringify(userData);
     this.logger.info(log);
     const res = await this.http.post(url, userData, httpOptions).toPromise();
-    log = 'receive from ' + url + JSON.stringify(res);
+    log = 'NEW USER receive from ' + url + ', content: ' + JSON.stringify(res);
     this.logger.info(log);
     return <any>res;
   }
