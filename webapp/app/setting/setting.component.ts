@@ -75,7 +75,7 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  submitPassBaru(): void {
+  async submitPassBaru() {
     const passUser = {
       id_nasabah: this.login.userData.id_nasabah,
       passwordl: this.passLama,
@@ -84,16 +84,8 @@ export class SettingComponent implements OnInit {
     };
 
     if (this.validatePassword()) {
-      this.setting.changePassword(passUser).subscribe((data: any) => {
-        alert(data['message']);
-        if (data['status'] === 'Berhasil') {
-          const log = 'setting: username ' + this.login.userData.username + ' change password success';
-          this.logger.info(log);
-        } else {
-          const log = 'setting: username ' + this.login.userData.username + ' change password failed. Message: ' + data['message'];
-          this.logger.error(log);
-        }
-      });
+      const res = await this.setting.changePassword(passUser);
+      alert(res.message);
     } else {
       alert('gagal ubah password');
       this.isPassBaruValid = false;
