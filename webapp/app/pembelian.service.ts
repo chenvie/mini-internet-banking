@@ -40,7 +40,7 @@ export class PembelianService {
     nominal: string
   }) {
     dataBeli.kode_rhs = md5(dataBeli.kode_rhs);
-    const url = 'http://localhost:8080/pembelian/'; // kode null masih valid
+    const url = 'http://localhost:8080/pembelian/';
     const id = this.login.userData.id_nasabah;
     let log = 'id ' + id + ' send POST to ' + url + ', content: ' + JSON.stringify(dataBeli);
     this.logger.info(log);

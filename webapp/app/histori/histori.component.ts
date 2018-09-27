@@ -4,7 +4,6 @@ import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { InfoRekService } from '../info-rek.service';
 import * as moment from 'moment';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-histori',
@@ -35,7 +34,6 @@ export class HistoriComponent implements OnInit {
     private login: LoginService,
     private route: Router,
     private info: InfoRekService,
-    private logger: NGXLogger
   ) { }
 
   ngOnInit() {
@@ -59,16 +57,10 @@ export class HistoriComponent implements OnInit {
     this.historiData.tgl_akhir = moment(this.historiData.tgl_akhir).format('DD MMMM YYYY');
     this.trx = res.result;
     try {
-      // const l = this.trx.length;
-      // const log = 'histori: username ' + this.login.userData.username + ' fetched ' + l + ' record(s)';
-      // this.logger.info(log);
       this.trx.forEach(t => {
         t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
       });
-    } catch (error) {
-      // const log = 'histori: username ' + this.login.userData.username + ' fetched 0 record(s)';
-      // this.logger.info(log);
-    }
+    } catch (error) {}
     this.page = 2;
   }
 

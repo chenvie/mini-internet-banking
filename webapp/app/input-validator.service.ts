@@ -231,18 +231,12 @@ export class InputValidatorService {
     nominal: string
   }): boolean {
     if (InputValidatorService.isNull(dataBeli.no_hp_tujuan)) {
-      // const log = 'transaction: username ' + this.login.userData.username + ' target phone number null value';
-      // this.logger.error(log);
       return false;
     }
     if (InputValidatorService.isNull(dataBeli.provider)) {
-      // const log = 'transaction: username ' + this.login.userData.username + ' provider null value';
-      // this.logger.error(log);
       return false;
     }
     if (InputValidatorService.isNull(dataBeli.nominal)) {
-      // const log = 'transaction: username ' + this.login.userData.username + ' nominal null value';
-      // this.logger.error(log);
       return false;
     }
     return true;

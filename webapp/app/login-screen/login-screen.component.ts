@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { InputValidatorService } from '../input-validator.service';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-login-screen',
@@ -20,8 +19,7 @@ export class LoginScreenComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private validator: InputValidatorService,
-    private route: Router,
-    private logger: NGXLogger) { }
+    private route: Router,) { }
 
   ngOnInit() {
     if (this.loginService.isLoginValid) {this.route.navigate(['/main']); }
@@ -32,11 +30,6 @@ export class LoginScreenComponent implements OnInit {
       this.isLoginApproved = await this.loginService.login(this.userLogin);
       if (this.isLoginApproved) {
         this.route.navigate(['main']);
-        // const log = 'login: username ' + this.loginService.userData.username + ' has logged in.';
-        // this.logger.info(log);
-      } else {
-        // const log = 'login: username'  + this.userLogin.username + ' failed to login.';
-        // this.logger.warn(log);
       }
     }
   }

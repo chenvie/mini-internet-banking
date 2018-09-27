@@ -4,7 +4,6 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {PembelianService} from '../pembelian.service';
 import {InputValidatorService} from '../input-validator.service';
 import {LoginService} from '../login.service';
-import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-pembelian',

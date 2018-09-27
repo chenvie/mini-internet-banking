@@ -50,16 +50,10 @@ export class MutasiRekComponent implements OnInit {
     const res = await this.info.getMutasi(norek);
     try {
       this.trx = res.result;
-      const l = this.trx.length;
-      const log = 'mutation: username ' + this.login.userData.username + ' fetched ' + l + ' record(s)';
-      this.logger.info(log);
       this.trx.forEach(t => {
         t.tgl_trans = moment(t.tgl_trans).format('DD/MM/YYYY');
       });
-    } catch (error) {
-      // const log = 'mutation: username ' + this.login.userData.username + ' no record(s) fetched';
-      // this.logger.info(log);
-    }
+    } catch (error) {}
   }
 
   onChangedSelect(norek): void {
