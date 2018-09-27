@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2018 at 12:59 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Generation Time: Sep 27, 2018 at 08:39 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -224,7 +224,7 @@ SELECT
     no_rek into norek
 FROM 
    rekening
-   ORDER by id_nasabah DESC LIMIT 1;
+   ORDER by no_rek DESC LIMIT 1;
 
 SET norek = CAST(norek as int);
 SET norek = norek+1;
@@ -585,7 +585,8 @@ INSERT INTO `nasabah` (`id_nasabah`, `email`, `username`, `nama_lengkap`, `passw
 (48, 'vievin.efendy@ti.ukdw.ac.id', 'Vievin47', 'Vievin Efendy', 'ff68179dddd38692293d04c091d017ff', '3372024109970003', '1997-09-01', 'Surakarta', '2018-09-25 06:11:19'),
 (49, 'jaehwan_kim@naver.com', 'Jaehwan48', 'Jaehwan Kim', '5994b01d753d52410bd6f17a5da647f4', '02382783209832', '1996-05-27', 'South Korea', '2018-09-25 09:41:21'),
 (50, 'daehwi_lee@naver.com', 'Daehwi49', 'Daehwi Lee', '273d9bd3ef50d81d70fd9150c9404565', '283702489403', '2001-01-29', 'South Korea', '2018-09-25 09:46:19'),
-(54, 'daniel_kang@naver.com', 'Daniel50', 'Daniel Kang', 'b5ea8985533defbf1d08d5ed2ac8fe9b', '01084793403', '1996-12-10', 'South Korea', '2018-09-25 09:58:54');
+(54, 'daniel_kang@naver.com', 'Daniel50', 'Daniel Kang', 'b5ea8985533defbf1d08d5ed2ac8fe9b', '01084793403', '1996-12-10', 'South Korea', '2018-09-25 09:58:54'),
+(61, 'yosefresi@gmail.com', 'Yosef20', 'Yosef Resi', '34b558355be3635700741e243a9d4c2a', '123', '1990-08-08', 'qweqwe', '2018-09-27 06:32:04');
 
 -- --------------------------------------------------------
 
@@ -640,6 +641,7 @@ CREATE TABLE `rekening` (
 --
 
 INSERT INTO `rekening` (`no_rek`, `id_nasabah`, `kode_rahasia`, `jml_saldo`, `kode_cabang`, `created`) VALUES
+('0249120', 61, '4297f44b13955235245b2497399d7a93', 450000, 'asd1', '2018-09-27 06:32:04'),
 ('037000', 7, '123', 150000, 'asd1', '2018-09-10 08:38:56'),
 ('037001', 6, 'asda', 4800000, 'asd1', '2018-09-12 08:50:08'),
 ('037002', 8, '123', 230000, 'asd1', '2018-09-06 08:16:21'),
@@ -857,7 +859,7 @@ ALTER TABLE `transfer`
 -- AUTO_INCREMENT for table `nasabah`
 --
 ALTER TABLE `nasabah`
-  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id_nasabah` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- Constraints for dumped tables
