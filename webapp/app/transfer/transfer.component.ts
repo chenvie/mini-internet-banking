@@ -4,7 +4,6 @@ import { LoginService } from '../login.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputValidatorService } from '../input-validator.service';
 import { TransferService } from '../transfer.service';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-transfer',
@@ -15,17 +14,16 @@ export class TransferComponent implements OnInit {
 
   page: number;
   dataTrf = {
-    username: null,
-    kode_rahasia: null,
-    no_rek_tujuan: null,
-    id_nasabah: null,
+    norek_kirim: null,
+    norek_terima: null,
     nominal: null,
-    keterangan: null
+    ket: null,
+    kode_rhs: null,
   };
   isNorekValid = true;
-  isSuccess = false;
   message: string;
-  status = 'Gagal';
+  status: string;
+  rekening = [];
   angForm: FormGroup;
 
   constructor(
@@ -34,7 +32,6 @@ export class TransferComponent implements OnInit {
     private transfer: TransferService,
     private route: Router,
     private validator: InputValidatorService,
-    private logger: NGXLogger
   ) { this.createForm(); }
 
   createForm() {
@@ -49,46 +46,27 @@ export class TransferComponent implements OnInit {
     if (!this.login.isLoginValid) { this.route.navigate(['login']); }
 
     this.page = 1;
-    this.dataTrf.id_nasabah = this.login.userData.id_nasabah;
-    this.dataTrf.username = this.login.userData.username;
+    this.rekening = this.login.userData.rekening;
+    this.dataTrf.norek_kirim = this.rekening[0].no_rek;
   }
 
   async validateNorek() {
-    if (this.dataTrf.no_rek_tujuan === null || this.dataTrf.no_rek_tujuan === '') {
-      const log = 'transfer: username ' + this.login.userData.username + ' norek value null';
-      this.logger.error(log);
-      return;
-    }
-    if (this.dataTrf.nominal === null || this.dataTrf.nominal === '') {
-      const log = 'transfer: username ' + this.login.userData.username + ' nominal value null';
-      this.logger.error(log);
+    if (InputValidatorService.isNull(this.dataTrf.norek_terima, this.dataTrf.nominal)) {
       return;
     }
     const res = await this.validator.validateNorek(this.dataTrf);
-    this.isNorekValid = res.check === 'True' ? true : false;
-    if (this.isNorekValid) {
-      this.page = 2;
-      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' norek valid';
-      this.logger.info(log);
-    } else {
-      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' norek invalid';
-      this.logger.error(log);
-    }
+    this.isNorekValid = res.status === 'Berhasil';
+    this.page = this.isNorekValid ? 2 : 1 ;
   }
 
   async doTransfer() {
     const res = await this.transfer.doTransfer(this.dataTrf);
-    this.isSuccess = res.transfer;
+    this.status = res.status;
     this.message = res.message;
     this.page = 3;
-    if (this.isSuccess) {
-      this.status = 'Berhasil';
-      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' + this.dataTrf.no_rek_tujuan + ' success';
-      this.logger.info(log);
-    } else {
-      const log = 'transfer: username ' + this.login.userData.username + ' transfer to ' +
-        this.dataTrf.no_rek_tujuan + ' failed. Message: ' + this.message;
-      this.logger.error(log);
-    }
+  }
+
+  onChangedSelect(val): void {
+    this.dataTrf.norek_kirim = val;
   }
 }

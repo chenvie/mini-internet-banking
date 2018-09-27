@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PembelianService } from '../pembelian.service';
-import { InputValidatorService } from '../input-validator.service';
-import { LoginService } from '../login.service';
-import { NGXLogger } from 'ngx-logger';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {PembelianService} from '../pembelian.service';
+import {InputValidatorService} from '../input-validator.service';
+import {LoginService} from '../login.service';
 
 @Component({
   selector: 'app-pembelian',
@@ -15,19 +14,17 @@ export class PembelianComponent implements OnInit {
 
   page = 1;
   dataBeli = {
-    username: null,
+    norek: null,
     no_hp_tujuan: null,
-    id_nasabah: null,
     provider: null,
-    kode_rahasia: null,
+    kode_rhs: null,
     nominal: null
   };
   keterangan: string;
-  status: boolean;
-  txtStatus: string;
+  status: string;
   isFormValid = false;
-  isKodeValid = false;
   angForm: FormGroup;
+  rekening = [];
 
   constructor(
     private beli: PembelianService,
@@ -35,22 +32,24 @@ export class PembelianComponent implements OnInit {
     private route: Router,
     private login: LoginService,
     private fb: FormBuilder,
-    private logger: NGXLogger
-  ) { this.cekForm(); }
+  ) {
+    this.cekForm();
+  }
 
-    cekForm() {
-      this.angForm = this.fb.group({
-        no_hp_tujuan: ['', Validators.required],
-        provider: ['', Validators.required],
-        nominal: ['', Validators.required]
-      });
-    }
+  cekForm() {
+    this.angForm = this.fb.group({
+      no_hp_tujuan: ['', Validators.required],
+      provider: ['', Validators.required],
+      nominal: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
-    if (!this.login.isLoginValid) { this.route.navigate(['login']); }
-    this.dataBeli.username = this.login.userData.username;
-    this.dataBeli.id_nasabah = this.login.userData.id_nasabah;
-
+    if (!this.login.isLoginValid) {
+      this.route.navigate(['login']);
+    }
+    this.rekening = this.login.userData.rekening;
+    this.dataBeli.norek = this.rekening[0].no_rek;
     this.page = 1;
   }
 
@@ -66,16 +65,11 @@ export class PembelianComponent implements OnInit {
   async submitPulsa() {
     const res = await this.beli.buyPulsa(this.dataBeli);
     this.keterangan = res.message;
-    this.status = res.pulsa;
-    this.txtStatus = this.status ? 'Berhasil' : 'Gagal';
+    this.status = res.status;
     this.page = 3;
-    if (this.status) {
-      const log = 'transaction: username ' + this.login.userData.username + ' pulsa transaction success';
-      this.logger.info(log);
-    } else {
-      const log = 'transaction: username ' + this.login.userData.username + ' pulsa transaction failed. Message: ' + this.keterangan;
-      this.logger.error(log);
-    }
   }
 
+  onChangedSelect(val): void {
+    this.dataBeli.norek = val;
+  }
 }

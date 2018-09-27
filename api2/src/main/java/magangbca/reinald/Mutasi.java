@@ -12,10 +12,10 @@ public class Mutasi {
     private String tujuan;
     private String jenis;
     private String keterangan;
-    private BigInteger nominal;
+    private String nominal;
 
     public Mutasi() {  }
-    public Mutasi(String kd, String tj, String ttr, String jns, String ket, BigInteger nom) {
+    public Mutasi(String kd, String tj, String ttr, String jns, String ket, String nom) {
       this.setKode_transaksi(kd);
       this.setTujuan(tj);
       this.setTgl_trans(ttr);
@@ -44,7 +44,7 @@ public class Mutasi {
         return keterangan;
     }
 
-    public BigInteger getNominal() {
+    public String getNominal() {
         return nominal;
     }
 
@@ -68,7 +68,7 @@ public class Mutasi {
         this.keterangan = keterangan;
     }
 
-    public void setNominal(BigInteger nominal) {
+    public void setNominal(String nominal) {
         this.nominal = nominal;
     }
 

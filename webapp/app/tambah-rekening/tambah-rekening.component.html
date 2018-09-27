@@ -1,0 +1,7 @@
+<div>
+  <label>Masukkan kode rahasia</label><br>
+  <input type="password" maxlength="6" [(ngModel)]="dataTbhRek.kode_rahasia"><br>
+  <span style="color: red;" *ngIf="err_msg">{{err_msg}}</span><br>
+  <input type="submit" value="Tambah rekening" (click)="tambahRek()"><br><br>
+  <div *ngIf="status">{{message}} : <span>{{norekBaru}}</span></div>
+</div>

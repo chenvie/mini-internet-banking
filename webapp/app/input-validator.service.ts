@@ -17,6 +17,46 @@ export class InputValidatorService {
 
   tanggal: any;
 
+  /**
+   * Validasi input kosong
+   *
+   * @param val value yang akan dicek
+   *
+   * @returns {boolean} Jika null/undefined/' ' return true, jika tidak false
+   */
+  static isNull(...val: string[]): boolean {
+    for (const v of val) {
+      if (v === null) { return true; }
+      if (v === undefined) { return true; }
+      if (v === '') { return true; }
+    }
+    return false;
+  }
+
+  /**
+   * Mendeteksi kombinasi tanggal lahir pada input
+   *
+   * @param {string} sequence - input yang akan dilihat
+   * @param {string} tanggal - tanggal yang akan dicocokkan
+   *
+   * @returns {boolean} Jika tidak terdapat kombinasi tanggal pada input return true, selain itu false
+   */
+  static validateTanggalPermutation(sequence: string, tanggal: string): boolean {
+    if (sequence === moment(tanggal).format('DDMMYY')) { return false; }
+    if (sequence === moment(tanggal).format('MMDDYY')) { return false; }
+    if (sequence === moment(tanggal).format('DDYYMM')) { return false; }
+    if (sequence === moment(tanggal).format('MMYYDD')) { return false; }
+    if (sequence === moment(tanggal).format('YYDDMM')) { return false; }
+    if (sequence === moment(tanggal).format('YYMMDD')) { return false; }
+    if (sequence === moment(tanggal).format('DDMMYYYY')) { return false; }
+    if (sequence === moment(tanggal).format('MMDDYYYY')) { return false; }
+    if (sequence === moment(tanggal).format('DDYYYYMM')) { return false; }
+    if (sequence === moment(tanggal).format('MMYYYYDD')) { return false; }
+    if (sequence === moment(tanggal).format('YYYYDDMM')) { return false; }
+    if (sequence === moment(tanggal).format('YYYYMMDD')) { return false; }
+    return true;
+  }
+
   constructor(
     private http: HttpClient,
     private logger: NGXLogger,
@@ -31,7 +71,7 @@ export class InputValidatorService {
    * @returns {boolean} Jika password valid return true, jika tidak false
    */
   validatePassword(pass: string): boolean {
-    if (this.isNull(pass)) {
+    if (InputValidatorService.isNull(pass)) {
       const log = 'input: username ' + this.login.userData.username + ' password null value';
       this.logger.error(log);
       return false;
@@ -48,7 +88,7 @@ export class InputValidatorService {
       this.logger.error(log);
       return false;
     }
-    if (!this.validateTanggalPermutation(pass, this.tanggal)) {
+    if (!InputValidatorService.validateTanggalPermutation(pass, this.tanggal)) {
       const log = 'input: username ' + this.login.userData.username + ' password contains birth date';
       this.logger.error(log);
       return false;
@@ -64,7 +104,7 @@ export class InputValidatorService {
    * @returns {boolean} Jika kode rahasia valid return true, jika tidak false
    */
   validateKode(kode: string): boolean {
-    if (this.isNull(kode)) {
+    if (InputValidatorService.isNull(kode)) {
       const log = 'input: username ' + this.login.userData.username + ' secret code null value';
       this.logger.error(log);
       return false;
@@ -81,7 +121,7 @@ export class InputValidatorService {
       this.logger.error(log);
       return false;
     }
-    if (!this.validateTanggalPermutation(kode, this.tanggal)) {
+    if (!InputValidatorService.validateTanggalPermutation(kode, this.tanggal)) {
       const log = 'input: username ' + this.login.userData.username + ' secret code contains birth date';
       this.logger.error(log);
       return false;
@@ -98,7 +138,7 @@ export class InputValidatorService {
    */
   validateTanggal(tanggal: string): boolean {
     this.tanggal = tanggal;
-    if (this.isNull(tanggal)) {
+    if (InputValidatorService.isNull(tanggal)) {
       const log = 'registration: username ' + this.login.userData.username + ' date null value';
       this.logger.error(log);
       return false;
@@ -120,12 +160,12 @@ export class InputValidatorService {
    * @returns {boolean} Jika range tanggal valid return true, jika tidak false
    */
   validateRangeTanggal(dariTanggal: string, hinggaTanggal: string): boolean {
-    if (this.isNull(dariTanggal)) {
+    if (InputValidatorService.isNull(dariTanggal)) {
       const log = 'histori: username ' + this.login.userData.username + ' initial date null value';
       this.logger.error(log);
       return false;
     }
-    if (this.isNull(hinggaTanggal)) {
+    if (InputValidatorService.isNull(hinggaTanggal)) {
       const log = 'histori: username ' + this.login.userData.username + ' target date null value';
       this.logger.error(log);
       return false;
@@ -157,40 +197,16 @@ export class InputValidatorService {
    * @returns {boolean} Jika input valid return true, jika tidak false
    */
   validateLogin(username: string, password: string): boolean {
-    if (this.isNull(username)) {
+    if (InputValidatorService.isNull(username)) {
       const log = 'login: username null value';
       this.logger.error(log);
       return false;
     }
-    if (this.isNull(password)) {
+    if (InputValidatorService.isNull(password)) {
       const log = 'login: password null value';
       this.logger.error(log);
       return false;
     }
-    return true;
-  }
-
-  /**
-   * Mendeteksi kombinasi tanggal lahir pada input
-   *
-   * @param {string} sequence - input yang akan dilihat
-   * @param {string} tanggal - tanggal yang akan dicocokkan
-   *
-   * @returns {boolean} Jika tidak terdapat kombinasi tanggal pada input return true, selain itu false
-   */
-  validateTanggalPermutation(sequence: string, tanggal: string): boolean {
-    if (sequence === moment(tanggal).format('DDMMYY')) { return false; }
-    if (sequence === moment(tanggal).format('MMDDYY')) { return false; }
-    if (sequence === moment(tanggal).format('DDYYMM')) { return false; }
-    if (sequence === moment(tanggal).format('MMYYDD')) { return false; }
-    if (sequence === moment(tanggal).format('YYDDMM')) { return false; }
-    if (sequence === moment(tanggal).format('YYMMDD')) { return false; }
-    if (sequence === moment(tanggal).format('DDMMYYYY')) { return false; }
-    if (sequence === moment(tanggal).format('MMDDYYYY')) { return false; }
-    if (sequence === moment(tanggal).format('DDYYYYMM')) { return false; }
-    if (sequence === moment(tanggal).format('MMYYYYDD')) { return false; }
-    if (sequence === moment(tanggal).format('YYYYDDMM')) { return false; }
-    if (sequence === moment(tanggal).format('YYYYMMDD')) { return false; }
     return true;
   }
 
@@ -208,26 +224,19 @@ export class InputValidatorService {
    * @returns {boolean} Jika data valid return true, jika tidak false
    */
   validatePembelian(dataBeli: {
-    username: string,
+    norek: string,
     no_hp_tujuan: string,
-    id_nasabah: string,
     provider: string,
-    kode_rahasia: string,
+    kode_rhs: string,
     nominal: string
   }): boolean {
-    if (this.isNull(dataBeli.no_hp_tujuan)) {
-      const log = 'transaction: username ' + this.login.userData.username + ' target phone number null value';
-      this.logger.error(log);
+    if (InputValidatorService.isNull(dataBeli.no_hp_tujuan)) {
       return false;
     }
-    if (this.isNull(dataBeli.provider)) {
-      const log = 'transaction: username ' + this.login.userData.username + ' provider null value';
-      this.logger.error(log);
+    if (InputValidatorService.isNull(dataBeli.provider)) {
       return false;
     }
-    if (this.isNull(dataBeli.nominal)) {
-      const log = 'transaction: username ' + this.login.userData.username + ' nominal null value';
-      this.logger.error(log);
+    if (InputValidatorService.isNull(dataBeli.nominal)) {
       return false;
     }
     return true;
@@ -247,29 +256,16 @@ export class InputValidatorService {
    * @returns {Promise} Hasil request dari API dalam bentuk Promise
    */
   async validateNorek(dataTrf: {
-    username: string,
-    kode_rahasia: string,
-    no_rek_tujuan: string,
-    id_nasabah: string,
-    nominal: string,
-    keterangan: string
+    norek_kirim: string,
+    norek_terima: string,
   }) {
-    const url = 'http://localhost/api/transfer/cek-no-rek.php';
+    const url = 'http://localhost:8080/ceknorek';
+    const id = this.login.userData.id_nasabah;
+    let log = 'id ' + id + ' send POST to ' + url + ', content: ' + JSON.stringify(dataTrf);
+    this.logger.info(log);
     const res = await this.http.post(url, dataTrf, httpOptions).toPromise();
+    log = 'id ' + id + ' receive from ' + url + ', content: ' + JSON.stringify(res);
+    this.logger.info(log);
     return <any>res;
-  }
-
-  /**
-   * Validasi input kosong
-   *
-   * @param val input yang akan divalidasi
-   *
-   * @returns {boolean} Jika null/undefined/' ' return true, jika tidak false
-   */
-  isNull(val: string): boolean {
-    if (val === null) { return true; }
-    if (val === undefined) { return true; }
-    if (val === '') { return true; }
-    return false;
   }
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit} from '@angular/core';
-import { LoginService } from '../login.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {LoginService} from '../login.service';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-main-screen',
@@ -16,24 +16,31 @@ export class MainScreenComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit() {
   }
 
   route(page: number): void {
     switch (page) {
-      case 1: this.router.navigate(['/'], {relativeTo: this.activatedRoute});
+      case 1:
+        this.router.navigate(['/'], {relativeTo: this.activatedRoute});
         break;
-      case 2: this.router.navigate(['mutasi-rek']);
+      case 2:
+        this.router.navigate(['mutasi-rek']);
         break;
-      case 3: this.router.navigate(['transfer']);
+      case 3:
+        this.router.navigate(['transfer']);
         break;
-      case 4: this.router.navigate(['pembelian']);
+      case 4:
+        this.router.navigate(['pembelian']);
         break;
-      case 5: this.router.navigate(['histori']);
+      case 5:
+        this.router.navigate(['histori']);
         break;
-      case 6: this.router.navigate(['setting']);
+      case 6:
+        this.router.navigate(['setting']);
         break;
       default:
         break;

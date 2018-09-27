@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, ObservableInput } from 'rxjs';
 import md5 from 'md5';
+import { NGXLogger} from 'ngx-logger';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,7 +12,9 @@ const httpOptions = {
 })
 export class RegisterService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private logger: NGXLogger) { }
 
   /**
    * Call API untuk registrasi
@@ -28,7 +30,7 @@ export class RegisterService {
    *
    * @returns {Observable<any>} Hasil request dari API dalam bentuk Observable
    */
-  register(userData: {
+  async register(userData: {
     nama_lengkap: string,
     email: string,
     password: string,
@@ -36,10 +38,15 @@ export class RegisterService {
     tgl_lahir: string,
     alamat: string,
     kode_rahasia: string
-  }): Observable<any> {
+  }) {
     userData.password = md5(userData.password);
     userData.kode_rahasia = md5(userData.kode_rahasia);
-    const url = 'http://localhost/api/nasabah/create.php';
-    return this.http.post(url, userData, httpOptions);
+    const url = 'http://localhost:8080/nasabah';
+    let log = 'NEW USER send POST to ' + url + ', content: ' + JSON.stringify(userData);
+    this.logger.info(log);
+    const res = await this.http.post(url, userData, httpOptions).toPromise();
+    log = 'NEW USER receive from ' + url + ', content: ' + JSON.stringify(res);
+    this.logger.info(log);
+    return <any>res;
   }
 }

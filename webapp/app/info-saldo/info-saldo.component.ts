@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {LoginService} from '../login.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-info-saldo',
@@ -10,17 +10,26 @@ import { Router } from '@angular/router';
 
 export class InfoSaldoComponent implements OnInit {
 
-  norek: string;
-  saldo: string;
+  rekening = [];
+  selectedRekSaldo: string;
 
   constructor(
     private login: LoginService,
-    private route: Router) { }
+    private route: Router,
+  ) {
+  }
 
-  ngOnInit() {
-    if (!this.login.isLoginValid) { this.route.navigate(['login']); }
+  async ngOnInit() {
+    if (!this.login.isLoginValid) {
+      this.route.navigate(['login']);
+    } else {
+      await this.login.getUserData();
+      this.rekening = this.login.userData.rekening;
+      this.selectedRekSaldo = this.rekening[0].jml_saldo;
+    }
+  }
 
-    this.norek = this.login.userData.no_rek;
-    this.saldo = this.login.userData.jml_saldo;
+  onChangedSelect(val): void {
+    this.selectedRekSaldo = val;
   }
 }

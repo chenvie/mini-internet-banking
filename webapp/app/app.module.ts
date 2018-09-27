@@ -16,6 +16,7 @@ import { HistoriComponent } from './histori/histori.component';
 import { SettingComponent } from './setting/setting.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { TambahRekeningComponent } from './tambah-rekening/tambah-rekening.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     TransferComponent,
     PembelianComponent,
     HistoriComponent,
-    SettingComponent
+    SettingComponent,
+    TambahRekeningComponent
   ],
   imports: [
     BrowserModule,
