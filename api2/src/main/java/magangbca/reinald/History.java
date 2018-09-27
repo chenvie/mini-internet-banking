@@ -11,12 +11,12 @@ public class History {
     private String tgl_trans;
     private String tujuan;
     private String keterangan;
-    private BigInteger nominal;
+    private String nominal;
 
     private String status;
 
     public History() {  }
-    public History(String kd, String tj, String ttr, String ket, BigInteger nom, String stts) {
+    public History(String kd, String tj, String ttr, String ket, String nom, String stts) {
         this.setKode_transaksi(kd);
         this.setTujuan(tj);
         this.setTgl_trans(ttr);
@@ -41,7 +41,7 @@ public class History {
         return keterangan;
     }
 
-    public BigInteger getNominal() {
+    public String getNominal() {
         return nominal;
     }
 
@@ -65,7 +65,7 @@ public class History {
         this.keterangan = keterangan;
     }
 
-    public void setNominal(BigInteger nominal) {
+    public void setNominal(String nominal) {
         this.nominal = nominal;
     }
 
