@@ -131,80 +131,86 @@ public class TransferActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, TransferCodeActivity.class);
 
         if (!noRek.equals("") && !nominal.equals("")){
-            OkHttpClient client = new OkHttpClient();
-            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-            String url = HttpClientURL.urlCheckRekNum;
+            if (Integer.parseInt(nominal) > 0) {
+                OkHttpClient client = new OkHttpClient();
+                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                String url = HttpClientURL.urlCheckRekNum;
 
-            JSONObject jsonParams = new JSONObject();
-            try {
-                jsonParams.put("norek_kirim", rekKirim);
-                jsonParams.put("norek_terima", noRek);
-            } catch (JSONException e) {
-                Log.e(TAG, "Error create JSONObject for post param: " + e.getMessage());
-                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error create JSONObejct for post param: " + e.getMessage());
-                e.printStackTrace();
-            }
-
-            RequestBody body = RequestBody.create(JSON, jsonParams.toString());
-
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(body)
-                    .build();
-
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.e(TAG, "error in getting response from async okhttp call");
-                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
+                JSONObject jsonParams = new JSONObject();
+                try {
+                    jsonParams.put("norek_kirim", rekKirim);
+                    jsonParams.put("norek_terima", noRek);
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error create JSONObject for post param: " + e.getMessage());
+                    listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error create JSONObejct for post param: " + e.getMessage());
+                    e.printStackTrace();
                 }
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String responseBody = response.body().string().toString();
+                RequestBody body = RequestBody.create(JSON, jsonParams.toString());
 
-                    int jsonStart = responseBody.indexOf("{");
-                    int jsonEnd = responseBody.indexOf("}");
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
 
-                    if (jsonStart > 0 && jsonEnd > 0 && jsonEnd > jsonStart){
-                        responseBody = responseBody.substring(jsonStart, jsonEnd+1);
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.e(TAG, "error in getting response from async okhttp call");
+                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Error in getting response from async okhttp call");
                     }
 
-                    try {
-                        JSONObject jsonObject = new JSONObject(responseBody);
-                        String check = jsonObject.getString("status");
-                        final String message = jsonObject.getString("message");
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String responseBody = response.body().string().toString();
 
-                        if (check.equalsIgnoreCase("berhasil")){
-                            Log.i(TAG, "Checking receiver rekening num success, [" +
-                                    "No Rekening Tujuan = " + noRek +
-                                    ", Id Nasabah = " + Nasabah.id);
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Checking receiver rekening num success, [" +
-                                    "No Rekening Tujuan = " + noRek +
-                                    ", Nasabah id = " + Nasabah.id);
-                            intent.putExtra("rekKirim", rekKirim);
-                            intent.putExtra("noRek", noRek);
-                            intent.putExtra("nominal", nominal);
-                            intent.putExtra("ket", ket);
-                            writeLogs();
-                            startActivity(intent);
-                        } else{
-                            Log.e(TAG, "Checking receiver rekening num failed: " + message);
-                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Checking receiver num failed: " + message);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-                                }
-                            });
+                        int jsonStart = responseBody.indexOf("{");
+                        int jsonEnd = responseBody.indexOf("}");
+
+                        if (jsonStart > 0 && jsonEnd > 0 && jsonEnd > jsonStart) {
+                            responseBody = responseBody.substring(jsonStart, jsonEnd + 1);
                         }
-                    } catch (JSONException e) {
-                        listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
-                        Log.e(TAG, "Json parsing error: " + e.getMessage());
-                        e.printStackTrace();
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseBody);
+                            String check = jsonObject.getString("status");
+                            final String message = jsonObject.getString("message");
+
+                            if (check.equalsIgnoreCase("berhasil")) {
+                                Log.i(TAG, "Checking receiver rekening num success, [" +
+                                        "No Rekening Tujuan = " + noRek +
+                                        ", Id Nasabah = " + Nasabah.id);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[INFO] " + ": " + "Checking receiver rekening num success, [" +
+                                        "No Rekening Tujuan = " + noRek +
+                                        ", Nasabah id = " + Nasabah.id);
+                                intent.putExtra("rekKirim", rekKirim);
+                                intent.putExtra("noRek", noRek);
+                                intent.putExtra("nominal", nominal);
+                                intent.putExtra("ket", ket);
+                                writeLogs();
+                                startActivity(intent);
+                            } else {
+                                Log.e(TAG, "Checking receiver rekening num failed: " + message);
+                                listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Checking receiver num failed: " + message);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        } catch (JSONException e) {
+                            listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
+                            Log.e(TAG, "Json parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
+            } else{
+                Toast.makeText(this, "Saldo harus lebih besar dari 0", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Transfer nominal is less than 0");
+                listLog.add((s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Transfer nominal is less than 0"));
+            }
         } else{
             Log.e(TAG, "Rekening Number or Nominal is empty");
             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Secret code wrong");
