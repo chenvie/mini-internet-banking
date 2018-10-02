@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d9a9029f-3e19-4231-95cc-dca88c5d6461" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/magangbca/reinald/NasabahRepositorylmpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/magangbca/reinald/NasabahRepositorylmpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile-app/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile-app/app/build.gradle" afterDir="false" />
-    </list>
+    <list default="true" id="d9a9029f-3e19-4231-95cc-dca88c5d6461" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -167,7 +162,7 @@
     <session id="835335007">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.19" value="1" />
@@ -393,7 +388,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
     <option name="width" value="1383" />
@@ -587,15 +582,15 @@
       <workItem from="1538014444299" duration="9977000" />
       <workItem from="1538014843103" duration="2442000" />
       <workItem from="1538375648165" duration="286000" />
-      <workItem from="1538377302014" duration="656000" />
+      <workItem from="1538377302014" duration="658000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128594000" />
+    <option name="totallyTimeSpent" value="128596000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49836066" visible="true" weight="0.23724696" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -607,7 +602,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49924356" visible="true" weight="0.31850535" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.31850535" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
