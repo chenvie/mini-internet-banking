@@ -25,3 +25,7 @@
     1. `npm i web-push`
     2. `web-push generate-vapid-keys --json`
     3. note down the private and public key
+    
+# References
+https://malcoded.com/posts/angular-push-notifications    
+https://blog.angular-university.io/angular-push-notifications/
