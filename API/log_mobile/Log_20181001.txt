@@ -1,0 +1,27 @@
+
+01-10-2018 01:40:57 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = ff68179dddd38692293d04c091d017ff]
+01-10-2018 01:40:57 | MainActivity | [INFO] : Get Nasabah Data Success
+01-10-2018 01:41:03 | HomeActivity | [INFO] :  Logout, remove session from app
+01-10-2018 01:41:16 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = ff68179dddd38692293d04c091d017ff]
+01-10-2018 01:41:16 | MainActivity | [INFO] : Get Nasabah Data Success
+01-10-2018 01:45:56 | MainActivity | [ERROR] : Get Nasabah data from session
+01-10-2018 01:45:59 | MainActivity | [ERROR] : Get Nasabah data from session
+01-10-2018 01:47:05 | MainActivity | [ERROR] : Get Nasabah data from session
+01-10-2018 02:03:28 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = ff68179dddd38692293d04c091d017ff]
+01-10-2018 02:03:28 | MainActivity | [INFO] : Get Nasabah Data Success
+01-10-2018 02:04:03 | MainActivity | [ERROR] : Get Nasabah data from session
+01-10-2018 02:04:12 | MainActivity | [ERROR] : Get Nasabah data from session
+01-10-2018 02:04:14 | HomeActivity | [INFO] :  Logout, remove session from app
+01-10-2018 02:04:21 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = ff68179dddd38692293d04c091d017ff]
+01-10-2018 02:04:21 | MainActivity | [INFO] : Get Nasabah Data Success
+01-10-2018 02:18:34 | MainActivity | [ERROR] : Get Nasabah data from session
+01-10-2018 02:18:39 | MainActivity | [ERROR] : Get Nasabah data from session
+01-10-2018 02:18:41 | HomeActivity | [INFO] :  Logout, remove session from app
+01-10-2018 02:18:49 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = ff68179dddd38692293d04c091d017ff]
+01-10-2018 02:18:49 | MainActivity | [INFO] : Get Nasabah Data Success
+01-10-2018 02:29:15 | MainActivity | [ERROR] : Get Nasabah data from session
+01-10-2018 02:29:27 | MainActivity | [ERROR] : Get Nasabah data from session
+01-10-2018 02:29:29 | HomeActivity | [INFO] :  Logout, remove session from app
+01-10-2018 02:31:56 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = ff68179dddd38692293d04c091d017ff]
+01-10-2018 02:31:56 | MainActivity | [INFO] : Get Nasabah Data Success
+01-10-2018 02:32:34 | MainActivity | [ERROR] : Get Nasabah data from session
