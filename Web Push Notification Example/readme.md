@@ -2,7 +2,8 @@
 ---
 1. ### Create client
     1. Create angular project `<your_angular>`
-    2. Replace angular default **src** with this **client/src**
+    2. Install service worker `npm i @angular/service-worker`
+    3. Replace angular default **src** with this **client/src**
 2. ### Create server
     1. Create a folder`<your_server>`
     2. Go to folder `cd <your_server>`
@@ -10,8 +11,8 @@
     4. Install dependencies `npm i body-parser cors express web-push`
     5. Copy content of **server/** to `<your_server>`
 3. ### Starting Up
-    1. Install http-server `npm i http-server`
-    2. Go to `<your_angular>`
+    1. Go to `<your_angular>`
+    2. Install http-server `npm i http-server`
     3. Build project `ng build --prod`
     4. Serve your angular using http-server `http-server dist/<your_angular>/`
     5. Go to `<your_server>`
