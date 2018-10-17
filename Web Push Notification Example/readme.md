@@ -2,7 +2,7 @@
 ---
 1. ### Create client
     1. Create angular project `<your_angular>`
-    2. Install service worker `npm i @angular/service-worker`
+    2. Install pwa `ng add @angular/pwa --project <your_angular>`
     3. Replace angular default **src** with this **client/src**
 2. ### Create server
     1. Create a folder`<your_server>`
