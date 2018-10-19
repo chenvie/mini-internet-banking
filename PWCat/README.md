@@ -41,7 +41,9 @@ Note: Your PWA Score after audits must be have 2 errors if you deploy your proje
 2. Content is not sized correctly for the viewport --> because this audit is a roundabout way of determining if your page is optimized for mobile devices, you can optimized it by using **Responsive Web Designs**
 
 ## Open project at smartphones
-1. Type link github repository `https://{GITHUB_REPOSITORY_USERNAME}.github.io/{REPOSITORY_NAME}/`
+1. Type link github repository `https://{GITHUB_REPOSITORY_USERNAME}.github.io/{REPOSITORY_NAME}/` 
+    or
+   Type link of same network IP address, example `192.168.xx.xxx:8080`
 2. After you opened it, there will be a pop-up to add apps to homescreen, tapped it
 3. Automatically there will be a new icon if your apps that can run at offline state (but the picture doesn't show because API Request of picture need internet connection)
 
