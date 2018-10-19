@@ -50,4 +50,5 @@ Note: Your PWA Score after audits must be have 2 errors if you deploy your proje
 # References
 1. https://medium.com/@nsmirnova/creating-pwa-with-angular-5-part-2-progressifying-the-application-449e3a706129
 2. https://medium.com/@nsmirnova/creating-pwa-with-angular-5-e36ea2378b5d
+3. https://www.npmjs.com/package/angular-cli-ghpages
 
