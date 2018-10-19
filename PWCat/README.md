@@ -26,7 +26,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 5. Set github source at Settings tab of your repo, scroll down a little bit and find a `GitHub Pages` section. Make sure that `gh-pages branch` is set as a source.
 6. Build your project and publish to github, run `ng build --prod --base-href "https://{GITHUB_REPOSITORY_USERNAME}.github.io/{REPOSITORY_NAME}/"`
     example: `ng build --prod --base-href "https://chenvie.github.io/PWCat"`
-7. Run `npx ngh --dir dist/{PROJECT_NAME}` to run your published project at github pages
+7. Run `npx ngh --dir=dist/{PROJECT_NAME}` to run your published project at github pages
 8. Open your running project at your github link `https://{GITHUB_REPOSITORY_USERNAME}.github.io/{REPOSITORY_NAME}/`
 
 ## Testing Progressive Web Apps
