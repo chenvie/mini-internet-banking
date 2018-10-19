@@ -45,7 +45,7 @@ Note: Your PWA Score after audits must be have 2 errors if you deploy your proje
 2. After you opened it, there will be a pop-up to add apps to homescreen, tapped it
 3. Automatically there will be a new icon if your apps that can run at offline state (but the picture doesn't show because API Request of picture need internet connection)
 
-#References
-https://medium.com/@nsmirnova/creating-pwa-with-angular-5-part-2-progressifying-the-application-449e3a706129
-https://medium.com/@nsmirnova/creating-pwa-with-angular-5-e36ea2378b5d
+# References
+1. https://medium.com/@nsmirnova/creating-pwa-with-angular-5-part-2-progressifying-the-application-449e3a706129
+2. https://medium.com/@nsmirnova/creating-pwa-with-angular-5-e36ea2378b5d
 
