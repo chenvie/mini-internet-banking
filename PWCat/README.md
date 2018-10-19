@@ -27,7 +27,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 6. Build your project and publish to github, run `ng build --prod --base-href "https://{GITHUB_REPOSITORY_USERNAME}.github.io/{REPOSITORY_NAME}/"`
     example: `ng build --prod --base-href "https://chenvie.github.io/PWCat"`
 7. Run `npx ngh --dir dist/{PROJECT_NAME}` to run your published project at github pages
-8. Open your running project at your href `https://{GITHUB_REPOSITORY_USERNAME}.github.io/{REPOSITORY_NAME}/`
+8. Open your running project at your github link `https://{GITHUB_REPOSITORY_USERNAME}.github.io/{REPOSITORY_NAME}/`
 
 ## Testing Progressive Web Apps
 1. Install Lighthouse Chrome Extension
@@ -39,6 +39,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Note: Your PWA Score after audits must be have 2 errors if you deploy your project at localhost
 1. Does not redirect **HTTP** traffics to **HTTPS** --> because you deploy your project at localhost
 2. Content is not sized correctly for the viewport --> because this audit is a roundabout way of determining if your page is optimized for mobile devices, you can optimized it by using **Responsive Web Designs**
+
+## Open project at smartphones
+1. Type link github repository `https://{GITHUB_REPOSITORY_USERNAME}.github.io/{REPOSITORY_NAME}/`
+2. After you opened it, there will be a pop-up to add apps to homescreen, tapped it
+3. Automatically there will be a new icon if your apps that can run at offline state (but the picture doesn't show because API Request of picture need internet connection)
 
 #References
 https://medium.com/@nsmirnova/creating-pwa-with-angular-5-part-2-progressifying-the-application-449e3a706129
