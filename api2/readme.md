@@ -16,8 +16,9 @@
 1. url	: localhost:8080/nasabah/{id}
 2. method	: GET
 3. input	: id (param)
-4. output	: nasabah : id_nasabah, email, username, nama_lengkap, password, no_ktp, tgl_lahir, alamat, created
-	  	  List<Rekening> :  no_rek, kode_rahasia, jml_saldo, kode_cabang, created  (JSON)
+4. output	: 
+a. nasabah : id_nasabah, email, username, nama_lengkap, password, no_ktp, tgl_lahir, alamat, created
+b. List<Rekening> :  no_rek, kode_rahasia, jml_saldo, kode_cabang, created  (JSON)
 
 ## BUKA REKENING (CREATE NASABAH)
 1. url	: localhost:8080/nasabah
@@ -36,17 +37,17 @@
 2. method	: GET
 3. input	: no_rek (param)
 4. output	: JSON Array 
-	          respon : no_rek,tgl_awal, tgl_akhir
-		  result : List<mutasi> : kode_transaksi, tgl_trans, tujuan, jenis, keterangan, nominal 
+a. respon : no_rek,tgl_awal, tgl_akhir
+b. result : List<mutasi> : kode_transaksi, tgl_trans, tujuan, jenis, keterangan, nominal 
 
 ## READ HISTORY
 1. url		: localhost:8080/history/{no_rek}/{tgl_awal}/{tgl_akhir}
-	  	  contoh format tanggal : localhost:8080/history/037015/2018-08-15/2018-09-13
+- contoh format tanggal : localhost:8080/history/037015/2018-08-15/2018-09-13
 2. method	: GET
 3. input	: no_rek, tgl_awal, tgl_akhir (param)
 4. output	: JSON Array 
-		  respon : no_rek, tgl_awal, tgl_akhir
-		  result : List<history> : kode_transaksi, tgl_trans, tujuan, keterangan, nominal, status(JSON)
+a. respon : no_rek, tgl_awal, tgl_akhir
+b. result : List<history> : kode_transaksi, tgl_trans, tujuan, keterangan, nominal, status(JSON)
 
 ## UPDATE PASSWORD
 1. url	: localhost:8080/update_password
