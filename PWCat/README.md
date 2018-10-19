@@ -12,7 +12,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 2. Run `npm install --save @angular/material @angular/cdk` to install **Angular Material Library** (used for Toolbar and Card View)
 4. Run `npm install --save normalize.css` to install **Normalize Theme** for project
 
-## Run Project
+## Run Project (Localhost)
 1. Navigate to project folder
 2. Run `npm install http-server` to install http-server library
 3. Run `ng build --prod` to build your project
@@ -35,6 +35,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 2. Open Chrome Dev Tools (F12)
 3. Navigate to Audits Tab
 4. Scroll down a little bit and find button **Run Audits**
+
+Note: Your PWA Score after audits must be have 2 errors if you deploy your project at localhost
+1. Does not redirect **HTTP** traffics to **HTTPS** --> because you deploy your project at localhost
+2. Content is not sized correctly for the viewport --> because this audit is a roundabout way of determining if your page is optimized for mobile devices, you can optimized it by using **Responsive Web Designs**
 
 #References
 https://medium.com/@nsmirnova/creating-pwa-with-angular-5-part-2-progressifying-the-application-449e3a706129
