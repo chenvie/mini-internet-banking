@@ -4,9 +4,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## How to Install
 1. Clone / Download Zip of this project
-2. Run `npm install` to install dependencies of project
+2. Run `npm install` to install all dependencies of project (include pwa, http-server, etc)
 
-## Getting started
+## Getting started (If You Create New Project without using this source code)
+1. Run `ng new {PROJECT_NAME}` to create new project
 1. Run `ng add @angular/pwa --project PWCat` to add Progressive Web Apps Library
 2. Run `npm install --save @angular/material @angular/cdk` to install **Angular Material Library** (used for Toolbar and Card View)
 4. Run `npm install --save normalize.css` to install **Normalize Theme** for project
