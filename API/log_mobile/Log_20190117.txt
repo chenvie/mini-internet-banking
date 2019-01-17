@@ -1,0 +1,63 @@
+
+17-01-2019 10:36:40 | MainActivity | [ERROR] : Error in getting response using async okhttp call
+17-01-2019 10:37:14 | MainActivity | [ERROR] : Username or password wrong
+17-01-2019 10:38:03 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = 5f4dcc3b5aa765d61d8327deb882cf99]
+17-01-2019 10:38:03 | MainActivity | [INFO] : Get Nasabah Data Success
+2019-01-17 | MutationActivity | [INFO] : Getting Mutation Data Success, [Nasabah id = 48]
+2019-01-17 | MutationActivity | [INFO] : Getting Mutation Data Success, [Nasabah id = 48]
+17-01-2019 10:41:32 | TransferActivity | [INFO] : Checking receiver rekening num success, [No Rekening Tujuan = 037048, Nasabah id = 48
+17-01-2019 10:48:29 | MainActivity | [ERROR] : Get Nasabah data from session
+17-01-2019 10:52:03 | HomeActivity | [INFO] :  Logout, remove session from app
+17-01-2019 10:52:11 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = 5f4dcc3b5aa765d61d8327deb882cf99]
+17-01-2019 10:52:11 | MainActivity | [INFO] : Get Nasabah Data Success
+2019-01-17 | MutationActivity | [INFO] : Getting Mutation Data Success, [Nasabah id = 48]
+17-01-2019 10:53:33 | TransferActivity | [INFO] : Checking receiver rekening num success, [No Rekening Tujuan = 037048, Nasabah id = 48
+17-01-2019 10:53:38 | TransferCodeActivity | [INFO] : Transfer success, [Username = Vievin47, Nasabah id = 48, Nomor Rekening Tujuan = 037047, Nominal = 50000, Keterangan = pembayaran traktiran, Kode Rahasia = 5ca73969cd1b308036f2dac4674bbbd4
+17-01-2019 10:55:28 | TransferActivity | [INFO] : Checking receiver rekening num success, [No Rekening Tujuan = 037050, Nasabah id = 48
+17-01-2019 10:55:34 | TransferCodeActivity | [INFO] : Transfer success, [Username = Vievin47, Nasabah id = 48, Nomor Rekening Tujuan = 037047, Nominal = 20000, Keterangan = Coba transfer, Kode Rahasia = 5ca73969cd1b308036f2dac4674bbbd4
+17-01-2019 10:55:41 | TransferStatusActivity | [INFO] :  Logout, remove session from app
+17-01-2019 10:55:51 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = 5f4dcc3b5aa765d61d8327deb882cf99]
+17-01-2019 10:55:51 | MainActivity | [INFO] : Get Nasabah Data Success
+17-01-2019 10:56:15 | HomeActivity | [INFO] :  Logout, remove session from app
+17-01-2019 10:56:21 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = 5f4dcc3b5aa765d61d8327deb882cf99]
+17-01-2019 10:56:21 | MainActivity | [INFO] : Get Nasabah Data Success
+17-01-2019 10:57:01 | TransferActivity | [INFO] : Checking receiver rekening num success, [No Rekening Tujuan = 037050, Nasabah id = 48
+17-01-2019 10:57:52 | MainActivity | [ERROR] : Get Nasabah data from session
+17-01-2019 10:59:05 | TransferActivity | [INFO] : Checking receiver rekening num success, [No Rekening Tujuan = 037048, Nasabah id = 48
+17-01-2019 10:59:10 | TransferCodeActivity | [ERROR] : Transfer failed with message: Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda
+17-01-2019 10:59:17 | TransferCodeActivity | [ERROR] : Transfer failed with message: Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda
+2019-01-17 | MutationActivity | [INFO] : Getting Mutation Data Success, [Nasabah id = 48]
+17-01-2019 11:00:48 | BuyingCodeActivity | [INFO] : Buying Success, [NoRek = 037047, NoHp = 085201258593, Nominal = 50000, Provider =  Telkomsel, Kode Rahasia = 5ca73969cd1b308036f2dac4674bbbd4]
+17-01-2019 11:01:24 | BuyingCodeActivity | [ERROR] : Buying Failed with message: Saldo tidak mencukupi, pastikan ada sisa Rp. 50.000 di rekening anda
+2019-01-17 | MutationActivity | [INFO] : Getting Mutation Data Success, [Nasabah id = 48]
+17-01-2019 11:02:04 | MutationActivity | [INFO] :  Logout, remove session from app
+17-01-2019 11:02:10 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = 5f4dcc3b5aa765d61d8327deb882cf99]
+17-01-2019 11:02:10 | MainActivity | [INFO] : Get Nasabah Data Success
+17-01-2019 11:02:36 | TransferActivity | [INFO] : Checking receiver rekening num success, [No Rekening Tujuan = 037047, Nasabah id = 48
+17-01-2019 11:02:40 | TransferCodeActivity | [INFO] : Transfer success, [Username = Vievin47, Nasabah id = 48, Nomor Rekening Tujuan = 037051, Nominal = 157000, Keterangan = uang saku, Kode Rahasia = 5ca73969cd1b308036f2dac4674bbbd4
+2019-01-17 | MutationActivity | [INFO] : Getting Mutation Data Success, [Nasabah id = 48]
+17-01-2019 11:04:01 | HistoryDetailActivity | [INFO] : Getting history data success, [NoRek = 037047, Date from = Sun, 13 Jan 2019, Date to = Thu, 17 Jan 2019]
+17-01-2019 11:04:18 | HistoryDetailActivity | [INFO] : Getting history data success, [NoRek = 037047, Date from = Thu, 17 Jan 2019, Date to = Thu, 17 Jan 2019]
+17-01-2019 11:07:46 | HistoryDetailActivity | [INFO] :  Logout, remove session from app
+17-01-2019 11:07:58 | MainActivity | [INFO] : Login success, [Username = sam, password = 5f4dcc3b5aa765d61d8327deb882cf99]
+17-01-2019 11:07:58 | MainActivity | [INFO] : Get Nasabah Data Success
+17-01-2019 11:08:31 | HistoryDetailActivity | [INFO] : Getting history data success, [NoRek = 037047, Date from = Sat, 01 Sep 2018, Date to = Tue, 25 Sep 2018]
+17-01-2019 11:08:43 | HistoryDetailActivity | [INFO] :  Logout, remove session from app
+17-01-2019 11:08:48 | MainActivity | [INFO] : Login success, [Username = sam, password = 5f4dcc3b5aa765d61d8327deb882cf99]
+17-01-2019 11:08:48 | MainActivity | [INFO] : Get Nasabah Data Success
+17-01-2019 11:09:08 | HistoryDetailActivity | [INFO] : Getting history data success, [NoRek = 037000, Date from = Sat, 01 Sep 2018, Date to = Tue, 25 Sep 2018]
+17-01-2019 11:09:28 | HistoryDetailActivity | [INFO] :  Logout, remove session from app
+17-01-2019 11:15:42 | MainActivity | [INFO] : Login success, [Username = Vievin47, password = 5f4dcc3b5aa765d61d8327deb882cf99]
+17-01-2019 11:15:42 | MainActivity | [INFO] : Get Nasabah Data Success
+17-01-2019 11:16:04 | HistoryActivity | [ERROR] : Date from and to exceed 30 days, [Date from = Tue Jan 01 00:00:00 GMT+07:00 2019, Date to = Wed Feb 06 00:00:00 GMT+07:00 2019]
+17-01-2019 11:16:56 | HistoryDetailActivity | [INFO] : Getting history data success, [NoRek = 037051, Date from = Tue, 01 Jan 2019, Date to = Wed, 30 Jan 2019]
+17-01-2019 11:17:22 | HistoryDetailActivity | [INFO] : Getting history data success, [NoRek = 037051, Date from = Tue, 01 Jan 2019, Date to = Thu, 17 Jan 2019]
+17-01-2019 11:19:46 | SettingPasswordActivity | [ERROR] : New password dan retype password not same
+17-01-2019 11:20:07 | SettingPasswordActivity | [ERROR] : Old password wrong
+17-01-2019 11:20:32 | SettingPasswordActivity | [ERROR] : Password didn;t fulfill minimum requirement
+17-01-2019 11:20:54 | SettingPasswordActivity | [INFO] : Update password success, [Password Lama = 5f4dcc3b5aa765d61d8327deb882cf99, Password Baru = af88a0ae641589b908fa8b31f0fcf6e1, Retype Password = af88a0ae641589b908fa8b31f0fcf6e1, Nasabah id = 48]
+17-01-2019 11:21:42 | SettingSecretCodeActivity | [ERROR] : New Code and Retype Code not same
+17-01-2019 11:22:05 | SettingSecretCodeActivity | [ERROR] : New secret code wrong
+17-01-2019 11:22:30 | SettingSecretCodeActivity | [ERROR] : Secret code didn't fulfill minimum requirement
+17-01-2019 11:22:58 | SettingSecretCodeActivity | [INFO] : Update secret code success, [Kode Rahasia Lama = 5ca73969cd1b308036f2dac4674bbbd4, Kode Rahasia Baru = b39509fbe33beb25e7a27243e17bf6dc, Retype Kode Rahasia = b39509fbe33beb25e7a27243e17bf6dc, Rekening Num = 037047
+17-01-2019 11:23:21 | SettingSecretCodeActivity | [INFO] : Update secret code success, [Kode Rahasia Lama = b39509fbe33beb25e7a27243e17bf6dc, Kode Rahasia Baru = 5ca73969cd1b308036f2dac4674bbbd4, Retype Kode Rahasia = 5ca73969cd1b308036f2dac4674bbbd4, Rekening Num = 037047

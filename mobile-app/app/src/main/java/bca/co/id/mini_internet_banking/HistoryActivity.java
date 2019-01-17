@@ -55,7 +55,7 @@ public class HistoryActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private List<String> listLog = new ArrayList<String>();
     SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
-    private static final List<String> listRekeningNum = new ArrayList<String>();
+    private static List<String> listRekeningNum = new ArrayList<String>();
     private Spinner txtHistNoRek;
 
     @Override
@@ -68,6 +68,8 @@ public class HistoryActivity extends AppCompatActivity {
         txtHistDateTo = findViewById(R.id.txtHistDateTo);
         btnShowHistory = findViewById(R.id.btnShowHistory);
         txtHistNoRek = findViewById(R.id.txtHistNoRek);
+
+        listRekeningNum = new ArrayList<>();
 
         for (Rekening rek: Nasabah.rekenings){
             listRekeningNum.add(rek.getRekeningNum());

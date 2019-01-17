@@ -162,6 +162,9 @@ public class TransferCodeActivity extends AppCompatActivity {
             }
         }
 
+        Log.e(TAG, "HashCode = " + hashCode);
+        Log.e(TAG, "CheckCode = " + checkCode);
+
         if (hashCode.equals(checkCode)) {
             //final float temp = Nasabah.saldo - Float.parseFloat(nominal);
             //if (temp > 0) {
@@ -249,8 +252,13 @@ public class TransferCodeActivity extends AppCompatActivity {
                                 }
                             } else{
                                 listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Transfer failed with message: " + message);
-                                Log.e(TAG, "Tranfer failed with message: " + message);
-                                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Log.e(TAG, "Tranfer failed with message: " + message);
+                                        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                    }
+                                });
                             }
                         } catch (final JSONException e) {
                             listLog.add(s.format(new Date()) + " | " + TAG + " | " + "[ERROR] " + ": " + "Json parsing error: " + e.getMessage());
